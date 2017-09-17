@@ -12,7 +12,7 @@ require('./components/forms/checkboxs.component');
 require('./components/forms/radios.component');
 require('./components/forms/chosen.component');
 require('./components/forms/datepicker.component');
-require('./components/forms/input-container.component');
+require('./components/forms/form-item.component');
 
 // directives
 require('./directives/chosen.directive');

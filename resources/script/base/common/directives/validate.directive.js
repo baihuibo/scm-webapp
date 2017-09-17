@@ -1,14 +1,17 @@
 angular.module('common-module')
     .directive('validate', function (validates) {
         return {
-            require: 'ngModel',
-            scope: {validate: '='},
+            require: '?ngModel',
+            scope: {validate: '=?'},
             link: function ($scope, el, attr, ngModelCtrl) {
-                if ($scope.validate) {
+                if ($scope.validate && ngModelCtrl) {
                     var helpBlock = el.next('.help-block'), validMsg;
                     ngModelCtrl.$validators.validate = function (currentValue) {
                         var validate = $scope.validate || {}; // 用户自定义规则多是动态模板规则
-                        var rules = validate.ruels || {}; // 多半是通用规则
+                        var rules = validate.rules || {}; // 多半是通用规则
+                        if (el.attr('type')) {
+                            rules[el.attr('type')] = true;// type类型也作为校验的一种
+                        }
                         validMsg = '';
 
                         // 获取所有要校验的规则依次校验
@@ -20,8 +23,11 @@ angular.module('common-module')
                                 var validResult = validFn(currentValue, ruleValue);// 调用校验方法
 
                                 if (validResult === false && validArgs[1]) {
-                                    // 返回ｆａｌｓｅ表示验证失败。处理提示语句
+                                    // 返回false表示验证失败。处理提示语句
                                     validMsg = (validArgs[1] || '').format(ruleValue);
+                                } else if (typeof validResult === 'string') { // 如果返回 string，则表示错误提示语句
+                                    validMsg = validResult;
+                                    validResult = false;
                                 }
 
                                 // 如果返回布尔，则表示校验有结果

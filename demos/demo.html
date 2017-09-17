@@ -36,30 +36,44 @@
 </head>
 <body ng-controller="demoCtrl as $ctrl" ng-cloak>
 
-$ctrl.data = {{$ctrl.data}}
+<pre>
+    $ctrl.data = {{$ctrl.data | json}}
+</pre>
 
 
 <form ng-submit="$ctrl.count = 1" layout="row" layout-wrap>
+    <form-item text="请输入数字" flex="50">
+        <sales-input type="number" value="$ctrl.data.number"
+                     validate-rule="{}">
+        </sales-input>
+    </form-item>
+    <form-item text="请输入电话号码" flex="50">
+        <sales-input type="tel" value="$ctrl.data.tel"
+                     validate-rule="{}">
+        </sales-input>
+    </form-item>
+    <form-item text="请输入邮箱" flex="50">
+        <sales-input type="email" value="$ctrl.data.email"
+                     validate-rule="{}">
+        </sales-input>
+    </form-item>
     <form-item text="请输入用户名" flex="50">
-        <sales-input type="text" name="userInfo"
-                     value="$ctrl.data.startName"
-                     validate-rule="{ruels:{maxlength:12,required:$ctrl.required},noMax: $ctrl.data.endName, regexp :'aaa'}"></sales-input>
+        <sales-input type="text" value="$ctrl.data.name"
+                     validate-rule="{}">
+        </sales-input>
     </form-item>
-    <form-item text="输入用户信息" flex="50">
-        <sales-input type="text" value="$ctrl.data.endName"
-                     validate-rule="{ruels:{required:$ctrl.required}, maxTo: $ctrl.data.startName}"></sales-input>
+    <form-item text="输入用户密码" flex="50">
+        <sales-input type="text" value="$ctrl.data.pwd"
+                     validate-rule="{ rules:{required:$ctrl.required || 0} }">
+        </sales-input>
     </form-item>
 
-    <button type="button" ng-click="$ctrl.required = !$ctrl.required"> toggle required</button>
+    <form-item flex="100">
+        <button type="button" ng-click="$ctrl.required = !$ctrl.required"> toggle required</button>
 
-    <form-item>
         <button>submit</button>
     </form-item>
 </form>
-
-<div class="form-group">
-    <label class="control-label"></label>
-</div>
 
 <script>
     seajs.use('demos/demo.controller');

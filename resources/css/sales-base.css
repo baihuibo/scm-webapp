@@ -6,4 +6,10 @@ form-item > .form-group > label.control-label {
     min-width: 100px;
     text-align: right;
     margin-right: .5em;
+    padding: 5px 0 0;
+}
+
+form-item > .form-group > label.control-label.required:before {
+    content: '*';
+    color: red;
 }
