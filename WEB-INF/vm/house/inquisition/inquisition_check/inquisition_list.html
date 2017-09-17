@@ -1,0 +1,214 @@
+#set($plugins = ["table","chosen","laydate","autoSearch","ztree"])
+<div class="ibox">
+	<div class="ibox-title">
+		<h5>实勘管理</h5>
+		<div class="ibox-tools">
+			<a class="collapse-link ui-sortable"><i class="fa fa-chevron-up"></i></a>
+		</div>
+	</div>
+	<div class="ibox-content">
+		#if($shiro.hasPermission("SCM:HOUSE:INQUISITION:CHECK"))
+			<input type="hidden" value="1" id="temp_check"></input>
+		#end
+		<form id="J_query"  class="form-horizontal" role="form">
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">房源编号：</label>
+					<div class="col-sm-8">	
+						<input type="text" class="form-control" name="housesId"  id="" autocomplete="off">					
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">实勘编号：</label>
+					<div class="col-sm-8">	
+						<input type="text" class="form-control" name="inquId"  id="" autocomplete="off">					
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">实勘状态：</label>
+						<div class="col-sm-8">
+							<select id="inquState"name="inquState" class="J_chosen form-control" data-placeholder="全部">
+								<option value="0">全部</option>
+								 <option value="1" >有效</option>
+								<option value="2">无效</option>  
+							</select>
+						</div>
+					</div> 
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">实勘部门：</label>
+						<div class="col-sm-8">
+							<input id="J_grouplevel" name="grouplevel"  type="hidden" class="form-control" value="">
+							<div class="input-group">
+								<input id="J_groupid" name="groupid" type="text" class="form-control radius-3 float-l" autocomplete="off" readonly="readonly" style="background-color:#fff;">
+								<div class="input-group-btn">
+									<button id="J_createSelect" data-toggle="dropdown" class="btn dropdown-toggle btn-dept float-l" type="button"><span class="caret"></span>
+	                            	</button>
+	                            </div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">审核状态：</label>
+						<div class="col-sm-8">
+							<select id="checkState" name="checkState" class="J_chosen form-control" data-placeholder="全部">
+								 <option value="0">全部</option> 
+								 <option value="1">已审核</option> 
+								 <option value="2">未审核</option> 
+							</select>
+						</div>
+					</div> 
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">审核结果：</label>
+						<div class="col-sm-8">
+							<select id="checkResult" name="checkResult" class="J_chosen form-control" data-placeholder="全部">
+								<option value="0">全部</option> 
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">上传时间：</label>
+						<div class="col-sm-4">
+							<input id="J_begindate" name="beginDate" class="J_chosen form-control" readonly style="background-color: #FFFFFF;">
+						</div>
+						<div style="float:left; padding:7px 0px;">-</div>
+						<div class="col-sm-4">
+							<input id="J_enddate" name="endDate" class="J_chosen form-control" readonly style="background-color: #FFFFFF;">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">上传人：</label>
+						<div class="col-sm-8">
+							<div class="input-group">
+								<input type="text" class="form-control" id="J_fenpeirenId" name="fenpeirenId" autocomplete="off">
+								<div class="input-group-btn">
+									<button type="button" class="btn btn-white dropdown-toggle"
+										data-toggle="">
+										<span class="glyphicon glyphicon-search search-caret"></span>
+									</button>
+									<ul class="dropdown-menu dropdown-menu-right" role="menu"
+										style="padding-top: 0px; max-height: 375px; max-width: 800px; overflow: auto; width: auto; transition: 0.3s; left: -110px; right: auto; min-width: 145px;">
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">实勘人：</label>
+						<div class="col-sm-8">
+							<div class="input-group">
+								<input type="text" class="form-control" id="J_userId" name="userId" autocomplete="off">
+								<div class="input-group-btn">
+									<button type="button" class="btn btn-white dropdown-toggle"
+										data-toggle="">
+										<span class="glyphicon glyphicon-search search-caret"></span>
+									</button>
+									<ul class="dropdown-menu dropdown-menu-right" role="menu"
+										style="padding-top: 0px; max-height: 375px; max-width: 800px; overflow: auto; width: auto; transition: 0.3s; left: -110px; right: auto; min-width: 145px;">
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">业务类型：</label>
+						<div class="col-sm-8">
+							<select id="J_housekInd" name="housekInd" class="J_chosen form-control" data-placeholder="全部">
+								<option value="">全部</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12" style="text-align: center;">
+					<div class="form-group">
+						<button id="J_search" type="button" class="btn btn-success pr5">查 询</button>
+						<button id="" onclick="res()" type="reset" class="btn btn-white btn_size">重置</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<div class="ibox float-e-margins">
+	<div class="ibox-title">
+        <h5>实勘查询列表</h5>
+     </div>
+	<div class="ibox-content">
+		<div class="row all" >
+			<div class="col-sm-12">
+				#if($shiro.hasPermission("SCM:HOUSE:INQUISITION:UPLOAD"))
+				<div class="res">
+					<button id="J_del" type="button" class="btn btn-success pr5">审核结果批量上传</button>
+				</div>
+				#end
+				<!-- Example Pagination -->
+				<div class="col-sm-12 ptb10">
+					<table id="J_dataTable_list" class="table table-hover table-striped table table-bordered tables">
+						<thead>
+								<tr>
+									<th data-field="housesId">房源编号</th>
+									<th data-field="inquId">实勘编号</th>	
+									<th data-field="uploadName">上传人</th>
+									<th data-field="inquName">实勘人</th>
+									<th data-field="uploadTime">上传时间</th>
+									<th data-field="inquState">实勘状态</th>
+									<th data-field="checkState">审核状态</th>
+									<th data-field="checkResult">审核结果</th>
+									
+								</tr>
+								
+							</thead>
+					</table>
+				</div>
+				<!-- End Example Pagination -->
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- 审批结果批量上传 -->
+<div id="demo_layer_stantard" class="ibox-content" style="display: none">
+	<div class="all_of">
+		<div class="upload1">
+			<a id="exceldown">下载实勘审核结果上传模板</a>
+		</div>
+		<div class="upload2">
+			<input type="file" name="file1"  id="file1" style="display:none"/>
+		</div>
+		<h5 class="up_btn">上 传</h5>
+		<div class="onload" >	
+		</div>
+	</div>
+		
+</div>
+<script type="text/javascript" src="$link.contextPath/resources/js/department.js"></script>
+<script src="/sales/resources/script/house/inquisition/inquisition_check/inquisition_list.js"></script>
+
+

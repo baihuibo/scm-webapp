@@ -1,0 +1,43 @@
+<div class="ibox float-e-margins">
+	<div class="ibox-title"><h5>打印历史</h5></div>
+	<div class="ibox-content">
+
+		<div>
+			打印次数：{{$ctrl.printCount}}
+		</div>
+
+		<div class="row row-lg">
+			<div class="col-sm-12">
+				<!-- Example Pagination -->
+				<div class="example-wrap ptb10">
+					<p></p>
+					<table id="J_dataTable_print" class="table table-hover table-striped table-bordered" data-query-params="queryParams" data-mobile-responsive="true" data-pagination="true" data-icon-size="outline" data-striped="true" data-search="false">
+						<thead>
+							<tr>
+								<th data-field="number">序号</th>
+								<th data-field="type">类型</th>
+								<th data-field="contractid">合同编号</th>
+								<th data-field="printdept">打印部门 </th>
+								<th data-field="printperson">打印人员</th>
+								<th data-field="printtime">打印时间</th>
+								<th data-field="printnum">打印份数</th>
+							</tr>
+						</thead>
+						<tbody>
+						<tr ng-repeat="item in $ctrl.printhistorylist">
+							<td>{{$index + 1}}</td>
+							<td>{{item.type}}</td>
+							<td>{{item.contractCode}}</td>
+							<td>{{item.shopName}}</td>
+							<td>{{item.userName}}</td>
+							<td>{{item.crtDttm}}</td>
+							<td>{{item.printCount}}</td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+				<!-- End Example Pagination -->
+			</div>
+		</div>
+	</div>
+</div>

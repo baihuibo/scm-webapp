@@ -1,0 +1,52 @@
+<!--
+    补充协议
+-->
+<div class="ibox float-e-margins">
+    <div class="ibox-title"><h5>补充协议</h5></div>
+    <div class="ibox-content">
+    	#if($shiro.hasPermission("SCM:SALES:LEASE_SIGN_CONTRACT_AGREEMENT_ADD"))
+        <h4 class="page-header text-success"
+            ng-if="!$ctrl.docbizkey && $ctrl.isOwnerUser&& !$ctrl.other">
+            &nbsp;
+            <a class="btn btn-success btn-xs pull-right" target="_blank"
+               ng-if="!$ctrl.docbizkey && $ctrl.isOwnerUser && !$ctrl.other"
+               href="$link.contextPath/sign/agreement/agreement-edit.html?agrtType=1&conId={{$ctrl.formId}}">
+                <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+                添加补充协议
+            </a>
+        </h4>
+        #end
+        <table class="table table-hover table-striped table-bordered">
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>合同编号</th>
+                <th>类型</th>
+                <th>协议编号</th>
+                <th>录入部门</th>
+                <th>录入人员</th>
+                <th>状态</th>
+                <th>最新状态时间</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="item in $ctrl.supplAgrtList">
+                <td>{{$index + 1}}</td>
+                <td>{{item.contract_code}}</td>
+                <td>{{item.agrt_type}}</td>
+                <td>
+                    <a href="/sales/sign/agreement/agreement-detail.html?supplAgrtId={{item.suppl_agrt_id}}"
+                       target="_blank">{{item.sign_number}}</a>
+                </td>
+                <td>{{item.dept_name}}</td>
+                <td>
+                    <person-show person-id="item.create_by_id" person-name="item.create_by_name">
+                    </person-show>
+                </td>
+                <td>{{item.status}}</td>
+                <td>{{item.update_time}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

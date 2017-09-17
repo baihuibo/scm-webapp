@@ -1,0 +1,268 @@
+#set($plugins = ["table","chosen","laydate","autoSearch","ztree"])
+<style>
+.table>thead>tr>th{vertical-align: middle !important;}
+.but-border{ border-bottom:1px solid #D0CDC7;}
+</style>
+<div class="ibox">
+	<div class="ibox-title">
+		<h5>选择合同页面</h5>
+		<div class="ibox-tools">
+			<a class="collapse-link ui-sortable"> 
+				<i class="fa fa-chevron-up"></i>
+			</a>
+		</div>
+	</div>
+	<div class="ibox-content">
+		<div class="row ptb10">
+			<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>合同信息</div>
+		</div>
+		<div class="ibox-pay form-horizontal">
+			<div class="row">
+				<div class="col-sm-4">
+					<label class="col-sm-3 control-label">合同编号：</label>
+					<div id="J_Contract" class="col-sm-7 control-div"></div>
+				</div>
+				<div class="col-sm-4">
+					<label class="col-sm-3 control-label">合同类型：</label>
+					<div id="J_typecontract" class="col-sm-7 control-div"></div>
+				</div>
+				<div class="col-sm-4">
+					<label class="col-sm-3 control-label">房源编号：</label>
+					<div id="J_houseId" class="col-sm-7 control-div"></div>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-sm-4">
+					<label class="col-sm-3 control-label">业主姓名：</label>
+					<div id="J_ownerName" class="col-sm-7 control-div"></div>
+				</div>
+				<div class="col-sm-4">
+					<label class="col-sm-3 control-label">客户编号：</label>
+					<div id="J_clientId" class="col-sm-7 control-div"></div>
+				</div>
+				<div class="col-sm-4">
+					<label class="col-sm-3 control-label">客户姓名：</label>
+					<div id="J_clientName" class="col-sm-7 control-div"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="ibox-content">
+	<div class="row ptb10">
+		<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>未开发票的收据列表</div>
+	</div>
+	<div class="ibox float-e-margins">
+  		<div class="row row-lg">
+			<div class="col-sm-12 ptb5">
+				<table id="J_contract_dataTable" class="table table-hover table-striped table table-bordered tables table-condensed">
+					<thead>
+						<tr>
+							<th data-field="check">选择</th>
+							<th data-field="receiptNumber">收据编号</th>
+							<th data-field="strPayer">付款方</th>
+							<th data-field="payerName">付款单位/个人</th>
+							<th data-field="payeeName">收款单位</th>
+							<th data-field="moneyType">款项</th>
+							<th data-field="amount">收据金额</th>
+							<th data-field="printCount">打印张数</th>
+							<th class="col-md-1" data-field="returnCount">回收张数</th>
+							<th data-field="returnDiffReason">回收差异原因</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div class="row ptb10">
+		<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>已开发票列表</div>
+	</div>
+	<div class="ibox float-e-margins">
+  		<div class="row row-lg">
+			<div class="col-sm-12 ptb10">
+				<table id="J_choosecontract_dataTable" class="table table-hover table-striped table table-bordered tables table-condensed">
+					<thead>
+						<tr>
+							<th data-field="check">选择</th>
+							<th data-field="a">发票编号</th>
+							<th data-field="b">付款方</th>
+							<th data-field="c">收款单位</th>
+							<th data-field="d">发票抬头</th>
+							<th data-field="e">发票日期</th>
+							<th data-field="f">发票名称</th>
+							<th data-field="g">发票面值</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div class="row ptb10">
+		<div class="col-md-12 info-tit">
+			<div class="col-md-5 pl10 font-bold font-blue"><i class="glyphicon glyphicon-minus"></i>新发票信息</div>
+			<div class="col-md-7">
+				<div class="col-md-12 text-right"><span style="padding-right:25px;">待开发票面值：<i id="sum">0.00</i></span><span>已开发票面值：<i id="J_number">0.00</i></span></div>
+			</div>
+		</div>
+	</div>
+	<div class="ibox float-e-margins">
+  		<div class="row row-lg">
+  			<div class="col-md-12 mb20 text-right">
+	  			<button id="J_increase" type="button" class="btn btn-success btn-sm" style="margin-right:20px;">增加</button>
+	  			<button id="J_delete" type="button" class="btn btn-danger btn-sm">删除</button>
+			</div>
+			<div class="col-sm-12 ptb10">
+				<table id="J_Newinvoice_dataTable" class="table table-hover table-striped table table-bordered tables table-condensed">
+					<thead>
+						<tr>
+							<th data-field="check">选择</th>
+							<th data-field="a">发票业务类型</th>
+							<th data-field="b">付款方</th>
+							<th data-field="c">发票日期</th>
+							<th data-field="d">发票名称</th>
+							<th data-field="e">发票抬头</th>
+							<th data-field="k">发票编号</th>
+							<th data-field="g">发票面值</th>
+							<th data-field="h">所用收据编号</th>
+							<th data-field="l">旧发票编号</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="form-group">
+				<div class="col-sm-8  col-sm-offset-5">
+					<button id="J_save" type="button" class="btn btn-success btn_size">保 存</button>
+					<button id="J_reset" type="reset" class="btn btn-white btn_size">取 消</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- 新增发票 str -->
+<div id="increase_layer" class="ibox-content" style="display: none">
+	<form id="increase_form" name="auditrecord_form" class="form-horizontal">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-4 control-label">付款方:</label>
+					<div class="col-sm-8" style="padding-top:7px"><span id="J_strPayer"></span></div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-4 control-label">发票业务类型:</label>
+					<div class="col-sm-8" style="padding-top:7px"><span id="J_invoicebusinessType"></span></div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-2 control-label">发票抬头:</label>
+					<div class="col-sm-8" style="padding-top:7px"><span id="J_invoiceHeader"></span></div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span class="color_red">*</span>发票名称:</label>
+					<div class="col-sm-8">
+						<select id="J_invoiceName" name="invoiceName" class="J_chosen form-control" data-placeholder="">
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span class="color_red">*</span>发票日期:</label>
+					<div class="col-sm-7">
+						<input type="text" class="form-control" id="J_singlewatch_backtime" name="singlewatch_backtime" placeholder="">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6" id="J_nonebox" style="display:block;">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span class="color_red">*</span>发票编号:</label>
+					<!-- <div class="col-sm-8">
+						<input type="text" class="form-control" id="J_invoiceNumber" name="invoiceNumber" placeholder="">
+					</div> -->
+					<div class="input-group">
+						<input type="text" class="form-control" id="J_invoiceNumber" data-id="" autocomplete="off" name="invoiceNumber" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')">
+						<div class="input-group-btn">
+							<button type="button" class="btn btn-white dropdown-toggle" data-toggle="" id="J_button">
+								<span class="glyphicon glyphicon-search search-caret"></span>
+							</button>
+							<ul class="dropdown-menu dropdown-menu-left" role="menu" style="padding-top: 0px; max-height: 375px; max-width: 800px; overflow: auto; width: auto; transition: 0.3s; left: -110px; right: auto; min-width: 145px;">
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-8" id="J_blockbox" style="display:none;">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="color_red">*</span>发票编号:</label>
+					<div id="J_showblock" class="col-sm-7" style="display:block"></div>
+					<div id="J_show" class="col-sm-9" style="display:none">
+						<div class="col-sm-5">
+							<!-- <input id="J_start" name="start" class="J_chosen form-control" placeholder=""> -->
+							<div class="input-group">
+								<input type="text" class="form-control" id="J_start" data-id="" autocomplete="off" name="start" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')">
+								<div class="input-group-btn">
+									<button type="button" class="btn btn-white dropdown-toggle" data-toggle="" id="J_button">
+										<span class="glyphicon glyphicon-search search-caret"></span>
+									</button>
+									<ul class="dropdown-menu dropdown-menu-left" role="menu" style="padding-top: 0px; max-height: 375px; max-width: 800px; overflow: auto; width: auto; transition: 0.3s; left: -110px; right: auto; min-width: 145px;">
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div style="float:left; padding:7px 5px;">--</div>
+						<div class="col-sm-5">
+							<!-- <input id="J_end" name="end" class="J_chosen form-control" placeholder=""> -->
+							<div class="input-group">
+								<input type="text" class="form-control" id="J_end" data-id="" autocomplete="off" name="end" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')">
+								<div class="input-group-btn">
+									<button type="button" class="btn btn-white dropdown-toggle" data-toggle="" id="J_button">
+										<span class="glyphicon glyphicon-search search-caret"></span>
+									</button>
+									<ul class="dropdown-menu dropdown-menu-left" role="menu" style="padding-top: 0px; max-height: 375px; max-width: 800px; overflow: auto; width: auto; transition: 0.3s; left: -110px; right: auto; min-width: 145px;">
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label id="J_click" class="col-sm-4 control-label text-right">批量增加</label>
+					<label id="J_increaseshow" class="col-sm-4 control-label text-right" style="display:none">单一增加</label>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span class="color_red">*</span>发票面值:</label>
+					<div class="col-sm-7">
+						<input type="text" class="form-control" id="J_invoiceAmount" name="invoiceAmount" placeholder="">
+					</div>
+					<div class="col-sm-1" style="padding:8px 0 0 10px;"><span>元</span></div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+<!-- 新增发票 end -->
+<script src="$link.contextPath/resources/script/finance/invoice/choosecontract.js"></script>

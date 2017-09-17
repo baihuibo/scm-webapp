@@ -1,0 +1,277 @@
+#set($plugins = ["table", "ztree" , "laydate" , "chosen"])
+<div ng-controller="agreementDetailCtrl as $ctrl" ng-cloak="">
+    <div class="ibox">
+        <div class="ibox-title">
+            <h5>合同信息</h5>
+        </div>
+        <div class="ibox-content">
+            <form class="form-horizontal" role="form">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">协议编号：</label>
+                            <div class="col-sm-8">
+                                <input type="text" readonly="readonly" class="form-control"
+                                       ng-value="$ctrl.detailObj.sign_number">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">审核状态：</label>
+                            <div class="col-sm-8">
+                                <input type="text" readonly="readonly" class="form-control"
+                                       ng-value="$ctrl.detailObj.audit_status">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="tabs-container">
+        <ul class="nav nav-tabs">
+        	#if($shiro.hasPermission("SCM:SALES:AGREEMENT_INFORMATION_VIEW"))
+            <li class="active"><a data-toggle="tab" href="#tab-1">协议信息</a></li>
+            #end
+            #if($shiro.hasPermission("SCM:SALES:AGREEMENT_INFORMATION_PROCESS_QUERY"))
+            <li ng-click="$ctrl.initContractApprovalList()">
+                <a data-toggle="tab" href="#tab-2">审批流程</a>
+            </li>
+            #end
+            #if($shiro.hasPermission("SCM:SALES:AGREEMENT_INFORMATION_PRINT_HISTORY_SEE"))
+            <li ng-click="$ctrl.initPrintHistoryList()">
+                <a data-toggle="tab" href="#tab-3">打印历史</a>
+            </li>
+            #end
+        </ul>
+        <div class="tab-content">
+        	#if($shiro.hasPermission("SCM:SALES:AGREEMENT_INFORMATION_VIEW"))
+            <div class="tab-pane active" id="tab-1">
+                <div class="panel-body">
+                    <div class="ibox">
+                        <div class="ibox-title">
+                            <h5>协议信息</h5>
+                            <div class="ibox-tools">
+                                <a class="collapse-link ui-sortable"> <i class="fa fa-chevron-up"></i></a>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <form class="form-horizontal" role="form">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label required">合同编号：</label>
+                                            <div class="col-sm-8" layout="row">
+                                                <a ng-href="{{$ctrl.contractHref}}"
+                                                   class="btn-link btn" flex
+                                                   style="border-bottom: 1px solid #a7a7a7; color: blue;"
+                                                   target="_blank">{{$ctrl.contractDetail.contract_code}}</a>
+                                                <button type="button" class="btn btn-link"
+                                                        ng-if="$ctrl.modifyMode && !$ctrl.detailObj.charge_back_id"
+                                                        ng-click="$ctrl.choseContract()">
+                                                    <span class="glyphicon glyphicon-search search-caret"></span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">所属部门：</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" readonly="readonly" class="form-control"
+                                                       ng-value="$ctrl.contractDetail.dept_name">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">协议类型：</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" readonly="readonly" class="form-control"
+                                                       ng-value="$ctrl.detailObj.term_type">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row ptb10">
+                                    <div class="pl10 font-bold font-blue info-tit"><i
+                                            class="glyphicon glyphicon-minus"></i>审计信息
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">创建人：</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" readonly="readonly" class="form-control"
+                                                       ng-value="$ctrl.detailObj.create_by">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">创建时间：</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" readonly="readonly" class="form-control"
+                                                       ng-value="$ctrl.detailObj.create_time">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">最后修改人：</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" readonly="readonly" class="form-control"
+                                                       ng-value="$ctrl.detailObj.update_by">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label">最后修改时间：</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" readonly="readonly" class="form-control"
+                                                       ng-value="$ctrl.detailObj.update_time">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row ptb10">
+                                    <div class="pl10 font-bold font-blue info-tit" ng-if="$ctrl.modifyMode">
+                                        <i class="glyphicon glyphicon-minus"></i>协议信息
+                                        <button class="btn btn-success btn-xs pull-right" type="button"
+                                                ng-click="$ctrl.selectAgreement()">
+                                            选择条款
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <form novalidate ng-submit="$ctrl.save($ctrl.codeForm)" name="$ctrl.codeForm"
+                              ng-class="{'hide-btn' : !$ctrl.modifyMode}" id="codeForm">
+                            <div ng-class="{'pointer-events-none' : !$ctrl.modifyMode , 'pointer-events-auto' : $ctrl.modifyMode}">
+                                <iframe src="about:black" scrolling="no" frameborder="0"></iframe>
+                                <agreement-code
+                                        ng-repeat="code in $ctrl.codes"
+                                        agrt-type="$ctrl.agrtType"
+                                        code="code" index="$index" payment-type="$ctrl.paymentType"
+                                        contract="$ctrl.contractDetail"></agreement-code>
+                            </div>
+
+                            <div class="ibox-content clearfix" ng-if="$ctrl.docbizkey">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label required">审批意见：</label>
+                                    <div class="col-sm-9">
+                                    <textarea rows="3" class="form-control"
+                                              ng-model="$ctrl.comment"
+                                              maxlength="500"></textarea>
+                                          <div ng-if="$ctrl.comment.length>=490" class="help-block text-right text-danger">
+                                            还可以输入{{500 - ($ctrl.comment.length || 0)}}字
+                                        </div>
+                                        <div  ng-if="$ctrl.comment.length<490"  class="help-block text-right" style="color:#1d3872;">
+                                            还可以输入{{500 - ($ctrl.comment.length || 0)}}字
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="ibox-content text-center" ng-if="!$ctrl.tIsDone">
+                            #if($shiro.hasPermission("SCM:SALES:AGREEMENT_INFORMATION_MODIFY"))
+                                <button class="btn btn-success btn_size" type="button"
+                                        ng-if="!$ctrl.modifyMode && !$ctrl.docbizkey && $ctrl.detailObj.audit_status_num == 1 && $ctrl.detailObj.enableFlag != 0"
+                                        ng-click="$ctrl.modifyMode = true">
+                                    修改
+                                </button>
+                                #end
+                                <button class="btn btn-success btn_size" type="submit"
+                                        ng-if="$ctrl.modifyMode && !$ctrl.docbizkey && $ctrl.detailObj.audit_status_num == 1">
+                                    保存
+                                </button>
+                                <button class="btn btn-success btn_size" type="button"
+                                        ng-if="$ctrl.modifyMode && !$ctrl.docbizkey && $ctrl.detailObj.audit_status_num == 1"
+                                        ng-click="$ctrl.modifyMode = false;$ctrl.revertModify()">
+                                    取消
+                                </button>
+                                #if($shiro.hasPermission("SCM:SALES:AGREEMENT_INFORMATION_TO_VOID"))
+                                <button class="btn btn-danger btn_size" type="button"
+                                        ng-if="!$ctrl.modifyMode && !$ctrl.docbizkey && $ctrl.detailObj.enableFlag != 0  && $ctrl.detailObj.audit_status_num == 1"
+                                        ng-click="$ctrl.setContractEnable(0 , 5 , '确定要将此补充协议作废吗？')">
+                                    作废
+                                </button>
+                                #end
+                                #if($shiro.hasPermission("SCM:SALES:AGREEMENT_INFORMATION_CANCEL"))
+                                <button class="btn btn-success btn_size" type="button"
+                                        ng-if="!$ctrl.modifyMode && !$ctrl.docbizkey && $ctrl.detailObj.enableFlag == 0  && $ctrl.detailObj.audit_status_num == 5"
+                                        ng-click="$ctrl.setContractEnable(1 , 1 , '确定要将此补充协议取消作废吗？')">
+                                    取消作废
+                                </button>
+                                #end
+                                #if($shiro.hasPermission("SCM:SALES:AGREEMENT_INFORMATION_PRINT_SEE"))
+                                <button class="btn btn-success btn_size" type="button"
+                                        ng-if="!$ctrl.modifyMode && !$ctrl.docbizkey && $ctrl.detailObj.enableFlag != 0"
+                                        ng-click="$ctrl.preview()">
+                                    打印预览
+                                </button>
+                                #end
+                                #if($shiro.hasPermission("SCM:SALES:AGREEMENT_INFORMATION_EXAMINE"))
+                                <button class="btn btn-success btn_size" type="button"
+                                        ng-if="!$ctrl.modifyMode && !$ctrl.docbizkey && $ctrl.detailObj.enableFlag != 0 &&
+                                            !$ctrl.isShowQue && $ctrl.detailObj.audit_status_num == 1 && !$ctrl.detailObj.charge_back_id"
+                                        ng-click="$ctrl.flowUsers($ctrl.codeForm)">
+                                    提交审核
+                                </button>
+                                #end
+                                #if($shiro.hasPermission("SCM:SALES:AGREEMENT_INFORMATION_CONFIRM_AUDIT"))
+                                <button class="btn btn-success btn_size" type="button"
+                                        ng-if="!$ctrl.modifyMode && !$ctrl.docbizkey && $ctrl.detailObj.enableFlag != 0 &&
+                                            $ctrl.isShowQue && $ctrl.detailObj.audit_status_num == 1 && !$ctrl.detailObj.charge_back_id"
+                                        ng-click="$ctrl.confirmAudit($ctrl.codeForm)">
+                                    确认审核
+                                </button>
+                                #end
+                                <button class="btn btn-success btn_size" type="button"
+                                        ng-repeat="item in $ctrl.workFlowButtons"
+                                        ng-disabled="!$ctrl.comment"
+                                        ng-click="$ctrl.workFlowAction(item)">
+                                    {{ item.labelName }}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            #end
+            #if($shiro.hasPermission("SCM:SALES:AGREEMENT_INFORMATION_PROCESS_QUERY"))
+            <div class="tab-pane" id="tab-2">
+                <div class="panel-body">
+                    #parse("/sign/agreement/approval-process.html")
+                </div>
+            </div>
+            #end
+            #if($shiro.hasPermission("SCM:SALES:AGREEMENT_INFORMATION_PRINT_HISTORY_SEE"))
+            <div class="tab-pane" id="tab-3">
+                <div class="panel-body">
+                    #parse("/sign/agreement/print-history.html")
+                </div>
+            </div>
+            #end
+        </div>
+    </div>
+
+</div>
+
+<script src="$link.contextPath/resources/js/department.js"></script>
+<script src="$link.contextPath/resources/script/sign/sign-common.module.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/paging.component.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/select-agreement-layer.component.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/reject-layer.component.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/comment-layer.component.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/sign-phone-number-btn.component.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/sign-card-type.directive.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/sign-work-flow-user-layer.component.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/agreement-code.component.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/chose-contract.component.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/sign-agreement-preview.component.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/sign-laydate.directive.js"></script>
+<script src="$link.contextPath/resources/script/sign/agreement/agreement-detail.module.js"></script>

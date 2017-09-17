@@ -1,0 +1,121 @@
+<!-- 带看反馈弹框 -->
+#parse("/house/focuswatch/showback.html")
+
+<!--带看反馈表单-->
+<div id="feedback" class="ibox-content layui-layer-wrap" style="display:none">
+    <h4 class="pl10 font-bold font-blue info-tit">客户信息</h4>
+
+    <form class="form-horizontal">
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">
+                客户信息：
+            </label>
+            <div class="col-sm-9">
+                <div class="form-control-static" id="CustomerInfor"></div>
+            </div>
+        </div>
+
+        <div class="hr-line-dashed"></div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">
+                <span class="text-danger">*</span>
+                返回店面时间：
+            </label>
+            <div class="col-sm-9">
+                <input type="text" id="returnTime" readonly="readonly" class="form-control">
+            </div>
+        </div>
+
+        <div class="hr-line-dashed"></div>
+
+        <div class="form-group" id="upLoadLile" style="dispaly:none;">
+            <label class="col-sm-2 control-label">附件上传：</label>
+            <div class="col-sm-9">
+                <button id="selectFile" type="button" class="btn btn-success pr5">选择文件</button>
+                <div id="fileHidden" style="position:absolute;visibility:hidden;">
+                    <input type="file" id="upFile">
+                </div>
+                <span>（最大5兆，格式：xlsx、doc、pdf、pptx、txt、bmp、jpg、svg、psd、rar）</span>
+            </div>
+        </div>
+
+        <div class="hr-line-dashed"></div>
+
+        <div class="form-group" id="upFileName" style="dispaly:none;">
+            <label class="col-sm-2 control-label"></label>
+            <div class="col-sm-9" id="upFileList" style="max-height:100px;overflow:auto;"></div>
+        </div>
+    </form>
+
+    <h4 class="pl10 font-bold font-blue info-tit">带看房源</h4>
+    <div class="col-md-12">
+        <div class="font-bold font-blue">
+            <a id="addHouse" class="btn-green btn-bitbucket add-icon">
+                <i class="glyphicon glyphicon-plus"></i> 添加房源
+            </a>
+        </div>
+    </div>
+    <div class="tab-pane pt6">
+        <div class="bootstrap-table" style="max-height:150px;overflow-y:auto;">
+            <table id="seeListings" class="table">
+                <thead>
+                <tr>
+                    <th data-field="houseid">房源编号</th>
+                    <th data-field="address">商圈</th>
+                    <th data-field="housetype">户型</th>
+                    <th data-field="housesize">面积</th>
+                    <th data-field="floor">层数</th>
+                    <th data-field="orientation">朝向</th>
+                    <th data-field="price">价格</th>
+                    <th data-field="leadresult">带看结果</th>
+                    <th data-field="opt">操作</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+    <!--<div class="tab-pane pt6">
+        <table id="addseeListings" class="table table-hover table-striped"></table>
+    </div>-->
+</div>
+<!--带看反馈表单-->
+#parse("/public/add_house_dialog.html")
+
+<!--带看结果反馈-->
+<div class="ibox-content" id="backResults" style="display:none">
+    <h4 class="pl10 font-bold font-blue info-tit">带看结果反馈</h4>
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">带看结果：</label>
+            <div class="radio radio-primary radio-inline">
+                <input type="radio" id="inlineRadio" name="takeResults" value="1" checked>
+                <label for="inlineRadio">有意向</label>
+            </div>
+            <div class="radio radio-primary radio-inline">
+                <input type="radio" id="inlineRadio1" name="takeResults" value="2">
+                <label for="inlineRadio1">无意向</label>
+            </div>
+            <div class="radio radio-primary radio-inline">
+                <input type="radio" id="inlineRadio2" name="takeResults" value="3">
+                <label for="inlineRadio2">未看</label>
+            </div>
+        </div>
+
+        <div class="hr-line-dashed"></div>
+
+        <div class="form-group" id="reason" style="display:none;">
+            <label class="col-sm-2 control-label">
+                <span class="text-danger">*</span>
+                原因：
+            </label>
+            <div class="col-sm-9">
+                <textarea class="form-control" maxlength="200" id="noSeeReason" placeholder="请输入原因"></textarea>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script type='text/javascript'
+        src="$link.contextPath/resources/script/house/focuswatch/with-people-feedback.js"></script>

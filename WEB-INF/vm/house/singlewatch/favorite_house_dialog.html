@@ -1,0 +1,135 @@
+<div class="ibox-content">
+	<form id="J_favorite_query" class="form-horizontal">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">房源编号：</label>
+					<div class="col-sm-7">	
+						<input type="text" class="form-control" name="houseid" id="J_houseid_favorite" autocomplete="off">					
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-3 control-label J_favorite_price">价格：</label>
+					<!-- <div class="col-sm-3">	
+						<input type="text" class="form-control" name="minPrice" id="J_minPrice_favorite" autocomplete="off">					
+					</div>
+					<div class="control-spacing">-</div>
+					<div class="col-sm-3">	
+						<input type="text" class="form-control" name="maxPrice" id="J_maxPrice_favorite" autocomplete="off">					
+					</div>
+					<label class="control-label J_favorite_unit">万/元</label> -->
+					
+					<div class="col-sm-8" layout="row">
+						 <div flex="">	
+							<input type="text" class="form-control" name="minPrice" id="J_minPrice_favorite" autocomplete="off">
+						</div>
+						<div class="split">-</div>
+						<div flex="">	
+							<input type="text" class="form-control" name="maxPrice" id="J_maxPrice_favorite" autocomplete="off">				
+						</div>
+						<label class="control-label J_favorite_unit">万/元</label>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">建筑面积：</label>
+					<div class="col-sm-3">	
+						<input type="text" class="form-control" name="minBuildArea" id="J_minBuildArea_favorite" autocomplete="off">					
+					</div>
+					<div class="control-spacing">-</div>
+					<div class="col-sm-3">	
+						<input type="text" class="form-control" name="maxBuildArea" id="J_maxBuildArea_favorite" autocomplete="off">					
+					</div>
+					<label class="control-label">平方米</label>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">户型：</label>
+					<div class="col-sm-3">	
+						<select id="J_minBedRoom_favorite" name="minBedRoom" class="J_chosen form-control" data-placeholder="请选择">
+								<option value="">全部</option>
+						</select>					
+					</div>
+					<div class="control-spacing">-</div>
+					<div class="col-sm-3">	
+						<select id="J_maxBedRoom_favorite" name="maxBedRoom" class="J_chosen form-control" data-placeholder="请选择">
+								<option value="">全部</option>
+						</select>				
+					</div>
+					<label class="control-label">室</label>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">楼盘：</label>
+					<div class="col-sm-7">
+                    	<div class="input-group">
+                        	<input id="J_build_favorite" name="conmmunityIds" type="text" class="form-control"> 
+							<div class="input-group-btn">
+                                <button type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown">
+                                    <span class="glyphicon glyphicon-search search-caret"></span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                </ul>
+                            </div>
+                   		</div>
+                   </div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">商圈：</label>
+					<div class="col-sm-7">
+                    	<div class="input-group">
+                        	<input id="J_business_favorite" name="businessIds" type="text" class="form-control"> 
+                              <div class="input-group-btn">
+								<button type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown">
+									<span class="glyphicon glyphicon-search search-caret"></span>
+								</button>
+								<ul class="dropdown-menu dropdown-menu-right" role="menu">
+								</ul>
+							</div>
+                   		</div>
+                   </div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<div class="col-sm-5  col-sm-offset-5">
+						<button id="J_search_favorite" type="button" class="btn btn-success btn_size">查 询</button>
+						<button id="J_reset_favorite" type="button" class="btn btn-white btn_size">重 置</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>		
+	<div class="row">	
+		<div class="col-md-12 ptb10">
+			<table id="J_favorite_dataTable" class="table table-hover table-striped table-bordered">
+				<thead>
+					<tr>
+						<th data-field="id"></th>
+						<th data-field="housesid">房源编号</th>
+						<th data-field="conmmunityname">楼盘名</th>
+						<th data-field="bedroom">户型</th>
+						<th data-field="buildarea">建筑面积</th>
+						<th data-field="price" id="J_favorite_cprice">委托价</th>
+						<th data-field="heading">朝向</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+	</div>
+</div>
+
+<script type='text/javascript' src="$link.contextPath/resources/script/house/singlewatch/favorite_house.js"></script>

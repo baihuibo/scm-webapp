@@ -1,0 +1,125 @@
+#set($plugins = ["table","chosen"])
+<style>
+.table>thead>tr>th{vertical-align: middle !important;}
+</style>
+<div class="ibox float-e-margins">
+	<div class="section">
+		<div class="row">
+			<div class="tabs-container" id="tabs-container">
+				<div class="tab-container">
+					<ul class="nav nav-tabs">
+						<li>
+							<a href="$link.contextPath/house/keyadmin/pend_list.htm">待处理<span id="J_waitkeycount"></span></a>
+						</li>
+						<li>
+							<a href="$link.contextPath/house/keyadmin/list.htm">钥匙在管</a>
+						</li>
+						<li class="active">
+							<a href="#">退钥匙记录</a>
+						</li>
+						<li>
+							<a href="$link.contextPath/house/keyadmin/check_list.htm"> 日盘点管理</a>
+						</li>
+					</ul>
+				</div>
+				<div class="tab-content tab-content-min">
+					<div class="ibox">
+					    <div class="ibox-title">
+					        <h5>查询条件</h5>
+					        <div class="ibox-tools">
+					            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+					        </div>
+					    </div>
+					    <div class="ibox-content">
+							<div class="row">
+								#if($shiro.hasPermission("SCM:HOUSE:KEY:VIEW"))
+									<input type="hidden" value="1" id="temp_view"></input>
+								#end
+						        <form id="J_form" class="form-horizontal"role="form">
+						        	<div class="col-md-4">
+										<div class="form-group">
+											<label class="col-sm-3 control-label">业务类型:</label>
+											<div class="col-sm-8">
+												<select id="J_operationtype" name="operationType" class="J_chosen form-control" data-placeholder="全部">
+													<option value="">全部</option>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<label class="col-sm-3 control-label">钥匙状态:</label>
+											<div class="col-sm-8">
+												<select id="J_keystatus" name="status" class="J_chosen form-control" data-placeholder="全部">
+													<option value="">全部</option>
+													<option value="2">退钥匙</option>
+													<option value="7">收钥匙退回</option>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<label class="col-sm-3 control-label">领取类型:</label>
+											<div class="col-sm-8">
+												<select id="J_receivetype" name="receiveType" class="J_chosen form-control" data-placeholder="全部">
+													<option value="">全部</option>
+								                </select>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<label class="col-sm-3 control-label">房源编号:</label>
+											<div class="col-sm-8">
+												<input id="houseid" type="text" class="form-control" name="houseid" placeholder="请输入房源编号" >
+											</div>
+										</div>
+									</div>
+									<div class="col-md-12 text-cen">
+										<div class="form-group">
+											<button id="J_search" type="button" class="btn btn-success btn_size">查 询</button>
+											<button id="J_reset" type="reset" class="btn btn-white btn_size">重 置</button>
+										</div>
+									</div>
+						        </form>
+						    </div>
+						</div>
+					</div>
+					<div class="ibox float-e-margins">
+						<div class="ibox-title">
+					        <h5>退钥匙记录列表</h5>
+					     </div>
+					    <div class="ibox-content">
+					  		<div class="row row-lg">
+								<div class="col-sm-12">
+									<!-- Example Pagination -->
+									<div class="col-sm-12 ptb10">
+										<table id="J_dataTable" class="table table-hover table-striped table-bordered table-condensed">
+											<thead>
+												<tr>
+													<th data-field="operationType">业务类型</th>
+													<th data-field="houseid">房源编号</th>
+													<th data-field="username">收钥匙人</th>
+													<th data-field="lenddate">收钥匙时间<br>退钥匙时间</th>
+													<th data-field="keyStatus">钥匙状态</th>
+													<th data-field="receiveType">领取类型</th>
+													<th data-field="userpeople">领取人</th>
+													<th data-field="opt">操作</th>
+												</tr>
+											</thead>
+										</table>
+									</div>
+								</div>
+								<!-- End Example Pagination -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript" src="$link.contextPath/resources/script/key/waitkeycount.js"></script>
+<script type="text/javascript" src="$link.contextPath/resources/script/key/back_list.js"></script>

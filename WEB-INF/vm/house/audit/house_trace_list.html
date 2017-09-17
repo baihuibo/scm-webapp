@@ -1,0 +1,110 @@
+<!-- 详情页房源审核记录 begin -->
+<div class="ibox float-e-margins">
+	<div class="ibox-content">
+		<div class="row">
+			<div class="tab-content" style="padding:10px 0;">
+				<div class="customer_info_box">
+					<div class="col-md-12">
+						<h4 class="pl10 font-bold font-black info-tit">审核记录</h4>
+					</div>
+				</div>
+				<div class="row row-lg">
+					<div class="col-sm-12">
+						<table id="J_auditdetail_dataTable" class="table table-hover table-striped table-bordered table-condensed">
+							<thead>
+								<tr>
+									<th data-field="auditusername">审批人</th>
+									<th data-field="audittime">审批时间</th>
+									<th data-field="auditstep">审批类型</th>
+									<th data-field="auditresult">审批结果</th>
+									<th class="col-sm-4 remark_all" data-field="remark">审批备注信息</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 详情页房源审核记录 end -->
+<script >
+//审核记录
+	var houseId=getQueryString("houseid");
+	function trace(houseId){
+	$('#J_auditdetail_dataTable').bootstrapTable({ 
+		url:basePath + '/house/audit/housetracelist',
+		sidePagination: 'server',
+		dataType: 'json',
+		method:'post',
+		pagination: true,
+		striped: true,
+		pageSize: 10,
+		pageList: [10, 20, 50],
+		queryParams : function(params) {
+			var o = new Object();
+			o.timestamp = new Date().getTime();
+			o.pageindex = params.offset / params.limit+ 1,
+			o.pagesize = params.limit;
+			o.houseid = houseId;
+			return o;
+		},
+		responseHandler: function(result) {
+			if(result.code == 0 && result.data && result.data.totalcount > 0) {
+				return { "rows": result.data.list, "total": result.data.totalcount }
+			}
+			return { "rows": [], "total": 0 } 
+		},
+	
+		columns:[		
+					{field: 'auditusername', title: '审批人', align: 'center',
+						formatter: function(value, row, index) {
+				    		var userId = row.audituserid;
+							var html='';
+							if(value=='' || value==undefined)
+								html = '-';
+							else
+								html= '<a onclick="getUserStaffInfo('+userId+')" target="_blank">'+ value +'</a>';
+							return html;
+					    }
+					},
+					{field: 'audittime', title: '审批时间', align: 'center',
+						formatter: function(value, row, index) {
+							audittime = value ? value : '-';
+							if(value != undefined){
+								var html='';
+								html= audittime.substring(0,19);
+								return html;
+							}
+					    }	
+					},
+		      	    {field: 'strauditstep', title: '审批类型', align: 'center'},
+		      	    {field: 'strauditresult', title : '审批结果', align : 'center',
+		      	    	formatter: function(value, row, index) {
+		      	    		strauditresult = value ? value : '-';
+							if(value != undefined){
+								var html='';
+									html= row.strauditresult;
+								return html;
+							}
+					    }
+		      	    },
+		      	  	{field: 'remark', title: '审批备注信息', align: 'center',
+		      	    	formatter: function(value, row, index) {
+			      			var remark = value ? value : '-';
+			      			if(row.remark != undefined){
+			      				var html = '';		    
+		      	    			html = '<div class="text-left">'+row.remark+'</div>';
+		      	    			return html;
+			      			}
+		      	    	}
+		      	  	}
+		      	],
+	})
+	}
+function getQueryString(name) { // js获取url地址以及 取得后面的参数
+	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); 
+	var r = window.location.search.substr(1).match(reg); 
+	if (r != null) return unescape(r[2]); return null; 
+} 
+</script>

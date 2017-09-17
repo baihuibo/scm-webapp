@@ -1,0 +1,108 @@
+#set($plugins = ["table","chosen"])
+<div class="ibox-content" id="attachmentCon">	
+	<form id="" class="form-horizontal" role="form">
+		<div class="row">
+			<div class="form-group">
+				<label class="col-sm-2 control-label">申请人：</label>
+				<div class="col-sm-3 control-label text-left" id="userName"></div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><span style="color:#ff0000">*</span>付款款项：</label>
+				<div class="col-sm-3">
+					<select name="" id="payment" class="J_chosen form-control">
+						<option value="">请选择</option>
+						<option value="11">返信息费</option>
+						<option value="13">普租分期</option>
+					</select>
+				</div>
+				<label class="col-sm-2 control-label"><span style="text-decoration:underline;cursor:pointer;color:#73c0d4;" id="temDownload">模板下载</span></label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group">
+				<div class="col-sm-2"></div>
+				<div class="col-sm-8">
+					<button id="selectFile" type="button" class="btn btn-success btn_size">选择文件</button>
+				</div>
+				<div id="fileHidden" style="position:absolute;visibility:hidden;">
+					<input type="file" accept="application/xls" id="upFile" />
+				</div>
+			</div>
+		</div>
+			<div class="row"><label class="col-sm-12 control-label text-left">信息预览：</label></div>
+			<table id="attachmentList" class="table table-hover table-striped table-bordered">
+				<thead>
+					<tr>
+						<th data-field="">
+							<div class="th-inner">序号</div>
+						</th>
+						<th data-field="">
+							<div class="th-inner">合同号</div>
+						</th>
+						<th data-field="">
+							<div class="th-inner">付款款项</div>
+						</th>
+						<th data-field="">
+							<div class="th-inner">付款方式</div>
+						</th>
+						<th data-field="">
+							<div class="th-inner">付款金额</div>
+						</th>
+						<th data-field="">
+							<div class="th-inner">收款人类型</div>
+						</th>
+						<th data-field="">
+							<div class="th-inner">收款人</div>
+						</th>
+						<th data-field="">
+							<div class="th-inner">收款人证件类型</div>
+						</th>
+						<th data-field="">
+							<div class="th-inner">证件号码</div>
+						</th>
+						<th data-field="">
+							<div class="th-inner">开户人</div>
+						</th>
+						<th data-field="">
+							<div class="th-inner">开户人证件类型</div>
+						</th>
+						<th data-field="">
+							<div class="th-inner">开户人证件编号</div>
+						</th>
+						<th data-field="">
+							<div class="th-inner">账号类型</div>
+						</th>
+						<th data-field="">
+							<div class="th-inner">银行支行名称<br /><span style="color:#ff0000">必须准确填写</span></div>
+						</th>
+						<th data-field="">
+							<div class="th-inner">开户行</div>
+						</th>
+						<th data-field="">
+							<div class="th-inner">联行号</div>
+						</th>
+						<th data-field="">
+							<div class="th-inner">账号</div>
+						</th>
+					</tr>
+				</thead>
+			</table>
+			<div class="row"><label class="col-sm-12 control-label text-left"><span style="color:#ff0000">*</span>付款原因：</label></div>
+			<div class="row">
+			<div class="col-sm-12" style="margin-bottom: 10px;">
+				<textarea class="form-control" maxlength="500" id="remarks"></textarea>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<div class="col-sm-5  col-sm-offset-5">
+                        <button id="submitBtn" type="button" class="btn btn-success btn_size">提交</button>
+                        <button id="cancelBtn" type="button" class="btn btn-white btn_size">取消</button>
+                    </div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+<script src="$link.contextPath/resources/script/finance/commoncontract/common_concactapply.js"></script>

@@ -1,0 +1,346 @@
+#set($plugins = ["laydate" , "chosen" , "autoSearch"])
+<!--
+    新增草签合同 - step3 (居间服务及解约)
+-->
+<div ng-controller="signServiceSurrenderCtrl as $ctrl" ng-cloak>
+
+    <div class="ibox">
+        <div class="tabs-container">
+            <ul class="nav nav-tabs">
+                <li>
+                    <a>交易双方信息</a>
+                </li>
+                <li>
+                    <a>房源及租赁信息</a>
+                </li>
+                <li class="active">
+                    <a>居间服务及解约</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-panel active" id="tab-3">
+                    <div class="panel-body">
+                        <form novalidate name="validForm" ng-submit="$ctrl.submit(validForm , $event.target)">
+                            <div class="ibox">
+                                <div class="ibox-title">
+                                    居间服务
+                                </div>
+                                <div class="ibox-content">
+                                    <div class="form-horizontal" layout="row" layout-wrap>
+                                        <label flex="15" class="control-label required">服务费收取对象：</label>
+                                        <div flex="15">
+                                            <sign-checkbox-group
+                                                    ng-model="$ctrl.data.charge_object" required>
+                                                <sign-checkbox
+                                                        ng-repeat="item in $ctrl.leaseServiceChargeObj"
+                                                        value="item.valueCode">
+                                                    {{item.valueName}}
+                                                </sign-checkbox>
+                                            </sign-checkbox-group>
+                                        </div>
+                                        <label flex="20" class="control-label required">居间服务费支付日期：</label>
+                                        <div flex="20" layout="row">
+                                            <div class="radio radio-primary radio-inline">
+                                                <input type="radio" id="l1" name="l" ng-value="1" required
+                                                       placeholder="请选择日期"
+                                                       ng-model="$ctrl.data.service_fee_payment_way">
+                                                <label for="l1" class="text-nowrap">即时</label>
+                                            </div>
+                                            <div class="radio radio-primary radio-inline">
+                                                <input type="radio" id="l2" name="l" ng-value="0" required
+                                                       ng-model="$ctrl.data.service_fee_payment_way">
+                                                <label for="l2">
+                                                    <input type="text" style="width: 120px; height: 20px;"
+                                                           sign-laydate
+                                                           placeholder="请选择日期"
+                                                           ng-required="$ctrl.data.service_fee_payment_way == 0"
+                                                           ng-model="$ctrl.data.service_fee_payment_date"
+                                                           ng-style="{'pointer-events':$ctrl.data.service_fee_payment_way == 1 ? 'none' : 'auto'}">
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <label flex="15" class="control-label">总折扣：</label>
+                                        <div flex="15" layout="row" style="margin-bottom: 10px;">
+                                            <input type="text" class="form-control" readonly
+                                                   ng-value="$ctrl.disCountTotal()">
+                                            <div layout-padding>折</div>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+                                    <div class="form-horizontal" layout="row"
+                                         ng-if="$ctrl.data.charge_object.indexOf(1) > -1"
+                                         layout-wrap style="margin-top: 10px;">
+                                        <label flex="15" class="control-label">客户佣金(公司规定)：</label>
+                                        <div flex="15" layout="row">
+                                            <input type="text" class="form-control" readonly
+                                                   ng-value="$ctrl.data.customer_commission_stipulate">
+                                            <div layout-padding>元</div>
+                                        </div>
+                                        <label flex="20" class="control-label required">客户佣金(合同约定)：</label>
+                                        <div flex="15" layout="column">
+                                            <div layout="row">
+                                                <input type="number" class="form-control hide-spin"
+                                                       placeholder="请输入金额"
+                                                       ng-model="$ctrl.data.customer_commission_convention"
+                                                       required disabled-negative>
+                                                <div layout-padding>元</div>
+                                            </div>
+                                            <div class="text-danger" ng-if="$ctrl.data.customer_commission_convention">
+                                                ￥：{{$ctrl.data.customer_commission_convention | signCurrency}}
+                                            </div>
+                                        </div>
+                                        <label flex="20" class="control-label">客户佣金占月租金比例：</label>
+                                        <div flex="15" layout="row" style="margin-bottom: 20px;">
+                                            <input type="text" class="form-control" readonly
+                                                   ng-value="$ctrl.customerPaymentProportion()">
+                                            <div layout-padding>%</div>
+                                        </div>
+                                        <label flex="15" class="control-label required">客户佣金支付方式：</label>
+                                        <div flex="30" style="margin-bottom: 20px;">
+                                            <sign-checkbox-group
+                                                    ng-model="$ctrl.data.customer_payment_mode" required>
+                                                <sign-checkbox ng-repeat="item in $ctrl.leaseRentPayWay"
+                                                               value="item.valueCode">
+                                                    {{item.valueName}}
+                                                </sign-checkbox>
+                                            </sign-checkbox-group>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-horizontal" layout="row"
+                                         ng-if="$ctrl.data.charge_object.indexOf(2) > -1"
+                                         layout-wrap style="margin-top: 10px;">
+                                        <label flex="15" class="control-label">业主佣金(公司规定)：</label>
+                                        <div flex="15" layout="row">
+                                            <input type="text" class="form-control" readonly
+                                                   ng-value="$ctrl.data.owner_commission_stipulate">
+                                            <div layout-padding>元</div>
+                                        </div>
+                                        <label flex="20" class="control-label required">业主佣金(合同约定)：</label>
+                                        <div flex="15" layout="column">
+                                            <div layout="row">
+                                                <input type="number" class="form-control hide-spin"
+                                                       placeholder="请输入金额"
+                                                       ng-model="$ctrl.data.owner_commission_convention"
+                                                       required disabled-negative>
+                                                <div layout-padding>元</div>
+                                            </div>
+                                            <div class="text-danger" ng-if="$ctrl.data.owner_commission_convention">
+                                                ￥：{{$ctrl.data.owner_commission_convention | signCurrency}}
+                                            </div>
+                                        </div>
+                                        <label flex="20" class="control-label">业主佣金占月租金比例：</label>
+                                        <div flex="15" layout="row" style="margin-bottom: 20px;">
+                                            <input type="text" class="form-control" readonly
+                                                   ng-value="$ctrl.ownerPaymentProportion()">
+                                            <div layout-padding>%</div>
+                                        </div>
+                                        <label flex="15" class="control-label required">业主佣金支付方式：</label>
+                                        <div flex="30">
+                                            <sign-checkbox-group
+                                                    ng-model="$ctrl.data.owner_payment_mode" required>
+                                                <sign-checkbox ng-repeat="item in $ctrl.leaseRentPayWay"
+                                                               value="item.valueCode">
+                                                    {{item.valueName}}
+                                                </sign-checkbox>
+                                            </sign-checkbox-group>
+                                        </div>
+                                    </div>
+
+                                    <div ng-if="$ctrl.data.discount_total < 10">
+                                        <h4 class="page-header font-size-12 text-success required">
+                                            折扣原因
+                                        </h4>
+                                        <div class="form-horizontal" layout="row" layout-wrap>
+                                            <label flex="15" class="control-label required">打折原因：</label>
+                                            <div flex="15" style="margin-bottom: 20px;">
+                                                <select class="form-control" chosen
+                                                        ng-model="$ctrl.data.discount_reason" required
+                                                        ng-options="item.valueCode as item.valueName for item in $ctrl.discountReason">
+                                                    <option value="">请选择</option>
+                                                </select>
+                                            </div>
+                                            <div flex="30" ng-if="$ctrl.data.discount_reason == 4" layout="row">
+                                                <label flex="50" class="control-label required">员工姓名：</label>
+                                                <div flex="50">
+                                                    <sign-choose-person required
+                                                                        ng-model="$ctrl.data.discount_userid"
+                                                                        person-name="$ctrl.data.discount_user_name">
+                                                    </sign-choose-person>
+                                                </div>
+                                            </div>
+                                            <div flex="30" ng-if="$ctrl.data.discount_reason == 3" layout="row">
+                                                <label flex="50" class="control-label required">合同编号：</label>
+                                                <div flex="50">
+                                                    <input type="text" class="form-control"
+                                                           placeholder="请输入合同编号"
+                                                           ng-model="$ctrl.data.discount_conids" required>
+                                                </div>
+                                            </div>
+
+                                            <div flex="100" layout="row">
+                                                <label flex="15" class="control-label required">情况说明：</label>
+                                                <div flex="75">
+                                                    <textarea rows="4" class="form-control" maxlength="100"
+                                                              placeholder="请输入说明"
+                                                              ng-model="$ctrl.data.situation_explain" required></textarea>
+													<div ng-if="$ctrl.data.situation_explain.length>=90" class="text-right help-block" style="color:#1d3872;">
+                                                        还可以输入：{{100 - ($ctrl.data.situation_explain.length||0)}} 字
+                                                    </div>
+                                                    <div ng-if="$ctrl.data.situation_explain.length<90"  class="text-right help-block text-danger">
+                                                        还可以输入：{{100 - ($ctrl.data.situation_explain.length||0)}} 字
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="ibox">
+                                <div class="ibox-title">
+                                    合同解除及违约
+                                </div>
+                                <div class="ibox-content">
+                                    <div class="form-horizontal" layout="row" layout-wrap>
+                                        <label flex="15" class="control-label">乙方单方解除合同原因：</label>
+                                        <div flex="80" layout="row" layout-wrap style="margin-bottom: 20px;">
+                                            <div flex="40" layout="row">
+                                                <div layout-padding class="text-nowrap">1、延迟交付房屋达</div>
+                                                <input type="text" class="form-control input-sm"
+                                                       placeholder="七" style="width: 50px;"
+                                                       ng-model="$ctrl.data.delay_delivery">
+                                                <div layout-padding>日</div>
+                                            </div>
+                                            <div flex="40" layout="row" style="margin-bottom: 10px;">
+                                                <div layout-padding class="text-nowrap">2、其它约定</div>
+                                                <input type="text" class="form-control input-sm"
+                                                       ng-model="$ctrl.data.other_conventions">
+                                            </div>
+                                        </div>
+
+                                        <label flex="15" class="control-label">甲方单方解除合同原因：</label>
+                                        <div flex="80" layout="row" layout-wrap style="margin-bottom: 20px;">
+                                            <div flex="40" layout="row">
+                                                <div layout-padding class="text-nowrap">1、不按照约定租金达</div>
+                                                <input type="text" class="form-control input-sm"
+                                                       placeholder="七" style="width: 50px;"
+                                                       ng-model="$ctrl.data.due_day">
+                                                <div layout-padding>日</div>
+                                            </div>
+                                            <div flex="40" layout="row" style="margin-bottom: 10px;">
+                                                <div layout-padding class="text-nowrap">2、欠缴各项费用达</div>
+                                                <input type="text" class="form-control input-sm" style="width: 100px;"
+                                                       ng-model="$ctrl.data.owe_amount">
+                                                <div layout-padding>元</div>
+                                            </div>
+                                            <div flex="80" layout="row">
+                                                <div layout-padding class="text-nowrap">3、其它约定</div>
+                                                <input type="text" class="form-control"
+                                                       ng-model="$ctrl.data.other_other_conventions">
+                                            </div>
+                                        </div>
+
+
+                                        <label flex="15" class="control-label">违约责任：</label>
+                                        <div flex="75" style="margin-bottom: 20px;">
+                                            <div layout-padding style="padding-top: 0;">
+                                                1、甲方有第九条第三款约定的情况之一的，应按月租金的
+                                                <input type="text" class="form-control input-sm"
+                                                       style="display: inline-block;width: 50px;" placeholder="200"
+                                                       ng-model="$ctrl.data.break_nine_three">
+                                                %向乙方支付违约金；乙方有第九条第四款约定的情形之一的，应按月租金的
+                                                <input type="text" class="form-control input-sm"
+                                                       placeholder="200" style="display: inline-block;width: 50px;"
+                                                       ng-model="$ctrl.data.break_nine_four">
+                                                %向甲方支付违约金，甲方并可要求乙方将房屋恢复原状或赔偿相应损失。
+                                            </div>
+                                            <div layout-padding>
+                                                2、租赁期内，甲方需提前收回该房屋的，或乙方需提前退租的，应提前
+                                                <input type="text" class="form-control input-sm"
+                                                       placeholder="30" style="display: inline-block;width: 50px;"
+                                                       ng-model="$ctrl.data.break_back_day">
+                                                日通知对方，并按月租金的
+                                                <input type="text" class="form-control input-sm"
+                                                       placeholder="200" style="display: inline-block;width: 50px;"
+                                                       ng-model="$ctrl.data.break_back_percent">
+                                                % 支付违约金，甲方还应退还相应的租金。
+                                            </div>
+                                            <div layout-padding>
+                                                3、甲方未按约定时间交付该房屋或者乙方不按约定支付租金但未达到解除合同条件的，以及乙方未按约定时间返还房屋的，
+                                                <input type="text" class="form-control input-sm"
+                                                       placeholder="每逾期一日，按日租金的200%"
+                                                       style="display: inline-block;width: 220px;"
+                                                       ng-model="$ctrl.data.break_amount_discription">
+                                                标准支付违约金。
+                                            </div>
+                                            <div layout="row">
+                                                <div layout-padding class="text-nowrap">4、其它</div>
+                                                <input type="text" class="form-control input-sm"
+                                                       style="display: inline-block;"
+                                                       ng-model="$ctrl.data.break_other_discription">
+                                            </div>
+                                        </div>
+                                        <label flex="15" class="control-label">其它约定事项：</label>
+                                        <div flex="75" style="margin-bottom: 20px;">
+                                            <input type="text" class="form-control"
+                                                   ng-model="$ctrl.data.break_ohter_agree">
+                                        </div>
+
+                                        <div flex="80" style="margin-left: 10%;font-weight: bold;" layout="row"
+                                             layout-wrap="">
+                                            <div layout-padding class="text-nowrap">本合同经三方签字盖章后生效。本合同（及附件）一式</div>
+                                            <input type="text" class="form-control input-sm"
+                                                   style="width: 50px;" placeholder="叁"
+                                                   ng-model="$ctrl.data.contract_amount">
+                                            <div layout-padding class="text-nowrap">份，其中甲方执</div>
+                                            <input type="text" class="form-control input-sm"
+                                                   style="width: 50px;" placeholder="壹"
+                                                   ng-model="$ctrl.data.contract_amount_jia">
+                                            <div layout-padding class="text-nowrap">份，乙方执</div>
+                                            <input type="text" class="form-control input-sm"
+                                                   style="width: 50px;" placeholder="壹"
+                                                   ng-model="$ctrl.data.contract_amount_yi">
+                                            <div layout-padding class="text-nowrap">份，丙方</div>
+                                            <input type="text" class="form-control input-sm"
+                                                   style="width: 50px;" placeholder="壹"
+                                                   ng-model="$ctrl.data.contract_amount_bing">
+                                            <div layout-padding class="text-nowrap">份，</div>
+                                            <input type="text" class="form-control input-sm" style="width: 50px;"
+                                                   ng-model="$ctrl.data.contract_amount_other_name">
+                                            <div layout-padding class="text-nowrap">执</div>
+                                            <input type="text" class="form-control input-sm" style="width: 50px;"
+                                                   ng-model="$ctrl.data.contract_amount_other_num">
+                                            <div layout-padding class="text-nowrap">份。</div>
+                                            <div layout-padding class="text-nowrap">
+                                                本合同生效后，各方对合同内容的变更或补充应采取书面形式，作为本合同的附件。附件与本合同具有同等的法律效力。
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <br>
+
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary btn_size"
+                                                style="float: none !important;">
+                                            完成
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="$link.contextPath/resources/script/sign/sign-common.module.js"></script>
+
+<script src="$link.contextPath/resources/script/sign/component/sign-checkbox.component.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/sign-laydate.directive.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/sign-choose-person.component.js"></script>
+
+<script src="$link.contextPath/resources/script/sign/create-sign-service-surrender.module.js"></script>

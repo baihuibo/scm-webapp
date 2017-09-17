@@ -1,0 +1,115 @@
+#set($plugins = ["table","chosen","laydate","autoSearch","ztree"])
+<style>
+.chosen-container-multi .chosen-choices{ padding:1px !important;}
+</style>
+<div class="ibox">
+	<div class="ibox-title">
+		<h5>规则设置日志</h5>
+		<div class="ibox-tools">
+			<a class="collapse-link ui-sortable"> 
+				<i class="fa fa-chevron-up"></i>
+			</a>
+		</div>
+	</div>		
+	<div class="ibox-content">
+		<form id="J_query"  class="form-horizontal" role="form">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">所属部门：</label>
+						<div class="col-sm-8">
+							<input id="J_deptLevel" type="hidden" name="deptlevel" class="form-control" value="">
+							<div class="input-group">
+								<input id="J_deptName" name="deptid" type="text" class="form-control radius-3 float-l" autocomplete="off">
+								<div class="input-group-btn">
+									<button id="J_deptSelect" data-toggle="dropdown" class="btn dropdown-toggle btn-dept float-l" type="button"><span class="caret"></span>
+	                            	</button>
+	                            </div>
+							</div>	
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">操作人：</label>
+						<div class="col-sm-8">
+							<div class="input-group">
+								<input type="text" class="form-control" id="J_user" autocomplete="off" name="belonguserid">
+								<div class="input-group-btn">
+									<button type="button" class="btn btn-white dropdown-toggle"
+										data-toggle="">
+										<span class="glyphicon glyphicon-search search-caret"></span>
+									</button>
+									<ul class="dropdown-menu dropdown-menu-left" role="menu" style="padding-top: 0px; max-height: 375px; max-width: 800px; overflow: auto; width: auto; transition: 0.3s; left: -110px; right: auto; min-width: 145px;">
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">设置项：</label>
+						<div class="col-sm-8">
+							<select id="J_type" name="type" class="J_chosen form-control" data-placeholder="请选择">
+								<option value="">请选择</option>
+								<option value="10">租赁转介功能设置</option>
+								<option value="11">租赁带看超期</option>
+								<option value="12">买卖转介功能设置</option>
+								<option value="13">买卖带看超期</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">操作时间：</label>
+						<div class="col-sm-4">
+							<input id="J_begindate" name="begindate" class="J_chosen form-control" placeholder="">
+						</div>
+						<div style="float:left; padding:7px 2px;">-</div>
+						<div class="col-sm-4">
+							<input id="J_enddate" name="enddate" class="J_chosen form-control" placeholder="">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12 text-cen">
+					<div class="form-group">
+						<button id="J_search" type="button" class="btn btn-success btn_size">查 询</button>
+						<button id="J_reset" type="reset" class="btn btn-white btn_size">重 置</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<div class="ibox float-e-margins">
+	<div class="ibox-title">
+        <h5>规则设置日志列表</h5>
+     </div>
+	<div class="ibox-content">
+		<div class="row all" >
+			<div class="col-sm-12">	
+				<!-- Example Pagination -->
+				<div class="col-sm-12 ptb10">
+					<table id="J_log_list" class="table table-hover table-striped table table-bordered tables">
+						<thead>
+							<tr>
+								<th class="col-sm-3" data-field="deptname">所属部门</th>
+								<th class="col-sm-1" data-field="createbyname">操作人</th>
+								<th class="col-sm-2" data-field="rulename">设置项</th>
+								<th class="col-sm-4" data-field="content">设置结果</th>
+								<th class="col-sm-2" data-field="createtime">操作时间</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+				<!-- End Example Pagination -->
+			</div>
+		</div>
+	</div>
+</div>
+<script src="$link.contextPath/resources/script/customer/rule/log_list.js"></script>
+<script type="text/javascript" src="$link.contextPath/resources/js/department.js"></script>

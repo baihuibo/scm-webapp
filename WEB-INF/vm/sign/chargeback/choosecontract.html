@@ -1,0 +1,260 @@
+<!--star选择合同-->
+<div class="ibox" id="choiceHetong" style="display:none;">
+	<div class="ibox-content">	
+		<form id="J_contractQuery" class="form-horizontal" role="form">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">合同编号：</label>
+						<div class="col-sm-8">
+							<input name="contract_code" type="text" class="form-control">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">合同类型：</label>
+						<div class="col-sm-8">
+							<select name="contract_type" id="businesstype" class="J_chosen form-control">
+								<option value="">全部</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">业主姓名：</label>
+						<div class="col-sm-8">
+							<input type="text" name="owner_name" class="form-control">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">客户名称：</label>
+						<div class="col-sm-8">
+							<input type="text" name="customer_name" class="form-control">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">收据编号：</label>
+						<div class="col-sm-8">
+							<input type="text" name="customer_code" class="form-control">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">发票编号：</label>
+						<div class="col-sm-8">
+							<input type="text" name="customer_code" class="form-control">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<div class="col-sm-5  col-sm-offset-5">
+	                        <button id="J_search_pop" type="button" class="btn btn-success btn_size">查 询</button>
+	                        <button id="J_reset" type="reset" class="btn btn-white btn_size">重 置</button>
+	                    </div>
+					</div>
+				</div>
+			</div>
+		</form>
+		<div id="hetConten"></div>
+	</div>
+</div>
+<!--end选择合同-->
+<script>
+$(function(){
+	addChargebackView.init();
+});
+var addChargebackView={
+	init:function(){
+		var _this=this;
+		//初始select下拉框
+		$('select').chosen({
+			width:'100%'
+		});
+		_this.choiceContract();
+		
+	},
+	//选择合同
+	choiceContract:function(){
+		var _this=this;
+		var isInit=true;
+		$('#addContractNum').off().on('click',function(){
+			
+			commonContainer.modal('选择合同',$('#choiceHetong'),function(i){
+				_this.getAddContract(i);
+			},{
+				area:['80%','70%'],
+				btns:['确定','取消'],
+				overflow :true,
+				success:function(){
+					if(isInit){
+						$('#J_search_pop').off().on('click',_this.contractList);
+						isInit=false;
+					}
+					//重置表单
+					$('#J_contractQuery')[0].reset();
+					//创建表格表头
+					var tabHtml='\
+						<table id="contractList" class="table table-hover table-striped table-bordered mb20">\
+						<thead>\
+							<tr>\
+								<th data-field="">\
+									<div class="th-inner">合同类型</div>\
+								</th>\
+								<th data-field="">\
+									<div class="th-inner">合同编号</div>\
+								</th>\
+								<th data-field="">\
+									<div class="th-inner">房源编号</div>\
+								</th>\
+								<th data-field="">\
+									<div class="th-inner">客源编号</div>\
+								</th>\
+								<th data-field="">\
+									<div class="th-inner">业主名称</div>\
+								</th>\
+								<th data-field="">\
+									<div class="th-inner">客户名称</div>\
+								</div>\
+								</th>\
+								<th data-field="">\
+									<div class="th-inner">录入日期</div>\
+								</th>\
+								<th data-field="">\
+									<div class="th-inner">成交人</div>\
+								</th>\
+								<th data-field="">\
+									<div class="th-inner">所属部门</div>\
+								</th>\
+							</tr>\
+						</thead>\
+					</table>';
+					$('#hetConten').html(tabHtml);
+				}
+			});
+		});
+	},
+	//查询合同列表
+	contractList:function(){
+		$('#contractList').bootstrapTable({
+			url:basePath+'/sign/chargeback/choosecontract.htm',
+			method:'post',
+			sidePagination:'server',
+			dataType:'json',
+			pagination: true,
+			singleSelect:true,		//设置单选
+			clickToSelect:true,		//点击选中行
+			striped:true,
+			pageSize:10,
+			pageList:[10, 20, 50],
+			queryParams: function (params) {
+				var data=$('#J_contractQuery').serializeObject();
+				data.pagesize = params.limit;
+				data.pageindex = params.offset / params.limit+ 1;
+				return data;
+			},
+			responseHandler: function(result) {
+				if (result.code == 0 && result.data && result.data.totalcount> 0){
+					return {
+						'rows': result.data.list, 
+						'total': result.data.totalcount
+					}
+				}
+				return {
+					'rows': [],
+					'total': 0
+				}	
+			},
+			columns:[
+	         	{
+	         		field: '',
+			    	title :'选择',
+			    	checkbox:true,
+			    	align:'center'
+	         	},
+				{
+					field : 'contract_type',
+					title : '合同类型',
+					align : 'center'
+				},
+				{
+					field : 'contract_code',
+					title : '合同编号',
+					align : 'center'
+				},
+				{
+					field : 'customer_name',
+					title : '房源编号',
+					align : 'center',
+					formatter:function(value,row){
+						return value+'<br />'+row.owner_name;
+					}
+				},
+				{
+					field : 'customer_commission',
+					title : '客源编号',
+					align : 'center',
+					formatter:function(value,row){
+						return value+'<br />'+row.owner_commission;
+					}
+				},
+				{
+					field : 'transaction_price',
+					title : '业主名称',
+					align : 'center'
+				},
+				{
+					field : 'dept_name',
+					title : '客户名称',
+					align : 'center'
+				},
+				{
+					field : 'user_name',
+					title : '录入日期',
+					align : 'center'
+				},
+				{
+					field : 'create_time',
+					title : '成交人',
+					align : 'center'
+				},
+				{
+					field : 'create_time',
+					title : '所属部门',
+					align : 'center'
+				}
+			]
+		});
+	},
+	//获取新增合同详情
+	getAddContract:function(i){
+		var checkrowDataArr=$("#contractList").bootstrapTable('getSelections');	//选中的合同数据
+		if(checkrowDataArr.length>0 && checkrowDataArr[0].con_id!==undefined){
+			layer.close(i);
+			//回显新增合同信息
+			jsonGetAjax(basePath+'/sign/chargeback/choosesingelecontract.htm',{
+				con_id:checkrowDataArr[0].con_id		//合同主键id
+			},function(result){
+				//回显新增合同信息
+				$('#addContractNumber').val(result.data.contract_code);													//合同编号
+				$('#addBusinessType').val(result.data.strcontract_type);												//业务类型
+				$('#addCustomerName').val(result.data.customer_name);													//客户姓名
+				$('#addOwnerName').val(result.data.owner_name);																//实收佣金
+			});
+		}else{
+			commonContainer.alert('请选择合同');
+		}
+	},
+}
+</script>

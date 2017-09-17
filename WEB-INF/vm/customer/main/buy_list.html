@@ -1,0 +1,322 @@
+#set($plugins = ["table","chosen","laydate","linkage","ztree","autoSearch"])
+<style>
+	.chosen-container-single .chosen-single span{
+		    margin-right: 10px;
+	}
+</style>
+<script>
+    var buy_query_permission = $shiro.hasPermission("SCM:CUSTOM:BUY_QUERY"); // 客户查询
+    var buy_view_permission = $shiro.hasPermission("SCM:CUSTOM:BUY_VIEW"); // 客户详情查看
+    var buy_tel_view_permission = $shiro.hasPermission("SCM:CUSTOM:BUY_TEL_VIEW"); // 电话查看
+    var buy_show_add_permission = $shiro.hasPermission("SCM:CUSTOM:BUY_SHOW_ADD"); // 带看录入
+</script>
+<!-- 查询条件 begin -->
+<div class="ibox">
+	<div class="ibox-title">
+		<h5>买卖客源查询</h5>
+		<div class="ibox-tools">
+			<a class="collapse-link ui-sortable"> <i class="fa fa-chevron-up"></i>
+			</a>
+		</div>
+	</div>
+	#if($shiro.hasPermission("SCM:CUSTOM:LEASE_SHOW_ADD"))
+		<input type="hidden" name="haspermission" id="J_haspermission" value="haspermission"/>	
+	#end
+	<div class="ibox-content">
+		<form class="form-horizontal" role="form" id="J_black_form">
+			<input type="hidden" name="businessType" value="2">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">客户姓名：</label>
+						<div class="col-sm-8">	
+							<input type="text" class="form-control" name="customername" id="customername" autocomplete="off">					
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">客源编号：</label>
+						<div class="col-sm-8">	
+							<input type="text" class="form-control" name="customerno" id="customerno" autocomplete="off">					
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">物业类型：</label>
+						<div class="col-sm-8">
+							<select id="businesstype" name="propertytype" class="J_chosen form-control" data-placeholder="请选择">
+								<option value="">请选择</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">销售阶段：</label>
+							<div class="col-sm-8">
+								<select id="status" name="salesstatus" class="J_chosen form-control" data-placeholder="请选择">
+									<option value="">请选择</option>
+								</select>
+							</div>
+						</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">电话：</label>
+						<div class="col-sm-8">
+							<input id="phone" name="phone" class="form-control" placeholder="">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">客户评价：</label>
+						<div class="col-sm-8">
+							<select id="remarktype"name="remarktype" class="J_chosen form-control" data-placeholder="请选择">
+								<option value="">请选择</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4" id="groupFromItem">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">所属部门：</label>
+						<div class="col-sm-8">
+							<input type="hidden" class="form-control" name="grouplevel" id="J_deptLevel">
+							<div class="input-group">
+								<input id="J_deptName" type="text" name="groupid" class="form-control radius-3" autocomplete="off" style="background-color:#fff;">
+								<div class="input-group-btn">
+									<button id="J_deptSelect" data-toggle="dropdown" class="btn dropdown-toggle btn-dept float-l" type="button"><span class="caret"></span>
+	                            	</button>
+	                            </div>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4" id="belongUserFromItem">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">所属人：</label>
+						<div class="col-sm-8">
+							<div class="input-group">
+								<input type="text" class="form-control" id="J_user" name="belonguserid" autocomplete="off">
+								<div class="input-group-btn">
+									<button type="button" class="btn btn-white dropdown-toggle"
+										data-toggle="">
+										<span class="glyphicon glyphicon-search search-caret"></span>
+									</button>
+									<ul class="dropdown-menu dropdown-menu-right" role="menu"
+										style="padding-top: 0px; max-height: 375px; max-width: 800px; overflow: auto; width: auto; transition: 0.3s; left: -110px; right: auto; min-width: 145px;">
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">客户类型：</label>
+						<div class="col-sm-8">
+							<select id="customertype"name="customertype" class="J_chosen form-control" data-placeholder="请选择">
+								<option value="">请选择</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<div class="col-sm-3">
+							<select id="datetype" name="datetype" class="J_chosen form-control" data-placeholder="请选择">
+									<option value="1">录入时间</option>
+									<option value="2">跟进时间</option>
+									<option value="3">带看时间</option>
+							</select>
+						</div>
+						<div class="col-sm-8" layout="row">
+							<div flex>
+								<input id="J_begindate" name="starttime" class="form-control" placeholder="">
+							</div>
+							<div  class="split">-</div>
+							<div flex>
+								<input id="J_enddate" name="endtime" class="form-control" placeholder="">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12 text-cen">
+					<div class="form-group">
+						<button id="J_search" type="button" class="btn btn-success btn_size">查 询</button>
+						<button id="J_reset_buy" type="reset" class="btn btn-white btn_size">重 置</button>
+					</div>
+				</div>
+			</div>	
+		</form>
+	</div>
+</div>
+<!-- 查询条件end -->
+
+<!-- 列表 begin -->
+<div class="ibox float-e-margins">
+<div class="ibox-title">
+    <h5>买卖客源列表</h5>
+</div>
+	<div class="ibox-content">
+		<div class="row row-lg">
+			<div class="col-sm-12">
+				<div class="example-wrap ptb10">
+					<p></p>
+					<table id="J_dataTable" class="table table-hover  table-striped table-condensed" data-query-params="queryParams" data-mobile-responsive="true" 
+						data-pagination="true" data-icon-size="outline"
+						data-striped="true" data-search="false">
+						<thead>
+							<tr>
+								<th data-field="remarktype">评价</th>
+								<th data-field="customerno">客户姓名<br>客户编号</th>
+								<th data-field="customertype">客户类型</th>
+								<th data-field="status">销售阶段</th>
+								<th data-field="guideresult">带看结果</th>
+								<th data-field="lookhousetime">方便看房时间</th>
+								<th data-field="lastfollowtime">录入时间<br>最后跟进时间</th>
+								<th data-field="belonguser">归属部门<br>归属人</th>
+								<th data-field="guidetimes">带看次数</th>
+								<th data-field="opt">操作</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 列表 end -->
+<!-- 带看begin -->
+<div id="J_add_guide_dialog" class="ibox-content" style="display: none;height:100%">
+	<div class="ibox">
+		<form id="J_addForm" class="form-horizontal" role="form">
+			<div class="row">
+				<div class="col-md-12">
+					<h4 class="pl10 font-bold font-blue info-tit">客户信息</h4>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">
+								<span id="J_cusId"></span>
+								<span id="J_cusName"></span>
+							</label>
+							
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="form-group">
+							<div class="col-sm-3 control-label">
+								<a id="J_checkPhone" data-clientid="" href="javascript:void(0);">查看电话</a>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">
+								<span class="text-danger">*</span>预计带看时间：
+							</label>
+							<div class="col-sm-5">
+								<input type="text" readonly="readonly" class="form-control" id="seeTime" style="background-color:#fff;">
+							</div>
+							
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">陪看人：</label>
+							<div class="col-sm-5">
+								<div class="input-group">
+									<input type="text" name="accompanyname" data-id="" class="form-control" id="J_lendusername">
+									<div class="input-group-btn">
+										<button type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown">
+											<span class="glyphicon glyphicon-search search-caret"></span>
+										</button>
+										<ul class="dropdown-menu dropdown-menu-right" role="menu">
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-10">
+					<h4 class="pl10 font-bold font-blue info-tit">带看房源</h4>
+				</div>
+				<div class="col-md-12">
+					<div class="font-bold font-blue">
+						<a id="J_add_house" class="btn-green btn-bitbucket add-icon">
+							<i class="glyphicon glyphicon-plus"></i> 添加房源
+						</a>
+					</div>
+				</div>
+				<div class="col-md-12 m-b-sm pt6">
+					<div class="bootstrap-table table-list">
+						<table id="J_guide_dataTable" class="table table-hover table-striped table-condensed">
+							<tbody>
+								
+							</tbody>
+						</table>
+						<div id="prompt" style="padding:10px 0;color:#ff0000;">注：至少保留一条房源信息</div>
+						<input id="J_guide_houses" type="hidden" value="" />
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+#parse("/public/add_house_dialog.html")
+#parse("/customer/proxy/entering.html")
+<script type='text/javascript'>
+searchContainer.searchUserListByComp($("#J_lenduser"), true, 'right');
+
+//预计带看时间
+$('#seeTime').on('click',function(){
+	laydate({
+		elem:'#seeTime',
+	    format:'YYYY-MM-DD hh:mm',
+	    min: laydate.now(0, 'YYYY-MM-DD hh:mm'),
+	    istime:true
+	});
+});
+// 查看电话
+$('#J_checkPhone').on('click',function(){
+    if (buy_tel_view_permission) {
+        var clientid = $(this).attr('data-clientid');
+        showPhone(clientid , 2);
+    }
+})
+
+// 添加房源
+$('#J_add_house').on('click',function(){
+	addHouse(2);
+})
+//陪看人
+searchContainer.searchUserListByComp($('#J_lendusername'), true, 'left');
+// 删除带看房源
+$('#J_guide_dataTable').delegate('#J_house_del','click',function(event){
+	// 删除当前行
+	$(this).parents('tr').remove();
+	// 重置J_guide_houses的值
+	var guideHouseIds = $('#J_guide_houses').val();
+	guideHouseIds = guideHouseIds.substring(0, guideHouseIds.length-1);
+	var guideHouseIdArr = guideHouseIds.split(',');
+	guideHouseIdArr.splice($.inArray($(this).attr('data-id'), guideHouseIdArr), 1);
+	$('#J_guide_houses').val(guideHouseIdArr.join(','));
+})
+</script>
+<!-- 自定义js -->
+<script type='text/javascript' src="$link.contextPath/resources/js/check_phone.js"></script> <!-- 查看电话 -->
+<script src="$link.contextPath/resources/script/customer/main/buy_list.js"></script>
+<script type="text/javascript" src="$link.contextPath/resources/js/department.js"></script>
+
+

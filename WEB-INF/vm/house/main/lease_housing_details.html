@@ -1,0 +1,514 @@
+
+<div class="ibox">
+	<div class="ibox-content">
+<div class="row">
+	<!-- <div class="col-md-12">
+		<h4 class="business-title">房源信息</h4>
+	</div> -->
+<div class="customer_info_content">
+	<div class="row ptb10">
+		<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>楼盘信息</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-4">
+			<dl class="dl-horizontal">
+				<dt class="J_edit_area">所在行政区：</dt>
+				<dd id="J_detail_areaName"></dd>
+			</dl>
+		</div>
+		<div class="col-sm-4">
+			<dl class="dl-horizontal">
+				<dt class="J_edit_area">所在街道：</dt>
+				<dd id="J_detail_areaType"></dd>
+			</dl>
+		</div>
+		<div class="col-sm-4">
+			<dl class="dl-horizontal">
+				<dt class="J_edit_area">所在商圈：</dt>
+				<dd id="J_detail_busiName"></dd>
+			</dl>
+		</div>
+	</div>
+</div>
+<div class="customer_info_content">
+	<div class="row ptb10">
+		<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>物理信息</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-4">
+			<dl class="dl-horizontal">
+				<dt class="J_edit_area" edit-attr="bedRoom,livingRoom,kitchen,toilet,balcony|select||bedRoom,livingRoom,kitchen,toilet,balcony|layout"><span class="text-danger">*</span>户型：</dt>
+				<dd><span id="J_detail_bedRoom"></span><span>室</span><span id="J_detail_livingRoom"></span><span>厅</span><span id="J_detail_kitchen"></span><span>厨</span><span id="J_detail_toilet"></span><span>卫</span><span id="J_detail_balcony"></span><span>阳</span></dd>
+			</dl>
+		</div>
+		<div class="col-sm-4">
+			<dl class="dl-horizontal">
+				<dt class="J_edit_area" edit-attr="heading|checkbox|orientation|headingId|heading"><span class="text-danger">*</span>朝向：</dt>
+				<dd id="J_detail_heading"></dd>
+			</dl>
+		</div>
+		<div class="col-sm-4">
+			<dl class="dl-horizontal">
+				<dt class="J_edit_area" edit-attr="houseType|select|layoutStructure|houseTypeId"><span class="text-danger">*</span>户型结构：</dt>
+				<dd id="J_detail_houseType"></dd>
+			</dl>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-4">
+			<dl class="dl-horizontal">
+				<dt class="J_edit_area" edit-attr="buildyear|select||buildyear|buildyear"><span class="text-danger">*</span>建筑年代：</dt>
+				<dd><span id="J_detail_buildyear"></span><span class="unit">年</span></dd>
+			</dl>
+		</div>
+		<div class="col-sm-4">
+			<dl class="dl-horizontal">
+				<dt class="J_edit_area" edit-attr="buildarea|input||buildarea"><span class="text-danger">*</span>建筑面积：</dt>
+				<dd><span id="J_detail_buildarea"></span><span class="unit">平方米</span></dd>
+			</dl>
+		</div>
+		<div class="col-sm-4">
+			<dl class="dl-horizontal">
+				<dt class="J_edit_area" edit-attr="buildType|select|buildType|buildTypeId"><span class="text-danger">*</span>建筑类型：</dt>
+				<dd><span id="J_detail_buildType"></span></dd>
+			</dl>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-4">
+			<dl class="dl-horizontal">
+				<dt class="J_edit_area" edit-attr="architecture|select|architecture|architectureId"><span class="text-danger">*</span>建筑结构：</dt>
+				<dd><span id="J_detail_architecture"></span></dd>
+			</dl>
+		</div>
+	
+		<div class="col-sm-4">
+			<dl class="dl-horizontal">
+				<dt class="">规划用途 ：</dt>
+				<dd id="J_detail_guihuayongtu"></dd>
+			</dl>
+		</div>
+	
+		<div class="col-sm-4">
+			<dl class="dl-horizontal">
+				<dt class="J_edit_area" edit-attr="houseown|select|houseown|houseownId|houseown"><span class="text-danger">*</span>产权性质：</dt>
+				<dd id="J_detail_houseown"></dd>
+			</dl>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-4">
+			<dl class="dl-horizontal">
+				<dt class="J_edit_area" edit-attr="useYears|select|landUseLife|useYearsId">土地使用年限：</dt>
+				<dd><span id="J_detail_useYears"></span></dd>
+			</dl>
+		</div>
+	
+		<div class="col-sm-4">
+			<dl class="dl-horizontal">
+				<dt class="J_edit_area" edit-attr="hasWindow|select|yesOrNo|hasWindowId">卫生间是否带窗：</dt>
+				<dd id="J_detail_hasWindow"></dd>
+			</dl>
+		</div>
+	
+		<div class="col-sm-4">
+			<dl class="dl-horizontal">
+				<dt class="J_edit_area" edit-attr="hasGarden|select|yesOrNo|hasGardenId">是否有花园：</dt>
+				<dd id="J_detail_hasGarden"></dd>
+			</dl>
+		</div>	
+	</div>
+	<div class="row">									
+		<div class="col-sm-4">
+			<dl class="dl-horizontal">
+				<dt class="J_edit_area" edit-attr="hasGarden|select|yesOrNo|hasGardenId">是否有地下室：</dt>
+				<dd id="J_detail_hasBasement"></dd>
+			</dl>
+		</div>
+	
+		<div class="col-sm-4">
+			<dl class="dl-horizontal">
+				<dt class="J_edit_area" edit-attr="hasGarden|select|yesOrNo|hasGardenId">是否有车库：</dt>
+				<dd id="J_detail_hasCarport"></dd>
+			</dl>
+		</div>
+		
+		<div class="col-sm-4">
+			<dl class="dl-horizontal">
+				<dt class="J_edit_area" edit-attr="firstFloorHeight|input||firstFloorHeight">首层层高：</dt>
+				<dd><span id="J_detail_firstFloorHeight"></span><span class="unit">米</span></dd>
+			</dl>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-4">
+			<dl class="dl-horizontal">
+				<dt class="J_edit_area" edit-attr="overlayType|select|overlayType|overlayTypeId">叠加方式：</dt>
+				<dd id="J_detail_overlayType"></dd>
+			</dl>
+		</div>										
+		<div class="col-sm-4">
+			<dl class="dl-horizontal">
+				<dt class="J_edit_area" edit-attr="coldAirCost|input||coldAirCost">冷气费：</dt>
+				<dd><span id="J_detail_coldAirCost"></span><span class="unit">元/平方米/月</span></dd>
+			</dl>
+		</div>
+	
+		<div class="col-sm-4">
+			<dl class="dl-horizontal">
+				<dt class="J_edit_area" edit-attr="isLevel|select|level|isLevelId">等级：</dt>
+				<dd id="J_detail_isLevel"></dd>
+			</dl>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-4">
+			<dl class="dl-horizontal">
+				<dt class="J_edit_area" edit-attr="airConditionType|select|airConditionType|airConditionTypeId|airConditionType">空调方式：</dt>
+				<dd id="J_detail_airConditionType"></dd>
+			</dl>
+		</div>										
+		<div class="col-sm-4">
+			<dl class="dl-horizontal">
+				<dt class="J_edit_area" edit-attr="carPortNum|input||carPortNum">车位数量：</dt>
+				<dd id="J_detail_carPortNum"></dd>
+			</dl>
+		</div>
+	
+		<div class="col-sm-4">
+			<dl class="dl-horizontal">
+				<dt class="J_edit_area" edit-attr="totalHeight|input||totalHeight">总高：</dt>
+				<dd><span id="J_detail_totalHeight"></span><span class="unit">米</span></dd>
+			</dl>
+		</div>
+	</div>
+	<div class="row">	
+		<div class="col-sm-4">
+			<dl class="dl-horizontal">
+				<dt class="J_edit_area" edit-attr="depth|input||depth">进深：</dt>
+				<dd><span id="J_detail_depth"></span><span class="unit">米</span></dd>
+			</dl>
+		</div>	
+									
+		<div class="col-sm-4">
+			<dl class="dl-horizontal">
+				<dt class="J_edit_area" edit-attr="doorWidth|input||doorWidth">门宽：</dt>
+				<dd><span id="J_detail_doorWidth"></span><span class="unit">米</span></dd>
+			</dl>
+		</div>
+	
+		<div class="col-sm-4">
+			<dl class="dl-horizontal">
+				<dt class="J_edit_area" edit-attr="clearHeight|input||clearHeight">净高：</dt>
+				<dd><span id="J_detail_clearHeight"></span><span class="unit">米</span></dd>
+			</dl>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-4">
+			<dl class="dl-horizontal">
+				<dt class="J_edit_area" edit-attr="gainsRate|input||gainsRate">实得率：</dt>
+				<dd><span id="J_detail_gainsRate"></span><span class="unit">%</span></dd>
+			</dl>
+		</div>										
+		
+	</div>
+</div>
+
+<div class="customer_info_content">
+	<div class="row ptb10">
+		<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>详细信息</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-4">
+			<dl class="dl-horizontal">
+				<dt class="J_edit_area" edit-attr="decorateLevel|select|housedecorationstatus|decorateLevelId">装修状况：</dt>
+				<dd id="J_detail_decorateLevel"></dd>
+			</dl>
+		</div>
+		<div class="col-sm-4">
+			<dl class="dl-horizontal">
+				<dt class="J_edit_area" edit-attr="decorateTime|select|fitmentYear|decorateTimeId">装修年限：</dt>
+				<dd id="J_detail_decorateTime"></dd>
+			</dl>
+		</div>
+		<div class="col-sm-4">
+			<dl class="dl-horizontal">
+				<dt class="J_edit_area" edit-attr="statusNow|select|useStatus|statusNowId">使用现状：</dt>
+				<dd id="J_detail_statusNow"></dd>
+			</dl>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-4">
+			<dl class="dl-horizontal">
+				<dt class="J_edit_area" edit-attr="freetime|select|freetimeType|freetimeTypeId">腾空时间：</dt>
+				<dd id="J_detail_freetime"></dd>
+			</dl>
+		</div>
+		<div class="col-sm-4">
+			<dl class="dl-horizontal">
+				<dt class="J_edit_area" edit-attr="rentmode|select|rentType|rentmodeId">出租形式：</dt>
+				<dd id="J_detail_rentmode"></dd>
+			</dl>
+		</div>
+		<div class="col-sm-4">
+			<dl class="dl-horizontal">
+				<dt class="J_edit_area" edit-attr="planRentenddt|date||planRentenddt">预计租赁到期日：</dt>
+				<dd id="J_detail_planRentenddt"></dd>
+			</dl>
+		</div>
+	</div>
+	<div class="row">
+		<!-- <div class="col-sm-4">
+			<dl class="dl-horizontal">
+				<dt class="J_edit_area">凶宅：</dt>
+				<dd id="J_detail_gainsRate"></dd>
+			</dl>
+		</div> -->
+		<div class="col-sm-4">
+			<dl class="dl-horizontal">
+				<dt class="J_edit_area">录入方式：</dt>
+				<dd id="J_detail_inputType"></dd>
+			</dl>
+		</div>
+		<div class="col-sm-4">
+			<dl class="dl-horizontal">
+				<dt class="">房源状态：</dt>
+				<dd id="J_detail_finalStatusId"></dd>
+			</dl>
+		</div>
+	
+		<div class="col-sm-4">
+			<dl class="dl-horizontal">
+				<dt class="J_edit_area">房源评价：</dt>
+				<dd>
+					#if ($!vo.houseremark !='成交')
+						#if($shiro.hasPermission("SCM:HOUSE:LEASE:MGRMODIFY:REMARK")||$shiro.hasPermission("SCM:HOUSE:LEASE:SUPERMODIFY:REMARK"))
+							<span id="J_detail_finalassessmentId"></span>&nbsp;&nbsp;<a class="J_evaluate_but" style="display:none" onclick="editevaluate()">修改评价</a>
+						#else
+								<span id="J_detail_finalassessmentId"></span>&nbsp;&nbsp;
+						#end
+					#else
+							<span id="J_detail_finalassessmentId"></span>&nbsp;&nbsp;
+					#end
+					
+				</dd>
+			</dl>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-4">
+			<dl class="dl-horizontal">
+				<dt class="J_edit_area">轨道：</dt>
+				<dd id="J_detail_lineName"></dd>
+			</dl>
+		</div>
+		<div class="col-sm-4">
+			<dl class="dl-horizontal">
+				<dt class="J_edit_area">教育配套：</dt>
+				<dd id="J_detail_schoolName"></dd>
+			</dl>
+		</div>
+	
+		<div class="col-sm-4">
+			<dl class="dl-horizontal">
+				<dt class="J_edit_area">审核状态：</dt>
+				<dd id="J_detail_isPass"></dd>
+			</dl>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-4">
+			<dl class="dl-horizontal">
+				<dt class="J_edit_area">来源渠道：</dt>
+				<dd id="J_detail_source"></dd>
+			</dl>
+		</div>
+	</div>
+</div>
+
+<div class="customer_info_content">
+	<div class="row ptb10">
+		<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>室内情况及报价信息</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-4">
+			<dl class="dl-horizontal">
+				#if ($!vo.houseremark !='无效'&&$!vo.houseremark !='成交')
+					<dt onclick="updatePrice()">意向租金：</dt>
+				#else
+					<dt>意向租金：</dt>
+				#end
+				
+				<dd><span id="J_detail_price"></span><span id="company">元/月</span></dd>
+			</dl>
+		</div>
+		<div class="col-sm-4">
+			<dl class="dl-horizontal">
+				<dt class="J_edit_area" edit-attr="heatingCost|input||heatingCost">暖气费：</dt>
+				<dd><span id="J_detail_heatingCost"></span><span class="unit">元/平方米/月 </span></dd>
+			</dl>
+		</div>
+		<div class="col-sm-4">
+			<dl class="dl-horizontal">
+				<dt class="J_edit_area" edit-attr="propertyFee|input||propertyFee">物业费：</dt>
+				<dd><span id="J_detail_propertyFee"></span><span class="unit">元/平方米/月</span></dd>
+			</dl>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-4">
+			<dl class="dl-horizontal">
+				<dt class="J_edit_area" edit-attr="cashMonthNum|select||cashMonthNum">押金要求：</dt>
+				<dd>押<span id="J_detail_cashMonthNum"></span><span class="unit">月</span></dd>
+			</dl>
+		</div>
+		<div class="col-sm-4">
+			<dl class="dl-horizontal">
+				<dt class="J_edit_pay" edit-attr="pay|select|payType|payId">付款方式：</dt>
+				<dd id="J_detail_pay"></dd>
+			</dl>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<dl class="dl-horizontal">
+				<dt class="col-sm-1 control-label J_edit_area" edit-attr="furniture|checkbox|furniture|furnitureId|furniture">家具状况：</dt>
+				<dd class="col-sm-9 J_electric"  id="J_detail_furniture"></dd>
+			</dl>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<dl class="dl-horizontal">
+				<dt class="col-sm-1 control-label J_edit_area" edit-attr="equipment|checkbox|electric|equipmentId|equipment">房屋设施：</dt>
+				<dd class="col-sm-9 J_electric" id="J_detail_equipment"></dd>
+			</dl>
+		</div>
+	</div>
+</div>
+
+<div class="customer_info_content">
+	<div class="row ptb10">
+		<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>证贷情况</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-4">
+			<dl class="dl-horizontal">
+				<dt class="J_edit_area">证贷情况：</dt>
+				<dd id="J_detail_certLoan"></dd>
+			</dl>
+		</div>
+		<!-- <div class="col-sm-4">
+			<dl class="dl-horizontal">
+				<dt class="J_edit_area">房产证号：</dt>
+				<dd id="J_detail_housecode"></dd>
+			</dl>
+		</div> -->
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt class="J_edit_area" edit-attr="houseCodeDate|date||houseCodeDate">房产证签发日期：</dt>
+					<dd id="J_detail_houseCodeDate"></dd>
+				</dl>
+			</div>
+		
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt class="J_edit_area" edit-attr="loanBank|select|loanBank|loanBankId|loanBank">贷款银行：</dt>
+					<dd id="J_detail_loanBank"></dd>
+				</dl>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt class="J_edit_area" edit-attr="taxDate|date||taxDate">契税票日期：</dt>
+					<dd id="J_detail_taxDate"></dd>
+				</dl>
+			</div>
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt class="J_edit_area" edit-attr="diyaquanren|input||diyaquanren">抵押权人：</dt>
+					<dd id="J_detail_diyaquanren"></dd>
+				</dl>
+			</div>
+		
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt class="J_edit_area" edit-attr="load|input||load">贷款额：</dt>
+					<dd><span id="J_detail_load"></span><span class="unit">万</span></dd>
+				</dl>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt class="J_edit_area" edit-attr="loadYears|input||loadYears">贷款年限：</dt>
+					<dd><span id="J_detail_loadYears"></span><span class="unit">年</span></dd>
+				</dl>
+			</div>
+			<!-- <div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt class="J_edit_area">购房年限：</dt>
+					<dd id="J_detail_buyYears"></dd>
+				</dl>
+			</div> -->
+		</div>
+	</div>
+	<div class="customer_info_content">
+		<div class="row ptb10">
+			<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>房源所属</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6">
+				<dl class="dl-horizontal">
+					<dt class="J_edit_area">所属部门：</dt>
+					<dd id="J_detail_belongDepartment"></dd>
+				</dl>
+			</div>
+			<div class="col-sm-2">
+				<dl class="dl-horizontal">
+					<dt class="J_edit_area">所属人：</dt>
+					<dd id="J_detail_belonguser"></dd>
+				</dl>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6">
+				<dl class="dl-horizontal">
+					<dt class="J_edit_area">录入部门：</dt>
+					<dd id="J_detail_inputDepartment"></dd>
+				</dl>
+			</div>
+			<div class="col-sm-2">
+				<dl class="dl-horizontal">
+					<dt class="J_edit_area">录入人：</dt>
+					<dd id="J_detail_users"></dd>
+				</dl>
+			</div>
+		</div>
+	</div>
+	<div class="customer_info_content">
+		<div class="row ptb10">
+			<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>备注</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12">
+				<dl class="dl-horizontal">
+				#if ($!vo.houseremark !='无效'&&$!vo.houseremark !='成交')
+					<dt class="J_edit_area" onclick='updateremark()'>备注：</dt>
+				#else
+					<dt class="J_edit_area">备注：</dt>
+				#end
+					
+					<dd id="J_detail_memo" class="break-word"></dd>
+				</dl>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+</div>

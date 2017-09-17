@@ -1,0 +1,283 @@
+<!-- 审核记录 begin -->
+<style>
+#J_audittracelist_dataTable th{border-right:1px solid #CBD5DD;}
+#J_audittracelist_dataTable tr{ border-bottom:1px solid #CBD5DD; border-right:1px solid #CBD5DD; border-left:1px solid #CBD5DD;}
+#J_audittracelist_dataTable tr td{border-right:1px solid #CBD5DD;}
+#J_auditusertracelist_dataTable th{border-right:1px solid #CBD5DD;}
+#J_auditusertracelist_dataTable tr{ border-bottom:1px solid #CBD5DD; border-right:1px solid #CBD5DD; border-left:1px solid #CBD5DD;}
+#J_auditusertracelist_dataTable tr td{border-right:1px solid #CBD5DD;}
+</style>
+
+
+<div id="auditrecord_layer" class="ibox-content" style="display: none">
+	<form id="auditrecord_form" name="auditrecord_form" class="form-horizontal">
+		<div class="row">
+			<div class="col-md-4">
+				<label class="col-sm-4 control-label">房源编号:</label>
+				<div class="col-sm-8 form-group" style="margin-top:1px;"><a href="" id="J_houseidrecord" target="_blank"></a></div>
+			</div>
+			<div class="col-md-4">
+				<label class="col-sm-4 control-label">所属部门:</label>
+				<div class="col-sm-8 form-group" id="J_deptname" style="margin-top:1px;"></div>		
+			</div>
+			<div class="col-md-4">
+				<label class="col-sm-4 control-label">所属人:</label>
+				<input id="J_userid" type="hidden" value="">
+				<div class="col-sm-8 form-group" style="margin-top:1px;"><a id="J_username"></a></div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<label class="col-sm-4 control-label">楼盘:</label>
+				<div class="col-sm-8 form-group" id="J_buildingname" style="margin-top:1px;"></div>
+			</div>
+			<div class="col-md-4">
+				<label class="col-sm-4 control-label">地址:</label>
+				<div class="col-sm-8 form-group" style="margin-top:1px;"><a type="address" class="phone-address" id="J_seeaddress">查看</a></div>
+			</div>
+			<div class="col-md-4">
+				<label class="col-sm-4 control-label">电话:</label>
+				<div class="col-sm-8 form-group" style="margin-top:1px;"><a type="phone" class="phone-address" id="J_seephone">查看</a></div>
+			</div>
+		</div>
+		<div class="ibox float-e-margins">
+		    <div class="ibox-content">
+		    	<div class="ibox-title">
+					<h5>审核记录</h5>
+				</div>
+		  		<div class="row row-lg">
+					<div class="col-sm-12">
+						<table id="J_audittracelist_dataTable" class="table table-hover table-striped table-bordered table-condensed">
+							<thead>
+								<tr>
+									<th data-field="a">审批人</th>
+									<th data-field="b">审批时间</th>
+									<th data-field="c">审批类型</th>
+									<th data-field="d">审批结果</th>
+									<th class="col-sm-3 remark_all" data-field="e">审批备注</th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-7">
+				<label class="col-sm-3 control-label">当前审批类型:</label>
+				<div class="col-sm-9 form-group" id="J_curauditstep" style="margin-top:1px;"></div>
+			</div>
+			<div class="col-md-5">
+				<label class="col-sm-3 control-label">当前审批人:</label>
+				<div class="col-sm-3 form-group" id="J_curauditusername" style="margin-top:1px;"></div>
+				<div class="col-sm-3 form-group" style="margin-top:1px;"><a id="J_approverschange" style="color:#ff0000;">变更</a></div>
+			</div>
+			<div class="col-md-7">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>审批备注:</label>
+					<div class="col-sm-9">
+						<textarea type="text" id="J_auditrecordcontent" name="followcontent" class="form-control" maxlength="500"></textarea>
+					</div>
+					<input type="hidden" value="" id="J_auditresult" />
+				</div>
+			</div>
+			<div class="col-md-12 text-cen">
+				<div class="form-group" id="J_btn_button">
+					<button id="J_btnpass" type="button" class="btn btn-success btn-altogether" style="margin-right:100px;">通过</button>
+					<button id="J_btnfail" type="button" class="btn btn-success btn-altogether" style="margin-right:100px;">不通过</button>
+					<button id="J_btndetermined" type="button" class="btn btn-success btn-altogether" style="margin-right:100px;">待定</button>
+				</div>
+			</div>
+		</div>
+		<div class="ibox float-e-margins">
+		    <div class="ibox-content">
+		    	<div class="ibox-title">
+					<h5>审核人变更记录</h5>
+				</div>
+		  		<div class="row row-lg">
+					<div class="col-sm-12">
+						<table id="J_auditusertracelist_dataTable" class="table table-hover table-striped table-bordered table-condensed">
+							<thead>
+								<tr>
+									<th data-field="o">变更审批类型</th>
+									<th data-field="p">变更时间</th>
+									<th data-field="q">变更前审批人</th>
+									<th data-field="r">变更后审批人</th>
+									<th data-field="s">变更人</th>
+									<th class="col-sm-3 remark_all" data-field="t">变更备注</th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+<!-- 审核记录 end -->
+<script type="text/javascript">
+
+//审核弹出框中 变更审批人操作
+$(document).delegate("#J_approverschange","click",function(event){
+	var veriifyIdArr = [];
+	veriifyIdArr.push($(this).data('id'));
+	auditlayer(veriifyIdArr, true);
+});
+
+//点击通过按钮操作按钮
+var unauditreviewUrl = basePath + '/house/audit/verify';
+$('#J_btnpass').on('click',function(){
+	var houseId = $('#J_houseidrecord').html();
+	var curauditstep = $('#J_curauditstep').text();
+	var auditrecordcontent=$('#J_auditrecordcontent').val();
+	if(auditrecordcontent==''){
+		commonContainer.alert('请输入审批备注');
+		return false;
+	}
+	if(curauditstep == '二审'){ // 判断当前审核类型为二审则弹出提示信息框
+		layer.confirm(
+			'房源确定为可售，房源转至三次审核阶段', 
+			function(index){
+				jsonPostAjax(
+					unauditreviewUrl,
+					{	
+						"houseid": houseId,
+						"remark": $('#J_auditrecordcontent').val(),
+						"result":1,
+						"id":$('#J_btnpass').data('id')
+					},
+					function(result) {
+						$('#J_auditrecordcontent').val('');	
+						layer.close(index);
+						closeLayer();
+					}
+				);	
+			}, 
+			function(){}
+		)
+	} else {
+		jsonPostAjax(
+			unauditreviewUrl,
+			{	
+				"houseid": houseId,
+				"remark": $('#J_auditrecordcontent').val(),
+				"result":1,
+				"id":$('#J_btnpass').data('id')
+			},
+			function(result) {
+				$('#J_auditrecordcontent').val('');			
+				closeLayer();
+			}
+		);
+	}
+	
+})
+
+//点击不通过按钮操作按钮
+$('#J_btnfail').on('click',function(){
+	var houseId = $('#J_houseidrecord').html();
+	var curauditstep = $('#J_curauditstep').text();
+	var auditrecordcontent=$('#J_auditrecordcontent').val();
+	if(auditrecordcontent==''){
+		commonContainer.alert('请输入审批备注');
+		return false;
+	}
+	if(curauditstep == '二审'){// 判断当前审核类型为二审则弹出提示信息框
+		layer.confirm(
+			'房源确定为非可售，系统自动变更房源评价为无效', 
+			function(index){
+				layer.close(index);
+				jsonPostAjax(
+					unauditreviewUrl,
+					{	
+						"houseid": houseId,
+						"remark": $('#J_auditrecordcontent').val(),
+						"result":2,
+						"id":$('#J_btnfail').data('id')
+					},
+					function(result) {
+						$('#J_auditrecordcontent').val('');		
+						closeLayer();
+					}
+				);
+			}, 
+			function(){}
+		)
+		
+	}else{
+		jsonPostAjax(
+			unauditreviewUrl,
+			{	
+				"houseid": houseId,
+				"remark": $('#J_auditrecordcontent').val(),
+				"result":2,
+				"id":$('#J_btnfail').data('id')
+			},
+			function(result) {
+				$('#J_auditrecordcontent').val('');		
+				closeLayer();
+			}
+		);
+	}
+	
+})
+
+//点击待定按钮操作按钮
+$('#J_btndetermined').on('click',function(){
+	var houseId = $('#J_houseidrecord').html();
+	var auditrecordcontent=$('#J_auditrecordcontent').val();
+	if(auditrecordcontent==''){
+		commonContainer.alert('请输入审批备注');
+		return false;
+	}
+	jsonPostAjax(
+		unauditreviewUrl,
+		{	
+			"houseid": houseId,
+			"remark": $('#J_auditrecordcontent').val(),
+			"result":3,
+			"id":$('#J_btndetermined').data('id')
+		},
+		function(result) {
+			$('#J_auditrecordcontent').val('');	
+			closeLayer();
+		}
+	);
+})
+
+// 审核弹出框 查看电话 查看地址
+$(document).delegate(".phone-address","click",function(event){
+	
+	if(this.type == 'address'){// 根据type 判断查看地址
+		var houseId = $(this).data('seehouseid');
+		// 加载查看地址数据
+		checkAddress(houseId);
+		
+	}else if(this.type == 'phone'){// 根据type 判断查看电话
+		var houseId = $(this).data('seehouseid');
+		// 加载查看电话数据
+		checkPhone(houseId);
+	}
+})
+
+//审核弹出框 所属人点击弹出资料
+$('#J_username').on('click',function(){
+	var userId = $('#J_userid').val();
+	getUserStaffInfo(userId);
+})
+
+//审核弹出框 点击房源编号跳转详情页
+$('#J_houseidrecord').on('click',function(){
+	var houseId = $(this).html();
+	var houseidrecord = $('#J_businesstype').attr('data-businesstype')
+	if(houseidrecord=='租赁'){
+		$(this).attr('href',basePath+"/house/main/leasedetail.htm?houseid="+houseId);
+	}else{
+		$(this).attr('href',basePath+"/house/main/buydetail.htm?houseid="+houseId);
+	}
+})
+</script>

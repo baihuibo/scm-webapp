@@ -1,0 +1,154 @@
+#set($plugins = ["table","chosen","laydate","autoSearch","ztree"])
+<style>
+.table>thead>tr>th{vertical-align: middle !important;}
+</style>
+<div class="ibox">
+	<div class="ibox-title">
+		<h5>申请单查询</h5>
+		<div class="ibox-tools">
+			<a class="collapse-link ui-sortable"> 
+				<i class="fa fa-chevron-up"></i>
+			</a>
+		</div>
+	</div>
+	<div class="ibox-content">
+		<form id="J_query"  class="form-horizontal" role="form">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">申请单编号:</label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" id="J_applyNumber" name="applyNumber" placeholder="请输入付款申请单编号">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">合同编号:</label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" id="J_contractNumber" name="contractNumber" placeholder="请输入合同编号">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">申请人:</label>
+						<div class="col-sm-8">
+							<div class="input-group">
+								<input type="text" class="form-control" id="J_applyUserId" autocomplete="off" name="applyUserId">
+								<div class="input-group-btn">
+									<button type="button" class="btn btn-white dropdown-toggle"
+										data-toggle="">
+										<span class="glyphicon glyphicon-search search-caret"></span>
+									</button>
+									<ul class="dropdown-menu dropdown-menu-left" role="menu" style="padding-top: 0px; max-height: 375px; max-width: 800px; overflow: auto; width: auto; transition: 0.3s; left: -110px; right: auto; min-width: 145px;">
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">所属部门:</label>
+						<div class="col-sm-8">
+							<input id="J_deptLevel" name="deptlevel" type="hidden" class="form-control" value="">
+							<div class="input-group">
+								<input id="J_deptName" name="deptId" type="text" class="form-control radius-3 float-l" autocomplete="off">
+								<div class="input-group-btn">
+									<button id="J_deptSelect" data-toggle="dropdown" class="btn dropdown-toggle btn-dept float-l" type="button"><span class="caret"></span>
+	                            	</button>
+	                            </div>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">申请时间:</label>
+						<div class="col-sm-4">
+							<input id="J_applyStartTime" name="applyStartTime" class="J_chosen form-control" placeholder="">
+						</div>
+						<div style="float:left; padding:7px 3px;">-</div>
+						<div class="col-sm-4">
+							<input id="J_applyEndTime" name="applyEndTime" class="J_chosen form-control" placeholder="">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">客户/业主姓名:</label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" id="J_payerName" name="payerName" placeholder="请输入客户/业主姓名">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">款项:</label>
+						<div class="col-sm-8">
+							<select id="J_fundCode" name="fundCode" class="J_chosen form-control">
+								<option value="">全部</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">应付金额:</label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" id="J_payAmount" name="paidTotalAmount" placeholder="请输入应付金额">
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-12 text-cen">
+					<div class="form-group">
+						<button id="J_search" type="button" class="btn btn-success btn_size">查 询</button>
+						<button id="J_reset" type="reset" class="btn btn-white btn_size">重 置</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+<div class="ibox float-e-margins">
+	<div class="ibox-title">
+        <h5>申请单列表</h5>
+     </div>
+	<div class="ibox-content">
+		<div class="row">
+			<div class="tab-content">
+				<div class="row row-lg">
+					<div class="col-sm-12">
+						<table id="J_dataTable" class="table table-hover table-striped table-bordered table-condensed">
+							<thead>
+								<tr>
+									<th data-field="b">业务来源</th>
+									<th data-field="c">付款申请单编号</th>
+									<th data-field="d">合同编号</th>
+									<th class="col-sm-3 remark_all" data-field="e">所属部门</th>
+									<th data-field="f">付款状态</th>
+									<th data-field="g">款项</th>
+									<th data-field="h">应付（转）金额<br/>应付（转）日期</th>
+									<th data-field="i">审核状态</th>
+									<th data-field="j">最后审核人<br/>最后审核时间</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="$link.contextPath/resources/script/finance/todo/payment_apply_list.js"></script>
+<script type="text/javascript" src="$link.contextPath/resources/js/department.js"></script>

@@ -1,0 +1,96 @@
+#set($plugins = ["table","chosen","laydate"])
+<div class="ibox">
+	<div class="ibox-title"><h5 id="J_titledetail"></h5></div>
+	<div class="ibox-content">
+		<div class="tabs-container">
+			<ul class="nav nav-tabs block-tabs-nav">
+				<li class="" id="detailK"><a id="J_jbmessage">基本信息</a></li>
+				<li><i>|</i></li>
+				<li class="" id="lishiK"><a id="J_splishi">审批历史</a></li>
+				<li id="J_jiange"><i>|</i></li>
+				<li class="active" id="logK"><a id="J_czrizhi">操作日志</a></li>
+				<li><i>|</i></li>
+				<li class=""><a id="J_yejimessage">业绩信息</a></li>
+			</ul>
+		</div>
+		<div class="ibox float-e-margins" id="fukuan_log" style="display:block;">
+			<div class="row mb20">
+				<div class="row mb20">
+					<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>操作日志列表</div>
+				</div>
+				<div class="tab-content">
+					<div class="row row-lg">
+						<div class="col-sm-12">
+							<table id="J_fuk_dataTable" class="table table-hover table-striped table-bordered table-condensed">
+								<thead>
+									<tr>
+										<th data-field="a">序号</th>
+										<th data-field="b">操作人</th>
+										<th data-field="c">岗位</th>
+										<th data-field="d">所属部门</th>
+										<th data-field="e">操作类型</th>
+										<th data-field="f">操作内容</th>
+										<th data-field="g">操作时间</th>
+									</tr>
+								</thead>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="ibox float-e-margins" id="tuikuan_log" style="display:none;">
+			<div class="row mb20">
+				<div class="row mb20">
+					<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>操作日志列表</div>
+				</div>
+				<div class="tab-content">
+					<div class="row row-lg">
+						<div class="col-sm-12">
+							<table id="J_tuik_dataTable" class="table table-hover table-striped table-bordered table-condensed">
+								<thead>
+									<tr>
+										<th data-field="a">序号</th>
+										<th data-field="b">操作人</th>
+										<th data-field="c">岗位</th>
+										<th data-field="d">所属部门</th>
+										<th data-field="e">操作类型</th>
+										<th data-field="f">操作内容</th>
+										<th data-field="g">操作时间</th>
+									</tr>
+								</thead>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="ibox float-e-margins" id="zhuankuan_log" style="display:none;">
+			<div class="row mb20">
+				<div class="row mb20">
+					<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>操作日志列表</div>
+				</div>
+				<div class="tab-content">
+					<div class="row row-lg">
+						<div class="col-sm-12">
+							<table id="J_zhuank_dataTable" class="table table-hover table-striped table-bordered table-condensed">
+								<thead>
+									<tr>
+										<th data-field="a">序号</th>
+										<th data-field="b">操作人</th>
+										<th data-field="c">岗位</th>
+										<th data-field="d">所属部门</th>
+										<th data-field="e">操作类型</th>
+										<th data-field="f">操作内容</th>
+										<th data-field="g">操作时间</th>
+									</tr>
+								</thead>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="$link.contextPath/resources/script/finance/payment/apply/operationlog.js"></script>

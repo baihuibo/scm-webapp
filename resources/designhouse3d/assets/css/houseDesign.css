@@ -1,0 +1,249 @@
+*{
+margin:0;
+padding:0;
+}
+
+object:focus{ 
+	outline:none;
+}
+#flashContent {
+	display:none;
+}
+
+.tdiv{
+width:100%;
+height:38px;
+background:#222327;
+border-bottom:1px solid #222327;
+position:relative;
+}
+
+.tdiv_l{
+background:url(/static/images/ifuwo/phoenix_logo.png);
+width:141px;
+height:32px;
+float:left;
+position:absolute;
+top:3px;
+left:11px;
+}
+
+.tdiv_merchant_l{
+	/*width:141px;*/
+	height:32px;
+	float:left;
+	position:absolute;
+	top:4px;
+	left:4px;
+}
+
+.tdiv_c{
+background:url(/static/images/ifuwo/phoenix_info.png);
+width:308px;
+height:32px;
+float:left;
+position:absolute;
+top:3px;
+left:300px;
+*z-index:-1;
+}
+
+.tdiv_r{
+height:38px;
+border-left:1px solid #222327;
+float:right;
+font-size:14px;
+font-family: "宋体";
+position:relative;
+background:#222327;
+}
+
+.tdiv_r a{
+color:#d2d2d2;
+}
+
+.tdiv_rc{
+height:28px;
+line-height:28px;
+-webkit-border-radius:5px;   
+border-radius: 5px; 
+-moz-border-radius :5px;
+text-align:center;
+color:#aaa;
+float:left;
+margin-top:5px;
+margin-left:14px;
+}
+
+.tdiv_rc:hover{
+background:#656565;
+color:#e5e5e5!important;
+}
+
+.tdiv_rcin{
+color:#53b801;
+float:left;
+margin-top:11px;
+margin-left:10px;
+}
+.tdiv_rcb{
+height:28px;
+width:1px;
+line-height:28px;
+color:#898989;
+float:left;
+margin:6px;
+}
+.tdiv_rc a{
+	text-decoration: none;
+	color:#aaa;
+	padding:0 5px;
+}
+.tdiv_rl{
+width:260px;
+height:38px;
+border-right:1px solid #222327;
+line-height:38px;
+font-family:"宋体";
+font-size:12px;
+float:right;
+background:#222327;
+position:relative;
+
+}
+
+.qborder{
+width:21px;
+height:21px;
+overflow:hidden;
+border:2px solid #222327;
+position:relative;
+float:left;
+margin-top:8px;
+-webkit-border-radius:4px;   
+border-radius: 4px; 
+-moz-border-radius :4px;
+}
+.qqimg{
+position:absolute;
+top:-2px;
+left:-2px;
+
+}
+.qqqimg{
+width:90px;
+height:22px;
+margin-top:9px;
+float:left;
+margin-right:10px;
+border:1px solid #222327; 
+-webkit-border-radius:3px;   
+border-radius: 3px; 
+-moz-border-radius :3px;
+overflow:hidden;
+position:absolute;
+}
+.fcolor1{
+color:#80b258;
+float:left;
+}
+.fcolor2{
+color:#a6d283;
+}
+.fcolor3{
+margin-left:5px;
+color:#d2d2d2;
+float:left;
+
+}
+.fcolor4{
+color:#e5e5e5;
+}
+.fcolor6{
+color:#898989;
+}
+
+
+.clear{
+clear:both;
+}
+
+.soft-top{
+	border-bottom:1px solid #222327;
+	height:38px;
+	background:#222327;
+	position:relative;
+	width:100%;
+}
+.soft-logo{
+	background:url(/design/assets/logo.png);
+	cursor:pointer;
+	height:32px;
+	float:left;
+	margin-left:11px;
+    margin-top: 6px;
+    width: 200px;
+    background-repeat: no-repeat;
+}
+.soft-render{
+	float:left;
+	position:relative;
+}
+.ihide{
+	display:none;
+}
+.soft-return{
+	font-size:12px;
+	float:left;
+	margin-left:30px;
+	margin-top:13px;
+}
+.soft-return a{
+	color:#53b801;
+	text-decoration:none;
+}
+.soft-right{
+	float: right;
+	margin-top:7px;
+}
+.soft-righ ul{
+	list-style:none;
+}
+.soft-right li{
+	color:#53b801;
+	font-size:12px;
+	float:left;
+	line-height:17px;
+    list-style:none;
+	margin:3px 10px 0 10px;
+}
+.soft-right li a{
+	color:#fff;
+	display:inline-block;
+	margin-right:5px;    
+	text-decoration: none;
+}
+
+.soft-icon{
+	background:url(/static/images/ifuwo/head_icon.png) no-repeat;
+	display: inline-block;
+	float:left;
+	height:18px;
+	margin-right:5px;
+    vertical-align: middle;
+	width:20px;
+}
+
+.soft-down{
+	background-position:-35px -6px;
+}
+.soft-service{
+	background-position:-75px -6px;
+}
+.soft-help{
+	background-position:-115px -6px;
+}
+.soft-loginout{
+	background-position:-152px -6px;
+}
+

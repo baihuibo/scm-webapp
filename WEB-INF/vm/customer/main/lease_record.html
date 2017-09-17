@@ -1,0 +1,44 @@
+#set($plugins = ["table"])
+<!--买卖客源详情  -->
+<div class="ibox">
+	<div class="row">
+				<div class="tabs-container">
+					<ul class="nav nav-tabs">
+						<li class="active"><a data-toggle="tab" href="#tab-11">跟进记录</a></li>
+						<li class=""><a data-toggle="tab" href="#tab-12"> 带看记录</a></li>
+						<li class=""><a data-toggle="tab" href="#tab-13">分配记录</a></li>
+						<li class=""><a data-toggle="tab" href="#tab-14"> 推荐房源</a></li>
+						<li class=""><a data-toggle="tab" href="#tab-15"> 修改记录</a></li>
+					</ul>
+					<div class="tab-content" id="tab-content1">
+						<div id="tab-11" class="tab-pane active">
+							<table id="dataTable" class="table table-hover table-striped">
+							</table>
+						</div>
+						<div id="tab-12" class="tab-pane">
+							<table id="dataTable2" class="table table-hover table-striped">
+							</table>
+						</div>
+						<div id="tab-13" class="tab-pane">
+							<table id="dataTable" class="table table-hover table-striped">
+							</table>
+						</div>
+						<div id="tab-14" class="tab-pane">
+							<table id="distribution-record" class="table table-hover  table-striped" data-query-params="queryParams" data-mobile-responsive="true" data-pagination="true" data-icon-size="outline" data-striped="true" data-search="false">
+								<thead>
+									<tr>
+										<th data-field="id">客源编号</th>
+										<th data-field="name">操作人</th>
+										<th data-field="type">调配类型</th>
+										<th data-field="beforeowner">前归属人</th>
+										<th data-field="afterowner">变更后归属人</th>
+										<th data-field="time">操作时间</th>
+
+									</tr>
+								</thead>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+</div>

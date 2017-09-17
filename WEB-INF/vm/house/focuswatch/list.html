@@ -1,0 +1,656 @@
+#set($plugins = ["table","chosen","laydate","ztree","autoSearch"])
+<!-- 查询条件 begin -->
+<div class="ibox">
+    <div class="ibox-title">
+        <h5>集中看房管理</h5>
+        <div class="ibox-tools">
+            <a class="collapse-link ui-sortable"><i class="fa fa-chevron-up"></i></a>
+        </div>
+    </div>
+    <div class="ibox-content">
+        <div class="row">
+        	#if($shiro.hasPermission("SCM:HOUSE:SINGLE:FEEDBACK"))
+				<input type="hidden" value="1" id="temp_feedback"></input>
+			#end
+			#if($shiro.hasPermission("SCM:HOUSE:FOCUS:VIEW"))
+				<input type="hidden" value="1" id="temp_view"></input>
+			#end
+			#if($shiro.hasPermission("SCM:HOUSE:FOCUS:UPDATE"))
+				<input type="hidden" value="1" id="temp_update"></input>
+			#end
+			#if($shiro.hasPermission("SCM:HOUSE:FOCUS:CANCEL"))
+				<input type="hidden" value="1" id="temp_cancel"></input>
+			#end
+			#if($shiro.hasPermission("SCM:CUSTOM:BUY_SHOW_FEEDBACK"))
+				<input type="hidden" value="1" id="temp_buy_feedback"></input>
+			#end
+            <form id="J_lease_form" class="form-horizontal">
+             <div clas="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">区域：</label>
+                        <div class="col-sm-8">
+                            <select name="areaids" id="areaids" class="form-control">
+                            	<option value="">全部</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">商圈：</label>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <input type="text" name="" class="form-control" id="J_business"
+                                       autocomplete="off">
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-white dropdown-toggle" data-toggle="">
+                                        <span class="glyphicon glyphicon-search search-caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-right" role="menu"></ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">楼盘：</label>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="J_housename" id="J_housename"
+                                       autocomplete="off">
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-white dropdown-toggle" data-toggle="">
+                                        <span class="glyphicon glyphicon-search search-caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+ 			</div>
+ 			<div clas="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">房源编号：</label>
+                        <div class="col-sm-8">
+                            <input id="houseid" name="houseid" class="form-control" placeholder="">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">所属部门：</label>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <input id="J_belongdeptLevel" type="hidden">
+                                <input id="J_belongdeptName" type="text"
+                                       class="form-control radius-3" autocomplete="off">
+                                <div class="input-group-btn">
+                                    <button id="J_belongdeptSelect" data-toggle="dropdown"
+                                            class="btn dropdown-toggle btn-dept"
+                                            type="button"><span class="caret"></span></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">所属人：</label>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <input type="text" class="form-control J_belongperson" id="belongid">
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-white dropdown-toggle"
+                                            data-toggle="dropdown">
+                                        <span class="glyphicon glyphicon-search search-caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+			</div>
+			<div clas="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">发起人：</label>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <input type="text" class="form-control J_createby" id="createby">
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-white dropdown-toggle"
+                                            data-toggle="dropdown">
+                                        <span class="glyphicon glyphicon-search search-caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">联系人：</label>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <input type="text" class="form-control J_connectid" id="connectid">
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-white dropdown-toggle"
+                                            data-toggle="dropdown">
+                                        <span class="glyphicon glyphicon-search search-caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">状态：</label>
+                        <div class="col-sm-8">
+                            <select id="status" name="status" class="J_chosen form-control" data-placeholder="请选择">
+                                <option value="">全部</option>
+                                <option value="1">已发起</option>
+                                <option value="2">已撤销</option>
+                                <option value="3">已开始</option>
+                                <option value="4">可反馈</option>
+                                <option value="5">已过期</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+			</div>
+			<div clas="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">起始时间：</label>
+                        <div class="col-sm-8" layout="row">
+                            <div flex>
+                                <input id="beginstarttime" name="beginstarttime" class="form-control"
+                                       onclick="laydate({istime: false,max:getMaxDate('#beginendtime'), format:'YYYY-MM-DD'})">
+                            </div>
+                            <div class="split">-</div>
+                            <div flex>
+                                <input id="beginendtime" name="beginendtime" class="form-control"
+                                       onclick="laydate({istime: false, min:getMinDate('#beginstarttime','YYYY-MM-DD'),format: 'YYYY-MM-DD'})">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">结束时间：</label>
+                        <div class="col-sm-8" layout="row">
+                            <div flex>
+                                <input id="endstarttime" name="endstarttime" class="form-control"
+                                       onclick="laydate({istime: false, max:getMaxDate('#endendtime'), format: 'YYYY-MM-DD'})">
+                            </div>
+                            <div class="split">-</div>
+                            <div flex>
+                                <input id="endendtime" name="endendtime" class="form-control"
+                                       onclick="laydate({istime: false, min:getMinDate('#endstarttime','YYYY-MM-DD'), format: 'YYYY-MM-DD'})">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+			</div>
+			<div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">规划用途：</label>
+                        <div class="col-sm-11" id="J_planningPurpose">
+                        </div>
+                    </div>
+                </div>
+			</div>
+                <!-- 查询按钮 -->
+                <div class="col-md-12 text-center">
+                    <div class="form-group">
+                        <button type="button" id="J_search" class="btn btn-success btn_size">查 询</button>
+                        <button type="reset" id="J_reset_lease" class="btn btn-white">重 置</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- 查询条件end -->
+
+<!-- 列表  begin -->
+<div class="ibox float-e-margins">
+    <div class="ibox-title"><h5>集中看房列表</h5></div>
+    <div class="ibox-content">
+        <div class="row row-lg">
+            <div class="col-sm-12">
+                <!-- Example Pagination -->
+                <div class="example-wrap ptb10">
+                    <p></p>
+                    <table id="J_dataTable" class="table table-hover  table-striped" data-query-params="queryParams"
+                           data-mobile-responsive="true" data-pagination="true" data-icon-size="outline"
+                           data-striped="true" data-search="false">
+                        <thead>
+                        <tr>
+                            <th data-field="id" rowspan="2">集中看房编号</th>
+                            <th data-field="houseId" rowspan="2">房源编号</th>
+                            <th data-field="status" rowspan="2">状态</th>
+                            <th data-field="beginTime" rowspan="2">起始时间</th>
+                            <th data-field="endTime" rowspan="2">结束时间</th>
+                            <th data-field="propertyType" rowspan="2">规划用途</th>
+                            <th data-field="singleNum" colspan="2">集中看房反馈</th>
+                            <th data-field="showNum" rowspan="2">发起人</th>
+                            <th data-field="userName" rowspan="2">联系人</th>
+                            <th data-field="connectName" rowspan="2">操作</th>
+                        </tr>
+                        <tr>
+                            <th data-field="singleNum">已空看数</th>
+                            <th data-field="showNum">已带看数</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <!-- End Example Pagination -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 集中看房详情 start -->
+<div id="J_detail_singlewatch_layer" class="ibox-content" style="display:none;">
+    <form class="form-horizontal">
+        <div class="form-group">
+            <div class="col-sm-6">
+                <label class="col-sm-4 control-label">房源编号：</label>
+                <div class="col-sm-7">
+                    <div class="form-control-static" id="detail_houseid"></div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <label class="col-sm-4 control-label">详细地址：</label>
+                <div class="col-sm-7">
+                    <div class="form-control-static" id="detail_address"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="hr-line-dashed"></div>
+
+        <div class="form-group">
+            <div class="col-sm-6">
+                <label class="col-sm-4 control-label">所属人：</label>
+                <div class="col-sm-7">
+                    <div class="form-control-static" id="detail_belongname"></div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <label class="col-sm-4 control-label">集中看房状态：</label>
+                <div class="col-sm-7">
+                    <div class="form-control-static" id="detail_status"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="hr-line-dashed"></div>
+
+        <div class="form-group">
+            <div class="col-sm-6">
+                <label class="col-sm-4 control-label">起始时间：</label>
+                <div class="col-sm-7">
+                    <div class="form-control-static" id="detail_begintime_static"></div>
+                    <input id="detail_begintime" name="detail_begintime" class="form-control"
+                           onclick="laydate({istime: true,fixed:true,max:getMaxDate('#detail_endtime'), format: 'YYYY-MM-DD hh:mm:ss'})">
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <label class="col-sm-4 control-label">结束时间：</label>
+                <div class="col-sm-7">
+                    <div class="form-control-static" id="detail_endtime_static"></div>
+                    <input id="detail_endtime" name="detail_endtime" class="form-control"
+                           onclick="laydate({istime: true,fixed:true,min:getMinDate('#detail_begintime','YYYY-MM-DD hh:mm:ss'),format: 'YYYY-MM-DD hh:mm:ss'})">
+                </div>
+            </div>
+        </div>
+
+        <div class="hr-line-dashed"></div>
+
+        <div class="form-group">
+            <div class="col-sm-6">
+                <label class="col-sm-4 control-label">联系人：</label>
+                <div class="col-sm-7">
+                    <div class="form-control-static" id="detail_connect_static"></div>
+                    <div class="input-group" id="detail_connect_input_group">
+                        <input type="text" class="form-control" id="detail_connect" autocomplete="off">
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown">
+                                <span class="glyphicon glyphicon-search search-caret"></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right" role="menu"
+                                style="padding-top: 0px; max-height: 116px; max-width: 800px; overflow: auto; width: auto; transition: 0.3s;">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <label class="col-sm-4 control-label">发起人：</label>
+                <div class="col-sm-7">
+                    <div id="detail_createname" class="form-control-static"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="hr-line-dashed"></div>
+
+        <div class="form-group">
+       	 	<div class="col-sm-6">
+	            <label class="col-sm-4 control-label">看房结果-空看数：</label>
+	            <div class="col-sm-7">
+	                <div class="form-control-static"><a id="detail_singlenum" ></a></div>
+	            </div>
+             </div>
+             <div class="col-sm-6">
+	            <label class="col-sm-4 control-label">看房结果-带看数：</label>
+	            <div class="col-sm-7">
+	                <div class="form-control-static"><a id="detail_showNum"></a></div>
+	            </div>
+            </div>
+        </div>
+
+        <div class="hr-line-dashed"></div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">备注：</label>
+            <div class="col-sm-9">
+                <div class="form-control-static" id="detail_memo_static" style="word-wrap: break-word;"></div>
+                <textarea class="form-control" id="detail_memo" name="memo" maxlength="500"></textarea>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- 集中看房详情 end -->
+
+<!-- 空看反馈 -->
+#parse("/house/focuswatch/singleback.html")
+
+<!-- 带看反馈弹框 -->
+#parse("/house/focuswatch/showback.html")
+
+<!--带看反馈表单-->
+<div id="feedback" class="ibox-content layui-layer-wrap" style="display:none">
+    <h4 class="pl10 font-bold font-blue info-tit">客户信息</h4>
+
+    <form class="form-horizontal">
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">
+                客户信息：
+            </label>
+            <div class="col-sm-9">
+                <div class="form-control-static" id="CustomerInfor"></div>
+            </div>
+        </div>
+
+        <div class="hr-line-dashed"></div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">
+                <span class="text-danger">*</span>
+                返回店面时间：
+            </label>
+            <div class="col-sm-9">
+                <input type="text" id="returnTime" readonly="readonly" class="form-control">
+            </div>
+        </div>
+
+        <div class="hr-line-dashed"></div>
+
+        <div class="form-group" id="upLoadLile" style="dispaly:none;">
+            <label class="col-sm-2 control-label">附件上传：</label>
+            <div class="col-sm-9">
+                <button id="selectFile" type="button" class="btn btn-success pr5">选择文件</button>
+                <div id="fileHidden" style="position:absolute;visibility:hidden;">
+                    <input type="file" id="upFile">
+                </div>
+                <span>（最大5兆，格式：xlsx、doc、pdf、pptx、txt、bmp、jpg、svg、psd、rar）</span>
+            </div>
+        </div>
+
+        <div class="hr-line-dashed"></div>
+
+        <div class="form-group" id="upFileName" style="dispaly:none;">
+            <label class="col-sm-2 control-label"></label>
+            <div class="col-sm-9" id="upFileList" style="max-height:100px;overflow:auto;"></div>
+        </div>
+    </form>
+
+    <h4 class="pl10 font-bold font-blue info-tit">带看房源</h4>
+    <div class="col-md-12">
+        <div class="font-bold font-blue">
+            <a id="addHouse" class="btn-green btn-bitbucket add-icon">
+                <i class="glyphicon glyphicon-plus"></i> 添加房源
+            </a>
+        </div>
+    </div>
+    <div class="tab-pane pt6">
+        <div class="bootstrap-table" style="max-height:150px;overflow-y:auto;">
+            <table id="seeListings" class="table">
+                <thead>
+                <tr>
+                    <th data-field="houseid">房源编号</th>
+                    <th data-field="address">商圈</th>
+                    <th data-field="housetype">户型</th>
+                    <th data-field="housesize">面积</th>
+                    <th data-field="floor">层数</th>
+                    <th data-field="orientation">朝向</th>
+                    <th data-field="price">价格</th>
+                    <th data-field="leadresult">带看结果</th>
+                    <th data-field="opt">操作</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+    <!--<div class="tab-pane pt6">
+        <table id="addseeListings" class="table table-hover table-striped"></table>
+    </div>-->
+</div>
+<!--带看反馈表单-->
+#parse("/public/add_house_dialog.html")
+
+<!--带看结果反馈-->
+<div class="ibox-content" id="backResults" style="display:none">
+    <h4 class="pl10 font-bold font-blue info-tit">带看结果反馈</h4>
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">带看结果：</label>
+            <div class="radio radio-primary radio-inline">
+                <input type="radio" id="inlineRadio" name="takeResults" value="1" checked>
+                <label for="inlineRadio">有意向</label>
+            </div>
+            <div class="radio radio-primary radio-inline">
+                <input type="radio" id="inlineRadio1" name="takeResults" value="2">
+                <label for="inlineRadio1">无意向</label>
+            </div>
+            <div class="radio radio-primary radio-inline">
+                <input type="radio" id="inlineRadio2" name="takeResults" value="3">
+                <label for="inlineRadio2">未看</label>
+            </div>
+        </div>
+
+        <div class="hr-line-dashed"></div>
+
+        <div class="form-group" id="reason" style="display:none;">
+            <label class="col-sm-2 control-label">
+                <span class="text-danger">*</span>
+                原因：
+            </label>
+            <div class="col-sm-9">
+                <textarea class="form-control" maxlength="200" id="noSeeReason" placeholder="请输入原因"></textarea>
+            </div>
+        </div>
+    </form>
+</div>
+<!--带看结果反馈-->
+
+<!--空看列表-->
+<div class="ibox-content" id="single-back-detail" style="display:none;height: 300px;overflow-y: scroll;">
+    <h4 class="pl10 font-bold font-blue info-tit">空看列表</h4>
+    <div class="bootstrap-table">
+        <table class="table">
+            <thead>
+            <tr>
+                <th data-field="emptyid">空看编号</th>
+                <th data-field="houseid">房源编号</th>
+                <th data-field="status">状态</th>
+                <th data-field="feedbacknum">反馈套数/空看套数</th>
+                <th data-field="createbyname">空看人</th>
+                <th data-field="shopgroupname">空看部门</th>
+                <th data-field="goouttime">外出时间</th>
+                <th data-field="backtime">返回时间</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+<!--空看列表-->
+
+<!--带看列表-->
+<div class="ibox-content" id="show-back-detail" style="display:none;height: 300px;overflow-y: scroll;">
+    <h4 class="pl10 font-bold font-blue info-tit">带看列表</h4>
+    <div class="bootstrap-table">
+        <table class="table">
+            <thead>
+            <tr>
+                <th data-field="id">带看单号</th>
+                <th data-field="businesstype">业务类型</th>
+                <th data-field="customername">客户姓名</th>
+                <th data-field="leadusersname">带看人</th>
+                <th data-field="accompany_name">陪看人</th>
+                <th data-field="begin_time">预计带看时间<br>返回店面时间</th>
+                <th data-field="showingsnum">看房量</th>
+                <th data-field="leadstatus">带看状态</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+<!--带看列表-->
+
+<div class="ibox-content" id="show-feedback"
+     style="margin:0 10px 0 10px; display:none;height: 400px;overflow: scroll;">
+    <!-- 房源信息 begin -->
+    <table class="table table-hover table-striped">
+        <thead>
+        <tr>
+            <th>房源编号</th>
+            <th>楼盘</th>
+            <th>详细地址</th>
+            <th>反馈时间</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
+                <a href="javascript:" target="_blank"
+                   data-houselink="emptyhouselist[0].houseid"
+                   data-housekind="emptyhouselist[0].housekind"
+                   data-bind="emptyhouselist[0].houseid"></a>
+            </td>
+            <td data-bind="emptyhouselist[0].building"></td>
+            <td>
+                <a href="javascript:"
+                   data-showaddr="emptyhouselist[0].houseid">查看</a>
+            </td>
+            <td data-bind="emptyhouselist[0].feedback"></td>
+        </tr>
+        </tbody>
+    </table>
+    <!-- 基本信息 begin -->
+    <form class="form-horizontal">
+
+        <div class="form-group">
+            <div class="col-sm-6">
+                <label class="col-sm-4 control-label">状态：</label>
+                <div class="col-sm-7">
+                    <div class="form-control-static" data-bind="strstatus"></div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <label class="col-sm-4 control-label">空看部门：</label>
+                <div class="col-sm-7">
+                    <div class="form-control-static" data-bind="shopgroupname"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="hr-line-dashed"></div>
+
+        <div class="form-group">
+            <div class="col-sm-6">
+                <label class="col-sm-4 control-label">外出时间：</label>
+                <div class="col-sm-7">
+                    <div class="form-control-static" data-bind="goouttime"></div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <label class="col-sm-4 control-label">预计返回时间：</label>
+                <div class="col-sm-7">
+                    <div class="form-control-static" data-bind="expecttime"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="hr-line-dashed"></div>
+
+        <div class="form-group">
+            <div class="col-sm-6">
+                <label class="col-sm-4 control-label">空看人：</label>
+                <div class="col-sm-7">
+                    <div class="form-control-static">
+                        <a href="javascript:"
+                           data-userinfo="createby"
+                           data-bind="createbyname"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <label class="col-sm-4 control-label">返回时间：</label>
+                <div class="col-sm-7">
+                    <div class="form-control-static" data-bind="backtime"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="hr-line-dashed"></div>
+
+        <div class="form-group">
+            <div class="col-sm-6">
+                <label class="col-sm-4 control-label">耗时：</label>
+                <div class="col-sm-7">
+                    <div class="form-control-static" data-bind="costtime"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <!-- 基本信息 end -->
+</div>
+#parse("/house/singlewatch/feedback.html")
+<!-- 列表  end -->
+<script type="text/javascript" src="$link.contextPath/resources/js/department.js"></script>
+<script type='text/javascript' src="$link.contextPath/resources/script/house/focuswatch/list.js"></script>
+<script type='text/javascript' src="$link.contextPath/resources/script/house/public/check_address.js"></script>
+
+
+
+
+

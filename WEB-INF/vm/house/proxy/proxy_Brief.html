@@ -1,0 +1,59 @@
+
+<div ng-controller="proxyBriefCtrl as $ctrl" ng-cloak>
+<div class="ibox">
+	<div class="bs-callout bs-callout-warning">
+		<h4>委托信息查看</h4>
+	</div>
+	<div class="ibox-content">		
+		<!-- <div class="row ptb10">
+			<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>委托书信息</div>
+		</div> -->
+		<div class="row">
+			<div class="bootstrap-table table-list">
+				<div class="fixed-table-container">
+					<table id="dataTablePeople"
+						class="table table-hover  table-striped"
+						style="border-bottom: none">
+						<thead>
+							<tr>
+								<th class="col-md-1">委托书编号</th>
+								<th class="col-md-1">签委托人</th>
+								<th class="col-md-1">委托部门</th>
+								<th class="col-md-1">状态</th>														
+								<th class="col-md-1">一次审核人</br>所在部门</th>
+								<th class="col-md-2">一次审核结果</th>
+								<th class="col-md-1">二次审核人</br>所在部门</th>
+								<th class="col-md-2">二次审核结果</th>
+								<th class="col-md-1">委托时间</th>
+								<th class="col-md-1">作废人</br>作废时间</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>{{$ctrl.detail.proxyCode}}</td>
+								<td>{{$ctrl.detail.mandatorName}}</td>
+								<td>{{$ctrl.detail.proxyDeptName}}</td>
+								<td>{{$ctrl.detail.proxyStatusStr}}</td>
+								<td>{{$ctrl.detail.firstAuditBy}}</br>{{$ctrl.detail.firstAuditByDeptName}}</td>
+								<td>{{$ctrl.detail.firstAuditStatusName}}</td>
+								<td>{{$ctrl.detail.secondAuditBy}}</br>{{$ctrl.detail.secondAuditByDeptName}}</td>
+								<td>{{$ctrl.detail.secondAuditStatusName}}</td>
+								<td>{{$ctrl.detail.createTime}}</td>
+								<td>{{$ctrl.detail.rejectByName}}</br>{{$ctrl.detail.rejectTime}}</td>
+							</tr>																							
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+<script src="/sales/resources/script/house/inquisition/pic-enlarge/script.js"></script>
+<script src="$link.contextPath/resources/script/sign/sign-common.module.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/slider.component.js"></script>
+<script src="$link.contextPath/resources/js/viewer.js"></script>
+<script src="$link.contextPath/resources/js/jquery.bxslider.js"></script>
+<link rel="stylesheet" type="text/css" href="$link.contextPath/resources/css/viewer.css">
+<!-- <link rel="stylesheet" type="text/css" href="$link.contextPath/resources/css/jquery.bxslider.css"> -->
+<script src="$link.contextPath/resources/script/house/proxy/proxy_brief.module.js"></script>

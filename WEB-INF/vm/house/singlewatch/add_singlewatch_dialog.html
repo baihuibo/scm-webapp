@@ -1,0 +1,59 @@
+
+<div id="J_editsinglewatch_layer" class="ibox-content" style="margin:0 10px 0 10px; display:none;">
+	<!-- <div class="row">
+		<input type="button" id="J_singlewatch_add_btn" name="singleouttime" class="form-control w160" value="添加空看" />
+	</div> -->
+	<h4 class="pl10 font-bold font-blue info-tit"></h4>
+	<div class="col-md-12">
+		<div class="font-bold font-blue">
+			<a id="J_singlewatch_addHouse" class="btn-green btn-bitbucket add-icon">
+				<i class="glyphicon glyphicon-plus"></i> 添加房源
+			</a>
+		</div>
+	</div>
+	<div class="tab-pane pt6">
+		<div class="bootstrap-table" style="height:300px;overflow-y:auto;">
+			<table id="seeListings" class="table table-hover table-striped singlewatch_ath table-bordered">
+				<thead>
+					<tr>
+						<th data-field="houseid">房源编号</th>
+						<th data-field="building">楼盘名</th>
+						<th data-field="bedroom">户型</th>
+						<th data-field="buildarea">建筑面积</th>
+						<th data-field="entrustprice">委托价</th>
+						<th data-field="heading">朝向</th>
+						<th data-field="opt">操作</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+	</div><!-- J_singlewatch_dataTable -->
+	
+	<form id="J_form_settime" class="form-horizontal form_settime_ath" style="width:90%;">
+		<div class="col-md-12 m-b-sm pt6 setsingletime_ath">
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">外出时间：</label>
+					<input id="J_singleouttime" name="singleouttime" class="form-control w160" value="" />
+					<!-- <input id="J_singleouttime" name="singleouttime" class="form-control w160" onclick="laydate({istime: true, min: laydate.now(0, 'YYYY-MM-DD hh:mm'), format: 'YYYY-MM-DD hh:mm'})" value="" /> -->
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><font color="#ff0000">预计返回时间：</font></label>
+					<input id="J_singleestimatetime" name="singleestimatetime" class="form-control w160"/>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-12 m-b-sm">
+			<div class="bootstrap-table">
+				<div id="prompt" style="color:#ff0000;">注：至少保留一条房源信息</div>
+				<input id="J_guide_houses" type="hidden" value="">
+			</div>
+		</div>
+	</form>
+</div>
+<!--带看反馈表单-->
+#parse("/house/singlewatch/add_house_dialog.html")
+
+<script type='text/javascript' src="$link.contextPath/resources/script/house/singlewatch/add_singlewatch_dialog.js"></script>

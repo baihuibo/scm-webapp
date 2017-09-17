@@ -1,0 +1,139 @@
+<style>
+	.backlog{  
+		width: 130px;
+	    height: 70px;
+	    background: #EEEEEE;
+	    -moz-border-radius: 100px / 50px;
+	    -webkit-border-radius: 100px / 50px;
+	    border-radius: 100px / 50px;
+	    color: #000;
+	    text-align: center;
+    }
+    .lh30{
+    	  line-height: 42px;
+    }
+    .mt90{
+    	margin-top: 90px;
+    }
+    .float-e-margins h4{
+    	padding: 10px;
+    	color: #000;    
+    	margin-bottom: 30px;
+    }
+    dd{font-weight: 700;font-size: 16px;}
+</style>
+<!-- 我的待办-->
+<div class="ibox float-e-margins">
+	<div class="ibox-content">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="float-e-margins">
+					<h4>目前共有<span id="J_totalTodoCount" class="color_red">0</span>个待办事项</h4>
+					<div class="row">
+						<div class="col-md-12 m-t" style="padding: 0 50px;">
+							#if ($shiro.hasPermission("SCM:FINANCE:TODO:COLLECT:BATCH"))
+							<a href="/sales/finance/todo/batchList.htm" target="_blank">
+								<div class="col-sm-2">
+									<dl class="backlog">
+										<dt class="lh30">收款批次</dt>
+										<dd><span id="J_collectBatchCount" class="color_red"></span></dd>
+									</dl>
+								</div>
+							</a>
+							#end
+							
+							#if ($shiro.hasPermission("SCM:FINANCE:TODO:RECEIPT:RETURN"))
+							<a href="/sales/finance/todo/receiptReturnList.htm" target="_blank">
+								<div class="col-sm-2">
+									<dl class="backlog">
+										<dt class="lh30">收据回收</dt>
+										<dd><span id="J_receiptReturnCount" class="color_red"></span></dd>
+									</dl>
+								</div>
+							</a>
+							#end
+							
+							#if ($shiro.hasPermission("SCM:FINANCE:TODO:COLLECT:POS:AUDIT"))
+							<a href="/sales/finance/todo/posCollectList.htm" target="_blank">
+								<div class="col-sm-2">
+									<dl class="backlog">
+										<dt class="lh30">POS机查账</dt>
+										<dd><span id="J_posCollectCount" class="color_red"></span></dd>
+									</dl>
+								</div>
+							</a>
+							#end
+							
+							#if ($shiro.hasPermission("SCM:FINANCE:TODO:COLLECT:AUDIT"))
+							<a href="/sales/finance/todo/collectList.htm" target="_blank">
+								<div class="col-sm-2">
+									<dl class="backlog">
+										<dt class="lh30">出纳查账</dt>
+										<dd><span id="J_collectCount" class="color_red"></span></dd>
+									</dl>
+								</div>
+							</a>
+							#end
+							
+							#if ($shiro.hasPermission("SCM:FINANCE:TODO:PAYMENT:APPLY"))
+							<a href="/sales/finance/todo/paymentApplyList.htm?paymentType=1" target="_blank">
+								<div class="col-sm-2">
+									<dl class="backlog">
+										<dt class="lh30">付款申请</dt>
+										<dd><span id="J_paymentApplyCount" class="color_red"></span></dd>
+									</dl>
+								</div>
+							</a>
+							#end
+							
+							#if ($shiro.hasPermission("SCM:FINANCE:TODO:REFUND:APPLY"))
+							<a href="/sales/finance/todo/paymentApplyList.htm?paymentType=2" target="_blank">
+								<div class="col-sm-2">
+									<dl class="backlog">
+										<dt class="lh30">退款申请</dt>
+										<dd><span id="J_refundApplyCount" class="color_red"></span></dd>
+									</dl>
+								</div>
+							</a>
+							#end
+							
+							#if ($shiro.hasPermission("SCM:FINANCE:TODO:TRANSFER:APPLY"))
+							<a href="/sales/finance/todo/paymentApplyList.htm?paymentType=3" target="_blank">
+								<div class="col-sm-2">
+									<dl class="backlog">
+										<dt class="lh30">转款申请</dt>
+										<dd><span id="J_transferApplyCount" class="color_red"></span></dd>
+									</dl>
+								</div>
+							</a>
+							#end
+							
+							#if ($shiro.hasPermission("SCM:FINANCE:TODO:PAYMENT:PAYFAILED"))
+							<a href="/sales/finance/todo/payFailedPaymentList.htm" target="_blank">
+								<div class="col-sm-2">
+									<dl class="backlog">
+										<dt class="lh30">付款失败</dt>
+										<dd><span id="J_payFailedPaymentCount" class="color_red"></span></dd>
+									</dl>
+								</div>
+							</a>
+							#end
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+    var todo_collect_batch = $shiro.hasPermission("SCM:FINANCE:TODO:COLLECT:BATCH"); // 收款批次
+    var todo_receipt_return = $shiro.hasPermission("SCM:FINANCE:TODO:RECEIPT:RETURN"); // 收据回收
+    var todo_collect_pos_audit = $shiro.hasPermission("SCM:FINANCE:TODO:COLLECT:POS:AUDIT"); // pos查账
+    var todo_collect_audit = $shiro.hasPermission("SCM:FINANCE:TODO:COLLECT:AUDIT"); // 出纳查账
+    var todo_payment_apply = $shiro.hasPermission("SCM:FINANCE:TODO:PAYMENT:APPLY"); // 付款申请
+    var todo_refund_apply = $shiro.hasPermission("SCM:FINANCE:TODO:REFUND:APPLY"); // 退款申请
+    var todo_transfer_apply = $shiro.hasPermission("SCM:FINANCE:TODO:TRANSFER:APPLY"); // 转款申请
+    var todo_payment_payfailed = $shiro.hasPermission("SCM:FINANCE:TODO:PAYMENT:PAYFAILED"); // 付款失败
+</script>
+<script type="text/javascript" src="$link.contextPath/resources/script/finance/todo/list.js"></script>

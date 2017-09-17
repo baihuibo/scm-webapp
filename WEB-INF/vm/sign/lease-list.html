@@ -1,0 +1,240 @@
+<!--
+ 签约管理 -> 租赁合同管理
+ -->
+#set($plugins = ["table","chosen","laydate","ztree","autoSearch"])
+<!-- 查询条件 begin -->
+<div class="ibox">
+	<div class="ibox-title">
+		<h5>租赁合同查询</h5>
+		<div class="ibox-tools">
+			<a class="collapse-link ui-sortable"><i class="fa fa-chevron-up"></i>
+			</a>
+		</div>
+	</div>
+	<div class="ibox-content">
+		<form class="form-horizontal normal" role="form" id="J_contract_form">
+		
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">合同编号：</label>
+					<div class="col-sm-8">
+						<input id="J_contractCode" name="contractCode" class="form-control" placeholder="请输入合同编号">
+					</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">校验编码：</label>
+					<div class="col-sm-8">
+						<input id="J_conId" name="conId" class="form-control" placeholder="请输入校验编码">
+					</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">客户姓名：</label>
+						<div class="col-sm-8">
+							<input id="J_customerName" name="customerName" class="form-control" placeholder="请输入客户姓名">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">业主姓名：</label>
+						<div class="col-sm-8">
+							<input id="J_ownerName" name="ownerName" class="form-control" placeholder="请输入业主姓名">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">提交日期：</label>
+						<div class="col-sm-8" layout="row">
+							<div flex><input id="J_begindate" name="begindate" class="form-control" placeholder="请输入开始日期"></div>
+							<div class="split">-</div>
+							<div flex><input id="J_enddate" name="enddate" class="form-control" placeholder="请输入结束日期"></div>
+						</div>                        
+					</div>
+				</div>
+				
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">审核状态：</label>
+						<div class="col-sm-8">
+							<select id="J_auditStatus" name="auditStatus" class="J_chosen form-control" data-placeholder="全部">
+								<option value="">全部</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">业主佣金收入：</label>
+						<div class="col-sm-8" layout="row">
+							<div flex><input id="J_ownerCommissionBegin" name="ownerCommissionBegin" class="form-control"></div>
+							<div class="split">-</div>
+							<div flex><input id="J_ownerCommissionEnd" name="ownerCommissionEnd" class="form-control"></div>
+							<div class="split">元</div>
+						</div>                        
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">客户佣金收入：</label>
+						<div class="col-sm-8" layout="row">
+							<div flex><input id="J_customerCommissionBegin" name="customerCommissionBegin" class="form-control"></div>
+							<div class="split">-</div>
+							<div flex><input id="J_customerCommissionEnd" name="customerCommissionEnd" class="form-control"></div>
+							<div class="split">元</div>
+						</div>                        
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">房屋租金：</label>
+						<div class="col-sm-8" layout="row">
+							<div flex><input id="J_rentStandardBegin" name="rentStandardBegin" class="form-control"></div>
+							<div class="split">-</div>
+							<div flex><input id="J_rentStandardEnd" name="rentStandardEnd" class="form-control"></div>
+							<div class="split">元</div>
+						</div>                        
+					</div>
+				</div>
+			</div>
+			<div class="row">			
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">成交部门：</label>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <input id="J_deptLevel" type="hidden">
+                                <input id="J_deptName" type="text" class="form-control radius-3" autocomplete="off">
+                                <div class="input-group-btn">
+                                    <button id="J_deptSelect" data-toggle="dropdown" class="btn dropdown-toggle btn-dept" type="button"><span class="caret"></span></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">成交人：</label>
+						<div class="col-sm-8">
+							<div class="input-group">
+								<input type="text" class="form-control" id="J_sendee" name="belongUserId" autocomplete="off">
+								<div class="input-group-btn">
+									<button type="button" class="btn btn-white dropdown-toggle"
+										data-toggle="">
+										<span class="glyphicon glyphicon-search search-caret"></span>
+									</button>
+									<ul class="dropdown-menu dropdown-menu-right" role="menu"
+										style="padding-top: 0px; max-height: 375px; max-width: 800px; overflow: auto; width: auto; transition: 0.3s; left: -110px; right: auto; min-width: 145px;">
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">合同状态：</label>
+						<div class="col-sm-8">
+							<select id="J_contractStatus" name="contractStatus" class="J_chosen form-control" data-placeholder="全部">
+								<option value="">全部</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">到期合同：</label>
+						<div class="col-sm-8">
+							<select id="J_expire_contract" name="status" class="J_chosen form-control" data-placeholder="全部">
+								<option value="">全部</option>
+								<option value="1">一个月</option>
+								<option value="2">二个月</option>
+								<option value="3">三个月</option>
+							</select>
+						</div>
+					</div>
+				</div>
+                <!-- <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">小区名称：</label>
+						<div class="col-sm-8">
+							<div class="input-group">
+								<input type="text" name="communityId" class="form-control" id="J_build_add" autocomplete="off">
+								<div class="input-group-btn">
+									<button type="button" class="btn btn-white dropdown-toggle" data-toggle="">
+										<span class="glyphicon glyphicon-search search-caret"></span>
+									</button>
+									<ul class="dropdown-menu dropdown-menu-right" role="menu"></ul>
+								</div>
+							</div>
+						</div>
+                    </div>
+                </div> -->
+                <div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">小区名称：</label>
+						<div class="col-sm-8">	
+							<input type="text" class="form-control" id="J_build_add" name="communityId"  autocomplete="off">					
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">									
+				<div class="col-md-12">
+                       <div class="form-group">
+                           <div class="col-sm-5  col-sm-offset-5">
+                               <button id="J_search" type="button" class="btn btn-success btn_size">查 询</button>
+                               <button id="J_reset_lease" type="button" class="btn btn-white btn_size">重 置</button>
+                           </div>
+                       </div>
+                   </div>
+			</div>
+		</form>
+	</div>
+</div>
+<!-- 查询条件end -->
+<!-- 列表  begin -->
+<div class="ibox float-e-margins">
+	<div class="ibox-title"><h5>租赁合同列表</h5></div>
+	<div class="ibox-content">
+		<div class="row row-lg">
+			<div class="col-sm-12">
+				<!-- Example Pagination -->
+				<div class="example-wrap ptb10">
+					<p class="spec_listdesc_ath"><i class="fa fa-bar-chart red_ath" style="font-size: 18px;"></i> <span class="blue_ath">本页统计结果：</span><span class="red_ath">客户佣金<label class="J_customercount_total">XX</label>元</span>&nbsp;<span class="red_ath">业主佣金<label class="J_ownercount_total">XX</label>元</span></p>
+					<table id="J_dataTable_lease" class="table table-hover table-striped table-bordered" data-query-params="queryParams" data-mobile-responsive="true" data-pagination="true" data-icon-size="outline" data-striped="true" data-search="false">
+						<thead>
+							<tr style="line-height:110%">
+								<th data-field="contractid">合同编号</th>
+								<th data-field="names">客户姓名<br/>业主姓名</th>
+								<th data-field="commissions">客户佣金<br/>业主佣金</th>
+								<th data-field="rent">月租金<br/>（元）</th>
+								<th data-field="closing">成交区/成交店</th>
+								<th data-field="dealer">成交人</th>
+								<th data-field="submitdate">提交日期</th>
+								<th data-field="auditstatus">审核状态</th>
+								<th data-field="contractstatus">合同状态</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+				<!-- End Example Pagination -->
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 列表  end -->
+
+<script type='text/javascript' src="$link.contextPath/resources/script/sign/lease-list.js"></script>
+<script type="text/javascript" src="$link.contextPath/resources/js/department.js"></script>

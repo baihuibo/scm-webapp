@@ -1,0 +1,182 @@
+#set($plugins = ["table","chosen","laydate","linkage","autoSearch","ztree"])
+ <!--公司平台补业绩详情 -->
+ <div class="ibox">
+ <div class="ibox-title">
+    <h5>公司平台补业绩详情</h5>
+ </div>
+ <div class="ibox-content">
+   <div class="ibox">
+     <div class="row">
+        <div class="col-sm-4">
+             <dl class="dl-horizontal">
+               <dt  class="J_edit_area">合同编号：</dt>
+               <dd class="J_num"></dd>
+             </dl>
+        </div> 
+        <div class="col-sm-4">
+             <dl class="dl-horizontal">
+               <dt class="J_edit_area">合同应收收入总额：</dt>
+               <dd class="receivableAmount"></dd>
+             </dl>
+        </div>
+        <div class="col-sm-4">
+             <dl class="dl-horizontal">
+               <dt class="J_edit_area">实收收入总额：</dt>
+               <dd class="J_realIncomeAmount"></dd>
+             </dl>
+        </div>
+     </div>
+       <div class="row">
+        <div class="col-sm-4">
+             <dl class="dl-horizontal">
+               <dt class="J_edit_area">折扣率：</dt>
+               <dd class="J_disCountTotal"></dd>
+             </dl>
+        </div>
+        <div class="col-sm-4">
+             <dl class="dl-horizontal">
+               <dt class="J_edit_area">公司平台补业绩总额：</dt>
+               <dd class="J_companyCompenstateAmount"></dd>
+             </dl>
+        </div>
+        <div class="col-sm-4">
+             <dl class="dl-horizontal">
+               <dt class="J_edit_area">业绩总金额：</dt> 
+               <dd class="J_tomoney"></dd>
+             </dl>
+        </div>
+     </div>
+   </div>
+   <!-- 合同信息结束 -->
+   <!-- 申请详情开始 -->
+     <div class="ibox">
+      <div class="ibox-title"><h5>申请详情</h5>
+      </div>
+      <div class="ibox-content">
+         <table class="table table-striped table-bordered table-hover dataTables-example table-condensed" id="J_dataTable">
+          <thead>
+            <tr>
+            <th data-field="applyNo">申请编号</th>
+            <th data-field="compensateAmount">公司平台补业绩金额</th>
+            <th data-field="approveState">审批状态</th>
+            <th data-field="createBy">申请人</th>
+            <th data-field="createTime">申请时间</th>
+            <th>审批时间</th>
+            <th data-field="mone">申请备注</th>
+            </tr>
+          </thead>
+         <!--  <tbody>
+           <tr>
+            <td>1</td>
+            <td>111</td>
+            <td>111</td>
+            <td>111</td>
+            <td>111</td>
+            <td>232</td>
+            <td>由于折扣比例较大，特申请公司补2000业绩</td>
+           </tr>
+          </tbody> -->
+         </table>
+      </div>
+     </div>
+    <!-- 申请详情结束 -->
+    <!-- 本合同其他申请开始 -->
+     <div class="ibox float-e-margins">
+        <div class="ibox-title"><h5>本合同其他申请</h5>
+        </div>
+        <div class="ibox-content">
+           <table class="table table-striped table-bordered table-hover dataTables-example table-condensed" id="J_dataTable_1">
+          <thead>
+            <tr>
+             <th>申请编号</th>
+             <th>公司平台补业绩金额</th>
+             <th>审批状态</th>
+             <th>申请人</th>
+             <th>申请时间</th>
+             <th>审批时间</th>
+             <th>申请备注</th>
+            </tr>
+          </thead>
+         <!--  <tbody>
+           <tr>
+            <td>1</td>
+            <td>111</td>
+            <td>111</td>
+            <td>111</td>
+            <td>111</td>
+            <td>232</td>
+            <td>2000业绩</td>
+           </tr>
+          </tbody> -->
+         </table>
+        </div>
+     </div>
+     <!--本合同其他申请结束-->
+     <div class="ibox-content">
+       <div class="ibox-title"><h5>审批进程</h5>
+		<!--审批流程图 str
+		#parse("/sign/detail/examine-flowchart.html")
+		审批流程图 end
+	</div> -->
+	<!-- <div class="row">
+			<div class="col-md-12 text-cen">
+				<div class="form-group">
+				<div class="form-group" id="J_btn_button"></div>
+				</div>
+			</div>
+	    </div> -->
+	      <div class="row">
+			<div class="ibox-content" style=" width:100%; height:610px; overflow:hidden;">
+				<iframe class="ibox-content" id="J_srcimg" width="100%"; height="1000px";>
+				</iframe>
+			</div>
+		</div>
+	</div>
+     <!-- 审批进程结束-->
+    
+    <!-- 审批历史开始 -->
+     <div class="ibox float-e-margins">
+        <div class="ibox-title"><h5>审批历史</h5>
+        </div>
+        <div class="ibox-content">
+           <table class="table table-striped table-bordered table-hover dataTables-example table-condensed" id="J_dataTable_history">
+          <thead>
+            <tr>
+             <th data-field="applyTaskId">序号</th>
+             <th data-field="taskName">审批节点</th>
+             <th data-field="createBy">审批人</th>
+             <th data-field="approveState">审批结果</th>
+             <th data-field="createTime">上级审批时间</th>
+             <th data-field="completeTime">审批时间</th>
+             <th data-field="comment">申请意见</th>
+            </tr>
+          </thead>
+         <!--  <tbody>
+           <tr>
+            <td>1</td>
+            <td>111</td>
+            <td>111</td>
+            <td>111</td>
+            <td>111</td>
+            <td>232</td>
+            <td>2000业绩</td>
+           </tr>
+          </tbody> -->
+         </table>
+        </div>
+     </div>
+     <!--审批历史结束-->
+     	 <!-- 撤销模态框 -->
+			<div id="demo_layer_stantard" class="ibox-content"
+				style="display: none">
+				<p class="title_contractNo" style="font-size: 14px; text-align: center;"></p>
+				<label for="name"><span style="color: red;">*</span>备注</label>
+				<textarea id="mem" maxlength="120"
+					style="height: 80px; width: 100%" oninput="strLenCalc($(this), 'checklen', 240);"></textarea>
+					<span id="checklen">还可输入 <strong>120</strong> 个汉字</span>
+			</div>
+ </div>
+ </div>
+ </div>
+ <script type="text/javascript" src="$link.contextPath/resources/script/performance/companyplatform/companypro_details.js"></script>
+ <script type="text/javascript" src="$link.contextPath/resources/js/department.js"></script>

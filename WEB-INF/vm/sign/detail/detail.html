@@ -1,0 +1,1986 @@
+#set($plugins = ["chosen","autoSearch","laydate"])
+<!--
+    草签合同 (查看，修改)
+-->
+
+<style>
+    .btn-pos {
+        position: relative;
+        margin-top: -8px;
+    }
+   
+</style>
+
+<div ng-controller="signDetailCtrl as $ctrl" ng-cloak>
+    <div class="ibox">
+        <div class="ibox-title">
+            <h5>合同信息详情</h5>
+            <!--<div ng-if="$ctrl.showAllEditBtn" class="pull-right">
+                <button type="button" class="btn btn-success btn-xs"
+                        ng-if="!$ctrl.contractEdit"
+                        ng-click="$ctrl.startEdit('contractEdit')">
+                    编辑
+                </button>
+                <button type="button" class="btn btn-success btn-xs btn_size"
+                        ng-if="$ctrl.contractEdit"
+                        ng-click="$ctrl.saveEdit()">
+                    保存
+                </button>
+                <button type="button" class="btn btn-success btn-xs"
+                        ng-if="$ctrl.contractEdit"
+                        ng-click="$ctrl.cancelEdit()">
+                    取消
+                </button>
+            </div>-->
+        </div>
+        <div class="ibox-content">
+            <form class="row form-horizontal">
+                <div class="form-group col-sm-4">
+                    <label class="control-label col-sm-4">合同编号：</label>
+                    <div class="col-sm-7" layout-padding>
+                        {{$ctrl.data.contractCode}}
+                    </div>
+                </div>
+                <div class="form-group col-sm-4">
+                    <label class="control-label col-sm-4">房源编号：</label>
+                    <div class="col-sm-7" layout-padding>
+                        <a ng-href="{{::$ctrl.houseLink}}" target="_blank">
+                            {{::$ctrl.data.housesCode}}
+                        </a>
+                    </div>
+                </div>
+                <div class="form-group col-sm-4">
+                    <label class="control-label col-sm-4">客源编号：</label>
+                    <div class="col-sm-7" layout-padding>
+                        <a ng-href="{{::$ctrl.customerLink}}" target="_blank">
+                            {{::$ctrl.data.clientId}}
+                        </a>
+                    </div>
+                </div>
+                <div class="form-group col-sm-4">
+                    <label class="control-label col-sm-4">合同日期：</label>
+                    <div class="col-sm-7" layout-padding>
+                        {{::$ctrl.data.createDate}}
+                    </div>
+                </div>
+                <div class="form-group col-sm-4">
+                    <label class="control-label col-sm-4">合同录入人：</label>
+                    <div class="col-sm-7" layout-padding>
+                        <person-show
+                                person-name="$ctrl.data.createUserName"
+                                person-id="$ctrl.data.createUserId"></person-show>
+                    </div>
+                </div>
+                <!--<div class="form-group col-sm-4">
+                    <label class="control-label col-sm-4">合同所属人：</label>
+                    <div class="col-sm-7" layout-padding
+                         ng-if="!$ctrl.contractEdit">
+                        <person-show
+                                person-name="$ctrl.data.belongUserName"
+                                person-id="$ctrl.data.belonguserid"></person-show>
+                    </div>
+                    <div class="col-sm-7" style="height: 31px;"
+                         ng-if="$ctrl.contractEdit">
+                        <sign-choose-person
+                                ng-model="$ctrl.edit.belonguserid"
+                                person-name="$ctrl.edit.belongUserName"></sign-choose-person>
+                    </div>
+                </div>-->
+                <div class="form-group col-sm-4">
+                    <label class="control-label col-sm-4">合同状态：</label>
+                    <div class="col-sm-7" layout-padding>
+                        {{$ctrl.data.contractStatusDesc}}
+                    </div>
+                </div>
+                <div class="form-group col-sm-4">
+                    <label class="control-label col-sm-4">合同审核状态：</label>
+                    <div class="col-sm-7" layout-padding>
+                        {{$ctrl.data.auditStatusDesc}}
+                    </div>
+                </div>
+                <div class="form-group col-sm-4" ng-if="$ctrl.data.auditStatus == 0 || $ctrl.data.auditStatus == 7">
+                    <label class="control-label col-sm-4 text-danger">驳回原因：</label>
+                    <div class="col-sm-7" layout-padding ng-mouseenter="$ctrl.showReason = 1"
+                         ng-mouseleave="$ctrl.showReason = 0">
+                        {{$ctrl.data.rejectId | showKeyCodeTypes : 'conRejectCause'}} :
+                        <span ng-if="$ctrl.showReason">{{$ctrl.data.rejectReason}}</span>
+                        <span ng-if="!$ctrl.showReason">{{$ctrl.data.rejectReason.slice(0,6)}} ...</span>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <div class="ibox">
+        <div class="tabs-container">
+            <ul class="nav nav-tabs">
+            	#if($shiro.hasPermission("SCM:SALES:LEASE_SIGN_CONTRACT_INFORMATION_VIEW"))
+                <li class="active">
+                    <a data-toggle="tab" href="#tab-1">合同信息</a>
+                </li>
+                #end
+                #if($shiro.hasPermission("SCM:SALES:LEASE_SIGN_CONTRACT_ENCLOSURE_SEE"))
+                <li>
+                    <a data-toggle="tab" href="#tab-2" id="attachmentTab" ng-click="$ctrl.initAttachment()">附件管理</a>
+                </li>
+                #end
+                #if($shiro.hasPermission("SCM:SALES:LEASE_SIGN_CONTRACT_DELIVERY_QUERY"))
+                <li>
+                    <a data-toggle="tab" href="#tab-3" ng-click="$ctrl.initDelivery()">房屋交割单</a>
+                </li>
+                #end
+                #if($shiro.hasPermission("SCM:SALES:LEASE_SIGN_CONTRACT_AGREEMENT_QUERY"))
+                <li>
+                    <a data-toggle="tab" href="#tab-4" ng-click="$ctrl.initSupplAgrtList()">补充协议</a>
+                </li>
+                #end
+                #if($shiro.hasPermission("SCM:SALES:LEASE_SIGN_CONTRACT_PROCESS_QUERY"))
+                <li ng-if="!$ctrl.docbizkey">
+                    <a data-toggle="tab" href="#tab-5" ng-click="$ctrl.initContractApprovalList()">审批流程</a>
+                </li>
+                #end
+                #if($shiro.hasPermission("SCM:SALES:LEASE_SIGN_CONTRACT_PRINT_HISTORY_SEE"))
+                <li ng-if="!$ctrl.docbizkey">
+                    <a data-toggle="tab" href="#tab-6" ng-click="$ctrl.initPrintHistoryList()">打印历史</a>
+                </li>
+                #end
+                #if($shiro.hasPermission("SCM:SALES:LEASE_SIGN_CONTRACT_ OPERATION_QUERY"))
+                <li ng-if="!$ctrl.docbizkey">
+                    <a data-toggle="tab" href="#tab-7" ng-click="$ctrl.initOperationLogList()">操作日志</a>
+                </li>
+                #end
+                #if($shiro.hasPermission("SCM:SALES:LEASE_CONTRACT_DETAILED_QUERY"))
+                <li ng-if="!$ctrl.docbizkey && ($ctrl.data.contractStatus != 1 && $ctrl.data.contractStatus != 3)">
+                    <a data-toggle="tab" href="#tab-8" ng-click="$ctrl.initCostDetailList()">合同费用执行明细</a>
+                </li>
+                #end
+               #if($shiro.hasPermission("SCM:SALES:LEASE_CONTRACT_ACHIEVEMENT_QUERY"))
+                 <li ng-if="!$ctrl.docbizkey && ($ctrl.data.contractStatus != 1 && $ctrl.data.contractStatus != 3)">
+                    <a data-toggle="tab" href="#tab-9" ng-click="$ctrl.performanceList()">业绩详情</a>
+                </li>
+                #end
+            </ul>
+            <div class="tab-content">
+           	 	#if($shiro.hasPermission("SCM:SALES:LEASE_SIGN_CONTRACT_INFORMATION_VIEW"))
+                <div class="tab-pane active" id="tab-1">
+                    <div class="panel-body" layout="row">
+                        <div flex>
+
+                            <div class="ibox" id="both-sides-info">
+                                <div class="ibox-title">
+                                    <h5>交易双方基本信息</h5>
+                                    <div ng-if="$ctrl.showContractEditBtn" class="pull-right">
+                                    	#if($shiro.hasPermission("SCM:SALES:LEASE_SIGN_CONTRACT_INFORMATION_MODIFY"))
+                                        <button class="btn btn-success btn-sm btn-pos" type="button"
+                                                ng-if="!$ctrl.salesUserInfoEdit"
+                                                ng-click="$ctrl.startEdit('salesUserInfoEdit')">
+                                            编辑
+                                        </button>
+                                        #end
+                                        <button type="button" class="btn btn-success btn-sm btn-pos btn_size"
+                                                ng-if="$ctrl.salesUserInfoEdit"
+                                                ng-disabled="$ctrl.salesUserInfoEditFrom.$invalid"
+                                                ng-click="$ctrl.saveEdit()">
+                                            保存
+                                        </button>
+                                        <button class="btn btn-success btn-sm btn-pos" type="button"
+                                                ng-if="$ctrl.salesUserInfoEdit"
+                                                ng-click="$ctrl.cancelEdit()">
+                                            取消
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="ibox-content" ng-if="!$ctrl.salesUserInfoEdit">
+                                    <!-- 展示详细信息 -->
+                                    <h4 class="page-header font-size-12 text-success">业主信息</h4>
+                                    <table class="table table-striped table-bordered table-hover dataTables-example table-condensed">
+                                        <thead>
+                                        <tr>
+                                            <th style="width: 25%;">业主姓名</th>
+                                            <th style="width: 25%;">业主证件类型</th>
+                                            <th style="width: 25%;">业主证件号码</th>
+                                            <th style="width: 25%;">联系电话</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="obj in $ctrl.data.signleasecontractuserinfo.ownerlist">
+                                            <td>{{::obj.full_name}}</td>
+                                            <td>{{obj.idcard_type_cd | showKeyCodeTypes : 'cardType'}}</td>
+                                            <td>{{::obj.idcard_no}}</td>
+                                            <td>{{::obj.phone_number | phoneNumberShow}}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <h4 class="page-header font-size-12 text-success">业主共有人</h4>
+                                    <table class="table table-striped table-bordered table-hover dataTables-example table-condensed">
+                                        <thead>
+                                        <tr>
+                                            <th style="width: 20%;">业主共有人姓名</th>
+                                            <th style="width: 20%;">业主共有人证件类型</th>
+                                            <th style="width: 20%;">业主共有人证件号码</th>
+                                            <th style="width: 20%;">共有人房产证号</th>
+                                            <th style="width: 20%;">联系电话</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="obj in $ctrl.data.signleasecontractuserinfo.coownerlist">
+                                            <td>{{::obj.full_name}}</td>
+                                            <td>{{obj.idcard_type_cd | showKeyCodeTypes : 'cardType'}}</td>
+                                            <td>{{::obj.idcard_no}}</td>
+                                            <td>{{::obj.house_no}}</td>
+                                            <td>{{::obj.phone_number | phoneNumberShow}}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <h4 class="page-header font-size-12 text-success">业主委托代理人</h4>
+                                    <table class="table table-striped table-bordered table-hover dataTables-example table-condensed">
+                                        <thead>
+                                        <tr>
+                                            <th style="width: 25%;">业主委托代理人姓名</th>
+                                            <th style="width: 25%;">业主委托代理人证件类型</th>
+                                            <th style="width: 25%;">业主委托代理人证件号码</th>
+                                            <th style="width: 25%;">联系电话</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="obj in $ctrl.data.signleasecontractuserinfo.ownagentlist">
+                                            <td>{{::obj.full_name}}</td>
+                                            <td>{{obj.idcard_type_cd | showKeyCodeTypes : 'cardType'}}</td>
+                                            <td>{{::obj.idcard_no}}</td>
+                                            <td>{{::obj.phone_number | phoneNumberShow}}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <h4 class="page-header font-size-12 text-success">客户信息</h4>
+                                    <table class="table table-striped table-bordered table-hover dataTables-example table-condensed">
+                                        <thead>
+                                        <tr>
+                                            <th style="width: 25%;">客户姓名</th>
+                                            <th style="width: 25%;">客户证件类型</th>
+                                            <th style="width: 25%;">客户证件号码</th>
+                                            <th style="width: 25%;">联系电话</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="obj in $ctrl.data.signleasecontractuserinfo.customerlist">
+                                            <td>{{::obj.full_name}}</td>
+                                            <td>{{obj.idcard_type_cd | showKeyCodeTypes : 'cardType'}}</td>
+                                            <td>{{::obj.idcard_no}}</td>
+                                            <td>{{::obj.phone_number | phoneNumberShow}}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <h4 class="page-header font-size-12 text-success">客户多签约人</h4>
+                                    <table class="table table-striped table-bordered table-hover dataTables-example table-condensed">
+                                        <thead>
+                                        <tr>
+                                            <th style="width: 25%;">客户多签约人姓名</th>
+                                            <th style="width: 25%;">客户多签约人证件类型</th>
+                                            <th style="width: 25%;">客户多签约人证件号码</th>
+                                            <th style="width: 25%;">联系电话</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="obj in $ctrl.data.signleasecontractuserinfo.cocustomerlist">
+                                            <td>{{::obj.full_name}}</td>
+                                            <td>{{obj.idcard_type_cd | showKeyCodeTypes : 'cardType'}}</td>
+                                            <td>{{::obj.idcard_no}}</td>
+                                            <td>{{::obj.phone_number | phoneNumberShow}}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <h4 class="page-header font-size-12 text-success">客户委托代理人</h4>
+                                    <table class="table table-striped table-bordered table-hover dataTables-example table-condensed">
+                                        <thead>
+                                        <tr>
+                                            <th style="width: 25%;">客户委托代理人姓名</th>
+                                            <th style="width: 25%;">客户委托代理人证件类型</th>
+                                            <th style="width: 25%;">客户委托代理人证件号码</th>
+                                            <th style="width: 25%;">联系电话</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="obj in $ctrl.data.signleasecontractuserinfo.customeragentlist">
+                                            <td>{{::obj.full_name}}</td>
+                                            <td>{{obj.idcard_type_cd | showKeyCodeTypes : 'cardType'}}</td>
+                                            <td>{{::obj.idcard_no}}</td>
+                                            <td>{{::obj.phone_number | phoneNumberShow}}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                                <div class="ibox-content" ng-if="$ctrl.salesUserInfoEdit">
+                                	<form class="form-horizontal" layout-wrap name="$ctrl.salesUserInfoEditFrom" novalidate>
+                                    <!-- 编辑状态 -->
+                                    <h4 class="page-header font-size-12 text-success">业主信息</h4>
+                                    <table class="table table-striped table-bordered table-hover dataTables-example table-condensed">
+                                        <thead>
+                                        <tr>
+                                            <th style="width: 25%;" class="required">业主姓名</th>
+                                            <th style="width: 25%;">业主证件类型</th>
+                                            <th style="width: 25%;">业主证件号码</th>
+                                            <th style="width: 25%;" class="required">联系电话</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="obj in $ctrl.edit.signleasecontractuserinfo.ownerlist">
+                                            <td>
+                                                <input type="text" class="form-control input-sm"
+                                                       ng-model="obj.full_name" required
+                                                       placeholder="请输入姓名">
+                                            </td>
+                                            <td>
+                                            	<sign-card-type ng-model="obj.idcard_type_cd" required></sign-card-type>
+                                            </td>
+                                            <td>
+                                            	<!-- {{::obj.idcard_no}} -->
+                                            	<input type="text" class="form-control input-sm"
+                                                       ng-model="obj.idcard_no" required
+                                                       placeholder="证件号码">
+                                            </td>
+                                            <td>
+                                                <sign-phone-number-btn
+                                                        ng-model="obj.phone_number" required>
+                                                </sign-phone-number-btn>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <h4 class="page-header font-size-12 text-success">业主共有人</h4>
+                                    <table class="table table-striped table-bordered table-hover dataTables-example table-condensed">
+                                        <thead>
+                                        <tr>
+                                            <th style="width: 20%;" class="required">业主共有人姓名</th>
+                                            <th style="width: 20%;">业主共有人证件类型</th>
+                                            <th style="width: 20%;">业主共有人证件号码</th>
+                                            <th style="width: 20%;">共有人房产证号</th>
+                                            <th style="width: 20%;" class="required">联系电话</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="obj in $ctrl.edit.signleasecontractuserinfo.coownerlist">
+                                            <td>
+                                                <input type="text" class="form-control input-sm"
+                                                       ng-model="obj.full_name" required
+                                                       placeholder="请输入姓名">
+                                            </td>
+                                            <td>
+                                            	<sign-card-type ng-model="obj.idcard_type_cd" required></sign-card-type>
+                                            </td>
+                                            <td>
+                                            	<!-- {{::obj.idcard_no}} -->
+                                            	<input type="text" class="form-control input-sm"
+                                                       ng-model="obj.idcard_no" required
+                                                       placeholder="证件号码">
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control input-sm"
+                                                       ng-model="obj.house_no"
+                                                       placeholder="请输入房产证号">
+                                            </td>
+                                            <td>
+                                                <sign-phone-number-btn ng-model="obj.phone_number" required>
+                                                </sign-phone-number-btn>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <h4 class="page-header font-size-12 text-success">
+                                        业主委托代理人
+                                        <div class="pull-right">
+                                            <button type="button" class="btn btn-primary btn-xs"
+                                                    ng-click="$ctrl.addPerson($ctrl.edit.signleasecontractuserinfo.ownagentlist,'新增业主委托代理人')">
+                                                <span class="fa fa-plus"></span>
+                                                新增
+                                            </button>
+                                        </div>
+                                    </h4>
+                                    <table class="table table-striped table-bordered table-hover dataTables-example table-condensed">
+                                        <thead>
+                                        <tr>
+                                            <th style="width: 20%;">业主委托代理人姓名</th>
+                                            <th style="width: 20%;">业主委托代理人证件类型</th>
+                                            <th style="width: 20%;">业主委托代理人证件号码</th>
+                                            <th style="width: 20%;">联系电话</th>
+                                            <th style="width: 20%;">操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="obj in $ctrl.edit.signleasecontractuserinfo.ownagentlist">
+                                            <td>{{::obj.full_name}}</td>
+                                            <td>{{obj.idcard_type_cd | showKeyCodeTypes : 'cardType'}}</td>
+                                            <td>{{::obj.idcard_no}}</td>
+                                            <td>
+                                                <sign-phone-number-btn ng-model="obj.phone_number" required>
+                                                </sign-phone-number-btn>
+                                            </td>
+                                            <td>
+                                                <a href="javascript:" class="btn btn-xs btn-success btn-outline"
+                                                   ng-click="$ctrl.editPerson($ctrl.edit.signleasecontractuserinfo.ownagentlist, $index , obj,'修改业主委托代理人')">修改</a>
+                                                <a href="javascript:" class="btn btn-xs btn-danger btn-outline"
+                                                   ng-click="$ctrl.removePerson($ctrl.edit.signleasecontractuserinfo.ownagentlist, $index,'确定删除此业务委托人')">删除</a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <h4 class="page-header font-size-12 text-success">客户信息</h4>
+                                    <table class="table table-striped table-bordered table-hover dataTables-example table-condensed">
+                                        <thead>
+                                        <tr>
+                                            <th style="width: 25%;" class="required">客户姓名</th>
+                                            <th style="width: 25%;">客户证件类型</th>
+                                            <th style="width: 25%;">客户证件号码</th>
+                                            <th style="width: 25%;" class="required">联系电话</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="obj in $ctrl.edit.signleasecontractuserinfo.customerlist">
+                                            <td>
+                                                <input type="text" class="form-control input-sm"
+                                                       ng-model="obj.full_name" required
+                                                       placeholder="请输入姓名">
+                                            </td>
+                                            <td>
+                                            	<sign-card-type ng-model="obj.idcard_type_cd" required></sign-card-type>
+                                            </td>
+                                            <td>
+                                            	<input type="text" class="form-control input-sm"
+                                                       ng-model="obj.idcard_no"
+                                                       placeholder="请输入证件号码">
+                                            </td>
+                                            <td>
+                                                <sign-phone-number-btn ng-model="obj.phone_number" required>
+                                                </sign-phone-number-btn>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <h4 class="page-header font-size-12 text-success">客户多签约人</h4>
+                                    <table class="table table-striped table-bordered table-hover dataTables-example table-condensed">
+                                        <thead>
+                                        <tr>
+                                            <th style="width: 25%;" class="required">客户多签约人姓名</th>
+                                            <th style="width: 25%;">客户多签约人证件类型</th>
+                                            <th style="width: 25%;">客户多签约人证件号码</th>
+                                            <th style="width: 25%;" class="required">联系电话</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="obj in $ctrl.edit.signleasecontractuserinfo.cocustomerlist">
+                                            <td>
+                                                <input type="text" class="form-control input-sm"
+                                                       ng-model="obj.full_name" required
+                                                       placeholder="请输入姓名">
+                                            </td>
+                                            <td>
+                                            	<sign-card-type ng-model="obj.idcard_type_cd" required></sign-card-type>
+                                            </td>
+                                            <td>
+                                            	<input type="text" class="form-control input-sm"
+                                                       ng-model="obj.idcard_no"
+                                                       placeholder="请输入证件号码">
+                                            </td>
+                                            <td>
+                                                <sign-phone-number-btn ng-model="obj.phone_number" required>
+                                                </sign-phone-number-btn>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <h4 class="page-header font-size-12 text-success">
+                                        客户委托代理人
+                                        <div class="pull-right">
+                                            <button type="button" class="btn btn-primary btn-xs"
+                                                    ng-click="$ctrl.addPerson($ctrl.edit.signleasecontractuserinfo.customeragentlist,'新增客户委托代理人')">
+                                                <span class="fa fa-plus"></span>
+                                                新增
+                                            </button>
+                                        </div>
+                                    </h4>
+                                    <table class="table table-striped table-bordered table-hover dataTables-example table-condensed">
+                                        <thead>
+                                        <tr>
+                                            <th style="width: 20%;">客户委托代理人姓名</th>
+                                            <th style="width: 20%;">客户委托代理人证件类型</th>
+                                            <th style="width: 20%;">客户委托代理人证件号码</th>
+                                            <th style="width: 20%;">联系电话</th>
+                                            <th style="width: 20%;">操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="obj in $ctrl.edit.signleasecontractuserinfo.customeragentlist">
+                                            <td>{{::obj.full_name}}</td>
+                                            <td>{{obj.idcard_type_cd | showKeyCodeTypes : 'cardType'}}</td>
+                                            <td>{{::obj.idcard_no}}</td>
+                                            <td>
+                                                <sign-phone-number-btn ng-model="obj.phone_number" required>
+                                                </sign-phone-number-btn>
+                                            </td>
+                                            <td>
+                                                <a href="javascript:" class="btn btn-xs btn-success btn-outline"
+                                                   ng-click="$ctrl.editPerson($ctrl.edit.signleasecontractuserinfo.customeragentlist,$index,obj,'修改客户委托代理人')">修改</a>
+                                                <a href="javascript:" class="btn btn-xs btn-danger btn-outline"
+                                                   ng-click="$ctrl.removePerson($ctrl.edit.signleasecontractuserinfo.customeragentlist , $index,'确定删除此客户委托人')">删除</a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div class="ibox">
+                                <div class="ibox-title" id="houses-info">
+                                    <h5>房源信息</h5>
+                                    <div ng-if="$ctrl.showContractEditBtn" class="pull-right">
+                                        #if($shiro.hasPermission("SCM:SALES:LEASE_SIGN_CONTRACT_INFORMATION_MODIFY"))
+                                        <button class="btn btn-success btn-sm btn-pos" type="button"
+                                                ng-if="!$ctrl.housesEdit"
+                                                ng-click="$ctrl.startEdit('housesEdit')">
+                                            编辑
+                                        </button>
+                                        #end
+                                        <button type="button" class="btn btn-success btn-sm btn-pos btn_size"
+                                                ng-if="$ctrl.housesEdit"
+                                                ng-disabled="$ctrl.housesEditFrom.$invalid"
+                                                ng-click="$ctrl.saveEdit()">
+                                            保存
+                                        </button>
+                                        <button class="btn btn-success btn-sm btn-pos" type="button"
+                                                ng-if="$ctrl.housesEdit"
+                                                ng-click="$ctrl.cancelEdit()">
+                                            取消
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="ibox-content" ng-if="!$ctrl.housesEdit">
+                                    <div class="form-horizontal" layout="row" layout-wrap>
+                                        <label flex="15" class="control-label">
+                                            所属区域：
+                                        </label>
+                                        <div flex="15" layout-padding>
+                                            {{::$ctrl.data.housingDistrictName}}
+                                        </div>
+
+                                        <label flex="15" class="control-label">
+                                            房产证地址：
+                                        </label>
+                                        <div flex="15" layout-padding>
+                                            {{::$ctrl.data.housingAddr}}
+                                        </div>
+
+                                        <label flex="15" class="control-label">
+                                            建筑面积：
+                                        </label>
+                                        <div flex="15" layout="row" layout-padding>
+                                            {{::$ctrl.data.buildArea}} 平方米
+                                        </div>
+
+                                        <label flex="15" class="control-label">
+                                            房屋权属证明：
+                                        </label>
+                                        <div flex="45" layout-padding>
+                                            {{$ctrl.data.house_owner_ship | showKeyCodeTypes : 'leaseHouseOwnership'}}
+                                        </div>
+
+                                        <div flex="30" layout="row"
+                                             ng-if="$ctrl.data.house_owner_ship.indexOf(1) > -1">
+                                            <label flex="50" class="control-label">房屋所有产权证书编号：</label>
+                                            <div flex="50" layout-padding>
+                                                {{::$ctrl.data.certificateNum}}
+                                            </div>
+                                        </div>
+                                        <div flex="30" layout="row"
+                                             ng-if="$ctrl.data.house_owner_ship.indexOf(4) > -1">
+                                            <label flex="50" class="control-label">房屋来源证明名称：</label>
+                                            <div flex="50" layout-padding>
+                                                {{::$ctrl.data.certificateName}}
+                                            </div>
+                                        </div>
+                                        <div flex="30" layout="row"
+                                             ng-if="$ctrl.data.house_owner_ship.indexOf(2) > -1 || $ctrl.data.house_owner_ship.indexOf(3) > -1">
+                                            <label flex="50" class="control-label">房屋所有权人姓名：</label>
+                                            <div flex="50" layout-padding>
+                                                {{::$ctrl.data.ownerName}}
+                                            </div>
+                                        </div>
+
+                                        <label flex="15" class="control-label">
+                                            租赁用途：
+                                        </label>
+                                        <div flex="15" layout-padding>
+                                            {{$ctrl.data.leaseUse | showKeyCodeTypes : 'leaseleasePurpose'}}
+                                        </div>
+
+                                        <div ng-if="$ctrl.data.leaseUse == 1" flex="30" layout="row">
+                                            <label flex="50" class="control-label">
+                                                居住人数：
+                                            </label>
+                                            <div flex="50" layout-padding>
+                                                {{::$ctrl.data.liveCount}}
+                                            </div>
+                                        </div>
+                                        <div ng-if="$ctrl.data.leaseUse == 1" flex="30" layout="row">
+                                            <label flex="50" class="control-label">
+                                                最大居住人数：
+                                            </label>
+                                            <div flex="50" layout-padding>
+                                                {{::$ctrl.data.liveMaxCount}}
+                                            </div>
+                                        </div>
+
+                                        <label flex="15" class="control-label col-sm-6">
+                                            房屋抵押：
+                                        </label>
+                                        <div flex="15" layout-padding>
+                                            {{::$ctrl.data.mortgage | yesOrNo}}
+                                        </div>
+
+                                        <label flex="15" class="control-label">
+                                            住宿登记：
+                                        </label>
+                                        <div flex="15" layout-padding>
+                                            {{$ctrl.data.accommodation_registration |
+                                            showKeyCodeTypes:'leaseAccommodationRegistration'}}
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="ibox-content" ng-if="$ctrl.housesEdit">
+                                    <form class="form-horizontal" layout="row" layout-wrap name="$ctrl.housesEditFrom" novalidate>
+                                        <label flex="15" class="control-label required">
+                                            所属区域：
+                                        </label>
+                                        <div flex="15" style="margin-bottom: 20px;">
+                                            <area-chosen
+                                                ng-model="$ctrl.edit.housingDistrictId"
+                                                area-name="$ctrl.edit.housingDistrictName"></area-chosen>
+                                        </div>
+
+                                        <label flex="15" class="control-label required">
+                                            房产证地址：
+                                        </label>
+                                        <div flex="15">
+                                            <input type="text" class="form-control" placeholder="请输入房产证地址"
+                                                   ng-model="$ctrl.edit.housingAddr" required>
+                                        </div>
+
+                                        <label flex="15" class="control-label required">
+                                            建筑面积：
+                                        </label>
+                                        <div flex="15" layout="row">
+                                            <input type="number" class="form-control hide-spin"
+                                                   placeholder="请输入建筑面积"
+                                                   ng-change="$ctrl.setMaxLive($ctrl.edit.buildArea)"
+                                                   ng-model="$ctrl.edit.buildArea" required disabled-negative>
+                                            <div layout-padding class="text-nowrap" style="padding:8px 3px">平方米</div>
+                                        </div>
+
+                                        <label flex="15" class="control-label required">
+                                            房屋权属证明：
+                                        </label>
+                                        <div flex="45" style="margin-bottom: 20px;">
+                                            <sign-checkbox-group
+                                                    ng-model="$ctrl.edit.house_owner_ship" required>
+                                                <sign-checkbox ng-repeat="item in $ctrl.leaseHouseOwnership"
+                                                               value="item.valueCode">
+                                                    {{::item.valueName}}
+                                                </sign-checkbox>
+                                            </sign-checkbox-group>
+                                        </div>
+
+                                        <div flex="30" layout="row" style="margin-bottom: 20px;"
+                                             ng-if="$ctrl.edit.house_owner_ship.indexOf(1) > -1">
+                                            <label flex="50" class="control-label required">房屋所有产权证书编号：</label>
+                                            <div flex="50">
+                                                <input type="text" class="form-control"
+                                                       placeholder="请输入证书编号"
+                                                       ng-model="$ctrl.edit.certificateNum" required>
+                                            </div>
+                                        </div>
+
+                                        <div flex="30" layout="row" style="margin-bottom: 20px;"
+                                             ng-if="$ctrl.edit.house_owner_ship.indexOf(4) > -1">
+                                            <label flex="50" class="control-label required">房屋来源证明名称：</label>
+                                            <div flex="50">
+                                                <input type="text" class="form-control"
+                                                       placeholder="请输入名称"
+                                                       ng-model="$ctrl.edit.certificateName" required>
+                                            </div>
+                                        </div>
+                                        <div flex="30" layout="row" style="margin-bottom: 20px;"
+                                             ng-if="$ctrl.edit.house_owner_ship.indexOf(2) > -1 || $ctrl.edit.house_owner_ship.indexOf(3) > -1">
+                                            <label flex="50" class="control-label required">房屋所有权人姓名：</label>
+                                            <div flex="50">
+                                                <input type="text" class="form-control"
+                                                       placeholder="请输入姓名"
+                                                       ng-model="$ctrl.edit.ownerName" required>
+                                            </div>
+                                        </div>
+
+                                        <label flex="15" class="control-label required">
+                                            租赁用途：
+                                        </label>
+                                        <div flex="15">
+                                            <select class="form-control"
+                                                    ng-model="$ctrl.edit.leaseUse" chosen required
+                                                    ng-options="item.valueCode as item.valueName for item in $ctrl.leaseleasePurpose">
+                                                <option value="">请选择</option>
+                                            </select>
+                                        </div>
+                                        <div ng-if="$ctrl.edit.leaseUse == 1" flex="30" layout="row">
+                                            <label flex="50" class="control-label required">
+                                                居住人数：
+                                            </label>
+                                            <div flex="50">
+                                                <input type="number" class="form-control hide-spin"
+                                                       not-greater-to="liveMaxCount" name="liveCount"
+                                                       placeholder="请输入居住人数"
+                                                       ng-model="$ctrl.edit.liveCount" required focus-integer>
+                                                <span class="help-block text-danger"
+                                                      ng-if="$ctrl.edit.liveCount > $ctrl.edit.liveMaxCount">
+                                            居住人数不能大于最大居住人数
+                                        </span>
+                                            </div>
+                                        </div>
+                                        <div ng-if="$ctrl.edit.leaseUse == 1" flex="30" layout="row">
+                                            <label flex="50" class="control-label required">
+                                                最大居住人数：
+                                            </label>
+                                            <div flex="50" style="margin-bottom: 20px;">
+                                                <input type="number" class="form-control hide-spin"
+                                                       not-less-to="liveCount" name="liveMaxCount" readonly
+                                                       ng-model="$ctrl.edit.liveMaxCount" required focus-integer>
+                                            </div>
+                                        </div>
+
+                                        <label flex="15" class="control-label col-sm-6">
+                                            房屋抵押：
+                                        </label>
+                                        <div flex="15">
+                                            <div class="radio radio-primary radio-inline">
+                                                <input type="radio" id="d1" name="mortgage"
+                                                       ng-model="$ctrl.edit.mortgage" required ng-value="1">
+                                                <label for="d1">是</label>
+                                            </div>
+                                            <div class="radio radio-primary radio-inline">
+                                                <input type="radio" id="d2" name="mortgage"
+                                                       ng-model="$ctrl.edit.mortgage" required ng-value="0">
+                                                <label for="d2">否</label>
+                                            </div>
+                                        </div>
+
+                                        <label flex="15" class="control-label">
+                                            住宿登记：
+                                        </label>
+                                        <div flex="15">
+                                            <sign-checkbox-group
+                                                    ng-model="$ctrl.edit.accommodation_registration">
+                                                <sign-checkbox ng-repeat="item in $ctrl.leaseAccommodationRegistration"
+                                                               value="item.valueCode">
+                                                    {{item.valueName}}
+                                                </sign-checkbox>
+                                            </sign-checkbox-group>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div class="ibox">
+                                <div class="ibox-title" id="lease-term">
+                                    <h5>租赁期限</h5>
+                                    <div ng-if="$ctrl.showContractEditBtn" class="pull-right">
+                                        #if($shiro.hasPermission("SCM:SALES:LEASE_SIGN_CONTRACT_INFORMATION_MODIFY"))
+                                        <button class="btn btn-success btn-sm btn-pos" type="button"
+                                                ng-if="!$ctrl.lesseeEdit"
+                                                ng-click="$ctrl.startEdit('lesseeEdit')">
+                                            编辑
+                                        </button>
+                                        #end
+                                        <button type="button" class="btn btn-success btn-sm btn-pos btn_size"
+                                                ng-if="$ctrl.lesseeEdit"
+                                                ng-disabled="$ctrl.lesseeEditFrom.$invalid"
+                                                ng-click="$ctrl.saveEdit()">
+                                            保存
+                                        </button>
+                                        <button class="btn btn-success btn-sm btn-pos" type="button"
+                                                ng-if="$ctrl.lesseeEdit"
+                                                ng-click="$ctrl.cancelEdit()">
+                                            取消
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="ibox-content" ng-if="!$ctrl.lesseeEdit">
+                                    <div class="form-horizontal" novalidate layout="row" layout-wrap="">
+                                        <label flex="15" class="control-label">
+                                            承租期限：
+                                        </label>
+                                        <div flex="45" layout="row">
+                                            <div layout-padding>{{::$ctrl.data.lessee_start_date | limitTo:10}}</div>
+                                            <div layout-padding>至</div>
+                                            <div layout-padding>{{::$ctrl.data.lessee_end_date | limitTo:10}}</div>
+                                            <div layout-padding>共计：
+                                                {{$ctrl.data.lessee_start_date | monthLength :
+                                                $ctrl.data.lessee_end_date |
+                                                monthLength2str}}
+                                            </div>
+                                        </div>
+                                        <label flex="15" class="control-label">
+                                            交付日期：
+                                        </label>
+                                        <div flex="15" layout-padding>
+                                            {{::$ctrl.data.delivery_date | limitTo:10}}
+                                        </div>
+
+                                        <label flex="15" class="control-label">
+                                            交付内容：
+                                        </label>
+                                        <div flex="50" layout="row" layout-padding>
+                                            房门钥匙及 {{::$ctrl.data.deliverables}}
+                                        </div>
+                                        <label flex="10" class="control-label">
+                                            交接方式：
+                                        </label>
+                                        <div flex="15" layout-padding>
+                                            {{$ctrl.data.deliveryMode | showKeyCodeTypes : 'leaseDeliveryWay'}}
+                                        </div>
+                                        <div flex="15"></div>
+                                        <div flex="85" layout-padding>
+                                            乙方继续承租的，应提前
+                                            {{::$ctrl.data.advanceDay}}
+                                            日向甲方提出（
+                                            {{$ctrl.data.filed_mode | showKeyCodeTypes:'leaseReletWay'}}
+                                            ）续租要求，协商一致后双方重新签订房屋租赁合同。
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ibox-content" ng-if="$ctrl.lesseeEdit">
+                                	<form class="form-horizontal" layout="row" layout-wrap name="$ctrl.lesseeEditFrom" novalidate>
+                                        <label flex="15" class="control-label required">
+                                            承租期限：
+                                        </label>
+                                        <div flex="45" layout="row">
+                                            <input type="text" flex="35" class="form-control input-sm"
+                                                   sign-laydate
+                                                   
+                                                   placeholder="请选择日期"
+                                                   max="$ctrl.edit.lessee_end_date"
+                                                   ng-model="$ctrl.edit.lessee_start_date" required>
+                                            <div layout-padding>至</div>
+                                            <input type="text" flex="35" class="form-control input-sm"
+                                                   sign-laydate min="$ctrl.edit.lessee_start_date"
+                                                   placeholder="请选择日期"
+                                                   ng-model="$ctrl.edit.lessee_end_date" required>
+                                            <div layout-padding>共计：
+                                                <span class="text-danger">
+                                            {{$ctrl.edit.lessee_start_date | monthLength : $ctrl.edit.lessee_end_date |
+                                        monthLength2str}}
+                                        </span>
+                                            </div>
+                                        </div>
+                                        <label flex="15" class="control-label required">
+                                            交付日期：
+                                        </label>
+                                        <div flex="15" style="margin-bottom: 20px;">
+                                            <input type="text" class="form-control input-sm"
+                                                   sign-laydate placeholder="请选择交付日期"
+                                                   ng-model="$ctrl.edit.delivery_date" required>
+                                        </div>
+
+                                        <label flex="15" class="control-label">
+                                            交付内容：
+                                        </label>
+                                        <div flex="50" layout="row">
+                                            <div layout-padding="">房门钥匙及</div>
+                                            <input flex="80" type="text" class="form-control input-sm"
+                                                   placeholder="请输入交付内容"
+                                                   ng-model="$ctrl.edit.deliverables">
+                                        </div>
+                                        <label flex="10" class="control-label required">
+                                            交接方式：
+                                        </label>
+                                        <div flex="15" style="margin-bottom: 20px;">
+                                            <select class="form-control input-sm" chosen
+                                                    ng-model="$ctrl.edit.deliveryMode" required
+                                                    ng-options="item.valueCode as item.valueName for item in $ctrl.leaseDeliveryWay">
+                                                <option value="">请选择</option>
+                                            </select>
+                                        </div>
+                                        <div flex="100" layout="row" layout-align="center" layout-wrap="">
+                                            <div layout-padding>
+                                                乙方继续承租的，应提前
+                                            </div>
+                                            <input flex="10" type="text" class="form-control input-sm"
+                                                   ng-model="$ctrl.edit.advanceDay" placeholder="三十">
+                                            <div layout-padding="">
+                                                日向甲方提出（
+                                            </div>
+                                            <div>
+                                                <sign-checkbox-group
+                                                        ng-model="$ctrl.edit.filed_mode">
+                                                    <sign-checkbox ng-repeat="item in $ctrl.leaseReletWay"
+                                                                   value="item.valueCode">
+                                                        {{item.valueName}}
+                                                    </sign-checkbox>
+                                                </sign-checkbox-group>
+                                            </div>
+
+                                            <div layout-padding="">
+                                                ）续租要求，协商一致后双方重新签订房屋租赁合同。
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div class="ibox">
+                                <div class="ibox-title" id="rent-and-deposit-info">
+                                    <h5>租金及押金信息</h5>
+                                    <div ng-if="$ctrl.showContractEditBtn" class="pull-right">
+                                        #if($shiro.hasPermission("SCM:SALES:LEASE_SIGN_CONTRACT_INFORMATION_MODIFY"))
+                                        <button class="btn btn-success btn-sm btn-pos" type="button"
+                                                ng-if="!$ctrl.rentEdit"
+                                                ng-click="$ctrl.startEdit('rentEdit')">
+                                            编辑
+                                        </button>
+                                        #end
+                                        <button type="button" class="btn btn-success btn-sm btn-pos btn_size"
+                                                ng-if="$ctrl.rentEdit"
+                                                ng-disabled="$ctrl.rentEditFrom.$invalid"
+                                                ng-click="$ctrl.saveEdit()">
+                                            保存
+                                        </button>
+                                        <button class="btn btn-success btn-sm btn-pos" type="button"
+                                                ng-if="$ctrl.rentEdit"
+                                                ng-click="$ctrl.cancelEdit()">
+                                            取消
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="ibox-content" ng-if="!$ctrl.rentEdit">
+                                    <div class="form-horizontal" layout-wrap layout="row">
+                                        <label flex="15" class="control-label">租金标准：</label>
+                                        <div flex="15" layout="row" layout-padding="">
+                                            {{::$ctrl.data.rentStandard}} 元/月
+                                        </div>
+                                        <label flex="15" class="control-label">支付方式(日期)：</label>
+                                        <div flex="15" layout-padding="">
+                                            {{$ctrl.data.paymentMode|showKeyCodeTypes:'paymentModeWay'}}
+                                        </div>
+                                        <label flex="15" class="control-label">租金总计：</label>
+                                        <div flex="20" layout-padding class="text-nowrap">
+                                            {{$ctrl.data.rentTotal}} 元
+                                            <span class="text-danger" ng-if="$ctrl.data.rentTotal">
+                                        ￥：{{$ctrl.data.rentTotal | signCurrency}}
+                                    </span>
+                                        </div>
+
+                                        <label flex="15" class="control-label">租金付款方式：</label>
+                                        <div flex="20" layout-padding>
+                                            {{$ctrl.data.rent_payment_mode | showKeyCodeTypes:'leaseRentPayWay'}}
+                                        </div>
+                                        <label flex="10" class="control-label">支付方式：</label>
+                                        <div flex="15" layout="row" layout-padding>
+                                            押{{::$ctrl.data.deposit}}
+                                            付{{::$ctrl.data.payment}}
+                                        </div>
+                                        <label flex="15" class="control-label">押金金额：</label>
+                                        <div flex="20" layout-padding class="text-nowrap">
+                                            {{::$ctrl.data.depositAmount}} 元
+                                            <span class="text-danger" ng-if="$ctrl.data.depositAmount">
+                                        ￥：{{$ctrl.data.depositAmount | signCurrency}}
+                                    </span>
+                                        </div>
+
+                                        <label flex="15" class="control-label">普租分期：</label>
+                                        <div flex="15" layout-padding="">
+                                            {{::$ctrl.data.lesseeInstallment | yesOrNo}}
+                                        </div>
+                                    </div>
+                                    <h4 class="page-header font-size-12 text-success">
+                                        租金支付日期
+                                    </h4>
+                                    <table class="table table-striped table-bordered table-hover dataTables-example table-condensed">
+                                        <thead>
+                                        <tr>
+                                            <th style="width: 25%;">序号</th>
+                                            <th style="width: 25%;">支付日期</th>
+                                            <th style="width: 25%;">支付金额（元）</th>
+                                            <th style="width: 25%;">备注</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="item in $ctrl.data.sign_pay_rent_vo">
+                                            <td>{{::$index + 1}}</td>
+                                            <td>{{::item.payment_date | limitTo :10}}</td>
+                                            <td>{{::item.payment_amount}}</td>
+                                            <td>{{::item.memo}}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="hr-line-dashed"></div>
+                                    <div class="form-horizontal" layout="row" layout-wrap>
+                                        <label flex="15" class="control-label">业主承担费用：</label>
+                                        <div flex="75" layout-padding="">
+                                            {{$ctrl.data.owner_expense | showKeyCodeTypes : 'leaseOwnerCost'}}
+                                        </div>
+                                        <label flex="15" class="control-label">客户承担费用：</label>
+                                        <div flex="75" layout-padding="">
+                                            {{$ctrl.data.customer_expense | showKeyCodeTypes : 'leaseCustomerCost'}}
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="ibox-content" ng-if="$ctrl.rentEdit">
+                                    <form class="form-horizontal" layout="row" layout-wrap name="$ctrl.rentEditFrom" novalidate>
+                                        <label flex="15" class="control-label required">租金标准：</label>
+                                        <div flex="15" layout="row">
+                                            <input type="number" class="form-control input-sm hide-spin"
+                                                   placeholder="请输入金额"
+                                                   ng-change="$ctrl.rentStandardChange($ctrl.edit.rentStandard)"
+                                                   ng-model="$ctrl.edit.rentStandard" required disabled-negative>
+                                            <div class="text-nowrap" layout-padding>元/月</div>
+                                        </div>
+                                        <label flex="15" class="control-label required">支付方式(日期)：</label>
+                                        <div flex="15">
+                                            <select class="form-control" chosen
+                                                    placeholder="请选择日期"
+                                                    ng-model="$ctrl.edit.paymentMode" required
+                                                    ng-options="item.valueCode as item.valueName for item in $ctrl.paymentModeWay">
+                                                <option value="">请选择</option>
+                                            </select>
+                                        </div>
+                                        <label flex="15" class="control-label required">租金总计：</label>
+                                        <div flex="20" layout="column" style="margin-bottom: 20px;">
+                                            <div layout="row">
+	                                            <input type="number" class="form-control input-sm hide-spin"
+	                                                   style="width: 100px;" flex
+	                                                   ng-model="$ctrl.edit.rentTotal" required disabled-negative>
+	                                            <div class="text-nowrap" layout-padding>元</div>
+                                            </div>
+                                            <div class="text-nowrap text-danger" layout-padding ng-if="$ctrl.edit.rentTotal">
+                                                ￥：{{$ctrl.edit.rentTotal | signCurrency}}
+                                            </div>
+                                        </div>
+
+                                        <label flex="15" class="control-label required">租金付款方式：</label>
+                                        <div flex="20">
+                                            <sign-checkbox-group
+                                                    ng-model="$ctrl.edit.rent_payment_mode" required>
+                                                <sign-checkbox ng-repeat="item in $ctrl.leaseRentPayWay"
+                                                               value="item.valueCode">
+                                                    {{item.valueName}}
+                                                </sign-checkbox>
+                                            </sign-checkbox-group>
+                                        </div>
+                                        <label flex="10" class="control-label required">支付方式：</label>
+                                        <div flex="20" layout="row" style="height: 30px;">
+                                            <div layout-padding>押</div>
+                                            <div flex>
+                                                <select class="form-control" chosen
+                                                        ng-model="$ctrl.edit.deposit" required>
+                                                    <option value="">请选择</option>
+                                                    <option ng-value="0">0</option>
+                                                    <option ng-value="1">1</option>
+                                                    <option ng-value="2">2</option>
+                                                    <option ng-value="3">3</option>
+                                                    <option ng-value="4">4</option>
+                                                    <option ng-value="5">5</option>
+                                                    <option ng-value="6">6</option>
+                                                    <option ng-value="7">7</option>
+                                                    <option ng-value="8">8</option>
+                                                    <option ng-value="9">9</option>
+                                                </select>
+                                            </div>
+                                            <div layout-padding>付</div>
+                                            <div flex>
+                                                <select class="form-control" chosen
+                                                        ng-model="$ctrl.edit.payment" required>
+                                                    <option value="">请选择</option>
+                                                    <option ng-value="0">0</option>
+                                                    <option ng-value="1">1</option>
+                                                    <option ng-value="2">2</option>
+                                                    <option ng-value="3">3</option>
+                                                    <option ng-value="4">4</option>
+                                                    <option ng-value="5">5</option>
+                                                    <option ng-value="6">6</option>
+                                                    <option ng-value="7">7</option>
+                                                    <option ng-value="8">8</option>
+                                                    <option ng-value="9">9</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <label flex="10" class="control-label required">押金金额：</label>
+                                        <div flex="20" layout="column" style="margin-bottom: 20px;">
+                                            <div  layout="row">
+                                            	<input type="number" class="form-control input-sm hide-spin"
+                                                   style="width: 100px;"
+                                                   placeholder="请输入金额"
+                                                   ng-model="$ctrl.edit.depositAmount" required disabled-negative>
+                                            	<div class="text-nowrap" layout-padding>元</div>
+                                            </div>
+                                            <div class="text-nowrap text-danger" layout-padding ng-if="$ctrl.edit.depositAmount">
+                                                ￥：{{$ctrl.edit.depositAmount | signCurrency}}
+                                            </div>
+                                        </div>
+
+                                        <label flex="15" class="control-label">普租分期：</label>
+                                        <div flex="15">
+                                            <div class="radio radio-primary radio-inline">
+                                                <input type="radio" id="h1" name="h" ng-value="1"
+                                                       ng-model="$ctrl.edit.lesseeInstallment">
+                                                <label for="h1">是</label>
+                                            </div>
+                                            <div class="radio radio-primary radio-inline" style="margin-right: 0;">
+                                                <input type="radio" id="h2" name="h" ng-value="0"
+                                                       ng-model="$ctrl.edit.lesseeInstallment">
+                                                <label for="h2">否</label>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <h4 class="page-header font-size-12 text-success required">
+                                        租金支付日期
+                                        <div class="pull-right">
+                                            <button type="button" class="btn btn-primary btn-xs"
+                                                    ng-click="$ctrl.addPayDate($ctrl.edit.sign_pay_rent_vo)">
+                                                <span class="fa fa-plus"></span>
+                                                添加日期
+                                            </button>
+                                        </div>
+                                    </h4>
+                                    <table class="table table-striped table-bordered table-hover dataTables-example table-condensed">
+                                        <thead>
+                                        <tr>
+                                            <th style="width: 20%;">序号</th>
+                                            <th style="width: 20%;" class="required">支付日期</th>
+                                            <th style="width: 20%;" class="required">支付金额(元)</th>
+                                            <th style="width: 20%;">备注</th>
+                                            <th style="width: 20%;">操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="item in $ctrl.edit.sign_pay_rent_vo"
+                                            class="valign-top">
+                                            <td>{{$index + 1}}</td>
+                                            <td>
+                                                <input type="text" class="form-control input-sm"
+                                                       placeholder="请选择日期"
+                                                       sign-laydate ng-model="item.payment_date" required>
+                                            </td>
+                                            <td>
+                                                <input type="number" class="form-control input-sm hide-spin text-right"
+                                                       placeholder="请输入金额"
+                                                       ng-model="item.payment_amount" required disabled-negative>
+                                                <span class="text-danger" ng-if="item.payment_amount">￥:{{item.payment_amount | signCurrency}}</span>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control input-sm" ng-model="item.memo">
+                                            </td>
+                                            <td>
+                                                <a href="javascript:" class="btn btn-danger btn-outline btn-xs"
+                                                   ng-if="!$first"
+                                                   ng-click="$ctrl.removePayDate($ctrl.edit.sign_pay_rent_vo,$index)">删除</a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="hr-line-dashed"></div>
+                                    <div class="form-horizontal" layout="row" layout-wrap>
+                                        <label flex="15" class="control-label">业主承担费用：</label>
+                                        <div flex="75" style="margin-bottom: 20px;">
+                                            <sign-checkbox-group
+                                                    ng-model="$ctrl.edit.owner_expense">
+                                                <sign-checkbox ng-repeat="item in $ctrl.leaseOwnerCost"
+                                                               value="item.valueCode">
+                                                    {{item.valueName}}
+                                                </sign-checkbox>
+                                            </sign-checkbox-group>
+                                        </div>
+                                        <label flex="15" class="control-label">客户承担费用：</label>
+                                        <div flex="75" style="margin-bottom: 20px;">
+                                            <sign-checkbox-group
+                                                    ng-model="$ctrl.edit.customer_expense">
+                                                <sign-checkbox ng-repeat="item in $ctrl.leaseCustomerCost"
+                                                               value="item.valueCode">
+                                                    {{item.valueName}}
+                                                </sign-checkbox>
+                                            </sign-checkbox-group>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="ibox">
+                                <div class="ibox-title" id="intermediary-services">
+                                    <h5>居间服务</h5>
+                                    <div ng-if="$ctrl.showContractEditBtn" class="pull-right">
+                                        #if($shiro.hasPermission("SCM:SALES:LEASE_SIGN_CONTRACT_INFORMATION_MODIFY"))
+                                        <button class="btn btn-success btn-sm btn-pos" type="button"
+                                                ng-if="!$ctrl.intermediaryServicesEdit"
+                                                ng-click="$ctrl.startEdit('intermediaryServicesEdit')">
+                                            编辑
+                                        </button>
+                                        #end
+                                        <button type="button" class="btn btn-success btn-sm btn-pos btn_size"
+                                                ng-if="$ctrl.intermediaryServicesEdit"
+                                                ng-disabled="$ctrl.intermediaryServicesEditFrom.$invalid"
+                                                ng-click="$ctrl.saveEdit()">
+                                            保存
+                                        </button>
+                                        <button class="btn btn-success btn-sm btn-pos" type="button"
+                                                ng-if="$ctrl.intermediaryServicesEdit"
+                                                ng-click="$ctrl.cancelEdit()">
+                                            取消
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="ibox-content" ng-if="!$ctrl.intermediaryServicesEdit">
+                                    <div class="form-horizontal" layout="row" layout-wrap>
+                                        <label flex="15" class="control-label">服务费收取对象：</label>
+                                        <div flex="15" layout-padding>
+                                            {{$ctrl.data.charge_object|showKeyCodeTypes:'leaseServiceChargeObj'}}
+                                        </div>
+                                        <label flex="20" class="control-label">居间服务费支付日期：</label>
+                                        <div flex="20" layout-padding layout="row">
+                                            <span ng-if="$ctrl.data.serviceFeePaymentWay == 1">即时</span>
+                                            <span ng-if="$ctrl.data.serviceFeePaymentWay == 0">
+                                        {{::$ctrl.data.service_feePayment_date}}
+                                    </span>
+                                        </div>
+                                        <label flex="15" class="control-label">总折扣：</label>
+                                        <div flex="15" layout-padding>
+                                            {{$ctrl.data.discountTotal}} 折
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+                                    <div class="form-horizontal" layout="row"
+                                         ng-if="$ctrl.data.charge_object.indexOf(1) > -1"
+                                         layout-wrap>
+                                        <label flex="15" class="control-label">客户佣金(公司规定)：</label>
+                                        <div flex="15" layout-padding>
+                                            {{$ctrl.data.customerCommissionStipulate}} 元
+                                        </div>
+                                        <label flex="20" class="control-label">客户佣金(合同约定)：</label>
+                                        <div flex="20" layout="row" layout-padding>
+                                            <div>{{$ctrl.data.customerCommissionConvention}} 元</div>
+                                            <div class="text-danger" ng-if="$ctrl.data.customerCommissionConvention">
+                                                ￥：{{$ctrl.data.customerCommissionConvention | signCurrency}}
+                                            </div>
+                                        </div>
+                                        <label flex="15" class="control-label">客户佣金占月租金比例：</label>
+                                        <div flex="15" layout-padding>
+                                            {{$ctrl.data.customerPaymentProportion}} %
+                                        </div>
+                                        <label flex="15" class="control-label">客户佣金支付方式：</label>
+                                        <div flex="30" layout-padding>
+                                            {{$ctrl.data.customer_payment_mode | showKeyCodeTypes:'leaseRentPayWay'}}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-horizontal" layout="row"
+                                         ng-if="$ctrl.data.charge_object.indexOf(2) > -1"
+                                         layout-wrap style="margin-top: 10px;">
+                                        <label flex="15" class="control-label">业主佣金(公司规定)：</label>
+                                        <div flex="15" layout-padding>
+                                            {{$ctrl.data.ownerCommissionStipulate}} 元
+                                        </div>
+                                        <label flex="20" class="control-label">业主佣金(合同约定)：</label>
+                                        <div flex="20" layout="row" layout-padding>
+                                            <div>
+                                                {{$ctrl.data.ownerCommissionConvention}} 元
+                                            </div>
+                                            <div class="text-danger" ng-if="$ctrl.data.ownerCommissionConvention">
+                                                ￥：{{$ctrl.data.ownerCommissionConvention | signCurrency}}
+                                            </div>
+                                        </div>
+                                        <label flex="15" class="control-label">业主佣金占月租金比例：</label>
+                                        <div flex="15" layout-padding>
+                                            {{$ctrl.data.ownerPaymentProportion}} %
+                                        </div>
+                                        <label flex="15" class="control-label">业主佣金支付方式：</label>
+                                        <div flex="30" layout-padding>
+                                            {{$ctrl.data.owner_payment_mode | showKeyCodeTypes:'leaseRentPayWay'}}
+                                        </div>
+                                    </div>
+
+                                    <div ng-if="$ctrl.data.discountTotal < 10">
+                                        <h4 class="page-header font-size-12 text-success">
+                                            折扣原因
+                                        </h4>
+                                        <div class="form-horizontal" layout="row"
+                                             ng-if="$ctrl.data.owner_payment_mode"
+                                             layout-wrap>
+                                            <label flex="15" class="control-label">打折原因：</label>
+                                            <div flex="15" layout-padding>
+                                                {{$ctrl.data.discountReason | showKeyCodeTypes:'discountReason'}}
+                                            </div>
+                                            <div flex="30" ng-if="$ctrl.data.discountReason == 4" layout="row">
+                                                <label flex="50" class="control-label">员工姓名：</label>
+                                                <div flex="50" layout-padding>
+                                                    <person-show
+                                                            person-id="$ctrl.data.discountUserid"
+                                                            person-name="$ctrl.data.discountUserName"></person-show>
+                                                </div>
+                                            </div>
+                                            <div flex="30" ng-if="$ctrl.data.discountReason == 3" layout="row">
+                                                <label flex="50" class="control-label">合同编号：</label>
+                                                <div flex="50" layout-padding="">
+                                                    {{::$ctrl.data.discountConids}}
+                                                </div>
+                                            </div>
+
+                                            <div flex="100" layout="row">
+                                                <label flex="15" class="control-label">情况说明：</label>
+                                                <div flex="75" layout-padding>
+                                                    {{::$ctrl.data.situationExplain}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ibox-content" ng-if="$ctrl.intermediaryServicesEdit">
+                                	 <form class="form-horizontal" layout-wrap name="$ctrl.intermediaryServicesEditFrom" novalidate>
+                                    <div class="form-horizontal" layout="row" layout-wrap>
+                                        <label flex="15" class="control-label required">服务费收取对象：</label>
+                                        <div flex="15">
+                                            <sign-checkbox-group ng-model="$ctrl.edit.charge_object" required>
+                                                <sign-checkbox ng-repeat="item in $ctrl.leaseServiceChargeObj"
+                                                               value="item.valueCode">
+                                                    {{item.valueName}}
+                                                </sign-checkbox>
+                                            </sign-checkbox-group>
+                                        </div>
+                                        <label flex="20" class="control-label required">居间服务费支付日期：</label>
+                                        <div flex="20" layout="row">
+                                            <div class="radio radio-primary radio-inline">
+                                                <input type="radio" id="l1" name="l" ng-value="1" required
+                                                       ng-model="$ctrl.edit.serviceFeePaymentWay">
+                                                <label for="l1" class="text-nowrap">即时</label>
+                                            </div>
+                                            <div class="radio radio-primary radio-inline">
+                                                <input type="radio" id="l2" name="l" ng-value="0" required
+                                                       ng-model="$ctrl.edit.serviceFeePaymentWay">
+                                                <label for="l2">
+                                                    <input type="text" style="width: 120px; height: 20px;"
+                                                           sign-laydate
+                                                           placeholder="请选择日期"
+                                                           ng-required="$ctrl.edit.serviceFeePaymentWay == 0"
+                                                           ng-model="$ctrl.edit.service_feePayment_date"
+                                                           ng-style="{'pointer-events':$ctrl.edit.serviceFeePaymentWay == 1 ? 'none' : 'auto'}">
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <label flex="15" class="control-label">总折扣：</label>
+                                        <div flex="15" layout="row" style="margin-bottom: 10px;">
+                                            <input type="text" class="form-control" readonly
+                                                   ng-value="$ctrl.disCountTotal()">
+                                            <div layout-padding>折</div>
+                                        </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+                                    <div class="form-horizontal" layout="row"
+                                         ng-if="$ctrl.edit.charge_object.indexOf(1) > -1"
+                                         layout-wrap style="margin-top: 10px;">
+                                        <label flex="15" class="control-label">客户佣金(公司规定)：</label>
+                                        <div flex="15" layout="row">
+                                            <input type="text" class="form-control" readonly
+                                                   ng-value="$ctrl.edit.customerCommissionStipulate">
+                                            <div layout-padding>元</div>
+                                        </div>
+                                        <label flex="20" class="control-label required">客户佣金(合同约定)：</label>
+                                        <div flex="15" layout="column">
+                                            <div layout="row">
+                                                <input type="number" class="form-control hide-spin"
+                                                       ng-model="$ctrl.edit.customerCommissionConvention"
+                                                       placeholder="请输入金额"
+                                                       required disabled-negative>
+                                                <div layout-padding>元</div>
+                                            </div>
+                                            <div class="text-danger" ng-if="$ctrl.edit.customerCommissionConvention">
+                                                ￥：{{$ctrl.edit.customerCommissionConvention | signCurrency}}
+                                            </div>
+                                        </div>
+                                        <label flex="20" class="control-label">客户佣金占月租金比例：</label>
+                                        <div flex="15" layout="row" style="margin-bottom: 20px;">
+                                            <input type="text" class="form-control" readonly
+                                                   ng-value="$ctrl.customerPaymentProportion()">
+                                            <div layout-padding>%</div>
+                                        </div>
+                                        <label flex="15" class="control-label required">客户佣金支付方式：</label>
+                                        <div flex="30" style="margin-bottom: 20px;">
+                                            <sign-checkbox-group ng-model="$ctrl.edit.customer_payment_mode" required>
+                                                <sign-checkbox ng-repeat="item in $ctrl.leaseRentPayWay"
+                                                               value="item.valueCode">
+                                                    {{item.valueName}}
+                                                </sign-checkbox>
+                                            </sign-checkbox-group>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-horizontal" layout="row"
+                                         ng-if="$ctrl.edit.charge_object.indexOf(2) > -1"
+                                         layout-wrap style="margin-top: 10px;">
+                                        <label flex="15" class="control-label">业主佣金(公司规定)：</label>
+                                        <div flex="15" layout="row">
+                                            <input type="text" class="form-control" readonly
+                                                   ng-value="$ctrl.edit.ownerCommissionStipulate">
+                                            <div layout-padding>元</div>
+                                        </div>
+                                        <label flex="20" class="control-label required">业主佣金(合同约定)：</label>
+                                        <div flex="15" layout="column">
+                                            <div layout="row">
+                                                <input type="number" class="form-control hide-spin"
+                                                       ng-model="$ctrl.edit.ownerCommissionConvention"
+                                                       placeholder="请输入金额"
+                                                       required disabled-negative>
+                                                <div layout-padding>元</div>
+                                            </div>
+                                            <div class="text-danger" ng-if="$ctrl.edit.ownerCommissionConvention">
+                                                ￥：{{$ctrl.edit.ownerCommissionConvention | signCurrency}}
+                                            </div>
+                                        </div>
+                                        <label flex="20" class="control-label">业主佣金占月租金比例：</label>
+                                        <div flex="15" layout="row" style="margin-bottom: 20px;">
+                                            <input type="text" class="form-control" readonly
+                                                   ng-value="$ctrl.ownerPaymentProportion()">
+                                            <div layout-padding>%</div>
+                                        </div>
+                                        <label flex="15" class="control-label required">业主佣金支付方式：</label>
+                                        <div flex="30">
+                                            <sign-checkbox-group ng-model="$ctrl.edit.owner_payment_mode" required>
+                                                <sign-checkbox ng-repeat="item in $ctrl.leaseRentPayWay"
+                                                               value="item.valueCode">
+                                                    {{item.valueName}}
+                                                </sign-checkbox>
+                                            </sign-checkbox-group>
+                                        </div>
+                                    </div>
+
+                                    <div ng-if="$ctrl.edit.discountTotal < 10">
+                                        <h4 class="page-header font-size-12 text-success required">
+                                            折扣原因
+                                        </h4>
+                                        <div class="form-horizontal" layout="row" layout-wrap>
+                                            <label flex="15" class="control-label required">打折原因：</label>
+                                            <div flex="15" style="margin-bottom: 20px;">
+                                                <select class="form-control" chosen
+                                                        ng-model="$ctrl.edit.discountReason" required
+                                                        ng-options="item.valueCode as item.valueName for item in $ctrl.discountReason">
+                                                    <option value="">请选择</option>
+                                                </select>
+                                            </div>
+                                            <div flex="30" ng-if="$ctrl.edit.discountReason == 4" layout="row">
+                                                <label flex="50" class="control-label required">员工姓名：</label>
+                                                <div flex="50">
+                                                    <sign-choose-person required
+                                                                        ng-model="$ctrl.edit.discountUserid"
+                                                                        person-name="$ctrl.edit.discountUserName">
+                                                    </sign-choose-person>
+                                                </div>
+                                            </div>
+
+                                            <div flex="30" ng-if="$ctrl.edit.discountReason == 3" layout="row">
+                                                <label flex="50" class="control-label required">合同编号：</label>
+                                                <div flex="50">
+                                                    <input type="text" class="form-control"
+                                                           placeholder="请输入合同编号"
+                                                           ng-model="$ctrl.edit.discountConids" required>
+                                                </div>
+                                            </div>
+
+                                            <div flex="100" layout="row">
+                                                <label flex="15" class="control-label required">情况说明：</label>
+                                                <div flex="75">
+                                        <textarea rows="4" class="form-control" maxlength="100"
+                                                  ng-model="$ctrl.edit.situationExplain" required></textarea>
+													<div ng-if="$ctrl.edit.situationExplain.length <90||$ctrl.edit.situationExplain.length==Null" class="text-right help-block" style="color:#1d3872;">
+                                                        还可以输入{{100 - $ctrl.edit.situationExplain.length}} 字
+                                                    </div>
+                                                    <div ng-if="$ctrl.edit.situationExplain.length>=90" class="text-right help-block text-danger">
+                                                        还可以输入{{100 - $ctrl.edit.situationExplain.length}} 字
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div class="ibox">
+                                <div class="ibox-title" id="breach-of-contract">
+                                    <h5>合同解除及违约</h5>
+                                    <div ng-if="$ctrl.showContractEditBtn" class="pull-right">
+                                        #if($shiro.hasPermission("SCM:SALES:LEASE_SIGN_CONTRACT_INFORMATION_MODIFY"))
+                                        <button class="btn btn-success btn-sm btn-pos" type="button"
+                                                ng-if="!$ctrl.rescissionAndBreachOfContractEdit"
+                                                ng-click="$ctrl.startEdit('rescissionAndBreachOfContractEdit')">
+                                            编辑
+                                        </button>
+                                        #end
+                                        <button type="button" class="btn btn-success btn-sm btn-pos btn_size"
+                                                ng-if="$ctrl.rescissionAndBreachOfContractEdit"
+                                                ng-click="$ctrl.saveEdit()">
+                                            保存
+                                        </button>
+                                        <button class="btn btn-success btn-sm btn-pos" type="button"
+                                                ng-if="$ctrl.rescissionAndBreachOfContractEdit"
+                                                ng-click="$ctrl.cancelEdit()">
+                                            取消
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="ibox-content" ng-if="!$ctrl.rescissionAndBreachOfContractEdit" >
+                                    <div class="form-horizontal" layout="row" layout-wrap>
+                                        <label flex="15" class="control-label">乙方单方解除合同原因：</label>
+                                        <div flex="80" layout="row" layout-wrap style="margin-bottom: 20px;">
+                                            <div flex="40" layout-padding>
+                                                <div class="text-nowrap">
+                                                    1、延迟交付房屋达
+                                                    {{::$ctrl.data.delayDelivery}}
+                                                    日
+                                                </div>
+                                            </div>
+                                            <div flex="40" layout-padding>
+                                                <div class="text-nowrap">
+                                                    2、其它约定
+                                                    {{::$ctrl.data.otherConventions}}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <label flex="15" class="control-label">甲方单方解除合同原因：</label>
+                                        <div flex="80" layout="row" layout-wrap style="margin-bottom: 20px;">
+                                            <div flex="40" layout-padding>
+                                                <div class="text-nowrap">
+                                                    1、不按照约定租金达
+                                                    {{::$ctrl.data.dueDay}}
+                                                    日
+                                                </div>
+                                            </div>
+                                            <div flex="40" layout-padding>
+                                                <div class="text-nowrap">
+                                                    2、欠缴各项费用达
+                                                    {{::$ctrl.data.oweAmount}}
+                                                    元
+                                                </div>
+                                            </div>
+                                            <div flex="80" layout-padding>
+                                                <div class="text-nowrap">
+                                                    3、其它约定
+                                                    {{::$ctrl.data.otherOtherConventions}}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <label flex="15" class="control-label">违约责任：</label>
+                                        <div flex="75" style="margin-bottom: 20px;">
+                                            <div layout-padding style="padding-top: 0;">
+                                                1、甲方有第九条第三款约定的情况之一的，应按月租金的
+                                                {{::$ctrl.data.breakNineThree}}
+                                                %向乙方支付违约金；乙方有第九条第四款约定的情形之一的，应按月租金的
+                                                {{::$ctrl.data.breakNineFour}}
+                                                %向甲方支付违约金，甲方并可要求乙方将房屋恢复原状或赔偿相应损失。
+                                            </div>
+                                            <div layout-padding>
+                                                2、租赁期内，甲方需提前收回该房屋的，或乙方需提前退租的，应提前
+                                                {{::$ctrl.data.breakBackDay}}
+                                                日通知对方，并按月租金的
+                                                {{::$ctrl.data.breakBackPercent}}
+                                                % 支付违约金，甲方还应退还相应的租金。
+                                            </div>
+                                            <div layout-padding>
+                                                3、甲方未按约定时间交付该房屋或者乙方不按约定支付租金但未达到解除合同条件的，以及乙方未按约定时间返还房屋的，
+                                                {{::$ctrl.data.breakAmountDiscription}}
+                                                标准支付违约金。
+                                            </div>
+                                            <div layout-padding>
+                                                <div class="text-nowrap">
+                                                    4、其它
+                                                    {{::$ctrl.data.breakOtherDiscription}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <label flex="15" class="control-label">其它约定事项：</label>
+                                        <div flex="75" layout-padding>
+                                            {{::$ctrl.data.breakOhterAgree}}
+                                        </div>
+
+                                        <div flex="80" style="margin-left: 10%;font-weight: bold;" layout="row"
+                                             layout-wrap="">
+                                            <div layout-padding class="text-nowrap">
+                                                本合同经三方签字盖章后生效。本合同（及附件）一式
+                                                {{::$ctrl.data.contractAmount}}
+                                                份，其中甲方执
+                                                {{::$ctrl.data.contractAmountJia}}
+                                                份，乙方执
+                                                {{::$ctrl.data.contractAmountYi}}
+                                                份，丙方
+                                                {{::$ctrl.data.contractAmountBing}}
+                                                份，
+                                                {{::$ctrl.data.contractAmountOtherName}}
+                                                执
+                                                {{::$ctrl.data.contractAmountOtherNum}}
+                                                份。
+                                            </div>
+                                            <div layout-padding class="text-nowrap">
+                                                本合同生效后，各方对合同内容的变更或补充应采取书面形式，作为本合同的附件。附件与本合同具有同等的法律效力。
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ibox-content" ng-if="$ctrl.rescissionAndBreachOfContractEdit" >
+
+                                    <div class="form-horizontal" layout="row" layout-wrap>
+                                        <label flex="15" class="control-label">乙方单方解除合同原因：</label>
+                                        <div flex="80" layout="row" layout-wrap style="margin-bottom: 20px;">
+                                            <div flex="40" layout="row">
+                                                <div layout-padding class="text-nowrap">1、延迟交付房屋达</div>
+                                                <input type="text" class="form-control input-sm"
+                                                       placeholder="七" style="width: 50px;"
+                                                       ng-model="$ctrl.edit.delayDelivery">
+                                                <div layout-padding>日</div>
+                                            </div>
+                                            <div flex="40" layout="row" style="margin-bottom: 10px;">
+                                                <div layout-padding class="text-nowrap">2、其它约定</div>
+                                                <input type="text" class="form-control input-sm"
+                                                       ng-model="$ctrl.edit.otherConventions">
+                                            </div>
+                                        </div>
+
+                                        <label flex="15" class="control-label">甲方单方解除合同原因：</label>
+                                        <div flex="80" layout="row" layout-wrap style="margin-bottom: 20px;">
+                                            <div flex="40" layout="row">
+                                                <div layout-padding class="text-nowrap">1、不按照约定租金达</div>
+                                                <input type="text" class="form-control input-sm"
+                                                       placeholder="七" style="width: 50px;"
+                                                       ng-model="$ctrl.edit.dueDay">
+                                                <div layout-padding>日</div>
+                                            </div>
+                                            <div flex="40" layout="row" style="margin-bottom: 10px;">
+                                                <div layout-padding class="text-nowrap">2、欠缴各项费用达</div>
+                                                <input type="text" class="form-control input-sm" style="width: 100px;"
+                                                       ng-model="$ctrl.edit.oweAmount">
+                                                <div layout-padding>元</div>
+                                            </div>
+                                            <div flex="80" layout="row">
+                                                <div layout-padding class="text-nowrap">3、其它约定</div>
+                                                <input type="text" class="form-control"
+                                                       ng-model="$ctrl.edit.otherOtherConventions">
+                                            </div>
+                                        </div>
+
+                                        <label flex="15" class="control-label">违约责任：</label>
+                                        <div flex="75" style="margin-bottom: 20px;">
+                                            <div layout-padding style="padding-top: 0;">
+                                                1、甲方有第九条第三款约定的情况之一的，应按月租金的
+                                                <input type="text" class="form-control input-sm"
+                                                       style="display: inline-block;width: 50px;" placeholder="200"
+                                                       ng-model="$ctrl.edit.breakNineThree">
+                                                %向乙方支付违约金；乙方有第九条第四款约定的情形之一的，应按月租金的
+                                                <input type="text" class="form-control input-sm"
+                                                       placeholder="200" style="display: inline-block;width: 50px;"
+                                                       ng-model="$ctrl.edit.breakNineFour">
+                                                %向甲方支付违约金，甲方并可要求乙方将房屋恢复原状或赔偿相应损失。
+                                            </div>
+                                            <div layout-padding>
+                                                2、租赁期内，甲方需提前收回该房屋的，或乙方需提前退租的，应提前
+                                                <input type="text" class="form-control input-sm"
+                                                       placeholder="30" style="display: inline-block;width: 50px;"
+                                                       ng-model="$ctrl.edit.breakBackDay">
+                                                日通知对方，并按月租金的
+                                                <input type="text" class="form-control input-sm"
+                                                       placeholder="200" style="display: inline-block;width: 50px;"
+                                                       ng-model="$ctrl.edit.breakBackPercent">
+                                                % 支付违约金，甲方还应退还相应的租金。
+                                            </div>
+                                            <div layout-padding>
+                                                3、甲方未按约定时间交付该房屋或者乙方不按约定支付租金但未达到解除合同条件的，以及乙方未按约定时间返还房屋的，
+                                                <input type="text" class="form-control input-sm"
+                                                       placeholder="每逾期一日，按日租金的200%"
+                                                       style="display: inline-block;width: 220px;"
+                                                       ng-model="$ctrl.edit.breakAmountDiscription">
+                                                标准支付违约金。
+                                            </div>
+                                            <div layout="row">
+                                                <div layout-padding class="text-nowrap">4、其它</div>
+                                                <input type="text" class="form-control input-sm"
+                                                       style="display: inline-block;"
+                                                       ng-model="$ctrl.edit.breakOtherDiscription">
+                                            </div>
+                                        </div>
+                                        <label flex="15" class="control-label">其它约定事项：</label>
+                                        <div flex="75" style="margin-bottom: 20px;">
+                                            <input type="text" class="form-control"
+                                                   ng-model="$ctrl.edit.breakOhterAgree">
+                                        </div>
+
+                                        <div flex="80" style="margin-left: 10%;font-weight: bold;" layout="row"
+                                             layout-wrap="">
+                                            <div layout-padding class="text-nowrap">本合同经三方签字盖章后生效。本合同（及附件）一式</div>
+                                            <input type="text" class="form-control input-sm"
+                                                   style="width: 50px;" placeholder="叁"
+                                                   ng-model="$ctrl.edit.contractAmount">
+                                            <div layout-padding class="text-nowrap">份，其中甲方执</div>
+                                            <input type="text" class="form-control input-sm"
+                                                   style="width: 50px;" placeholder="壹"
+                                                   ng-model="$ctrl.edit.contractAmountJia">
+                                            <div layout-padding class="text-nowrap">份，乙方执</div>
+                                            <input type="text" class="form-control input-sm"
+                                                   style="width: 50px;" placeholder="壹"
+                                                   ng-model="$ctrl.edit.contractAmountYi">
+                                            <div layout-padding class="text-nowrap">份，丙方</div>
+                                            <input type="text" class="form-control input-sm"
+                                                   style="width: 50px;" placeholder="壹"
+                                                   ng-model="$ctrl.edit.contractAmountBing">
+                                            <div layout-padding class="text-nowrap">份，</div>
+                                            <input type="text" class="form-control input-sm" style="width: 50px;"
+                                                   ng-model="$ctrl.edit.contractAmountOtherName">
+                                            <div layout-padding class="text-nowrap">执</div>
+                                            <input type="text" class="form-control input-sm" style="width: 50px;"
+                                                   ng-model="$ctrl.edit.contractAmountOtherNum">
+                                            <div layout-padding class="text-nowrap">份。</div>
+                                            <div layout-padding class="text-nowrap">
+                                                本合同生效后，各方对合同内容的变更或补充应采取书面形式，作为本合同的附件。附件与本合同具有同等的法律效力。
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="ibox-content" ng-if="!$ctrl.isEditState() && !$ctrl.tIsDone" >
+                                    <div class="text-center">
+                                   	 	
+                                        <button class="btn btn-success btn_size" type="button"
+                                                ng-if="$ctrl.showPrintFlowWork && $ctrl.showSendFlowWork"
+                                                ng-click="$ctrl.flowUsers()">
+                                            提交打印审核
+                                        </button>
+                                       
+                                        #if($shiro.hasPermission("SCM:SALES:LEASE_SIGN_CONTRACT_INFORMATION_PRINTSEE"))
+                                        <button class="btn btn-success btn_size" type="button"
+                                                ng-if="$ctrl.isOwnerUser && $ctrl.data.contractStatus != 3"
+                                                ng-click="$ctrl.preview()">
+                                            打印预览
+                                        </button>
+                                        #end
+                                        
+                                        <button class="btn btn-success btn_size" type="button"
+                                                ng-if="$ctrl.showFinance"
+                                                ng-click="$ctrl.flowUsers()">
+                                            提交财务审核
+                                        </button>
+                                       
+                                        #if($shiro.hasPermission("SCM:SALES:LEASE_SIGN_CONTRACT_INFORMATION_VOID"))
+                                        <button class="btn btn-danger btn_size" type="button"
+                                                ng-if="$ctrl.data.auditStatus < 2 && $ctrl.data.contractStatus != 3 && $ctrl.isOwnerUser"
+                                                ng-click="$ctrl.setContractStatus(3 , '确定作废合同吗')">
+                                            作废
+                                        </button>
+                                        #end
+                                        #if($shiro.hasPermission("SCM:SALES:LEASE_SIGN_CONTRACT_INFORMATION_CANCEL"))
+                                        <button class="btn btn-success btn_size" type="button"
+                                                ng-if="$ctrl.data.contractStatus == 3 && $ctrl.isOwnerUser"
+                                                ng-click="$ctrl.setContractStatus(1 , '确定将合同取消作废？')">
+                                            取消作废
+                                        </button>
+                                        #end
+                                        <button class="btn btn-success btn_size" type="button"
+                                                ng-repeat="item in $ctrl.workFlowButtons"
+                                                ng-click="$ctrl.workFlowAction(item)">
+                                            {{ item.labelName }}
+                                        </button>
+                                    </div>
+                                </div>
+                            	 <div class="ibox-content" style="padding-bottom:270px;border-color:#fff;"></div>
+                            </div>
+                        </div>
+                        <!-- end flex -->
+                        <div style="width: 200px; border-left:5px solid #e3e3e3; background:#fff; border-top:4px solid #ccc; border-right:#fff;">
+                            <div my-spy-affix offset-top="1"
+                                 style="width: 195px;"
+                                 offset-bottom="30" id="navbar-fixed">
+                                <div class="list-group" my-spy-scroll>
+                                    <a href="#both-sides-info" class="list-group-item" style="text-align:center">交易双方基本信息</a>
+                                    <a href="#houses-info" class="list-group-item" style="text-align:center">房源信息</a>
+                                    <a href="#lease-term" class="list-group-item" style="text-align:center">租赁期限</a>
+                                    <a href="#rent-and-deposit-info" class="list-group-item" style="text-align:center">租金及押金信息</a>
+                                    <a href="#intermediary-services" class="list-group-item" style="text-align:center">居间服务</a>
+                                    <a href="#breach-of-contract" class="list-group-item" style="text-align:center">合同解除及违约</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                #end
+                #if($shiro.hasPermission("SCM:SALES:LEASE_SIGN_CONTRACT_ENCLOSURE_SEE"))
+                <div class="tab-pane" id="tab-2">
+                    <div class="panel-body">
+                        #parse("/sign/detail/attachment.html")
+                    </div>
+                </div>
+                #end
+                #if($shiro.hasPermission("SCM:SALES:LEASE_SIGN_CONTRACT_DELIVERY_QUERY"))
+                <div class="tab-pane" id="tab-3">
+                    <div class="panel-body">
+                        #parse("/sign/detail/delivery.html")
+                    </div>
+                </div>
+                #end
+                #if($shiro.hasPermission("SCM:SALES:LEASE_SIGN_CONTRACT_AGREEMENT_QUERY"))
+                <div class="tab-pane" id="tab-4">
+                    <div class="panel-body">
+                        #parse("/sign/detail/agreement-list.html")
+                    </div>
+                </div>
+                #end
+                #if($shiro.hasPermission("SCM:SALES:LEASE_SIGN_CONTRACT_PROCESS_QUERY"))
+                <div class="tab-pane" id="tab-5">
+                    <div class="panel-body">
+                        #parse("/sign/detail/approval-process.html")
+                    </div>
+                </div>
+                #end
+                #if($shiro.hasPermission("SCM:SALES:LEASE_SIGN_CONTRACT_PRINT_HISTORY_SEE"))
+                <div class="tab-pane" id="tab-6">
+                    <div class="panel-body">
+                        #parse("/sign/detail/print-history.html")
+                    </div>
+                </div>
+                #end
+                #if($shiro.hasPermission("SCM:SALES:LEASE_SIGN_CONTRACT_ OPERATION_QUERY"))
+                <div class="tab-pane" id="tab-7">
+                    <div class="panel-body">
+                        #parse("/sign/detail/operation-log.html")
+                    </div>
+                </div>
+                #end
+                #if($shiro.hasPermission("SCM:SALES:LEASE_CONTRACT_DETAILED_QUERY"))
+                <div class="tab-pane" id="tab-8">
+                    <div class="panel-body">
+                    	#parse("/sign/detail/contractcost-detail.html")
+                        <!-- <iframe width="100%" height="100%" id="iframeId" scrolling="auto" frameborder="0"></iframe> -->
+                    </div>
+                </div>
+                #end
+                #if($shiro.hasPermission("SCM:SALES:LEASE_CONTRACT_ACHIEVEMENT_QUERY"))
+                <div id="tab-9" class="tab-pane">
+					<div class="panel-body">
+						<iframe width="100%" height="100%" id="iframeIdyeji" scrolling="no"></iframe>
+					</div>
+				</div>
+				#end
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="$link.contextPath/resources/script/sign/sign-common.module.js"></script>
+
+<script src="$link.contextPath/resources/script/sign/component/sign-phone-number-btn.component.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/sign-work-flow-user-layer.component.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/my-spy.directive.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/reject-layer.component.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/sign-upload-attachment-layer.component.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/sign-preview.component.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/sign-show-attachment-layer.component.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/sign-card-type.directive.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/sign-add-person-layer.component.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/sign-checkbox.component.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/sign-laydate.directive.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/sign-choose-person.component.js"></script>
+
+<script src="$link.contextPath/resources/script/sign/detail/detail.module.js"></script>
+<script type="text/javascript">
+startInit('iframeId', 560);
+startInit('iframeIdyeji', 560);
+
+var browserVersion = window.navigator.userAgent.toUpperCase();
+var isOpera = browserVersion.indexOf("OPERA") > -1 ? true : false;
+var isFireFox = browserVersion.indexOf("FIREFOX") > -1 ? true : false;
+var isChrome = browserVersion.indexOf("CHROME") > -1 ? true : false;
+var isSafari = browserVersion.indexOf("SAFARI") > -1 ? true : false;
+var isIE = (!!window.ActiveXObject || "ActiveXObject" in window);
+var isIE9More = (! -[1, ] == false);
+function reinitIframe(iframeId, minHeight) {
+    try {
+        var iframe = document.getElementById(iframeId);
+        var bHeight = 0;
+        if (isChrome == false && isSafari == false)
+            bHeight = iframe.contentWindow.document.body.scrollHeight;
+
+        var dHeight = 0;
+        if (isFireFox == true)
+            dHeight = iframe.contentWindow.document.documentElement.offsetHeight + 2;
+        else if (isIE == false && isOpera == false)
+            dHeight = iframe.contentWindow.document.documentElement.scrollHeight;
+        else if (isIE == true && isIE9More) {//ie9+
+            var heightDeviation = bHeight - eval("window.IE9MoreRealHeight" + iframeId);
+            if (heightDeviation == 0) {
+                bHeight += 3;
+            } else if (heightDeviation != 3) {
+                eval("window.IE9MoreRealHeight" + iframeId + "=" + bHeight);
+                bHeight += 3;
+            }
+        }
+        else//ie[6-8]、OPERA
+            bHeight += 3;
+
+        var height = Math.max(bHeight, dHeight);
+        if (height < minHeight) height = minHeight;
+        iframe.style.height = height + "px";
+    } catch (ex) { }
+}
+function startInit(iframeId, minHeight) {
+    eval("window.IE9MoreRealHeight" + iframeId + "=0");
+    window.setInterval("reinitIframe('" + iframeId + "'," + minHeight + ")", 100);
+}
+
+
+
+
+function reinitIframe(iframeIdyeji, minHeight) {
+    try {
+        var iframe = document.getElementById(iframeIdyeji);
+        var bHeight = 0;
+        if (isChrome == false && isSafari == false)
+            bHeight = iframe.contentWindow.document.body.scrollHeight;
+
+        var dHeight = 0;
+        if (isFireFox == true)
+            dHeight = iframe.contentWindow.document.documentElement.offsetHeight + 2;
+        else if (isIE == false && isOpera == false)
+            dHeight = iframe.contentWindow.document.documentElement.scrollHeight;
+        else if (isIE == true && isIE9More) {//ie9+
+            var heightDeviation = bHeight - eval("window.IE9MoreRealHeight" + iframeIdyeji);
+            if (heightDeviation == 0) {
+                bHeight += 3;
+            } else if (heightDeviation != 3) {
+                eval("window.IE9MoreRealHeight" + iframeIdyeji + "=" + bHeight);
+                bHeight += 3;
+            }
+        }
+        else//ie[6-8]、OPERA
+            bHeight += 3;
+
+        var height = Math.max(bHeight, dHeight);
+        if (height < minHeight) height = minHeight;
+        iframe.style.height = height + "px";
+    } catch (ex) { }
+}
+function startInit(iframeIdyeji, minHeight) {
+    eval("window.IE9MoreRealHeight" + iframeIdyeji + "=0");
+    window.setInterval("reinitIframe('" + iframeIdyeji + "'," + minHeight + ")", 100);
+}  
+</script>

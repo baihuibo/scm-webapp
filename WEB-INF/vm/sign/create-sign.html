@@ -1,0 +1,323 @@
+#set($plugins = ["chosen" , "autoSearch"])
+<!--
+    新增草签合同 - step1 (交易双方信息)
+-->
+<div ng-controller="createSignCtrl as $ctrl" ng-cloak>
+    <div class="ibox">
+        <div class="tabs-container">
+            <ul class="nav nav-tabs">
+                <li class="active">
+                    <a>交易双方信息</a>
+                </li>
+                <li>
+                    <a>房源及租赁信息</a>
+                </li>
+                <li>
+                    <a>居间服务及解约</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-panel active" id="tab-1">
+                    <div class="panel-body">
+                        <form novalidate name="$ctrl.validForm"
+                              ng-submit="$ctrl.submit($ctrl.validForm , $event.target)">
+                            <div class="ibox">
+                                <div class="ibox-title">
+                                    <h5>合同信息新增</h5>
+                                </div>
+                                <div class="ibox-content">
+                                    <div class="row form-horizontal">
+                                        <div class="form-group col-sm-4">
+                                            <label class="control-label col-sm-4">合同编号：</label>
+                                            <div class="col-sm-7">
+                                                <div class="form-control-static">系统自动生成</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <label class="control-label col-sm-4">房源编号：</label>
+                                            <div class="col-sm-7">
+                                                <div class="form-control-static">
+                                                    <a ng-href="{{::$ctrl.houselink}}"
+                                                       target="_blank">{{::$ctrl.houseid}}</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <label class="control-label col-sm-4">客源编号：</label>
+                                            <div class="col-sm-7">
+                                                <div class="form-control-static">
+                                                    <a ng-href="{{::$ctrl.customerlink}}"
+                                                       target="_blank">{{::$ctrl.clientid}}</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <label class="control-label col-sm-4">合同日期：</label>
+                                            <div class="col-sm-7">
+                                                <div class="form-control-static">系统保存时生成</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <label class="control-label col-sm-4">合同录入人：</label>
+                                            <div class="col-sm-7">
+                                                <div class="form-control-static">
+                                                    <person-show person-id="$ctrl.currentUserId"
+                                                                 person-name="$ctrl.currentUser"></person-show>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--<div class="form-group col-sm-4">
+                                            <label class="control-label col-sm-4">合同所属人：</label>
+                                            <div class="col-sm-7">
+                                                <sign-choose-person
+                                                        ng-model="$ctrl.belong_userid" required></sign-choose-person>
+                                            </div>
+                                        </div>-->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="ibox">
+                                <div class="ibox-title">
+                                    交易双方基本信息
+                                </div>
+                                <div class="ibox-content">
+
+                                    <h4 class="page-header font-size-12 text-success">业主信息</h4>
+                                    <table class="table table-striped table-bordered table-hover dataTables-example table-condensed">
+                                        <thead>
+                                        <tr>
+                                            <th style="width: 25%;" class="required">
+                                                业主姓名
+                                            </th>
+                                            <th style="width: 25%;">业主证件类型</th>
+                                            <th style="width: 25%;">业主证件号码</th>
+                                            <th style="width: 25%;" class="required">
+                                                联系电话
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="obj in $ctrl.ownerlist">
+                                            <td>
+                                                <input type="text" class="form-control input-sm"
+                                                       placeholder="请输入名称"
+                                                       ng-model="obj.full_name" required>
+                                            </td>
+                                            <td>{{obj.idcard_type_cd | showKeyCodeTypes : 'cardType'}}</td>
+                                            <td>{{::obj.idcard_no}}</td>
+                                            <td>
+                                                <sign-phone-number-btn
+                                                        ng-model="obj.phone_number" required>
+                                                </sign-phone-number-btn>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <h4 class="page-header font-size-12 text-success">业主共有人</h4>
+                                    <table class="table table-striped table-bordered table-hover dataTables-example table-condensed">
+                                        <thead>
+                                        <tr>
+                                            <th style="width: 20%;" class="required">业主共有人姓名</th>
+                                            <th style="width: 20%;">业主共有人证件类型</th>
+                                            <th style="width: 20%;">业主共有人证件号码</th>
+                                            <th style="width: 20%;">共有人房产证号</th>
+                                            <th style="width: 20%;" class="required">联系电话</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="obj in $ctrl.coownerlist">
+                                            <td>
+                                                <input type="text" class="form-control input-sm"
+                                                       placeholder="请输入名称"
+                                                       ng-model="obj.full_name" required>
+                                            </td>
+                                            <td>{{obj.idcard_type_cd | showKeyCodeTypes : 'cardType'}}</td>
+                                            <td>{{::obj.idcard_no}}</td>
+                                            <td>
+                                                <input type="text" class="form-control input-sm"
+                                                       placeholder="请输入共有人房产证号"
+                                                       ng-model="obj.house_no">
+                                            </td>
+                                            <td>
+                                                <sign-phone-number-btn
+                                                        ng-model="obj.phone_number" required>
+                                                </sign-phone-number-btn>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <h4 class="page-header font-size-12 text-success">
+                                        业主委托代理人
+                                        <div class="pull-right">
+                                            <button type="button"
+                                                    class="btn btn-primary btn-xs"
+                                                    ng-click="$ctrl.addPerson($ctrl.ownagentlist , '新增业主委托代理人')">
+                                                <span class="fa fa-plus"></span>
+                                                新增
+                                            </button>
+                                        </div>
+                                    </h4>
+                                    <table class="table table-striped table-bordered table-hover dataTables-example table-condensed">
+                                        <thead>
+                                        <tr>
+                                            <th style="width: 20%;">业主委托代理人姓名</th>
+                                            <th style="width: 20%;">业主委托代理人证件类型</th>
+                                            <th style="width: 20%;">业主委托代理人证件号码</th>
+                                            <th style="width: 20%;">联系电话</th>
+                                            <th style="width: 20%;">操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="obj in $ctrl.ownagentlist">
+                                            <td>{{::obj.full_name}}</td>
+                                            <td>{{obj.idcard_type_cd | showKeyCodeTypes : 'cardType'}}</td>
+                                            <td>{{::obj.idcard_no}}</td>
+                                            <td>
+                                                <sign-phone-number-btn
+                                                        ng-model="obj.phone_number" required>
+                                                </sign-phone-number-btn>
+                                            </td>
+                                            <td>
+                                                <a href="javascript:" class="btn btn-xs btn-success btn-outline"
+                                                   ng-click="$ctrl.editPerson($ctrl.ownagentlist,$index , obj,'修改业主委托代理人')">修改</a>
+                                                <a href="javascript:" class="btn btn-xs btn-danger btn-outline"
+                                                   ng-click="$ctrl.removePerson($ctrl.ownagentlist, $index,'确定删除此业主委托人')">删除</a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <h4 class="page-header font-size-12 text-success">客户信息</h4>
+                                    <table class="table table-striped table-bordered table-hover dataTables-example table-condensed">
+                                        <thead>
+                                        <tr>
+                                            <th style="width: 25%;" class="required">客户姓名</th>
+                                            <th style="width: 25%;">客户证件类型</th>
+                                            <th style="width: 25%;">客户证件号码</th>
+                                            <th style="width: 25%;" class="required">联系电话</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="obj in $ctrl.customerlist">
+                                            <td>
+                                                <input type="text" class="form-control input-sm"
+                                                       ng-model="obj.full_name"
+                                                       placeholder="请输入名称"
+                                                       required>
+                                            </td>
+                                            <td>{{obj.idcard_type_cd | showKeyCodeTypes : 'cardType'}}</td>
+                                            <td>{{::obj.idcard_no}}</td>
+                                            <td>
+                                                <sign-phone-number-btn
+                                                        ng-model="obj.phone_number" required>
+                                                </sign-phone-number-btn>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <h4 class="page-header font-size-12 text-success">客户多签约人</h4>
+                                    <table class="table table-striped table-bordered table-hover dataTables-example table-condensed">
+                                        <thead>
+                                        <tr>
+                                            <th style="width: 25%;" class="required">
+                                                客户多签约人姓名
+                                            </th>
+                                            <th style="width: 25%;">客户多签约人证件类型</th>
+                                            <th style="width: 25%;">客户多签约人证件号码</th>
+                                            <th style="width: 25%;" class="required">
+                                                联系电话
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="obj in $ctrl.cocustomerlist">
+                                            <td>
+                                                <input type="text" class="form-control input-sm"
+                                                       ng-model="obj.full_name"
+                                                       placeholder="请输入名称"
+                                                       required>
+                                            </td>
+                                            <td>{{obj.idcard_type_cd | showKeyCodeTypes : 'cardType'}}</td>
+                                            <td>{{::obj.idcard_no}}</td>
+                                            <td>
+                                                <sign-phone-number-btn
+                                                        ng-model="obj.phone_number" required>
+                                                </sign-phone-number-btn>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <h4 class="page-header font-size-12 text-success">
+                                        客户委托代理人
+                                        <div class="pull-right">
+                                            <button type="button" class="btn btn-primary btn-xs"
+                                                    ng-click="$ctrl.addPerson($ctrl.customeragentlist , '新增客户委托代理人')">
+                                                <span class="fa fa-plus"></span>
+                                                新增
+                                            </button>
+                                        </div>
+                                    </h4>
+                                    <table class="table table-striped table-bordered table-hover dataTables-example table-condensed">
+                                        <thead>
+                                        <tr>
+                                            <th style="width: 20%;">客户委托代理人姓名</th>
+                                            <th style="width: 20%;">客户委托代理人证件类型</th>
+                                            <th style="width: 20%;">客户委托代理人证件号码</th>
+                                            <th style="width: 20%;">联系电话</th>
+                                            <th style="width: 20%;">操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="obj in $ctrl.customeragentlist">
+                                            <td>{{::obj.full_name}}</td>
+                                            <td>{{obj.idcard_type_cd | showKeyCodeTypes : 'cardType'}}</td>
+                                            <td>{{::obj.idcard_no}}</td>
+                                            <td>
+                                                <sign-phone-number-btn
+                                                        ng-model="obj.phone_number" required>
+                                                </sign-phone-number-btn>
+                                            </td>
+                                            <td>
+                                                <a href="javascript:" class="btn btn-xs btn-success btn-outline"
+                                                   ng-click="$ctrl.editPerson($ctrl.customeragentlist,$index , obj,'修改客户委托代理人')">修改</a>
+                                                <a href="javascript:" class="btn btn-xs btn-danger btn-outline"
+                                                   ng-click="$ctrl.removePerson($ctrl.customeragentlist, $index,'确定删除此客户委托代理人')">删除</a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary btn_size"
+                                                style="float: none !important;">
+                                            下一步
+                                        </button>
+                                       <!--  <button type="button" class="btn btn-default" ng-click="$ctrl.back()">
+                                            取消
+                                        </button> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="$link.contextPath/resources/script/sign/sign-common.module.js"></script>
+
+<script src="$link.contextPath/resources/script/sign/component/sign-phone-number-btn.component.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/sign-choose-person.component.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/sign-laydate.directive.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/sign-card-type.directive.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/sign-add-person-layer.component.js"></script>
+
+<script src="$link.contextPath/resources/script/sign/create-sign.module.js"></script>

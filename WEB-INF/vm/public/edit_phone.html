@@ -1,0 +1,47 @@
+<!-- 添加联系电话begin -->
+<div id="J_phone_layer" class="ibox-content" style="display: none;height: 100%;">
+	<form id="add_form" name="add_form" class="form-horizontal">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<div class="col-sm-3">
+						<select id="J_editphoneType"name="phoneType" class="J_chosen form-control" data-placeholder="请选择">
+							<!-- <option value="">请选择</option> -->
+							<option value="1">国内手机</option>
+							<option value="2">国内座机</option>
+							<option value="3">国外电话</option>
+						</select>
+					</div>
+					<div class="col-sm-7 m-l-sm">
+						<input id="J_edit_phone" name="phones" class="form-control" placeholder="">
+						<div class="remark" style="margin-top: 3px;display: none;color:#ed5565;">注:座机格式区号（3或4位）-固话（7或8位）
+</div>
+					</div>
+					<div class="col-sm-1  m-l-sm">
+						<button id="J_add_call" type="button" class="btn btn-success pr5">添加</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="tab-pane pt6 m-b-sm">
+			<div class="bootstrap-table" style="height:320px;overflow-y:auto;">
+				<table id="J_phone_dataTable" class="table table-hover table-striped singlewatch_ath table-bordered">
+					<thead>
+						<tr style="height: 30px;">
+							<th data-field="phone">电话</th>
+							<th data-field="opt">操作</th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+			</div>
+		</div>	
+		<div class="col-md-12 m-b-sm">
+			<div class="bootstrap-table">
+				<div id="prompt" style="color:#ff0000;">备注：至少添加一个手机号码</div>
+			</div>
+		</div>
+	</form>
+</div> 
+<!-- 添加联系电话end-->
+<script src="$link.contextPath/resources/script/house/public/edit_phone.js"></script>

@@ -1,0 +1,86 @@
+#set($plugins = ["table","chosen"])
+<style>
+	.form-horizontal .control-div {
+		padding: 7px 0;
+		margin-bottom: 0;
+	}
+</style>
+<div class="row ptb10">
+	<div class="tabs-container">
+		<ul class="nav nav-tabs">
+			<li class="active"><a data-toggle="tab" href="#111" id="payDetailBtn">基本信息</a></li>
+			<li class=""><a data-toggle="tab" href="#222" id="approhisBtn">审批历史</a></li>
+			<li class=""><a data-toggle="tab" href="#333" id="operaLogBtn">操作日志</a></li>
+			#if($shiro.hasPermission("SCM:FINANCE:PAYMENT:PRINT"))
+			<button id="printPreBtn" type="button" class="btn btn-success pr5" style="float:right;">打印预览</button>
+			#end
+		</ul>
+	</div>
+	<div class="tab-content ibox-content">
+		<div id="111" class="tab-pane active">
+			<div id="basicInfor" class="form-horizontal customer_info_content">
+			
+			</div>
+			
+			<div id="posCont" style="display:none;">
+				<div class="ibox-title">
+					<h5>POS退款信息</h5>
+				</div>
+				<table id="POSlist" class="table table-hover table-striped table-bordered">
+					<thead>
+						<tr>
+							<th data-field="">
+								<div class="th-inner">收款编号</div>
+							</th>
+							<th data-field="">
+								<div class="th-inner">原刷卡日期</div>
+							</th>
+							<th data-field="">
+								<div class="th-inner">原刷卡终端号</div>
+							</th>
+							<th data-field="">
+								<div class="th-inner">原刷卡金额</div>
+							</th>
+							<th data-field="">
+								<div class="th-inner">原刷卡卡号</div>
+							</th>
+							<th data-field="">
+								<div class="th-inner">原12位参考号</div>
+							</th>
+							<th data-field="">
+								<div class="th-inner">原刷卡人姓名</div>
+							</th>
+							<th data-field="">
+								<div class="th-inner">本POS退款金额</div>
+							</th>
+						</tr>
+					</thead>
+				</table>
+				<div>本次退POS总金额：<span id="totalAmount"></span></div>
+			</div>
+		</div>
+		<div id="222" class="tab-pane">
+			<div id="flowchart"></div>
+			<table id="apprHistoryList" class="table table-hover table-striped table-bordered">
+				<thead></thead>
+			</table>
+		</div>
+		<div id="333" class="tab-pane">
+		<table id="operaLogTab" class="table table-hover table-striped table-bordered">
+				<thead>
+					<tr>
+						<th data-field="id">序号</th>
+						<th data-field="name">操作人</th>
+						<th data-field="type">岗位</th>
+						<th data-field="beforeowner">所属部门</th>
+						<th data-field="afterowner">操作类型</th>
+						<th data-field="afterowner">操做内容</th>
+						<th data-field="afterowner">操作时间</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+		<div style="display:none;padding-top:15px;text-align:center;" id="examBtns"></div>
+	</div>
+</div>
+<script src="$link.contextPath/resources/script/finance/payment/payDetails.js"></script>

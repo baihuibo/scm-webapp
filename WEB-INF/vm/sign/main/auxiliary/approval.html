@@ -1,0 +1,42 @@
+<div class="ibox-content">
+	<div ng-repeat="items in $ctrl.contractApproval" ng-if="items.contractApprovalList.length>0">
+	<div class="row row-lg">
+		 <!-- 审批流程图 -->
+        <iframe ng-if="items.flowChartUrl"
+                force-src="items.flowChartUrl" frameborder="0"
+                style="width: 100%; height: 560px;"></iframe>
+		<div class="col-sm-12">
+			 <div class="example-wrap ptb10">
+				<table id="J_dataTable" class="table table-hover table-striped table-bordered">
+					 <thead>
+						<tr>
+							<th>流程序号</th>
+							<th>合同类型</th>
+							<th>审批部门</th>
+							<th>角色</th>
+							<th>审批人</th>
+							<th>审批时间</th>
+							<th>审批结果</th>
+							<th>审批意见</th>
+							<th>审批持续时间</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="item in items.contractApprovalList">
+							<td>{{$index+1}}</td>
+							<td>{{item.businessType}}</td>
+							<td>{{item.approvalDepartment}}</td>
+							<td>{{item.role}}</td>
+							<td>{{item.assignee}}</td>
+							<td>{{item.createTime}}</td>
+							<td>{{item.statusDesc}}</td>
+							<td>{{item.status}}</td>
+							<td>{{item.approvalDuration}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div> 
+		</div>
+	</div>
+	</div>	
+</div>

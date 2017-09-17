@@ -1,0 +1,160 @@
+#set($plugins = ["table","chosen","laydate","ztree","autoSearch"])
+<!-- 查询条件 begin -->
+<div class="ibox">
+	<div class="ibox-title">
+		<h5>佣金折扣管理</h5>
+		<div class="ibox-tools">
+			<a class="collapse-link ui-sortable"><i class="fa fa-chevron-up"></i>
+			</a>
+		</div>
+	</div>
+	<div class="ibox-content">
+		<form class="form-horizontal" role="form" id="J_contract_form">
+		
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">合同编号：</label>
+					<div class="col-sm-8">
+						<input id="J_contractid" name="contractid" class="form-control" placeholder="">
+					</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">录入日期：</label>
+						<div class="col-sm-8" layout="row">
+							<div flex><input id="J_startdate" name="startdate" class="form-control"></div>
+							<div class="split">-</div>
+							<div flex><input id="J_enddate" name="enddate" class="form-control"></div>
+						</div>                        
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<div class="col-sm-3">
+							<select id="J_owner" name="status" class="J_chosen form-control">
+								<option value="1">业主编号</option>
+								<option value="2">业主姓名</option>
+							</select>
+						</div>
+						<div class="col-sm-8">
+							<input id="J_ownername" name="ownername" class="form-control" placeholder="">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<div class="col-sm-3">
+							<select id="J_customer" name="status" class="J_chosen form-control">
+								<option value="1">客户编号</option>
+								<option value="2">客户姓名</option>
+							</select>
+						</div>
+						<div class="col-sm-8">
+							<input id="J_customername" name="customername" class="form-control" placeholder="">
+						</div>
+					</div>
+				</div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">所属部门：</label>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <input id="J_deptLevel" type="hidden">
+                                <input id="J_deptName" type="text" class="form-control radius-3" autocomplete="off">
+                                <div class="input-group-btn">
+                                    <button id="J_deptSelect" data-toggle="dropdown" class="btn dropdown-toggle btn-dept" type="button"><span class="caret"></span></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+			</div>
+			<div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">业务类型：</label>
+                        <div class="col-sm-8" id="">
+                        	<input type="checkbox"/>租赁
+                        	<input type="checkbox"/>买卖
+                        </div>
+                    </div>
+                </div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">总折扣(折)：</label>
+						<div class="col-sm-8" layout="row">
+							<div flex><input id="J_rentmin" name="rentmin" class="form-control"></div>
+							<div class="split">-</div>
+							<div flex><input id="J_rentmax" name="rentmax" class="form-control"></div>
+						</div>                        
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">审核状态：</label>
+						<div class="col-sm-8">
+							<select id="J_status" name="status" class="J_chosen form-control" data-placeholder="全部">
+								<option value="">全部</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row">									
+				<div class="col-md-12">
+                       <div class="form-group">
+                           <div class="col-sm-5  col-sm-offset-5">
+                               <button id="J_search" type="button" class="btn btn-success btn_size">查 询</button>
+                               <button id="J_reset_lease" type="button" class="btn btn-white btn_size">重 置</button>
+                           </div>
+                       </div>
+                   </div>
+			</div>
+		</form>
+	</div>
+</div>
+<!-- 查询条件end -->
+<!-- 列表  begin -->
+<div class="ibox float-e-margins">
+	<div class="ibox-title"><h5>佣金折扣列表</h5></div>
+	<div class="ibox-content">
+		<div class="row mt10">
+			<a class="btn btn-success J_add_other" id="J_add_commission" href="">
+				<i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+			</a>
+		</div>
+		<div class="row row-lg">
+			<div class="col-sm-12">
+				<!-- Example Pagination -->
+				<div class="example-wrap ptb10">
+					<p></p>
+					<table id="J_dataTable_commission" class="table table-hover table-striped table-bordered" data-query-params="queryParams" data-mobile-responsive="true" data-pagination="true" data-icon-size="outline" data-striped="true" data-search="false">
+						<thead>
+							<tr>
+								<th data-field="servicetype">业务类型</th>
+								<th data-field="documentid">单据编号</th>
+								<th data-field="contractid">合同编号</th>
+								<th data-field="names">业主姓名<br/>客户姓名</th>
+								<th data-field="discount">总折扣（折）</th>
+								<th data-field="belongdept">所属部门</th>
+								<th data-field="inputperson">录入人</th>
+								<th data-field="inputdate">录入日期</th>
+								<th data-field="auditstatus">审核状态</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+				<!-- End Example Pagination -->
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 列表  end -->
+<!-- 折扣申请(新增/修改) start -->
+#parse("/sign/commission-discount-detail.html")
+<!-- 折扣申请(新增/修改) end -->

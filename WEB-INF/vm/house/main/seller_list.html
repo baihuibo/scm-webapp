@@ -1,0 +1,559 @@
+#set($plugins = ["table","chosen","laydate","linkage","ztree","autoSearch"])
+<style>
+	#dataTableArea th{
+		cursor: pointer;
+	}
+	.chosen-container-single .chosen-single span{
+		    margin-right: 10px;
+	}
+	.control-spacing {
+	    float: left;
+	    padding: 7px 5px;
+	}
+</style>
+<!-- 查询添加begin-->
+<div class="ibox">
+	<div class="ibox-title">
+		<h5>买卖房源查询</h5>
+		<div class="ibox-tools">
+			<a class="collapse-link ui-sortable"><i class="fa fa-chevron-up"></i></a>
+		</div>
+	</div>
+	<div class="ibox-content">
+		#if($shiro.hasPermission("SCM:HOUSE:KEY:VIEW"))
+			<input type="hidden" value="1" id="temp_view"></input>
+		#end
+		#if($shiro.hasPermission("SCM:HOUSE:INQUISITION:CHECK"))
+			<input type="hidden" value="1" id="temp_check"></input>
+		#end
+		<form class="form-horizontal" id="J_sellerform">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+					<label class="col-sm-1 control-label"></label>
+						<div class="col-sm-7">
+							<div id="J_renew" class="col-sm-10">
+							#if($shiro.hasPermission("SCM:HOUSE:BUY:RANKVIEW")&&!$shiro.hasPermission("SCM:HOUSE:BUY:ALLVIEW"))
+								<div class="radio radio-primary radio-inline">
+									<input type="radio" id="isPurchaseAfterSales0" name="scopeId" value="1" checked="">
+									<label for="isPurchaseAfterSales0">作业范围内</label>
+								</div>
+							#end
+							#if($shiro.hasPermission("SCM:HOUSE:BUY:RANKVIEW")&&$shiro.hasPermission("SCM:HOUSE:BUY:ALLVIEW"))
+								<div class="radio radio-primary radio-inline">
+									<input type="radio" id="isPurchaseAfterSales0" name="scopeId" value="1">
+									<label for="isPurchaseAfterSales0">作业范围内</label>
+								</div>
+								<div class="radio radio-primary radio-inline">
+									<input type="radio" id="isPurchaseAfterSales1" name="scopeId" value="2" checked="">
+									<label for="isPurchaseAfterSales1">全公司范围内</label>
+								</div>
+							#end
+							#if(!$shiro.hasPermission("SCM:HOUSE:BUY:RANKVIEW")&&$shiro.hasPermission("SCM:HOUSE:BUY:ALLVIEW"))
+								<div class="radio radio-primary radio-inline">
+									<input type="radio" id="isPurchaseAfterSales1" name="scopeId" value="2" checked="">
+									<label for="isPurchaseAfterSales1">全公司范围内</label>
+								</div>
+							#end
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">房源编号：</label>
+						<div class="col-sm-7">
+							<input type="text" class="form-control" name="houseId" id="houseId" autocomplete="off">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">楼盘名：
+							<span class="help-block m-b-none" style="font-weight: normal;height:0px;">(喷涂,证载,其他)</span>
+						</label>
+						<div class="col-sm-7">
+							<div class="input-group">
+								<input type="text" class="form-control" name="buildingIds" id="J_build" autocomplete="off">
+								<div class="input-group-btn">
+									<button type="button" class="btn btn-white dropdown-toggle" data-toggle="">
+										<span class="glyphicon glyphicon-search search-caret"></span>
+									</button>
+									<ul class="dropdown-menu dropdown-menu-right" role="menu">
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">商圈：</label>
+						<div class="col-sm-7">
+							<div class="input-group">
+								<input type="text" name="businessId" class="form-control" id="J_business" autocomplete="off">
+								<div class="input-group-btn">
+									<button type="button" class="btn btn-white dropdown-toggle" data-toggle="">
+										<span class="glyphicon glyphicon-search search-caret"></span>
+									</button>
+									<ul class="dropdown-menu dropdown-menu-right" role="menu"></ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">	
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">区域：</label>
+						<div class="col-sm-7">	
+							<!-- <input type="text" class="form-control" name="areaName" id="J_areaName" autocomplete="off"> -->					
+							 <select name="areaId" id="areaId" class="J_chosen form-control" data-placeholder="请选择">
+								<option value="">全部</option>
+							 </select>
+						</div>
+					</div>
+				</div>				
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">委托价：</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control" name="minPrice" id="minPrice" autocomplete="off">
+						</div>
+						<div class="control-spacing">-</div>
+						<div class="col-sm-3">
+							<input type="text" class="form-control" name="maxPrice" id="maxPrice" autocomplete="off">
+						</div>
+						<label class="control-label">万元</label>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">建筑面积：</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control" name="minCoveredArea" id="minCoveredArea" autocomplete="off">
+						</div>
+						<div style="float:left; padding:7px 0px;">-</div>
+						<div class="col-sm-3">
+							<input type="text" class="form-control" name="maxCoveredArea" id="maxCoveredArea" autocomplete="off">
+						</div>
+						<label class="control-label">平方米</label>
+					</div>
+				</div>
+			</div>
+			<div class="row">				
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">楼层：</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control" name="minFloor" id="minFloor" autocomplete="off">
+						</div>
+						<div class="control-spacing">-</div>
+						<div class="col-sm-3">
+							<input type="text" class="form-control" name="maxFloor" id="maxFloor" autocomplete="off">
+						</div>
+						<label class="control-label">层</label>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<!-- <label class="col-sm-2 control-label">时间：</label> -->
+						<div class="col-sm-3">
+							<select id="datetype" name="queryTimeTypeId" class="J_chosen form-control" data-placeholder="">
+								<option value="1">录入时间</option>
+								<option value="2">跟进时间</option>
+							</select>
+						</div>
+						<div class="col-sm-4">
+							<input id="J_begindate" name="minQueryTime" class="form-control" placeholder="">
+						</div>
+						<div style="float:left; padding:7px 0px;">-</div>
+						<div class="col-sm-4">
+							<input id="J_enddate" name="maxQueryTime" class="form-control" placeholder="">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">电话：</label>
+						<div class="col-sm-7">
+							<input type="text" class="form-control" name="phone" id="phone" autocomplete="off">
+						</div>
+					</div>
+				</div>
+			</div>			
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">户型：</label>
+						<div class="col-sm-3">
+							<select id="J_minRommNumber" name="minRommNumber" class="layout J_chosen form-control" data-placeholder="全部">
+								<option value="">请选择</option>
+							</select>
+						</div>
+						<div class="control-spacing">-</div>
+						<div class="col-sm-3">
+							<select id="J_maxRoomNumber" name="maxRoomNumber" class="layout J_chosen form-control" data-placeholder="全部">
+								<option value="">请选择</option>
+							</select>
+						</div>
+						<label class="control-label">室</label>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">房源级别：</label>
+						<div class="col-sm-7">	
+							<!-- <input type="text" class="form-control" name="areaName" id="J_areaName" autocomplete="off"> -->					
+							 <select name="houseLevel" id="houseLevel" class="J_chosen form-control" data-placeholder="全部">
+								<option value="">全部</option>
+							 </select>
+						</div>
+					</div>
+				</div>
+			</div>
+				<div class="row">
+					<div class="col-md-8">
+						<div class="form-group">
+							<label class="col-sm-2 control-label">房源评价：</label>
+							<div class="col-sm-10 sellerHouse" id="J_houseappraise"></div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group">
+							<label class="col-sm-1 control-label" style="width:11%;">规划用途：</label>
+							<div class="col-sm-10" id="J_planningPurpose">
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			
+			<div class="collapse" id="J_fold">
+				<div class="row">
+					
+					<div class="col-md-8">
+						<label class="col-sm-2 control-label">户型：</label>
+						<div class="col-md-2">
+							<div class="col-sm-10">
+								<select id="" name="livingRoomNumber" class="layout J_chosen form-control" data-placeholder="全部">
+									<option value="">全部</option>
+								</select>
+							</div>
+							<label class="col-sm-1 control-label">厅</label>
+						</div>
+						<div class="col-md-2">
+							<div class="col-sm-10">
+								<select id="" name="kitchenNumber" class="layout J_chosen form-control" data-placeholder="全部">
+									<option value="">全部</option>
+								</select>
+							</div>
+							<label class="col-sm-1 control-label">厨</label>
+						</div>
+						<div class="col-md-2">
+							<div class="col-sm-10">
+								<select id="" name="toiletNumber" class="layout J_chosen form-control" data-placeholder="全部">
+									<option value="">全部</option>
+								</select>
+							</div>
+							<label class="col-sm-1 control-label">卫</label>
+						</div>
+						<div class="col-md-2">
+							<div class="col-sm-10">
+								<select id="" name="balconyNumber" class="layout J_chosen form-control" data-placeholder="全部">
+									<option value="">全部</option>
+								</select>
+							</div>
+						<label class="col-sm-1 control-label">阳</label>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="col-sm-4 control-label">朝向：</label>
+							<div class="col-sm-8" id="J_orientation"></div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="col-sm-4 control-label">装修：</label>
+							<div class="col-sm-7">
+								<select id="J_fitmentTypeId" name="decorationId" class="J_chosen form-control" data-placeholder="全部">
+									<option value="">全部</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="col-sm-4 control-label">价格变动：</label>
+							<div class="col-sm-7">
+								<select id="" name="priceChangeDirectionId" class="J_chosen form-control" data-placeholder="全部">
+									<option value="">全部</option>
+									<option value="1">涨价</option>
+									<option value="-1">降价</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="col-sm-4 control-label">价格变动时间：</label>
+							<div class="col-sm-7">
+								<select id="J_priceChangeTimes" name="PriceChangeTimes" class="J_chosen form-control" data-placeholder="全部">
+									<option value="">全部</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="col-sm-4 control-label">是否实勘：</label>
+							<div class="col-sm-7">
+								<select id="ownerInquisition" name="ownerInquisitionId"
+									class="J_chosen form-control m-b" data-placeholder="全部">
+									<option value="">全部</option>
+									<option value="1">有实勘</option>
+									<option value="0">无实勘</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					
+				
+				<!-- <div class="row">
+					
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="col-sm-4 control-label">客户来源：</label>					
+							<div class="col-sm-4">
+								<select id="customerSource" name="sourceId"
+									class="J_chosen form-control m-b" data-placeholder="全部">
+									<option value="">全部</option>
+								</select>
+							</div>
+							<div class="col-sm-4 none" id="customer"></div>
+						</div>
+					</div>
+				</div> -->
+				
+					
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="col-sm-4 control-label">是否有钥匙：</label>
+							<div class="col-sm-7">
+								<select id="ownerKey" name="ownerKeyId"
+									class="J_chosen form-control m-b" data-placeholder="全部">
+									<option value="">全部</option>
+									<option value="1">有钥匙</option>
+									<option value="0">无钥匙</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="col-sm-4 control-label">教育配套：</label>
+							<div class="col-sm-7">
+								<input type="text" class="form-control" name="primarySchoolName" id="primarySchoolName"  placeholder="现只支持小学" autocomplete="off">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="col-sm-4 control-label">地铁站点：</label>
+							<div class="col-sm-7">
+								<input type="text" class="form-control" name="subwayStationName" id="subwayStationName" autocomplete="off">
+							</div>
+						</div>
+					</div>	
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="col-sm-4 control-label">是否签委托协议：</label>
+							<div class="col-sm-4">
+								<select name="" id="yesOrNo" class="J_chosen form-control" data-placeholder="全部">
+									<option value="">全部</option>
+							 	</select>
+							</div>
+							<div class="col-sm-4" id="proxyStatusCon">
+								<select name="" id="proxyStatus" class="J_chosen form-control" data-placeholder="全部">
+									<option value="0">全部</option>
+									<option value="1">待一审</option>
+									<option value="2">待二审</option>
+									<option value="3">有效</option>
+							 	</select>
+							</div>
+							<div class="col-sm-4" style="display:none" id="proxyTypeCon">
+								<select name="" id="proxyType" class="J_chosen form-control" data-placeholder="全部">
+									<option value="10">全部</option>
+									<option value="4">一类</option>
+									<option value="5">二类</option>
+							 	</select>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="col-sm-4 control-label">录入部门：</label>
+							<div class="col-sm-7">
+								<input id="J_createDepartmentLevel" name="createDepartmentLevelId"  type="hidden" class="form-control" value="">
+								<div class="input-group">
+									<input id="J_createDepartment" name="createDepartmentId" type="text" class="form-control radius-3 float-l" autocomplete="off" readonly="readonly" style="background-color:#fff;">
+									<div class="input-group-btn">
+										<button id="J_createSelect" data-toggle="dropdown" class="btn dropdown-toggle btn-dept float-l" type="button"><span class="caret"></span>
+		                            	</button>
+		                            </div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="col-sm-4 control-label">录入人：</label>
+							<div class="col-sm-7">
+								<div class="input-group">
+									<input type="text" class="form-control" id="J_createUser" name="createUserId" autocomplete="off">
+									<div class="input-group-btn">
+										<button type="button" class="btn btn-white dropdown-toggle"
+											data-toggle="">
+											<span class="glyphicon glyphicon-search search-caret"></span>
+										</button>
+										<ul class="dropdown-menu dropdown-menu-right" role="menu"
+											style="padding-top: 0px; max-height: 375px; max-width: 800px; overflow: auto; width: auto; transition: 0.3s; left: -110px; right: auto; min-width: 145px;">
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="col-sm-4 control-label">所属部门：</label>
+							<div class="col-sm-7">
+								<input id="J_deptLevel" name="departmentLevelId"  type="hidden" class="form-control" value="">
+								<div class="input-group">
+									<input id="J_deptName" name="departmentId" type="text" class="form-control radius-3 float-l" autocomplete="off" readonly="readonly" style="background-color:#fff;">
+									<div class="input-group-btn">
+										<button id="J_deptSelect" data-toggle="dropdown" class="btn dropdown-toggle btn-dept float-l" type="button"><span class="caret"></span>
+		                            	</button>
+		                            </div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="col-sm-4 control-label">所属人：</label>
+							<div class="col-sm-7">
+								<div class="input-group">
+									<input type="text" class="form-control" id="J_user" name="belongUserId" autocomplete="off">
+									<div class="input-group-btn">
+										<button type="button" class="btn btn-white dropdown-toggle"
+											data-toggle="">
+											<span class="glyphicon glyphicon-search search-caret"></span>
+										</button>
+										<ul class="dropdown-menu dropdown-menu-right" role="menu"
+											style="padding-top: 0px; max-height: 375px; max-width: 800px; overflow: auto; width: auto; transition: 0.3s; left: -110px; right: auto; min-width: 145px;">
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- <div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<label class="col-sm-1 control-label">已选：</label>
+						<div class="col-sm-10" id="J_choice"></div>
+						
+					</div>
+				</div>
+			</div> -->
+			<div class="row">
+				<div class="col-md-12 text-cen">
+					<div class="form-group">
+						<button id="J_search" type="button" class="btn btn-success btn_size">查 询</button>
+						<button id="J_moresearch" type="button" class="btn btn-success btn_size" data-toggle="collapse" data-target="#J_fold">更多查询</button>
+						<button id="J_reset_buy" type="reset" class="btn btn-white btn_size">重 置</button>
+					</div>
+				</div>
+			</div>	
+		</form>
+	</div>
+</div>
+<!-- 查询添加end -->
+
+<!-- 列表begin -->
+<div class="ibox float-e-margins">
+	<div class="ibox-title"><h5>买卖房源列表</h5></div>
+	<div class="ibox-content">
+		<div class="row row-lg">
+			<div class="col-sm-12">
+				<div class="example-wrap ptb10">
+					<p></p>
+					<div class="bootstrap-table table-list">
+						<div class="fixed-table-container">
+							<table id="dataTableArea" class="table table-hover  table-striped bor_b_none">
+								<thead>
+									<tr>
+										<th id="buildingName">楼盘名</th>
+										<th id="floor">楼层</th>
+										<th id="coveredArea">建筑面积</th>
+										<th id="price">委托价</th>
+										<th id="unitPrice">单价</th>
+										<th id="registerDate">录入日期<i class="fa fa-caret-down"></i></th>
+										<th id="lastFollowDate">最后跟进时间</th>
+									</tr>
+								</thead>
+							</table>
+						</div>
+					</div>
+					<table id="J_dataTable" class="table table-hover  table-striped table-condensed" 
+						data-query-params="queryParams" data-mobile-responsive="true" 
+						data-pagination="true" data-icon-size="outline"
+						data-striped="true" data-search="false">
+						 <thead>
+							<tr>
+								<th data-field="houseId">房源编号</th>
+								<th data-field="propertyName">规划用途</th>
+								<th data-field="inquisitionId">图/钥</th>
+								<th data-field="buildingName">楼盘名</th>
+								<th data-field="floorIndex">楼层</th>
+								<th data-field="roomNumber">室厅厨卫阳</th>
+								<th data-field="coveredArea">建筑面积/平方米</th>
+								<th data-field="headingNames">朝向</th>
+								<th data-field="price">委托价/万</th>
+								<th data-field="unitPrice">单价/元</th>
+								<th data-field="belongUserName">所属人</th>
+								<th data-field="registerDate">录入日期</th>
+								<th data-field="lastFollowDate">最后跟进日期</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 列表end -->
+<script src="$link.contextPath/resources/script/house/main/seller_list.js"></script>
+<script type="text/javascript" src="$link.contextPath/resources/js/department.js"></script>
+<script type="text/javascript" src="$link.contextPath/resources/script/house/public/check_price.js"></script>

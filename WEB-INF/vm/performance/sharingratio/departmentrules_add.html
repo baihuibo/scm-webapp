@@ -1,0 +1,165 @@
+#set($plugins = ["table","chosen","laydate","linkage","autoSearch","ztree"])
+<style>
+ #laydate_today{display:none !important;}
+</style>
+ <!--部门规则新增 -->
+ <div class="ibox">
+ <div class="ibox-title">
+    <h5 keyId="1">部门特殊规则新增(普租)</h5>
+     <div class="ibox-tools">
+		 <a class="collapse-link ui-sortable"> <i class="fa fa-chevron-up"></i></a>
+    </div>
+ </div>
+ <div id="add_layer" class="ibox-content">
+		    <div class="fr mb10">
+             <a class="btn btn-primary" id="add-departmenttype"> <i class="glyphicon glyphicon-plus" aria-hidden="true" ></i>新增分单类型(普租)</a>
+		    </div>
+			<table class="table table-striped table-bordered table-hover dataTables-example table-condensed" id="J_dataTable">
+			<thead>
+               <tr>
+                <th data-field="perfType">业绩分单类型</th>
+                <th data-field="isDefaultCalculate">是否默认计算</th>
+                <th data-field="calculateWay">计算方式</th>
+                <th data-field="percent">默认比例</th>
+                <th data-field="isAllowAdjust">是否允许申请调整</th>
+                <th data-field="lowerLimit">分单下限</th>
+                <th data-field="upperLimit">分单上限</th>
+                <th data-field="movePercent">分单进阶百分比</th>
+                <th data-field="">操作</th>
+               </tr>
+             </thead>
+             <tbody>
+                <tr>
+                <td>备注说明</td>
+                <td colspan="8">
+                <textarea cols="112" rows="4" oninput="strLenCalc($(this), 'checklen', 240);" style="border:none;width:100%;outline: none;" name="mome" id="mome" placeholder="请输入文本内容"></textarea>
+                <span id="checklen">还可输入 <strong>120</strong> 个汉字</span>
+                </td>
+              </tr> 
+             </tbody>
+			</table>
+			<div class="ibox">
+               <div class="row">
+                <form class="form-horizontal" id="">
+                 <div class="col-md-6">
+                     <label class="col-sm-4 control-label"><span class="text-danger">*</span>适用部门：</label>
+                            <input id="J_deptLevel" type="hidden" class="form-control" value="">
+                            <div class="input-group">
+                                <input id="deptId" type="text" data-id="" class="form-control radius-3 float-l" autocomplete="off" value="" name="deptId" readonly="readonly" style="background:#fff;">
+                                <div class="input-group-btn">
+                                    <button id="J_deptSelect" data-toggle="dropdown" class="btn dropdown-toggle btn-dept float-l" type="button"><span class="caret"></span>
+                                    </button>
+                                </div>
+                            </div>
+                    </div>
+                     <div class="col-md-6">
+                          <label class="col-sm-3 control-label"><span class="text-danger">*</span>启用日期：</label>
+                          <div class="col-sm-5">
+                              <!-- <input type="text" class="form-control" name=""> -->
+                             <input class="form-control layer-date" id="beginDate" name="beginDate" onclick="laydate({istime: false, format: 'YYYY-MM-DD', min: laydate.now(+1)})">
+                          </div>
+                    </div>
+                    <div class="col-md-6 col-sm-offset-6 mt10">
+                          <a class="btn btn-success" type="submit" id="save-add-city">保 存</a>
+                    </div>
+				 </form>
+               </div>
+			</div>
+	    </div>
+	  </div>
+	   <!--业绩新增分单类型详情弹出框开始-->
+     <div id="add_sharetype" class="ibox-content" style="display: none">
+           <form class="form-horizontal" id="J_sharetypeadd">
+            <table class="table table-striped table-bordered table-hover dataTables-example table-condensed" id="J_dataTable_1">
+			<thead>
+            <thead>
+               <tr>
+                <th data-field="perfType">业绩分单类型</th>
+                <th data-field="calculateWay">是否默认计算</th>
+                <th data-field="isDefaultCalculate">计算方式</th>
+                <th data-field="percent">默认比例</th>
+                <th data-field="isAllowAdjust">是否允许申请调整</th>
+                <th data-field="lowerLimit">分单下限</th>
+                <th data-field="upperLimit">分单上限</th>
+                <th data-field="movePercent">分单进阶百分比</th>
+               </tr>
+             </thead>
+             <tbody>
+              <tr>
+                <td>
+                <select data-placeholder="全部" id="J_perfType" class="form-control" name="perfType" >
+                    <option value="">全部</option>
+                	<!--  <option value="1">房源录入人业绩</option>
+                     <option value="2">收钥匙人业绩</option>
+                     <option value="3">委托书业绩</option>
+                     <option value="4">实勘人业绩</option>
+                     <option value="5">实勘预约人业绩</option>
+                     <option value="6">实勘拍摄人业绩</option>
+                     <option value="7">成交人业绩</option>
+                     <option value="8">奖励共享业绩</option>
+                     <option value="19">房源委托业绩</option>
+                     <option value="20">委托证件业绩</option> -->
+                </select>
+                </td>
+                <td>
+                  <select id="J_DefaultCalculate" class="form-control" name="isDefaultCalculate" data-placeholder="请选择">
+                     <option value="">请选择</option>
+                     <option value="1">是</option>
+                     <option value="2">否</option>
+                 </select>
+                </td>
+                 <td>
+                  <select id="J_calculate" class="form-control" name="calculateWay" data-placeholder="请选择">
+                     <option value="">请选择</option>
+                     <option value="0">默认比例</option>
+                     <option value="1">倒扣计算</option>
+                     <option value="2">手动计算</option>
+                 </select>
+                </td>
+                <td width="10%">
+                 <div class="col-sm-12">
+                  <div class="col-sm-9">
+                    <input type="text" value="" name="percent" id="J_percent" class="form-control text-right" >
+                  </div>
+                   <label class="col-sm-1 control-label">%</label>
+                  </div>  
+                </td>
+                 <td>
+                  <select data-placeholder="请选择" id="J_AllowAdjust" class="form-control" name="isAllowAdjust" data-placeholder="请选择">
+                     <option value="">请选择</option>
+                     <option value="1">是</option>
+                     <option value="2">否</option>
+                 </select>
+                </td>            
+                     <td width="10%">
+                  <div class="col-sm-12">
+                    <div class="col-sm-9">
+                    <input type="text" value="" id="J_lowerLimit" name="lowerLimit" class="form-control text-right" onKeyUp="value=value.replace(/[^\d]/g,'')" maxlength="2">
+                    </div>
+                   <label class="col-sm-1 control-label">%</label>
+                  </div>  
+                </td>
+                <td width="10%">
+                 <div class="col-sm-12">
+                    <div class="col-sm-9">
+                     <input type="text" value="" id="J_upperLimit" name="upperLimit" class="form-control text-right">
+                    </div>
+                   <label class="col-sm-1 control-label">%</label>
+                  </div>  
+                </td>
+                <td width="10%">
+                 <div class="col-sm-12">
+                    <div class="col-sm-9">
+                    <input type="text" value="1" id="J_movePercent" name="movePercent" class="form-control text-right" onKeyUp="value=value.replace(/[^\d]/g,'')" maxlength="2" readonly>
+                 </div>
+                   <label class="col-sm-1 control-label">%</label>
+                  </div>  
+                </td>
+              </tr>
+             </tbody>
+            </table> 
+           </form>
+        </div>
+    <!--收益业绩详情弹出框结束-->
+ <script type="text/javascript" src="$link.contextPath/resources/script/performance/shareratio/departmentrules-add.js"></script>
+ <script type="text/javascript" src="$link.contextPath/resources/js/department.js"></script>

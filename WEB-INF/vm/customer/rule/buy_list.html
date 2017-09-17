@@ -1,0 +1,59 @@
+#set($plugins = ["table","chosen","ztree","autoSearch"])
+<style>
+	.form-horizontal .ibox{ margin-bottom:0px;}
+	.delete-m{ padding:0px 5px !important;}#J_dept_dialog{border:1px solid #CBD5DD;}
+	input::-webkit-outer-spin-button, input::-webkit-inner-spin-button{ -webkit-appearance: none !important;}
+	input[type="number"]{-moz-appearance:textfield;}
+</style>
+<script>
+    var buy_cooperation_permission = $shiro.hasPermission("SCM:CUSTOM:BUY_COOPERATION"); // 买卖转介设置
+    var buy_showtimeout_permission = $shiro.hasPermission("SCM:CUSTOM:BUY_SHOWTIMEOUT"); // 买卖带看超期设置
+</script>
+<div class="ibox float-e-margins">
+	<div class="row">
+		<div id="J_ruleList" class="ibox-content pd10">
+			<div class="row">
+				<div class="tabs-container">
+					<ul class="nav nav-tabs block-tabs-nav">
+						#if($shiro.hasPermission("SCM:CUSTOM:LEASE_RULES"))
+						<li class=""><a  href="$link.contextPath/customer/rule/leaselist.htm?type=1">租赁</a></li>
+						<li><strong>|</strong></li>
+						#end
+						<li class="active"><a  href="$link.contextPath/customer/rule/buylist.htm?type=2"> 买卖</a></li>
+						<li style="float:right;">
+							#if($shiro.hasPermission("SCM:CUSTOM:OPERATE_LOG"))
+							<a class="a_href" href="loglist.htm">查看规则日志</a>
+							#end
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div id="J_ruleListContent"></div>
+		</div>
+	</div>
+</div>
+
+<!-- 转介功能设置 begin -->
+<div id="demo_layer1" class="ibox-content" style="display: none">
+	<form id="retreatkey_form" name="retreatkey_form" class="form-horizontal">
+		<input id="J_id" type="hidden" value="">
+		<p class="col-sm-12 form-control-static">添加不参与约配置的组织：</p>
+		#parse("/public/multiple_department.html")		
+	</form>
+</div>
+<!-- 转介功能设置 end -->
+
+<!-- 带看超期 begin -->
+<div id="demo_layer2" class="ibox-content" style="display: none">
+	<form id="retreatkey_form" name="retreatkey_form" class="form-horizontal">
+		<div class="form-group" >
+			<p class="col-sm-4 form-control-static" style="text-align:right;">超期时间：</p>
+			<input class="col-sm-4 form-control" style="width:33%;" type="number" class="" id="inputtext" name="" placeholder="请输入" onkeyup="this.value=this.value.replace(/\D/g,'')"  onafterpaste="this.value=this.value.replace(/\D/g,'')">
+			<label class="control-label" style="font-weight:normal">天   未反馈</label>
+		</div>
+	</form>
+</div>
+<!-- 带看超期 end -->
+
+
+<script src="$link.contextPath/resources/script/customer/rule/buy_list.js"></script>

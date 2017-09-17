@@ -1,0 +1,1715 @@
+@CHARSET "UTF-8";
+
+.form-horizontal .control-label {
+	padding: 7px 5px !important;
+	white-space: nowrap; /* 强制不换行 */
+}
+
+.form-horizontal.normal .control-label {
+	white-space: normal !important; /* 默认处理 */
+}
+
+.form-group .chosen-container{
+	min-height:32px;
+}
+
+.form-group .form-control[readonly]{
+	background-color: #fff;
+}
+
+.form-horizontal .control-div {
+	padding: 7px 0 !important;
+	margin-bottom: 0;
+}
+
+.font-weight-normal{
+	   font-weight: normal;
+}
+.break-word{
+	word-wrap:break-word;/*数字，英文字母自动换行*/
+}
+
+/* 弹性盒兼容 */
+.cssFlex{
+	display:-webkit-flex;
+	display:-webkit-box;
+	display:flex;
+}
+
+/********** 20170905 ljr add change default font-size for placeholder *************/
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+	font-size:12px;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+	font-size:12px;
+	opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+	font-size:12px;
+	opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+	font-size:12px;
+}
+/* readonly */
+.isdisable .form-group .form-control[readonly]{
+	background-color: #eee;
+}
+.isdisable .form-control[readonly]{
+	background-color: #eee !important;
+}
+.isdisable[readonly]{
+	background-color: #eee !important;
+}
+/***********备注禁止拖动*****************/
+textarea{
+	resize:none !important;
+}
+
+#tab-content {
+	overflow: hidden;
+}
+
+.btn-dept {
+	background: white none repeat scroll 0 0;
+	color: inherit;
+	border: 1px solid #cbd5dd;
+	border-radius: 0 3px 3px 0;
+}
+
+.dropdown-menu-dept {
+	z-index: 20;
+}
+
+.chosen-container-multi .chosen-choices {
+	border-radius: 3px 0 0 3px;
+}
+
+.radius-3 {
+	border-radius: 3px 0 0 3px !important;
+}
+
+.input-group-btn-dept {
+	width: 0 !important;
+}
+
+/* add in 2017-01-23 详情页面使用  */
+.table-bgcolor {
+	margin-bottom: 0 !important;
+}
+
+.table-bgcolor tr td {
+	border: 1px solid #CBD5DD;
+	font-weight: bold;
+}
+
+.table-bgcolor tr td.left {
+	width: 16.66%;
+	text-align: left !important;
+	padding-left: 15px !important;
+	padding-right: 15px !important;
+}
+
+.table-bgcolor tr td.bgcolor {
+	background: #e5e7ec;
+}
+
+.section .tab-content li a {
+	padding: 6px 12px;
+}
+
+/* .table-condensed tr td {
+	text-align: left !important;
+}
+ */
+.check_manual {
+	margin: 20px 10px 0 10px;
+}
+
+.check {
+	border-bottom: 1px solid #CBD5DD;
+	border-right: 1px solid #CBD5DD;
+}
+
+.check_line {
+	border-top: 1px solid #CBD5DD;
+	border-left: 1px solid #CBD5DD;
+}
+
+.check_title {
+	font-weight: bold;
+	text-align: center;
+	line-height: 20px;
+}
+
+.w100 {
+	width: 100px !important;
+}
+
+.w120 {
+	width: 120px !important;
+}
+
+.w160 {
+	width: 160px !important;
+}
+
+.pt6 {
+	padding-top: 6px;
+}
+
+.ptb5 {
+	padding: 5px 0 !important;
+}
+
+.ptb7 {
+	padding: 7px 0 !important;
+}
+
+.ptb10 {
+	padding: 10px 0 !important;
+}
+.ptbottom10 {
+	padding-bottom: 10px !important;
+}
+
+.pd5 {
+	padding: 5px !important;
+}
+
+.pd10 {
+	padding: 10px !important;
+}
+
+.mb20 {
+	margin-bottom: 20px !important;
+	margin-top: 20px !important;
+}
+.m20 {
+	margin: 20px !important;
+}
+.m20 {
+	margin: 20px !important;
+}
+
+.text-left {
+	text-align: left !important;
+}
+
+.text-center {
+	text-align: center !important;
+}
+
+.text-right {
+	text-align: right !important;
+}
+
+.float-l {
+	float: left !important;
+}
+
+.float-r {
+	float: right !important;
+}
+
+.clear {
+	padding: 0 !important;
+	margin: 0 !important;
+}
+
+.clear-margin {
+	margin: 0 !important;
+}
+
+.color_red {
+	color: #ec4758 !important;
+}
+
+.color_gray {
+	color: #ccc !important;
+}
+
+.bor_b_none{
+	border-bottom: none !important;
+}
+
+
+.tab-content-min {
+	min-height: 435px !important;
+	padding: 10px 0 !important;
+}
+
+.add-icon {
+	float: right;
+	position: absolute;
+	right: 0;
+	top: -20px;
+}
+
+.ibox-nolan {
+	border: 0px;
+}
+
+/* 自定义表格样式 -客源编辑/详情页面 strart*/
+.table-list .table>thead>tr>th {
+	/* background-color: #fff !important; */
+	color: #333 !important;
+}
+.table td{
+    word-break: break-all;
+    }
+.table-list .table>tbody>tr>td{
+    border-top: 1px solid #CBD5DD;
+}
+
+.table-list .table-striped>tbody>tr:nth-of-type(odd) {
+    background-color: #fff;
+}
+
+.table-list .table-hover>tbody>tr:hover {
+    background-color: #f5f5f5;
+}
+/* 自定义表格样式-客源客源编辑/详情页面  end*/
+
+
+/***********客源跟进管理样式****************/
+
+.midd{
+	width:100%;
+}
+
+.midd-title{
+	height:32px;
+	width:100%;
+	border:1px solid #666666;
+
+}
+.midd-title span{
+	margin-top:-1px;
+	line-height:30px;
+	margin-left:0.7%;
+	float:left;
+	width:2%;
+	border-right:1px solid #666666;
+}
+
+.midd-title h5{
+	float:left;
+	margin-top:0;
+	line-height:30px;
+	margin-left:0.7%;
+	margin-bottom:2px !important;
+}
+/***********客源调配管理样式****************/
+.allot_all{
+	width:100%;
+	height:160px;
+}
+.allot{
+	text-align:center;
+	line-height:160px;
+}
+#male{
+	display:none;
+}
+#male11{
+	display:none;
+}
+/* .layui-layer-lan .layui-layer-btn{
+	text-align: center !important;
+}
+
+.ibox-content{ 
+	padding:5px 0 !important;
+} */
+
+
+/***********规则设置****************/
+
+/* 控件间距 strart*/
+.control-spacing{
+float:left;
+padding:7px 10px;
+}
+/* 控件间距 end*/
+
+
+/*住宅添加标题strart */
+.business-title{
+	background: #F2F2F2;
+	color: #000;
+	padding: 8px;
+}
+
+.info-tit{
+	overflow: hidden;
+	line-height: 30px;
+    border-bottom: 1px dashed #ccc;
+}
+
+/*住宅添加标题end */
+
+/*规则设置 */
+.sh{
+	float:right;
+	margin-right:6%;
+}
+.lefts{
+	width:5%;
+	display:block;
+	margin-top:2%;
+	margin-left:2%;
+}
+.lines{
+	margin-top:3%;
+	padding-top:3%;
+	border-top:1px dashed #000;
+}
+
+.rank{
+	margin-left:6%;
+}
+.tim{
+	margin-top:1%;
+}
+
+/*待处理数量_cijiangbo_2017-2-27*/
+.pendingNumber{
+	display: block;
+	width: 50px;
+	margin-left: -15px;
+}
+
+.btns{
+	margin-top:1%;
+}
+.boxs{
+	margin-top:-1%;
+}
+.tabs-setborder{border-bottom: 1px dashed #ccc;}
+.tabs_delete>li>a.a_href{ background:none; color:#000; text-decoration:underline; border:none; font-weight:normal;}
+.tabs_delete>li>a.a_href:hover{ background:none; color:#000; text-decoration:underline; border:none;}
+.deptTree-max{ min-height:150px;max-height:150px; overflow-y: auto; overflow-x: hidden; border:1px solid #CBD5DD;}
+.checkbox-top{ margin-top:5px !important;}
+/*备注显示两行...*/
+.remark_twolines{
+	text-overflow: -o-ellipsis-lastline;
+	text-overflow: -webkit-ellipsis-lastline;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	width:100px;
+}
+
+/*备注显示全部*/
+.remark_all{
+	word-wrap:break-word;word-break:break-all
+}
+
+
+/**********备注****************/
+/* .remark_twolines2{
+	text-overflow: -webkit-ellipsis-lastline;
+	text-overflow: -o-ellipsis-lastline;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
+} */
+
+/*新加margin-top*/
+.mt5{
+	margin-top:5px !important;
+}
+.mt6{
+	margin-top:6px !important;
+}
+.mt10{
+	margin-top: 10px;
+}
+/*评价颜色*/
+.remarka{
+	color:#FF0000;
+}
+.remarkb{
+	color:#339999;
+}
+.remarkc{
+	color:#FFCC33;
+}
+
+/* 客源新增标签页 */
+/* .tabs-container .nav-tabs>li>a:hover, .tabs-container .nav-tabs>li>a:focus{
+    background-color: #1a7bb9;
+    border-color: #1a7bb9 !important;
+    color: #FFFFFF !important;
+} */
+/* 房源详情 */
+.ibox-chouse{
+	padding-right:20px;
+}
+.opt_bar{
+    position: fixed;
+    top: 30px;
+    right: 0;
+    width: 118px;
+}
+.content_house{
+	color: #333;
+	margin-right:118px;
+}
+.right_operbar .oper{
+    display: block;
+    width: 114px;
+   /*  line-height: 47px; */
+   	padding:20px;
+    border: solid 1px #e4e4e4;
+    margin: 2px;
+    text-align: center;
+    background-color: #fff;
+    color: #666666;
+    border-radius: 5px 5px 5px 5px / 5px 5px 5px 5px;
+}
+.right_operbar .href {
+    display: block;
+    width: 114px;
+    /* line-height: 47px; */
+    padding: 10px;
+    border: solid 1px #e4e4e4;
+    margin: 2px;
+    text-align: center;
+    background-color: #fff;
+    color: #666666;
+    border-radius: 5px 5px 5px 5px / 5px 5px 5px 5px;
+}
+.content_house .surround{
+	overflow:hidden;
+	margin-top:20px;
+    height: 40px;
+	font-weight: 700;
+}
+.content_house .name{
+	float:left;
+	font-size:28px;
+	color: #000000;
+	margin: 0 20px;
+}
+.content_house .infor-num{
+    color: #000000;
+    text-align: center;
+    float: left;
+
+}
+.content_house .infor-num .floor-num{
+	font-size:8px;
+	margin-top:5px;
+}
+.content_house .remarks{
+    color: #FF0000;
+    height:50px;
+    vertical-align: bottom;
+    display: table-cell;
+}
+.content_house .section{
+    background-color: #f2f2f2;
+    border: solid 1px #e4e4e4;
+    border-radius: 6px 6px 6px 6px / 6px 6px 6px 6px;
+    margin: 5px 20px;
+    overflow: hidden;
+}
+.content_house .section .con{
+	border-right:1px solid #999;
+	text-align:center;
+}
+.content_house .section .con .house-val{
+    font-weight: 700;
+    line-height: 15px;
+    min-height: 15px;
+}
+.content_house .section .none{
+	border-right:0px;
+}
+.content_house .section .con .record,.content_house .section .con .last{
+    text-align: left;
+    overflow: hidden;
+}
+.content_house .section .con .record{
+    margin-top: 2px;
+    margin-bottom: 3px;}
+.content_house .section .house-type{
+    margin-top: 10px;
+    display: block;
+    line-height: 1;
+    height: 15px;
+}
+.content_house .section .con .house-type .re{
+	color:#FF0000;
+}
+.content_house .section .con .label-name{
+	display:block;
+}
+.content_house .section .con .date{
+font-weight: 700;
+height:15px;
+display:block;
+}
+.content_house .section .name-sma{
+	font-weight: 700;
+}
+.pl-20{
+	padding-left:20px;
+}
+.ml-40{
+margin-left:40px;
+}
+.mr-20{
+margin-right:20px;
+overflow:hidden;
+}
+.label-pt{
+	padding:6px 0px;
+}
+/***********实勘****************/
+/*添加实勘*/
+.describ{
+	width:100%;
+	margin-bottom:1%;
+}
+
+/*实勘标准内容*/
+.startands{
+	margin-top:2%;
+	margin-left:1%;
+}
+.conts{
+	margin-left:5%;
+}
+inquisition_info_content{
+	width:100%;
+	padding:10px 30px;
+}
+.picterTotal{
+    display: block;
+    margin-top: 8px;	
+}
+ .panel-success>.panel-heading{
+	background-color: #0882FF !important;
+}
+.panel-title{
+	margin-top:8px;
+}
+ .btn-primary{
+ 	float:left!important;
+ }
+/* .pull-right{
+	padding:10px 5px;
+	color:red;
+	font-weight:700;
+} */
+/* .panel-body{
+	height:250px;
+} */
+.pull-right1{
+	padding:10px 5px;
+	color:red;
+	font-weight:700;
+}
+.panel-body1{
+	height:350px;
+}
+.inline{
+	float:left;
+	margin-top:20px;
+	margin-left:20%;
+}
+.upload{
+	float:left;
+	margin-top:20px;
+	margin-left:20%;
+}
+.demo_layer_flash2{
+	width:100%;
+	height:500px;
+	overflow-y:auto;
+}
+
+/* #demo_layer_flash{
+
+	overflow-y:auto;
+} */
+/* .discrib{
+	margin-bottom:5%;
+} */
+.flash{
+	width:100%;
+	height:670px;
+	overflow-y:auto;
+	border:1px solid #000;
+}
+.flash_descri{
+	width:96%;
+	margin-left:2%;
+	margin-top:2%;
+	/* border:1px solid #000; */
+}
+.menu-left_reported_out{
+	position:absolute;
+	left:0;
+	height:90%;
+	width:5%;
+	font-size:5vw;
+	font-weight:100;
+	line-height:250px;
+	cursor:pointer;
+	background:#fff;
+}
+.menu-right_reported_out{
+	position:absolute;
+	right:0;
+	height:90%;
+	width:5%;
+	font-size:5vw;
+	font-weight:100;
+	line-height:250px;
+	cursor:pointer;
+	background:#fff;
+}
+.pic_add{
+	width:96%;
+	height:400px;
+	margin-left:2%;
+	margin-top:2%;
+	margin-bottom:4%;
+	border:1px solid #000;
+	overflow:hidden;
+}
+/*上传图片按钮*/
+.webuploader_pick{
+	margin-top:1% !important;
+	background-color:#4476A7 !important;
+	color:#fff !important;
+	border-radius:5px !important;
+}
+.save_out{
+	margin-top:1% !important;
+	background-color:#4476A7 !important;
+	color:#fff !important;
+	border-radius:5px !important;
+	height:32px;
+	line-height:32px;
+	border:1px solid #CFCFCF;
+}
+.demo{
+	width:100% !important;
+	height:100% !important;
+	margin-top:-3%!important;
+}
+.imgBox{
+	width:120px !important;
+	height:120px !important;
+}
+.uploadImg img{
+	width:120px !important;
+	height:120px !important;
+}
+.upload_append_list .uploadImg img{
+	width:120px !important;
+	height:120px !important;
+}
+.file_select input{
+	width:100% !important;
+}
+.upload_append_list{
+	width:23% !important;
+	}
+.operimg_box{
+	z-index:2000 !important;
+}
+#mask_bg{
+	position:absolute !important;
+	top:0 !important;
+	left:0 !important;
+	bottom:0 !important;
+	width:100% !important;
+	height:170% !important;
+
+}
+.deleteImg{
+	height:250px;
+}
+.upFileName{
+	max-height:63vh;
+	overflow:auto;
+}
+#demo_layer_pic2{
+	/* max-height:500px; */
+	overflow:auto;
+}
+ .img_outer,.img_ins,.img_in,.img_in2,.img_outer2,.img_outerj2,.img_inj2,.img_ins2{
+	/* width:90%;
+	float:left;
+	margin-left:1%;
+	margin-top:3%; */
+	width:90%;
+	height:100%;
+	overflow:hidden;
+	margin-left:5%;
+}
+
+/* .img_out{
+	width:98%;
+	height:100%;
+} */
+ .out_img{
+	width:200px !important;
+	height:100%;
+	float:left !important;
+	margin-left:15px!important;
+	margin-top:50px!important;
+}
+ .out_img img{
+    width: 200px;
+    height: 200px;
+}
+ .out_img11{
+	width:150px !important;
+	height:100%;
+	float:left !important;
+	margin-left:15px!important;
+	margin-top:2%!important;
+}
+.out_img11 img{
+	width:150px;
+	height:150px;
+}
+
+ .out_img2{
+	width:150px !important;
+	height:100%;
+	float:left !important;
+	margin-left:15px!important;
+	margin-top:2%!important;
+}
+.out_img2 img{
+	width:150px;
+	height:150px;
+}
+ .out_img22{
+	width:150px !important;
+	height:100%;
+	float:left !important;
+	margin-left:15px!important;
+	margin-top:2%!important;
+}
+.out_img22 img{
+	width:150px;
+	height:150px;
+}
+ .big_pic{
+    margin-top:5%;
+   	width:100%;
+   	text-align:center;
+
+}
+.big{
+	float:left;
+	width:20%;
+	font-size:18px;
+	margin-left:5%;
+}
+
+.delt{
+	width:20%;
+	float:left;
+	font-size:18px;
+	margin-left:75%;
+	margin-top:-13%;
+	position:relative;
+	top:-10px;
+	cursor:pointer;
+}
+
+/*室内图*/
+.img_in{
+	/* width:98%;
+	height:94%;
+	margin-left:1%;
+	margin-top:3%; */
+}
+.in_img img{
+	width:17%;
+	height:150px;
+	float:left;
+	margin-left:1%;
+}
+/*举报历史*/
+.panel-title1{
+	margin-top:8px;
+}
+/*大的编辑框*/
+.panel-body1_reported{
+	height:800px;
+}
+.panel-body1_reported3{
+	height:790px;
+}
+ .panel-body1_reported1{
+	height:790px;
+	padding-left:0;
+}
+/*俩个按钮----户型图（添加实勘）*/
+.menu-left_reported_in{
+	/* float:left;
+
+	font-size:60px;
+	margin-top:5%;
+	font-weight:100; */
+	position:absolute;
+	left:0;
+	height:90%;
+	width:5%;
+	font-size:5vw;
+	font-weight:100;
+	line-height:250px;
+	cursor:pointer;
+}
+.menu-right_reported_in{
+	/* float:right;
+	font-size:60px;
+	margin-top:5%;
+	font-weight:100; */
+	position:absolute;
+	right:0;
+	height:90%;
+	width:5%;
+	font-size:5vw;
+	font-weight:100;
+	line-height:250px;
+	cursor:pointer;
+	background:#fff;
+}
+/*添加实勘 ----室内图*/
+.menu-left_report_in{
+	float:left;
+
+	font-size:60px;
+	margin-top:5%;
+	font-weight:100;
+}
+.menu-right_report_in{
+	float:right;
+	font-size:60px;
+	margin-top:5%;
+	font-weight:100;
+}
+/*原实勘评价*/
+.evaluate{
+	margin-top:3%;
+}
+/*举报图片*/
+/*被举报图片大框*/
+.panel-body1_report{
+	height:610px;
+}
+/*举报图片大框*/
+.panel-body2_report{
+	height:1100px;
+}
+.panel-body2_report3{
+	height:1100px;
+}
+.panel-body2_report1{
+	height:1100px;
+}
+/*里面的俩个输入框*/
+.img_report_outer{
+	width:98%;
+
+	margin-left:1%;
+	margin-top:3%;
+	position:relative;
+	overflow:hidden;
+}
+
+.img_report_in{
+/* 	float:left; */
+	width:98%;
+	margin-left:1%;
+/* 	margin-top:3%; */
+	position:relative;
+}
+
+/*处理举报*/
+/*复选框*/
+/*里面的第一個输入框*/
+.img_reported_outer{
+	width:98%;
+	height:90%;
+	float:left;
+	margin-left:1%;
+	margin-top:1%;
+	position:relative;
+}
+
+.img_out{
+	height:100%;
+}
+
+.out_img_deal{
+	width:150px !important;
+	/* height:100%; */
+	float:left !important;
+	margin-left:15px!important;
+	margin-top:2%!important;
+}
+.out_img_deal img{
+	width:150px;
+	height:150px;
+}
+/*复选框*/
+.change_reported_out input{
+	margin-top:12px;
+	margin-left:80px !important;
+
+}
+._out{
+	width:100%;
+	height:15px;
+	margin-left:13%;
+	padding-top:3px;
+}
+/*里面的第2個输入框*/
+.img_reported_in{
+	float:left;
+	width:98%;
+	margin-left:1%;
+/* 	margin-top:6%; */
+	position:relative;
+}
+.reported_out{
+	width:100%;
+	text-align:center;
+	margin-top:7px;
+}
+
+.evaluate{
+	margin-top:10px;
+}
+.shad{
+	width:100%;
+	height:100%;
+	z-index:1000;
+	background:rgba(0,0,0,0.3);
+
+}
+.set-4{
+	margin-top:5%;
+	margin-bottom:10%;
+}
+/*撤销举报的按钮，其他的都与处理举报公用*/
+.cancle_btn{
+	width:65%;
+	text-align:center;
+
+}
+/*举报详情*/
+.panel-body_deal{
+	height:320px;
+}
+.panel-body_exceed{
+	height:200px;
+}
+.exceed{
+	width:100%;
+	text-align:center;
+	margin-top:7%;
+	font-size:18px;
+}
+
+.inq_imageBox,.inq_imageBox1{
+	width:300px;
+	height:300px;
+	float:left;
+	overflow:hidden;
+	border:1px solid;
+}
+.inq_deta-imgBox{
+	width:100%;
+	height:100%;
+	overflow:auto;
+}
+.inq_deta_fieldset{
+	float:left;
+	width:300px;
+	height:300px;
+	overflow:hidden;
+}
+.inq_deta_legend{
+	width:60px;
+	margin-left:5%;
+	margin-bottom:0;
+	font-size:12px;
+}
+.enlarge,.narrow{
+	padding:10px;
+	font-weight:bold;
+	font-size:30px;
+	border:1px solid;
+	position:relative;
+	top:30px;
+	left:30px;
+	cursor:pointer;
+}
+.narrow{
+	margin-left:20px;
+}
+
+.singel-report{
+	height:90%;
+}
+.double-report{
+	height:40%;
+	overflow:hidden;
+}
+
+.topic{
+	margin:0 0 0 6%;
+}
+
+/*撤销举报后*/
+.record{
+	margin-top:2%;
+	margin-bottom:3%;
+}
+/*举报实勘*/
+.pic1{
+	float:right;
+	color:red;
+}
+.pic2{
+	float:right;
+	color:red;
+}
+
+/*弹出标准*/
+.norm{
+	display:block;
+	margin-top:7%;
+	font-size:16px;
+	color:#0033FF;
+}
+/*查看实勘*/
+.panel-body1_check1{
+	height:340px;
+}
+.panel-body1_check4{
+	height:300px;
+}
+.panel-body1_check2{
+	height:340px;
+}
+.panel-body1_check3{
+	height:300px;
+}
+.pictur{
+	display:block;
+	font-size:16px;
+	color:red;
+}
+.pr55{
+	margin-left:5%;
+}
+.evaluate1{
+	margin-top:10px;
+	margin-left:5%;
+	margin-bottom:10px;
+}
+.evaluate2{
+	margin-top:10px;
+
+}
+.evaluate3{
+	margin-top:10px;
+
+}
+
+/*实勘中变更实勘人模态框*/
+
+#inquese{
+	text-decoration:underline;
+	cursor:pointer;
+}
+#change_inquese{
+	height:100%;
+}
+.group_box{
+	margin:0 auto;
+	position:relative;
+	top:50px;
+}
+.group_box .control-label{
+	height:32px;
+	line-height:32px;
+	text-align:center;
+}
+
+
+/*查看实勘中的举报模态框*/
+.audit{
+	width:90%;
+	height:50%;
+	margin-left:10%;
+	margin-top:1%;
+}
+.idea{
+	margin-top:5%;
+}
+.idea textarea{
+	width:80%;
+	margin-bottom:-10%;
+}
+
+
+
+/*查看实勘-过往实勘*/
+.inq_past_box{
+	width:100%;
+	height:500px;
+	overflow:auto;
+	color:#333;
+}
+.inq_past_box1{
+	width:90%;
+	margin-left:5%;
+	height:500px;
+	overflow:auto;
+	color:#333;
+}
+.inq_past_list{
+	margin:10px auto;
+	width:90%;
+	/*border:1px solid;*/
+}
+.inq_past_img{
+	width:120px;
+	height:120px;
+}
+.inq_past_time{
+	margin:0 10px;
+}
+
+.inq_past_name:hover{
+	text-decoration:none;
+}
+
+.inq_past_normsg{
+	border-bottom:1px solid;
+	width:500px;
+	padding-bottom:5px;
+}
+.inq_past_imglist{
+	width:100%;
+	list-style:none;
+	padding:0;
+	overflow:auto;
+	zoom:1;
+}
+.inq_past_imglist li{
+	float:left;
+	list-style:none;
+	margin:0 10px;
+	text-align:center;
+	position:relative;
+}
+.inq_past_sTitle{
+	width:120px;
+	height:20px;
+	line-height:20px;
+	background:rgba(255,255,255,.4);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#66ffffff,endColorstr=#66ffffff);
+	position:absolute;
+	left:0;
+	top:100px;
+	text-align:center;
+	display:none;
+}
+.inq_past_sTitle+p{
+	margin-top:5px;
+}
+
+/*查看实勘*/
+.del_forms{
+	text-align:center;
+	margin-top:5%;
+	font-size:18px;
+}
+.del_form{
+	text-align:center;
+	margin-top:5%;
+	font-size:18px;
+}
+/***我的实勘管理*/
+.my_tabs{
+	width:100%;
+	height:50px;
+}
+.my_tabs li{
+	width:10%;
+	height:30px;
+	line-height:30px;
+	text-align:center;
+	margin-left:10%;
+	border-radius:3px !important;
+}
+ #fourth{
+	display:none;
+}
+#third{
+	display:none;
+}
+#second{
+	display:none;
+}
+#J_search{
+	margin-right:40px;
+}
+
+.up_btn{
+	width:100px;
+	height:40px;
+	margin:0 auto;
+	color:#fff;
+	background:#1C84C6;
+	cursor:pointer;
+	text-align:center;
+	line-height:40px;
+}
+
+.up_btn:hover{
+	background:#3390CB
+}
+.up_btn:active{
+	background:#60A9D7;
+}
+
+/*审批结果*/
+.all_of{
+	width:100%;
+	height:100%;
+}
+.upload1{
+	width:90%;
+	margin-left:5%;
+	margin-top:5%;
+	text-align:center;
+	font-size:18px;
+}
+.onload{
+	width:90%;
+	margin-left:5%;
+	margin-top:5%;
+}
+ .upload2{
+ 	width:20%;
+	margin:30px auto;
+}
+
+
+/*查看被取消的实勘*/
+/*户型图*/
+.panel-body1_check4{
+	height:300px;
+}
+.out_img_deal1{
+	width:100px !important;
+	height:100%;
+	float:left !important;
+	margin-left:15px!important;
+	margin-top:2%!important;
+}
+.out_img_deal1 img{
+	width:100px;
+	height:100px;
+	margin:5px;
+}
+.menu-left_reported_out11{
+	position:absolute;
+	left:0;
+	height:90%;
+	width:5%;
+	font-size:3vw;
+	font-weight:100;
+	line-height:250px;
+	cursor:pointer;
+}
+.menu-right_reported_out11{
+	position:absolute;
+	right:0;
+	height:90%;
+	width:5%;
+	font-size:3vw;
+	font-weight:100;
+	line-height:250px;
+	cursor:pointer;
+	background:#fff;
+}
+/*室内图*/
+.panel-body1_check3{
+	height:300px;
+}
+.out_img_deal2{
+	width:100px !important;
+	height:100%;
+	float:left !important;
+	margin-left:15px!important;
+	margin-top:2%!important;
+}
+.out_img_deal2 img{
+	width:100px;
+	height:100px;
+	margin:5px;
+}
+.menu-left_reported_out112{
+	position:absolute;
+	left:0;
+	height:90%;
+	width:5%;
+	font-size:3vw;
+	font-weight:100;
+	line-height:250px;
+	cursor:pointer;
+}
+.menu-right_reported_out112{
+	position:absolute;
+	right:0;
+	height:90%;
+	width:5%;
+	font-size:3vw;
+	font-weight:100;
+	line-height:250px;
+	cursor:pointer;
+	background:#fff;
+}
+/*编辑实勘*/
+.house{
+	height:35px !important;
+	line-height:30px !important;
+	margin-left:5%!important;
+}
+
+/*实勘列表*/
+.res{
+	float:right;
+}
+/* 添加带看 add by ljr */
+.singlewatch_ath{
+
+}
+.singlewatch_ath img{
+	width:159px;
+	height:92px;
+}
+.setsingletime_ath{
+	position:relative;
+	margin-bottom:5px;
+}
+.form_settime_ath{
+	/* position:absolute; */
+	width:100%;
+	bottom:5px;
+}
+/* 查看地址隔行变色样式 */
+.odd-tr {background-color: #F9F9F8;}
+.even-tr {background-color: #E0EDEE;}
+
+/**
+	处理表单中需要多个输入组件时中间切割符 `-`
+    @使用案例
+    <div class="col-md-4">
+        <div class="form-group form-group-splits">
+            <label class="col-sm-3 control-label">起始时间：</label>
+            <div class="col-sm-8" layout="row">
+                <div flex>
+                	<input class="form-control">
+                </div>
+
+                <div class="split">-</div> <!-- 在这里加入 .split 的切割符号 -->
+
+                <div flex>
+                	<input class="form-control">
+                </div>
+
+                <!-- 可任意多个切分 -->
+                <div class="split">-</div> <!-- 在这里加入 .split 的切割符号 -->
+
+                <div flex>
+                	<input class="form-control">
+                </div>
+            </div>
+        </div>
+    </div>
+ */
+
+.form-group .split{
+	margin:8px 3px;
+}
+
+/**
+	layui-layer的按钮对齐处理
+ */
+.layui-layer-btn-align-left .layui-layer-btn{
+	text-align: left !important;
+}
+.layui-layer-btn-align-center .layui-layer-btn{
+	text-align: center !important;
+}
+
+.chosen-container-multi .chosen-choices {
+	padding: 2px 2px 1px 2px; /* 修复多选组件时，高度不匹配的情况 */
+}
+/*限制性房源-----分派*/
+.fen{
+	width:80%;
+	margin-left:10%;
+	margin-top:5%;
+	text-align:center;
+
+}
+
+.ng-submitted .ng-invalid[required],
+.ng-submitted .ng-invalid .input-group .form-control,
+.ng-submitted .ng-invalid .input-group .btn,
+.ng-submitted select.ng-invalid + .chosen-container > a,
+.ng-submitted .ng-invalid .checkbox > input[type=checkbox] + label:before,
+.ng-submitted .radio > input[type=radio].ng-invalid + label:before,
+.ng-dirty.ng-invalid.ng-not-empty,
+.ng-touched.ng-invalid.ng-not-empty,
+.ng-touched.ng-invalid[required] {
+	border-color: red;
+}
+
+.has-error .form-control{
+	border-color: red !important;
+}
+.has-success .form-control{
+	border-color: #66afe9 !important;
+}
+
+.valign-top > *{
+	vertical-align: top !important;
+}
+
+.valign-middle {
+	vertical-align: middle !important;
+}
+
+.dropdown-menu.table-text-left table.table > tbody > tr > td{
+	text-align: left;
+}
+
+form.hide-btn agreement-code button.btn{
+	display: none;
+}
+
+.form-horizontal .checkbox, .form-horizontal .radio{
+	min-height: 32px;
+}
+
+.chosen-container-single .chosen-single span{
+	margin-right:10px;
+}
+
+.pointer-events-none{
+    position: relative;
+}
+
+.pointer-events-auto iframe {
+    display: none;
+}
+
+a.list-group-item.active, a.list-group-item.active:hover, a.list-group-item.active:focus {
+	background-color: #4074e1;
+	border-color: #4074e1;
+}
+
+.pointer-events-none iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    -moz-opacity: 0;
+    -webkit-opacity: 0;
+    opacity: 0;
+    filter: alpha(Opacity=0);
+    background: transparent;
+}
+
+.textarea-sup textarea,
+.textarea-sup pre{
+	border: none;
+	background: transparent;
+	padding:5px;
+	margin:0;
+	min-height:100px;
+	outline: none;
+	white-space: pre-wrap;
+	word-wrap: break-word;
+	line-height:20px;
+}
+
+.textarea-sup{
+	position: relative;
+	border: 1px solid #a8a8a8;
+	background: #fff;
+}
+.textarea-sup textarea{
+	position: absolute;
+	top:0;
+	left:0;
+	bottom:0;
+	right:0;
+	resize: none;
+}
+.textarea-sup pre{
+	visibility: hidden;
+}
+
+.font-size-12{
+	font-size: 12px;
+}
+
+.required:before{
+	content: '*';
+	color: red;
+}
+/* 文本不换行 */
+.text-nowrap{
+	white-space: nowrap;
+}
+
+.text-overflow {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+input.form-control[type=number] {
+    /* 在火狐浏览器中，数字输入框需要制定数字字体才不会出现显示 bug */
+    font-family: "Times New Roman", Times, serif;
+}
+
+input[type=number].hide-spin::-webkit-inner-spin-button,
+input[type=number].hide-spin::-webkit-outer-spin-button {
+	display: none;
+}
+input[type=number].hide-spin{
+	-moz-appearance:textfield;
+}
+
+/* 调整多选框和单选框间距在最后一个时多余的问题 */
+sign-checkbox-group sign-checkbox {
+	margin-right: 15px;
+}
+
+.radio-inline:last-child, .checkbox-inline:last-child, sign-checkbox:last-child {
+	margin-right: 0 !important;
+}
+/* athena add 201705 */
+/* 签约 合同列表 特殊样式 start */
+.spec_listdesc_ath,.spec_listdesc_ath span{
+	font-size:16px;
+}
+.red_ath{color:#ff0000;}
+.blue_ath{color:#0000ff}
+.b_ath{font-weight:bold;}
+/* athena add 20170825 */
+/* 选择合同按钮 */
+.search_btn_ath{
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+/* 签约 合同列表 特殊样式 end */
+/* 补充协议录入模板样式 start */
+.agm_dl_ath{background-color:#fff;}
+.agm_dd_ath{display:block;color:#000000;font-size:14px;margin-left:62px;text-indent:-62px;line-height:150%;}
+/* 补充协议录入模板样式 end */
+/* 空看table无边框 样式  */
+.table_noborder_ath,.table_noborder_ath td,.table_noborder_ath th{
+	border: 0px solid transparent !important;
+}
+/* 添加员工 样式 */
+.J_employee_del{cursor:pointer;padding-right:10px;}
+.J_employee_del label{cursor:pointer;color:red;}
+/* 模拟双层表格 */
+.firsttable,.secondtable{
+	padding:0px;
+}
+/*合同费用执行明细样式*/
+/* .firsttable>li>.row{
+    background-color: #CCFFFF;
+} */
+.secondtable span{
+	background-color: #D7D7D7;
+}
+.firsttable span{
+    border-bottom: 1px solid #CBD5DD;
+    line-height: 1.42857;
+    height: 45px;
+    padding: 5px;
+    vertical-align: middle;
+    text-align: center;
+}
+/* 房源委托书详情开始 */
+.proxy_con .img_report_outer{
+	margin-top:0px;
+	overflow:inherit;
+}
+.proxy_con .img_outer{
+	overflow:inherit;
+	overflow-x: hidden;
+	height:268px;
+}
+.proxy_con .menu-left_reported_out,.proxy_con .menu-right_reported_out{
+	line-height: 210px;
+}
+.proxy_con .out_img{
+	margin-top:0px !important;	
+	margin-left:0px !important;
+}
+.proxy_con .out_img .upload_image{
+transform: rotate(0deg); transform-origin: 50% 50% 0px;	
+}
+.proxy_con .picter_mar{
+	position:relative
+}
+.proxy_con .name{
+    font-size: 14px;
+    text-align: center;
+    display: block;
+}
+.proxy_con .out{
+	font-size:18px;
+	height: 15px;
+    margin-left: 13%;
+    padding-top: 3px;
+	cursor:pointer;
+}
+.proxy_con .download{
+    /* float: right; */
+    font-size: 14px;
+    cursor: pointer;
+    /* margin-right: 13%; */
+    text-align: center;
+    display: block;
+}
+/* 房源委托书详情结束 */
+/*cijiangbo,2017-8-3*/
+/*star付款单打印模板，重置表格边框颜色*/
+#printTemplate .table-bgcolor tr td{border:1px solid #000;}
+#printTemplate .table>thead>tr>th, #printTemplate .table>tbody>tr>th, #printTemplate .table>tfoot>tr>th, #printTemplate .table>thead>tr>td, #printTemplate .table>tbody>tr>td, #printTemplate .table>tfoot>tr>td{border-top:1px solid #000;}
+/*end付款单打印模板，重置表格边框颜色*/

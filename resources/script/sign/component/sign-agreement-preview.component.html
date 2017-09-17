@@ -1,0 +1,11 @@
+<div class="preview">
+    <div id="page1">
+        <agreement-code
+                class="pointer-events-none"
+                preview="true"
+                ng-repeat="code in $ctrl.codes"
+                agrt-type="$ctrl.agrtType"
+                code="code" index="$index" payment-type="$ctrl.paymentType"
+                contract="$ctrl.contractDetail"></agreement-code>
+    </div>
+</div>

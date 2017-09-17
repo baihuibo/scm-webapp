@@ -1,0 +1,317 @@
+<!-- 信息修改 -->
+#set($plugins = ["table","chosen","autoSearch","validator"])
+<style>
+	#J_revamp_nextAppvalUserId-error{
+		display: table-footer-group;
+	}
+</style>
+<div class="ibox">
+	<div class="ibox-title">
+		<h5>限制性房源客源信息修改</h5>
+		<div class="ibox-tools">
+			<a class="collapse-link ui-sortable"> <i class="fa fa-chevron-up"></i></a>
+		</div>
+	</div>
+	<div class="ibox-content">
+		<form class="form-horizontal" role="form" id="newform">
+			<input type="hidden" class="form-control" name="id" id="J_revamp_id" autocomplete="off">
+			<div class="row">
+			<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">信息编号：</label>
+						<div class="col-sm-7">
+							<input type="text" class="form-control" name="reid" id="J_revamp_reid" autocomplete="off" disabled="disabled">	
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">录入人：</label>
+						<div class="col-sm-7">	
+							<input type="text" class="form-control" name="createUserName" id="J_revamp_createUserName" autocomplete="off" disabled="disabled">	
+						</div>
+					</div>
+				</div> 
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">录入日期：</label>
+						<div class="col-sm-7">	
+							<input type="text" class="form-control" name="createTime" id="J_revamp_createTime" autocomplete="off" disabled="disabled">	
+						</div>
+					</div>
+				</div>  
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label"><span class="text-danger">*</span>姓名：</label>
+						<div class="col-sm-7">	
+							<input type="text" class="form-control" name="customerName" id="J_revamp_customerName" autocomplete="off">					
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label"><span class="text-danger">*</span>客户类型：</label>
+						<div class="col-sm-7">	
+							<select id="J_revamp_customerTypeId" name="customerTypeId" class="J_chosen form-control" data-placeholder="全部">
+									<option value="">全部</option>
+									<option value="1">业主</option>
+									<option value="2">客户</option>
+							</select>				
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label"><span class="text-danger">*</span>业务类型：</label>
+						<div class="col-sm-7">	
+							<select id="J_revamp_businessTypeId" name="businessTypeId" class="J_chosen form-control" data-placeholder="全部">
+									<option value="">全部</option>
+									<option value="1">租赁</option>
+									<option value="2">买卖</option>
+							</select>				
+						</div>					
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label"><span class="text-danger">*</span>房产证件类型：</label>
+						<div class="col-sm-7">	
+							<select id="J_revamp_houseCardTypeId" name="houseCardTypeId" class="J_chosen form-control" data-placeholder="全部">
+									<option value="0">全部</option>
+									<option value="1">原房产证号</option>
+									<option value="2">商品房预售合同</option>
+							</select>				
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label"><span class="text-danger">*</span>房产证件号：</label>
+						<div class="col-sm-7">	
+							<input type="text" class="form-control" name="houseCard" id="J_revamp_houseCard" autocomplete="off">					
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group customerTelephone">
+						<label class="col-sm-4 control-label">电话：</label>
+						<div class="col-sm-7">	
+							<input type="text" class="form-control" name="customerTelephone" id="J_revamp_customerTelephone" autocomplete="off" onKeyUp="value=value.replace(/[^\d]/g,'')">					
+						</div>
+					</div>
+				</div>	
+			</div>
+			<div class="row">
+			<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label"><span class="text-danger">*</span>身份证类型：</label>
+						<div class="col-sm-7">	
+							<select id="J_revamp_idCardTypeId" name="idCardTypeId" class="J_chosen form-control" data-placeholder="全部">
+									<option value="">全部</option>
+									
+							</select>				
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label"><span class="text-danger">*</span>证件号：</label>
+						<div class="col-sm-7">	
+							<input type="text" class="form-control" name="idCard" id="J_revamp_idCard" autocomplete="off">
+							<span class="error" style="display:none" class="help-block m-b-none">请正确填写证件号码</span>
+							<span class="error2" style="display:none" class="help-block m-b-none">
+								<i class="fa fa-times-circle"></i>
+								 必填</span>									
+						</div>
+					</div>
+				</div>			
+			</div>
+			<div class="row">
+				<div class="col-md-8">
+					<div class="form-group">
+						<label class="col-sm-2 control-label"><span class="text-danger">*</span>上榜原因：</label>
+						<div class="col-sm-10" id="J_revamp_reasons"></div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">物业地址：</label>
+						<div class="col-sm-7">	
+							<input type="text" class="form-control" name="address" id="J_revamp_address" autocomplete="off">					
+						</div>
+					</div>
+				</div>							
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">合同编号：</label>
+						<div class="col-sm-7">	
+							<input type="text" class="form-control" name="contractNo" id="J_revamp_contractNo" autocomplete="off">
+							<span class="help-block m-b-none" style="font-weight: normal;">(请至少输入连续4位合同号)</span>					
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">网签编号：</label>
+						<div class="col-sm-7">	
+							 <input type="text" class="form-control" name="netContractrecordNo" id="J_revamp_netContractrecordNo" autocomplete="off">					
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">				
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">成交日期：</label>
+						<div class="col-sm-7">	
+							<input type="text" class="form-control" name="commitTime" id="J_revamp_commitTime" autocomplete="off">					
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">成交经纪人：</label>
+						<div class="col-sm-7">	
+							<input type="text" class="form-control" name="commitUserId" id="J_revamp_commitUserId" autocomplete="off">					
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">成交部门：</label>
+						<div class="col-sm-7">	
+							<input type="text" class="form-control" name="commitShopId" id="J_revamp_commitShopId" autocomplete="off">					
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">		
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">投诉编号：</label>
+						<div class="col-sm-7">	
+							<input type="text" class="form-control" name="complainNo" id="J_revamp_complainNo" autocomplete="off">					
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">投诉日期：</label>
+						<div class="col-sm-7">	
+							<input type="text" class="form-control" name="complainTime" id="J_revamp_complainTime" autocomplete="off">					
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">审批状态：</label>
+						<div class="col-sm-7">	
+							<input type="text" class="form-control" name="stateName" id="J_revamp_stateName" autocomplete="off" disabled="disabled">					
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">审核部门：</label>
+						<div class="col-sm-7">	
+							<input type="text" class="form-control" name="lastApprovalDepartmentName" id="J_revamp_lastApprovalDepartmentName" autocomplete="off" disabled="disabled">				
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">审核人：</label>
+						<div class="col-sm-7">	
+							<input type="text" class="form-control" name="lastApprovalUserName" id="J_revamp_lastApprovalUserName" autocomplete="off" disabled="disabled">					
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">审核日期：</label>
+						<div class="col-sm-7">	
+							<input type="text" class="form-control" name="lastApprovalTime" id="J_revamp_lastApprovalTime" autocomplete="off" disabled="disabled">									
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">				
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">限制性房客源状态：</label>
+						<div class="col-sm-7">	
+							<input type="text" class="form-control" name="lockName" id="J_revamp_lockName" autocomplete="off" disabled="disabled">			
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label"><span class="text-danger">*</span>上级审批人：</label>
+						<div class="col-sm-7">
+							<div class="input-group">
+								<input type="text" class="form-control" id="J_revamp_nextAppvalUserId" name=nextAppvalUserId autocomplete="off">
+								<div class="input-group-btn">
+									<button type="button" class="btn btn-white dropdown-toggle"
+										data-toggle="">
+										<span class="glyphicon glyphicon-search search-caret"></span>
+									</button>
+									<ul class="dropdown-menu dropdown-menu-right" role="menu"
+										style="padding-top: 0px; max-height: 375px; max-width: 800px; overflow: auto; width: auto; transition: 0.3s; left: -110px; right: auto; min-width: 145px;">
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-8">
+					<div class="form-group">
+						<label class="col-sm-2 control-label">备注信息：</label>
+						<div class="col-sm-8">
+							<textarea class="form-control" placeholder="请输入备注信息" id="J_revamp_remark" name="remark" maxlength="500"></textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+					<div class="col-md-12 text-cen">
+						<div class="form-group">
+							<button id="J_submit" type="button" class="btn btn-success pr5">发送上级审批人</button>
+							<button id="J_reset"  class="btn btn-success">取 消</button>
+						</div>
+					</div>
+				</div>
+		</form>
+		<div class="row ptb10">
+			<div class="pl10 font-bold font-blue info-tit">限制性房源客源操作日志</div>
+		</div>
+		<div class="row ptb10_1">
+			<table id="J_dataTable" class="table table-hover  table-striped table-condensed"
+				data-query-params="queryParams" data-mobile-responsive="true"
+				data-pagination="true" 
+				data-striped="true" data-search="false">
+				<thead>
+					<tr>
+						<th data-field="operateUserName">操作人</th>
+						<th data-field="jobName">职位</th>
+						<th data-field="departmentName">所在组店</th>
+						<th data-field="operateTime">操作时间</th>
+						<th data-field="operateDesc">操作内容</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+	</div>
+</div>
+<script src="$link.contextPath/resources/script/restrictive/editrestrictive.js"></script>
+<script src="$link.contextPath/resources/script/restrictive/validate.js"></script>

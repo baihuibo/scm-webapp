@@ -1,0 +1,219 @@
+#set($plugins = ["table","chosen","laydate","autoSearch","validator"])
+<style type="text/css">
+.btn-edit {
+	color: #1A7BB9;
+	background: white;
+	font-size: 24px;
+	border-radius: 3px;
+	padding-right: 8px;
+}
+
+</style>
+
+<div ng-controller="draftDetailCtrl as $ctrl" ng-cloak id="controller">
+<div class="ibox">
+	<div class="bs-callout bs-callout-warning">
+		<h4>买卖合同详情</h4>
+	</div>
+	<div class="ibox-content">
+		<div class="customer_info_content">
+			<div id="detail" class="edit">
+				<div class="row">
+					<div class="col-md-4">
+						<dl class="dl-horizontal">
+							<dt>存量房合同编号：</dt>
+							<dd class="J_detail_contractCode">{{$ctrl.detail.contractCode}}</dd>
+						</dl>
+					</div>
+					<div class="col-md-4">
+						<dl class="dl-horizontal">
+							<dt>居间合同编号：</dt>
+							<dd class="J_detail_brokContractNum">{{$ctrl.detail.brokContractNum}}</dd>
+						</dl>
+					</div>
+					<div class="col-md-4">
+						<dl class="dl-horizontal">
+							<dt>履约合同编号：</dt>
+							<dd class="J_detail_perfContractNum">{{$ctrl.detail.perfContractNum}}</dd>
+						</dl>
+					</div>
+				<!-- </div>
+				<div class="row"> -->
+					<div class="col-md-4">
+						<dl class="dl-horizontal">
+							<dt>合同日期：</dt>
+							<dd class="J_detail_contCreateTime">{{$ctrl.detail.contCreateTime}}</dd>
+						</dl>
+					</div>
+					<div class="col-md-4">
+						<dl class="dl-horizontal">
+							<dt>合同成交人：</dt>
+							<person-show
+                                person-name="$ctrl.detail.inputUserName"
+                                person-id="$ctrl.detail.inputUserId"></person-show>
+						</dl>
+					</div>
+					<!-- <div class="col-md-4">
+						<dl class="dl-horizontal">
+							<dt>合同所属人：</dt>
+							<dd class="J_detail_belonguserName">{{$ctrl.detail.belonguserName}}</dd>
+						</dl>
+					</div> -->
+				<!-- </div>
+				<div class="row"> -->
+					<div class="col-md-4">
+						<dl class="dl-horizontal">
+							<dt>房源编号：</dt>
+							<dd class="J_detail_housesCode"> <a ng-href="{{::$ctrl.houseLink}}" target="_blank">{{::$ctrl.detail.housesCode}}</a></dd>
+						</dl>
+					</div>
+					<div class="col-md-4">
+						<dl class="dl-horizontal">
+							<dt>客源编号：</dt>
+							<dd class="J_detail_customerCode"><a ng-href="{{::$ctrl.customerLink}}" target="_blank">{{::$ctrl.detail.clientId}}</a></dd>
+						</dl>
+					</div>
+					<div class="col-md-4">
+						<dl class="dl-horizontal">
+							<dt>合同状态：</dt>
+							<dd class="J_detail_contractStatus">{{$ctrl.detail.contractStatusValue}}</dd>
+						</dl>
+					</div>
+				<!-- </div>
+				<div class="row"> -->
+					<div class="col-md-4">
+						<dl class="dl-horizontal">
+							<dt>合同审核状态：</dt>
+							<dd class="J_detail_auditStatus">{{$ctrl.detail.auditStatusValue}}</dd>
+						</dl>
+					</div>
+					<div class="col-md-4">
+						<dl class="dl-horizontal">
+							<div class="col-md-4" ng-if="$ctrl.detail.rejectReason && $ctrl.detail.rejectReason!=''">
+								<dl class="dl-horizontal">
+									<dt class="text-danger">驳回原因：</dt>
+									<dd class="J_detail_rejectReason">{{$ctrl.detail.rejectReason}}</dd>
+								</dl>
+							</div>
+						</dl>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row mt10">
+		<div class="tabs-container">
+			<ul class="nav nav-tabs nav_tab_ath">
+				#if($shiro.hasPermission("SCM:SALES:DEAL_CONTRACT_INFORMATION_VIEW"))
+				<li class="active"><a data-toggle="tab" href="#tab-11">合同信息</a></li>
+				#end
+				#if($shiro.hasPermission("SCM:SALES:DEAL_CONTRACT_ENCLOSURE_SEE"))
+				<li class=""><a data-toggle="tab" href="#tab-12">附件管理</a></li>
+				#end
+				#if($shiro.hasPermission("SCM:SALES:DEAL_CONTRACT_ANCILLARY_CONTRACT_QUERY"))
+				<li class=""><a data-toggle="tab" href="#tab-13">附属合同</a></li>
+				#end
+				#if($shiro.hasPermission("SCM:SALES:DEAL_CONTRACT_AGREEMENT_QUERY"))
+				<li class=""><a data-toggle="tab" href="#tab-14">补充协议</a></li>
+				#end
+				#if($shiro.hasPermission("SCM:SALES:DEAL_CONTRACT_PROCESS_QUERY"))
+				<li class=""><a data-toggle="tab" href="#tab-15">审批流程</a></li>
+				#end
+				#if($shiro.hasPermission("SCM:SALES:DEAL_CONTRACT_PRINT_HISTORY_SEE"))
+				<li class=""><a data-toggle="tab" href="#tab-16">打印历史</a></li>			
+				#end
+				#if($shiro.hasPermission("SCM:SALES:DEAL_CONTRACT_DETAILED_QUERY"))
+				<li class=""  ng-click="$ctrl.costDetail()" ng-if="$ctrl.detail.contractStatus==2 || $ctrl.detail.contractStatus==4 || $ctrl.detail.contractStatus==5 || $ctrl.detail.contractStatus==6"><a data-toggle="tab" href="#tab-18">合同费用执行明细</a></li>				
+				#end
+				#if($shiro.hasPermission("SCM:SALES:DEAL_CONTRACT_OPERATION_QUERY"))
+				<li class=""><a data-toggle="tab" href="#tab-17">操作日志</a></li>
+				#end
+				#if($shiro.hasPermission("SCM:SALES:DEAL_CONTRACT_ACHIEVEMENT_QUERY"))
+				<li class=""><a data-toggle="tab" href="#tab-19">业绩详情</a></li>
+				#end
+			</ul>
+			<div class="tab-content" id="tab-content1">
+				#if($shiro.hasPermission("SCM:SALES:DEAL_CONTRACT_INFORMATION_VIEW"))
+				<div id="tab-11" class="tab-pane active" >
+					<div class="panel-body">
+						#parse("/sign/main/contract_details/contract-info.html")</div>
+				</div>
+				#end
+				#if($shiro.hasPermission("SCM:SALES:DEAL_CONTRACT_ENCLOSURE_SEE"))
+				<div id="tab-12" class="tab-pane">
+					<div class="panel-body">
+						#parse("/sign/main/draft_details/annex.html")</div>
+				</div>
+				#end
+				#if($shiro.hasPermission("SCM:SALES:DEAL_CONTRACT_ANCILLARY_CONTRACT_QUERY"))
+				<div id="tab-13" class="tab-pane">
+					<div class="panel-body">
+						#parse("/sign/main/draft_details/subsidiary.html")</div>
+				</div>
+				#end
+				#if($shiro.hasPermission("SCM:SALES:DEAL_CONTRACT_AGREEMENT_QUERY"))
+				<div id="tab-14" class="tab-pane">
+					<div class="panel-body">
+						#parse("/sign/main/draft_details/supplementary.html")</div>
+				</div>
+				#end
+				#if($shiro.hasPermission("SCM:SALES:DEAL_CONTRACT_PROCESS_QUERY"))
+				<div id="tab-15" class="tab-pane">
+					<div class="panel-body">
+						#parse("/sign/main/draft_details/approval.html")</div>
+				</div>
+				#end
+				#if($shiro.hasPermission("SCM:SALES:DEAL_CONTRACT_PRINT_HISTORY_SEE"))
+				<div id="tab-16" class="tab-pane">
+					<div class="panel-body">
+						#parse("/sign/main/draft_details/print-history.html")</div>
+				</div>
+				#end
+				#if($shiro.hasPermission("SCM:SALES:DEAL_CONTRACT_DETAILED_QUERY"))
+				<div id="tab-18" class="tab-pane" ng-if="$ctrl.detail.contractStatus==2 || $ctrl.detail.contractStatus==4 || $ctrl.detail.contractStatus==5 || $ctrl.detail.contractStatus==6">
+					<div class="panel-body">
+						<iframe width="100%" height="100%" id="iframeId" scrolling="auto" frameborder="0"></iframe>
+					</div>
+				</div>
+				#end
+				#if($shiro.hasPermission("SCM:SALES:DEAL_CONTRACT_OPERATION_QUERY"))
+				<div id="tab-17" class="tab-pane">
+					<div class="panel-body">
+						#parse("/sign/main/draft_details/operation-log.html")</div>
+				</div>
+				#end
+				#if($shiro.hasPermission("SCM:SALES:DEAL_CONTRACT_ACHIEVEMENT_QUERY"))
+				<div id="tab-19" class="tab-pane">
+					<div class="panel-body">
+						<iframe width="100%" height="100%" id="iframeIdyeji" scrolling="no" frameborder="0"></iframe>
+					</div>
+				</div>
+				#end
+			</div>
+		</div>
+	</div>
+</div>
+
+</div>
+
+<script
+	src="$link.contextPath/resources/script/sign/sign-common.module.js"></script>
+	<script src="$link.contextPath/resources/script/sign/component/sign-work-flow-user-layer.component.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/sign-choose-person.component.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/my-spy.directive.js"></script>	
+<script
+	src="$link.contextPath/resources/script/sign/main/draft_detail.module.js"></script>
+<script
+	src="$link.contextPath/resources/script/sign/main/contract_detail.js"></script>
+<script
+	src="$link.contextPath/resources/script/sign/main/details/operation-log.js"></script>
+	<script
+	src="$link.contextPath/resources/script/sign/main/details/print-history.js"></script>
+<script
+	src="$link.contextPath/resources/script/sign/main/details/annex.js"></script>
+<script
+	src="$link.contextPath/resources/script/sign/main/details/subsidiary.js"></script>
+<script type="text/javascript"
+		src="$link.contextPath/resources/script/sign/main/draft_detail_validate.js?v=1"></script>
+		<script
+src="$link.contextPath/resources/script/sign/main/linkage.js"></script>

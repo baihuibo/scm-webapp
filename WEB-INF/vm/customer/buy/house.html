@@ -1,0 +1,383 @@
+<div class="ibox-title">
+	<h5>住宅需求</h5>
+</div>
+<div class="ibox-content">
+#if ($!VO.customer.hasHouse==1)
+<!-- 住宅详情 -->
+<div class="row">
+	<div class="customer_info_content">
+		<div class="row ptb10">
+			<div class="font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>房源需求</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt id="J_pricerange_1" data-columns="minprice,maxprice|intervalInput||$!VO.customer.house.minPrice,$!VO.customer.house.maxPrice" class="J_edit_area">
+						<span class="text-danger">*</span>价格区间：
+					</dt>
+					<dd>#if ($!VO.customer.house.minPrice) $number.format("#0.00", $!VO.customer.house.minPrice) #end - #if ($!VO.customer.house.maxPrice) $number.format("#0.00", $!VO.customer.house.maxPrice) #end 万元</dd>
+					
+				</dl>
+			</div>
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt id="J_coveredarea_1" data-columns="minarea,maxarea|intervalInput||$!VO.customer.house.minArea,$!VO.customer.house.maxArea" class="J_edit_area">
+						<span class="text-danger">*</span>需求面积：
+					</dt>
+					<dd>#if ($!VO.customer.house.minArea) $number.format("#0.00", $!VO.customer.house.minArea) #end - #if ($!VO.customer.house.maxArea) $number.format("#0.00", $!VO.customer.house.maxArea) #end <span>平方米</span></dd>
+				</dl>
+			</div>
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt id="J_houseStructure_1" data-columns="bedroom1,bedroom2|intervalSelect|houseStructure|$!VO.customer.house.bedRoom1,$!VO.customer.house.bedRoom2" class="J_edit_area">
+						<span class="text-danger">*</span>户型：
+					</dt>
+					<dd>$!VO.customer.house.bedRoom1 或 $!VO.customer.house.bedRoom2 <span>室</span></dd>
+				</dl>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt id="J_orientation_1" data-columns="orientation|checkbox|orientation|$!VO.customer.house.headingIds.replace('%23%23', '、')" class="J_edit_area">朝向：</dt>
+					<dd>$!VO.customer.house.headingNames.replace('%23%23', '、')</dd>
+				</dl>
+			</div>
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt id="J_fitmentTypeId_1" data-columns="fitmentTypeId|select|decorationStatus|$!VO.customer.house.fitmentTypeId" class="J_edit_area">装修：</dt>
+					<dd>$!VO.customer.house.fitmentTypeName</dd>
+				</dl>
+			</div>
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt id="J_layoutStructure_1" data-columns="layoutStructure|select|layoutStructure|$!VO.customer.house.roomTypeId" class="J_edit_area">户型结构：</dt>
+					<dd>$!VO.customer.house.roomTypeName</dd>
+				</dl>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt id="J_floor_1" data-columns="minfloorrang,maxfloorrang|intervalInput||$!VO.customer.house.minFloorRang,$!VO.customer.house.maxFloorRang" class="J_edit_area">楼层范围：</dt>
+					<dd>#if ($!VO.customer.house.minFloorRang) $number.format("#0.00", $!VO.customer.house.minFloorRang) #end - #if ($!VO.customer.house.maxFloorRang) $number.format("#0.00", $!VO.customer.house.maxFloorRang) #end</dd>
+				</dl>
+			</div>
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt id="J_property_1" data-columns="property|select|houseown|$!VO.customer.house.equityTypeId" class="J_edit_area">产权：</dt>
+					<dd>$!VO.customer.house.equityTypeName</dd>
+				</dl>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt id="J_furniture_1" data-columns="furniture|checkbox|furniture|$!VO.customer.house.furnitureIds.replace('%23%23', ',')" class="J_edit_area">家具：</dt>
+					<dd>$!VO.customer.house.furnitureNames.replace('%23%23', '、')</dd>
+				</dl>
+			</div>
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt id="J_electric_1" data-columns="electric|checkbox|electric|$!VO.customer.house.electricIds.replace('%23%23', ',')" class="J_edit_area">家电：</dt>
+					<dd>$!VO.customer.house.electricNames.replace('%23%23', '、')</dd>
+				</dl>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="customer_info_content">
+		<div class="row ptb10">
+			<div class="font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>区域需求</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt id="J_editBuild" data-columns="$!VO.customer.house.buildingIds|$!VO.customer.house.buildingAllNames">需求楼盘：</dt>
+					<dd>$!VO.customer.house.buildingNames</dd>
+				</dl>
+			</div>
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt id="J_editBusiness" data-columns="$!VO.customer.house.businessIds|$!VO.customer.house.businessAllNames"><span class="text-danger">*</span>商圈：</dt>
+					<dd>$!VO.customer.house.businessNames</dd>
+				</dl>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="customer_info_content">
+		<div class="row ptb10">
+			<div class="font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>其他需求</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt id="J_loanType_1" data-columns="loanType|select|loanType|$!VO.customer.house.loanTypeId" class="J_edit_area">
+						<span class="text-danger">*</span>贷款：
+					</dt>
+					<dd>$!VO.customer.house.loanTypeName</dd>
+				</dl>
+			</div>
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt id="J_payments_1" data-columns="payments|input||$!VO.customer.house.downPayment" class="J_edit_area">首付：</dt>
+					<dd>$!VO.customer.house.downPayment 万元</dd> 
+				</dl>
+			</div>
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt id="J_urgency_1" data-columns="urgencyType|select|urgency|$!VO.customer.house.urgencyTypeId" class="J_edit_area">紧急度：</dt>
+					<dd>$!VO.customer.house.urgencyTypeName</dd>
+				</dl>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt id="J_houseQuantity_1" data-columns="houseQuantity|radio|houseQuantity|$!VO.customer.house.ownerHouseNumberTypeId" class="J_edit_area">几套房：</dt>
+					<dd>$!VO.customer.house.ownerHouseNumberTypeName</dd>
+				</dl>
+			</div>
+		</div>
+	</div>
+</div>
+#else
+<!-- 住宅需求 新增 by lilac start -->
+<div id='residence' class="row form1 form">
+	<form id="form1" name="form1"  class="form-horizontal" role="form">
+		<div class="row ptb10">
+			<div class="font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>房源需求</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>价格区间：</label>
+					<div class="col-sm-3">
+						<input type="number" class="form-control J_minPrice" name="minPrice" id="" required>
+					</div>
+					<div class="control-spacing">-</div>
+					<div class="col-sm-3">
+						<input type="number" class="form-control J_maxPrice" name="maxPrice" id="" required>
+					</div>
+					<label class="control-label">万元</label>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>需求面积：</label>
+					<div class="col-sm-3">
+						<input type="number" class="form-control J_minArea" name="minArea" id="" autocomplete="off">
+					</div>
+					<div class="control-spacing">-</div>
+					<div class="col-sm-3">
+						<input type="number" class="form-control J_maxArea" name="maxArea" id="" autocomplete="off">
+					</div>
+					<label class="control-label">平方米</label>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>户型：</label>
+					<div class="col-sm-3">
+						<select id="J_bedRoom1" name="bedRoom1" class="J_chosen form-control J_bedRoom1" data-placeholder="请选择">
+							<option value="">请选择</option>							
+						</select>
+					</div>
+					<div class="control-spacing">或</div>
+					<div class="col-sm-3">
+						<select id="J_bedRoom2" name="bedRoom2" class="J_chosen form-control J_bedRoom2" data-placeholder="请选择">
+							<option value="">请选择</option>							
+						</select>
+						</div>
+					<label class="control-label">室</label>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">朝向：</label>
+					<div class="col-sm-8 J_orientation"></div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">装修：</label>
+					<div class="col-sm-7">
+						<select name="fitmentTypeId" class="J_chosen J_fitmentTypeId form-control" data-placeholder="请选择">
+							<option value="">请选择</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">户型结构：</label>
+					<div class="col-sm-7">
+						<select id="J_layoutStructure" name="roomTypeId" class="J_chosen J_layoutStructure form-control" data-placeholder="请选择" >
+							<option value="">请选择</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">楼层范围：</label>
+					<div class="col-sm-3">	
+						<input type="number" class="form-control J_minFloorRang" name="minFloorRang" id="" autocomplete="off">					
+					</div>
+					<div class="control-spacing">-</div>
+					<div class="col-sm-3">	
+						<input type="number" class="form-control J_maxFloorRang" name="maxFloorRang" id="" autocomplete="off">					
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">产权：</label>
+					<div class="col-sm-7">
+						<select id="J_equityTypeId" name="equityTypeId" class="J_equityTypeId J_chosen form-control" data-placeholder="请选择">
+							<option value="">请选择</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">家具：</label>
+					<div id="J_furniture" class="col-sm-9 J_furniture"></div>
+				</div>
+			</div>
+			<div class="col-md-5">
+				<div class="form-group">
+					<label class="col-sm-2 control-label">家电：</label>
+					<div id="J_electric" class="col-sm-10 J_electric"></div>
+				</div>
+			</div>
+		</div>
+		<div class="row ptb10">
+			<div class="font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>区域需求</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-md-1 control-label">
+						需求楼盘:
+					</label>
+					<div class="col-md-10">
+						<a onclick="addfloor('residence')" class="btn-green btn-bitbucket m-t-sm float-right"><i class="glyphicon glyphicon-plus"></i></a>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 m-b-sm ">
+				<label class="col-md-1 control-label"></label>
+				<div class="col-md-10">
+					<div class="bootstrap-table table-list">
+						<div class="fixed-table-container">
+							<table id="dataTableFloor" class="table table-hover  table-striped bor_b_none">
+								<thead>
+									<tr>
+										<th data-field="id">楼盘</th>
+										<th data-field="opt">操作</th>
+									</tr>
+								</thead>
+								<tbody></tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-md-1 control-label">
+						<span class="text-danger">*</span>商圈:
+					</label>
+					<div class="col-md-10">
+						<a onclick="addarea('residence')" class="btn-green btn-bitbucket m-t-sm float-right">
+						<i class="glyphicon glyphicon-plus"></i></a>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 m-b-sm">
+				<label class="col-md-1 control-label"></label>
+				<div class="col-md-10">
+					<div class="bootstrap-table table-list">
+						<div class="fixed-table-container">
+							<table id="dataTableArea" class="table table-hover  table-striped bor_b_none">
+								<thead>
+									<tr>
+										<th data-field="id">商圈</th>
+										<th data-field="price">所属行政区</th>
+										<th data-field="opt">操作</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row ptb10">
+			<div class="font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>其他需求</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span class="text-danger">*</span>贷款：</label>
+					<div class="col-sm-7">
+						<select name="loanTypeId" class="form-control m-b J_loanTypeId" data-placeholder="请选择" required> 
+							<option value="">请选择</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label">首付：</label>
+					<div class="col-sm-5">
+						<input type="text" class="form-control" name="downPayment" id="downPayment" autocomplete="off">
+					</div>
+					<label class="control-label">万元</label>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label">紧急度：</label>
+					<div class="col-sm-7">
+						<select id="J_urgencyTypeId" name="urgencyTypeId" class="form-control m-b J_urgencyTypeId" data-placeholder="请选择">
+							<option value="">请选择</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label">几套房：</label>
+					<div class="col-sm-8 J_houseQuantity" id="J_houseQuantity">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-12 text-cen">
+			<div class="form-group">
+				<button id="J_residence_btn" type="button" class="btn btn-success pr5">保 存</button>
+				<!-- <div class="layui-layer-btn"><a class="layui-layer-btn0" id="J_bungalow_btn">保存</a></div> -->
+			</div>
+		</div>
+	</form>
+</div><!-- 住宅需求 新增 by lilac end -->
+#end
+</div>

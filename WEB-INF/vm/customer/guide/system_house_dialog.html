@@ -1,0 +1,150 @@
+<div class="ibox-content">
+	<form class="form-horizontal">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">房源编号：</label>
+					<div class="col-sm-7">	
+						<input type="text" class="form-control" id="" autocomplete="off">					
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">价格：</label>
+					<div class="col-sm-3">	
+						<input type="text" class="form-control" id="" autocomplete="off">					
+					</div>
+					<div class="control-spacing">-</div>
+					<div class="col-sm-3">	
+						<input type="text" class="form-control" id="" autocomplete="off">					
+					</div>
+					<label class="control-label">万/元</label>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">面积：</label>
+					<div class="col-sm-3">	
+						<input type="text" class="form-control" id="" autocomplete="off">					
+					</div>
+					<div class="control-spacing">-</div>
+					<div class="col-sm-3">	
+						<input type="text" class="form-control" id="" autocomplete="off">					
+					</div>
+					<label class="control-label">㎡</label>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">户型：</label>
+					<div class="col-sm-3">	
+						<select id="infotype" name="infoType" class="J_chosen form-control" data-placeholder="请选择">
+								<option>均可</option>
+								<option value="0">A</option>
+								<option value="1">B</option>
+								<option value="2">C</option>
+						</select>					
+					</div>
+					<div class="control-spacing">-</div>
+					<div class="col-sm-3">	
+						<select id="infotype" name="infoType" class="J_chosen form-control" data-placeholder="请选择">
+								<option>均可</option>
+								<option value="0">A</option>
+								<option value="1">B</option>
+								<option value="2">C</option>
+						</select>				
+					</div>
+					<label class="control-label">室</label>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">楼层：</label>
+					<div class="col-sm-3">	
+						<input type="text" class="form-control" id="" autocomplete="off">					
+					</div>
+					<div class="control-spacing">-</div>
+					<div class="col-sm-3">	
+						<input type="text" class="form-control" id="" autocomplete="off">					
+					</div>
+					<label class="control-label">层</label>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">装修情况：</label>
+					<div class="col-sm-7">	
+						<select id="infotype" name="infoType" class="J_chosen form-control" data-placeholder="请选择">
+							<option>均可</option>
+							<option value="0">A</option>
+							<option value="1">B</option>
+							<option value="2">C</option>
+						</select>		
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">楼盘：</label>
+					<div class="col-sm-7">
+                    	<div class="input-group">
+                        	<input type="text" placeholder="" class="form-control"> 
+                              <div class="input-group-btn">
+								<button type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown">
+									<span class="glyphicon glyphicon-search search-caret"></span>
+								</button>
+								<ul class="dropdown-menu dropdown-menu-right" role="menu">
+								</ul>
+							</div>
+                   		</div>
+                   </div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">商圈：</label>
+					<div class="col-sm-7">
+                    	<div class="input-group">
+                        	<input type="text" placeholder="" class="form-control"> 
+                              <div class="input-group-btn">
+								<button type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown">
+									<span class="glyphicon glyphicon-search search-caret"></span>
+								</button>
+								<ul class="dropdown-menu dropdown-menu-right" role="menu">
+								</ul>
+							</div>
+                   		</div>
+                   </div>
+				</div>
+			</div>
+			<div class="col-md-12 text-cen">
+				<div class="form-group">
+					<button id="J_search" type="button" class="btn btn-success pr5">查 询</button>
+					<button id="J_reset" type="reset" class="btn btn-default">重 置</button>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<table id="J_add_dataTable" class="table table-hover  table-striped"
+					data-query-params="queryParams" data-mobile-responsive="true"
+					data-pagination="true" data-icon-size="outline"
+					data-striped="true" data-search="false">
+					<thead>
+						<tr>
+							<th data-field="state"><input type="checkbox" id="J_selectAll"/></th>
+							<th data-field="number">房源编号</th>
+							<th data-field="roperties">商圈</th>
+							<th data-field="layout">户型</th>
+							<th data-field="area">面积</th>
+							<th data-field="floor">楼层</th>
+							<th data-field="heading">朝向</th>
+							<th data-field="rice">价格</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+	</form>
+</div>
+
+<script src="$link.contextPath/resources/js/add_house.js"></script>

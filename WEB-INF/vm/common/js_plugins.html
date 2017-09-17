@@ -1,0 +1,38 @@
+<!-- js插件 -->
+#foreach($p in $plugins)
+#if($p=="jatools")
+<script type="text/javascript" src="$link.contextPath/resources/jatools/lic.js"></script>
+<script type="text/javascript" src="$link.contextPath/resources/jatools/jcp.js"></script>
+#elseif($p=="table")
+<script type="text/javascript" src="$basePath/resources/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+<script type="text/javascript" src="$basePath/resources/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
+<script type="text/javascript" src="$basePath/resources/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+#elseif($p=="chosen")
+<script type="text/javascript" src="$basePath/resources/js/plugins/chosen/chosen.jquery.js"></script>
+#elseif($p=="laydate")
+<script type="text/javascript" src="$basePath/resources/js/plugins/layer2.1/laydate/laydate.js"></script>
+#elseif($p=="prettyfile")
+<script type="text/javascript" src="$basePath/resources/js/plugins/prettyfile/bootstrap-prettyfile.js"></script>
+#elseif($p=="file_upload")
+<link rel="stylesheet" type="text/css" href="$basePath/resources/js/file_upload/css/zyUpload.css"><!-- 引用控制层插件样式 -->
+<script type="text/javascript" src="$basePath/resources/js/file_upload/js/zyFile.js"></script><!-- 引用核心层插件 -->
+<script type="text/javascript" src="$basePath/resources/js/file_upload/js/zyUpload.js"></script><!-- 引用控制层插件 -->
+<script type="text/javascript" src="$basePath/resources/js/file_upload/js/jqueryrotate.js"></script><!-- 图片旋转插件 -->
+#elseif($p=="treeview")
+<script type="text/javascript" src="$basePath/resources/js/plugins/treeview/bootstrap-treeview.js"></script>
+#elseif($p=="ztree")
+<script type="text/javascript" src="$basePath/resources/js/plugins/ztree/jquery.ztree.core.js"></script>
+<script type="text/javascript" src="$basePath/resources/js/plugins/ztree/jquery.ztree.excheck.js"></script>
+#elseif($p=="validator")
+<script type="text/javascript" src="$basePath/resources/js/plugins/validate/jquery.validate.min.js"></script>
+<script type="text/javascript" src="$basePath/resources/js/plugins/validate/messages_zh.min.js"></script>
+#elseif($p=="autoSearch")
+<script type="text/javascript" src="$basePath/resources/js/plugins/suggest/bootstrap-suggest.min.js"></script>
+#end #end
+<!-- 公共js -->
+<script type="text/javascript" src="$basePath/resources/js/plugins/layer/layer.js"></script>
+<script type="text/javascript" src="$link.contextPath/resources/js/utils.js"></script>
+<script type="text/javascript" src="$basePath/resources/js/content.js"></script>
+<script type="text/javascript" src="$link.contextPath/resources/js/basic.js"></script>
+<script type="text/javascript" src="$link.contextPath/resources/js/sales.js"></script>
+<script type="text/javascript" src="$link.contextPath/resources/js/permission.js"></script>

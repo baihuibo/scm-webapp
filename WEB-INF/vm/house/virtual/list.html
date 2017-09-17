@@ -1,0 +1,321 @@
+#set($plugins = ["table","chosen","laydate","ztree","autoSearch"])
+<!-- 查询条件 begin -->
+<div class="ibox">
+    <div class="ibox-title">
+        <h5>虚拟房源管理</h5>
+        <div class="ibox-tools">
+            <a class="collapse-link ui-sortable"><i class="fa fa-chevron-up"></i>
+            </a>
+        </div>
+    </div>
+    <div class="ibox-content">
+        <div class="row">
+        #if($shiro.hasPermission("SCM:HOUSE:VIRTUAL:PROCESSING"))
+			<input type="hidden" value="1" id="temp_process"></input>
+		#end
+		#if($shiro.hasPermission("SCM:HOUSE:VIRTUAL:ASSOCIATED"))
+			<input type="hidden" value="1" id="temp_associated"></input>
+		#end
+		#if($shiro.hasPermission("SCM:HOUSE:VIRTUAL:REJECT"))
+			<input type="hidden" value="1" id="temp_reject"></input>
+		#end
+		#if($shiro.hasPermission("SCM:HOUSE:VIRTUAL:CANCELASSOCIATION"))
+			<input type="hidden" value="1" id="temp_cancelassociation"></input>
+		#end
+		#if($shiro.hasPermission("SCM:HOUSE:VIRTUAL:REASSOCIATED"))
+			<input type="hidden" value="1" id="temp_reassociation"></input>
+		#end
+            <form class="form-horizontal" role="form" id="J_lease_form">
+            	<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">房源编号：</label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" name="housesid" id="" autocomplete="off">
+						</div>
+					</div>
+				</div>
+                <div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">区域：</label>
+						<div class="col-sm-8">	
+							<!-- <input type="text" class="form-control" name="areaName" id="J_areaName" autocomplete="off"> -->					
+							 <select name="areaId" id="areaId" class="J_chosen form-control" data-placeholder="请选择">
+								<option value="">全部</option>
+							 </select>
+						</div>
+					</div>
+				</div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">楼盘名：</label>
+                        <div class="col-sm-8">
+                            <input id="conmmunityname" name="conmmunityname" class="form-control" placeholder="">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">业务类型：</label>
+                        <div class="col-sm-8">
+                            <select id="housekind" name="housekind" class="J_chosen form-control"
+                                    data-placeholder="请选择">
+                                <option value="">全部</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">录入人：</label>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <input type="text" class="form-control" class="inputperson" id="userid">
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown">
+                                        <span class="glyphicon glyphicon-search search-caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">录入日期：</label>
+                        <div class="col-sm-8" layout="row">
+                            <div flex>
+                                <input id="bookintimestart" name="bookintimestart" class="form-control"
+                                       onclick="laydate({ istime: false,max : getMaxDate('#bookintimeend'),format: 'YYYY-MM-DD'})">
+                            </div>
+                            <div class="split">-</div>
+                            <div flex>
+                                <input id="bookintimeend" name="bookintimeend" class="form-control"
+                                       onclick="laydate({istime: false, min: getMinDate('#bookintimestart' , 'YYYY-MM-DD'), format: 'YYYY-MM-DD'})">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">录入部门：</label>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <input id="registershop" type="hidden" class="form-control" value=""/>
+                                <input id="J_inputdeptName" type="text"
+                                       class="form-control radius-3" autocomplete="off" readonly/>
+                                <div class="input-group-btn">
+                                    <button id="J_inputdeptSelect" data-toggle="dropdown"
+                                            class="btn dropdown-toggle btn-dept" type="button"><span
+                                            class="caret"></span></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">所属部门：</label>
+                        <div class="col-sm-8">
+                            <input id="J_belongdeptLevel" type="hidden" class="form-control" value=""/>
+                            <div class="input-group">
+                                <input id="J_belongdeptName" type="text" class="form-control radius-3"
+                                       autocomplete="off" readonly/>
+                                <div class="input-group-btn">
+                                    <button id="J_belongdeptSelect" data-toggle="dropdown"
+                                            class="btn dropdown-toggle btn-dept" type="button"><span
+                                            class="caret"></span></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">虚拟房源状态：</label>
+                        <div class="col-sm-8">
+                            <select id="virtualstatus" name="virtualstatus" class="J_chosen form-control"
+                                    data-placeholder="请选择">
+                                <option value="">全部</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">地址缺失类型：</label>
+                        <div class="col-sm-8">
+                            <select id="housebustype" name="housebustype" class="J_chosen form-control"
+                                    data-placeholder="请选择">
+                                <option value="">全部</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">规划用途：</label>
+                        <div class="col-sm-11" id="J_planningPurpose">
+                            <!-- <div class="checkbox checkbox-primary checkbox-inline">
+                                <input type="checkbox" id="guihuayongtu">
+                                <label for="guihuayongtu"> 全选</label>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 text-center">
+                    <div class="form-group">
+                        <button id="J_search" type="button" class="btn btn-success btn_size">查 询</button>
+                        <button id="J_reset_lease" type="reset" class="btn btn-default">重 置</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- 查询条件end -->
+
+<!-- 列表  begin -->
+<div class="ibox float-e-margins">
+    <div class="ibox-title"><h5>虚拟房源列表</h5></div>
+    <div class="ibox-content">
+        <div class="row row-lg">
+            <div class="col-sm-12">
+                <!-- Example Pagination -->
+                <div class="example-wrap ptb10">
+                    <p></p>
+                    <table id="J_dataTable" class="table table-hover  table-striped" data-query-params="queryParams"
+                           data-mobile-responsive="true" data-pagination="true" data-icon-size="outline"
+                           data-striped="true" data-search="false">
+                           <thead>
+							<tr>
+								<th data-field="housesid">房源编号</th>
+								<th data-field="virtualstatus">虚拟房源状态</th>
+								<th data-field="housekindstr">业务类型</th>
+								<th data-field="guihuayongtu">规划用途</th>
+								<th data-field="areaname">区域</th>
+								<th data-field="conmmunityname">楼盘名</th>
+								<th data-field="louhao">栋座</th>
+								<th data-field="danyuan">单元</th>
+								<th data-field="loucen">楼层</th>
+								<th data-field="menpaihao">门牌号</th>
+								<th data-field="belongshopname">所属部门</th>
+								<th data-field="deptname">录入部门</th>
+								<th data-field="username">录入人</th>
+								<th data-field="bookintime">录入时间</th>
+								<th data-field="opt">操作</th>
+							</tr>
+						</thead>
+                    </table>
+                </div>
+                <!-- End Example Pagination -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="J_relevance_house" class="ibox-content" style="display: none;">
+    <form id="form1" name="form1" class="form-horizontal" role="form">
+		<div class="row">
+			<div class="pl10 font-bold font-blue info-tit">选择楼盘信息</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-2 control-label"><span
+						class="text-danger">*</span>楼盘: </label>
+					<div class="col-sm-10">
+						<div class="input-group">
+							<input type="text" class="form-control" id="J_build" autocomplete="off">
+							<div class="input-group-btn">
+								<button type="button" class="btn btn-white dropdown-toggle" data-toggle="">
+									<span class="glyphicon glyphicon-search search-caret"></span>
+								</button>
+								<ul class="dropdown-menu dropdown-menu-right" role="menu">
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>栋座:</label>
+					<div class="col-sm-8">
+						<select id="J_building" name="buildingid"
+							class="J_chosen form-control" data-placeholder="请选择">
+							<!-- <option value="">请选择</option> -->
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-4 control-label">单元:</label>
+					<div class="col-sm-8">
+						<select id="unit" name="buildingunitid"
+							class="J_chosen form-control" data-placeholder="请选择">
+							<!-- <option value="">请选择</option> -->
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>楼层:</label>
+					<div class="col-sm-8">
+						<select id="floor" name="buildingfloorid"
+							class="J_chosen form-control" data-placeholder="请选择">
+							<!-- <option value="">请选择</option> -->
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>门牌号:</label>
+					<div class="col-sm-8">
+						<select id="houseNumber" name="buildinghouseid"
+							class="J_chosen form-control" data-placeholder="请选择">
+							<!-- <option value="">请选择</option> -->
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+<div id="J_reject" class="ibox-content" style="display: none;">
+    <form id="J_reject_form" class="form-horizontal" role="form">
+        <div class="form-group">
+            <label class="col-md-3 control-label">
+                <span class="text-danger">*</span>
+                驳回原因：
+            </label>
+            <div class="col-md-8">
+                <textarea rows="3" id="rejectReason" name="rejectReason" cols="100%" maxlength="500"
+                          class="form-control"></textarea>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- 列表  end -->
+<script type="text/javascript" src="$link.contextPath/resources/js/department.js"></script>
+<script type='text/javascript' src="$link.contextPath/resources/script/house/virtual/list.js"></script>
+
+
+
+
+

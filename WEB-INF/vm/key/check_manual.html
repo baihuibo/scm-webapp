@@ -1,0 +1,101 @@
+#set($plugins = ["table","chosen","laydate","validator"])
+
+	<div id="J_check_manual" class="ibox-content" style="margin:20px 10px 0 10px; display:none;">
+		<!-- 基本信息 begin -->
+		<div class="check">
+		    <form id="J_form_add" class="form-horizontal">
+		    	<div class="row">
+					<div class="col-md-4 check_line">
+						<div class="form-group">
+							<label class="col-sm-5 control-label">钥匙所在店：</label>
+							<div id="J_phshopname" class="col-sm-6 pt6"></div>
+							<input type='hidden' name="shopid" id="shopsid">
+						</div>
+					</div>
+					<div class="col-md-4 check_line">
+						<div class="form-group">
+							<label class="col-sm-5 control-label">钥匙盘点人：</label>
+							<div id="J_checkusername" class="col-sm-6 pt6"></div>
+						</div>
+					</div>
+					<div class="col-md-4 check_line">
+						<div class="form-group">
+							<label class="col-sm-5 control-label">钥匙在管数量：</label>
+							<div id="J_keynum" class="col-sm-6 pt6"></div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4 check_line">
+						<div class="form-group">
+							<label class="col-sm-5 control-label">钥匙在店数量：</label>
+							<div class="col-sm-6">
+								<input type="text" id="J_inshopnum" name="inshopnum" class="form-control w100" />
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4 check_line">
+						<div class="form-group">
+							<label class="col-sm-5 control-label">钥匙借出数量：</label>
+							<div class="col-sm-6">
+								<input type="text" id="J_lendnum" name="lendnum" class="form-control w100" />
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4 check_line">
+						<div class="form-group">
+							<label class="col-sm-5 control-label">待转店确认数量：</label>
+							<div class="col-sm-6">
+								<input type="text" id="J_waitchangeshopnum" name="waitchangeshopnum" class="form-control w100" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12 check_line">
+						<div class="form-group col-md-10">
+							<label class="col-sm-2 control-label">备注：</label>
+							<div class="col-sm-9">
+								<textarea type="text" id="J_memo"  maxlength="500" name="memo" class="form-control" ></textarea>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- <div class="row">
+					<div class="col-md-12 check_line">
+						<div class="form-group" style="text-align:center">
+							<button type="button" class="layui-layer-btn0">确 定</button>
+							<button type="button" class="layui-layer-btn1">取 消</button>
+						</div>
+					</div>
+				</div> -->
+				<div class="row">
+					<div class="col-md-12 check_line">
+						<div class="form-group check_title">
+							在管钥匙信息
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<!-- 基本信息 end -->
+		
+		<!-- 在管钥匙信息 begin -->
+		<table id="J_detail_dataTable" class="table table-hover table-striped">
+  			<thead>
+				<tr>
+					<th data-field="id">房源编号</th>
+					<th data-field="name">钥匙编号</th>
+					<th data-field="price">业务类型</th>
+					<th data-field="opt">钥匙数量</th>
+					<th data-field="id">借钥匙人<br/>借钥匙人电话</th>
+					<th data-field="name">借用时间</th>
+					<th data-field="price">钥匙状态</th>
+					<th data-field="opt">备注</th>
+				</tr>
+			</thead>
+  		</table>
+  		<!-- 在管钥匙信息 end -->
+	</div>
+
+

@@ -1,0 +1,36 @@
+<div class="ibox float-e-margins">
+	<div class="ibox-title"><h5>操作日志</h5></div>
+	<div class="ibox-content">
+		<div class="row row-lg">
+			<div class="col-sm-12">
+				<!-- Example Pagination -->
+				<div class="example-wrap ptb10">
+					<p></p>
+					<table id="J_dataTable_operlog" class="table table-hover table-striped table-bordered" data-query-params="queryParams" data-mobile-responsive="true" data-pagination="true" data-icon-size="outline" data-striped="true" data-search="false">
+						<thead>
+							<tr>
+								<th data-field="number">序号</th>
+								<th data-field="operdept">操作部门</th>
+								<th data-field="operperson">操作人</th>
+								<th data-field="operdate">操作时间</th>
+								<th data-field="operstatus">操作类型</th>
+								<th data-field="opercontent">操作内容</th>
+							</tr>
+						</thead>
+						<tbody>
+						<tr ng-repeat="item in $ctrl.operationLogList">
+							<td>{{$index + 1}}</td>
+							<td>{{item.deptname}}</td>
+							<td>{{item.uname}}</td>
+							<td>{{item.crtDttm}}</td>
+							<td>{{item.type}}</td>
+							<td>{{item.operationContent}}</td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+				<!-- End Example Pagination -->
+			</div>
+		</div>
+	</div>
+</div>

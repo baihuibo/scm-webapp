@@ -1,0 +1,88 @@
+<div class="ibox-content">
+	<div class="row row-lg">
+		<div class="col-sm-12">
+			 <div class="example-wrap ptb10">
+	            <div class="row m-b-sm">
+	            	#if($shiro.hasPermission("SCM:SALES:DEAL_SIGN_CONTRACT_AGREEMENT_ADD"))
+		            <div class="col-md-12">
+		            	<a class="btn btn-success btn-sm pull-right" target="_blank" ng-click="$ctrl.agreement()" id="agreement" ng-if="!$ctrl.docbizkey && !$ctrl.other">
+		                <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+		               	 添加补充协议	
+		            	</a>
+		            </div>
+		            #end
+	            </div>
+				<table id="J_dataTable" class="table table-hover table-striped table-bordered">
+					 <thead>
+						<tr>
+							<th class="col-md-1">序号</th>
+							<th class="col-md-1">合同编号</th>
+							<th class="col-md-4">类型</th>
+							<th class="col-md-1">协议编号</th>
+							<th class="col-md-2">录入部门</th>
+							<th class="col-md-1">录入人</th>
+							<th class="col-md-1">状态</th>
+							<th class="col-md-1">最新状态时间</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="item in $ctrl.supplAgrtList">
+			                <td>{{$index + 1}}</td>
+			                <td>{{item.contract_code}}</td>
+			                <td>{{item.agrt_type}}</td>
+			                <td>
+			                    <a href="/sales/sign/agreement/agreement-detail.html?supplAgrtId={{item.suppl_agrt_id}}"
+			                       target="_blank">{{item.sign_number}}</a>
+			                </td>
+			                <td>{{item.dept_name}}</td>
+			                <td>
+			                    <person-show person-id="item.create_by_id" person-name="item.create_by_name">
+			                    </person-show>
+			                </td>
+			                <td>{{item.status}}</td>
+			                <td>{{item.update_time}}</td>
+			            </tr>
+					</tbody>
+				</table>
+			</div> 
+		</div>
+	</div>	
+</div>
+<!-- 补充协议 -->
+<div class="ibox-content" id="addBucXy" style="display:none;">
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="form-group">
+				<label class="col-sm-2 control-label" style="padding:10px 0 0 10px;"><span class="text-danger">*</span>分类：</label>
+				<div class="col-sm-3">
+					<div class="radio radio-primary radio-inline ptb10">
+						<input type="radio" disabled="disabled" checked="true">
+						<label>买卖补充协议</label>
+					</div>
+					<div class="radio radio-primary radio-inline ptb10">
+						<input type="radio" disabled="disabled">
+						<label>租赁补充协议</label>
+					</div>
+					<div class="radio radio-primary radio-inline ptb10">
+						<input type="radio" disabled="disabled" id="businessShenm">
+						<label>买卖退单声明</label>
+					</div>
+					<div class="radio radio-primary radio-inline ptb10">
+						<input type="radio" disabled="disabled" id="leaseShenm">
+						<label>租赁退单声明</label>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-9">
+			<label class="col-sm-3 control-label" style="padding:10px 0 0 10px;"><span class="text-danger">*</span>适用场景：</label>
+			<div class="col-sm-8">
+				<select name="paymentType" id="paymentType" class="form-control" data-placeholder="请选择">
+					<option value="">请选择</option>
+					<option value="1">全款</option>
+					<option value="2">贷款</option>
+				</select>
+			</div>
+		</div>
+	</div>
+</div>

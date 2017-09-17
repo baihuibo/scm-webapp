@@ -1,0 +1,41 @@
+#set($plugins = ["table"])
+<div class="ibox">
+	<div class="bs-callout bs-callout-warning">
+		<h4>收据详情</h4>
+	</div>
+		<div class="row mt10">
+			<div class="tabs-container">
+				<ul class="nav nav-tabs nav_tab_ath m-b-sm">
+					<li class="active"><a data-toggle="tab" href="#tab-11">基本信息</a></li>
+					<!--<li class=""><a data-toggle="tab" href="#tab-12">审批历史</a></li>-->
+					<li class=""><a data-toggle="tab" href="#tab-13">打印历史</a></li>
+					<li class=""><a data-toggle="tab" href="#tab-14">收据换回</a></li>
+				</ul>
+				<div class="ibox-content">
+				<div class="tab-content" id="tab-content1">
+					<div id="tab-11" class="tab-pane active">
+						<div class="panel-body">
+							#parse("/finance/receipt/detail/basic_info.html")
+						</div>
+					</div>
+					<div id="tab-12" class="tab-pane">
+						<div class="panel-body">
+							#parse("/finance/receipt/detail/approve_past.html")
+						</div>
+					</div>
+					<div id="tab-13" class="tab-pane">
+						<div class="panel-body">
+							#parse("/finance/receipt/detail/print_past.html")
+						</div>
+					</div>
+					<div id="tab-14" class="tab-pane">
+						<div class="panel-body">
+							#parse("/finance/receipt/detail/receipt_regain.html")
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="$link.contextPath/resources/script/finance/receipt/detail.js"></script>

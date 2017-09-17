@@ -1,0 +1,168 @@
+<!-- 钥匙编号的修改 begin -->
+<div id="editkey_layer" class="ibox-content" style="display: none">
+	<form id="editkey_form" name="editkey_form" class="form-horizontal">
+		<div class="form-group">
+			<label class="col-sm-3 control-label"><span class="text-danger">*</span>钥匙编号：</label>
+			<div class="col-sm-8">
+				<input type="text" class="form-control" id="up_keycode" name="keycode"
+					placeholder="请输入钥匙编号" required>
+			</div>
+		</div>
+	</form>
+</div>
+<!-- 钥匙编号的修改 end -->
+<!-- 借钥匙 begin -->
+<div id="borrowkey_layer" class="ibox-content" style="display: none">
+	<form id="borrowkey_form" name="borrowkey_form" class="form-horizontal" autocomplete="on">
+		<div class="form-group">			
+			<label class="col-sm-3 control-label">钥匙存放店：</label>	
+			<p class="col-sm-3 form-control-static" id="borrow_phshopname"></p>				
+			<label class="col-sm-2 control-label">钥匙编号：</label>	
+			<p class="col-sm-3 form-control-static" id="borrow_keycode"></p>	
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label"><span class="text-danger">*</span>预计还钥匙时间：</label>					
+			<div class="col-sm-3">
+				<input id="planbackdate" class="form-control" placeholder="预计还钥匙时间">
+			</div>							
+			<label class="col-sm-2 control-label"><span class="text-danger">*</span>借用人：</label>			
+			<div class="col-sm-3">	
+				<div class="input-group">
+				<input type="text" class="form-control" class="lendusername" id="J_lendusername">
+				<div class="input-group-btn">
+					<button type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown">
+						<span class="glyphicon glyphicon-search search-caret"></span>
+					</button>
+					<ul class="dropdown-menu dropdown-menu-right" role="menu">
+					</ul>
+				</div>
+			</div>						
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">备注：</label>	
+			<div class="col-sm-8">					
+				<textarea class="form-control" placeholder="请输入备注信息"  maxlength="200" id="borrow_memo"></textarea>		
+			</div>
+		</div>
+	</form>
+</div>
+<!-- 借钥匙 end -->
+<!-- 钥匙转店 begin -->
+<div id="turnkey_layer" class="ibox-content" style="display: none">
+	<form id="turnkey_form" name="turnkey_form" class="form-horizontal">
+		<div class="form-group">			
+			<label class="col-sm-3 control-label">房源编号：</label>	
+			<p class="col-sm-3 form-control-static">
+			<a target="_blank" href="" id="turn_houseid"></a>
+			</p>				
+			<label class="col-sm-3 control-label">钥匙编号：</label>	
+			<p class="col-sm-3 form-control-static" id="turn_keycode"></p>	
+		</div>
+		<div class="form-group">						
+			<label class="col-sm-3 control-label">钥匙领取人：</label>			
+			<div class="col-sm-3">	
+				<div class="input-group">
+				<input type="text" class="form-control" id="J_takekeyuser">
+				<div class="input-group-btn">
+					<button type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown">
+						<span class="glyphicon glyphicon-search search-caret"></span>
+					</button>
+					<ul class="dropdown-menu dropdown-menu-right" role="menu">
+					</ul>
+				</div>
+			</div>						
+			</div>
+			<label class="col-sm-3 control-label">钥匙转存店：</label>			
+			<div class="col-sm-3">	
+				<div class="input-group">
+				<input type="text" class="form-control" id="J_shop">
+				<div class="input-group-btn">
+					<button type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown">
+						<span class="glyphicon glyphicon-search search-caret"></span>
+					</button>
+					<ul class="dropdown-menu dropdown-menu-right" role="menu">
+					</ul>
+				</div>
+			</div>						
+			</div>
+		</div>
+	</form>
+</div>
+<!-- 钥匙转店 end -->
+<!-- 退钥匙 begin -->
+<div id="retreatkey_layer" class="ibox-content" style="display: none">
+	<form id="retreatkey_form" name="retreatkey_form" class="form-horizontal">
+		<div class="form-group">			
+			<label class="col-sm-3 control-label">房源编号：</label>	
+			<p class="col-sm-3 form-control-static" id="retreat_houseid"></p>				
+			<label class="col-sm-3 control-label">钥匙编号：</label>	
+			<p class="col-sm-3 form-control-static" id="retreat_keycode"></p>	
+		</div>
+		<div class="form-group">						
+			<label class="col-sm-3 control-label">领取人类型：</label>
+			<div id="J_receiveType" class="col-sm-9"></div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label" id="J_retreatuser_lable">领取人：</label>	
+			<div class="col-sm-3">
+				<div class="input-group" id="J_auto" style="display:none">
+					<input type="text" class="form-control" id="J_retreatkeyuser">
+					<div class="input-group-btn" id="J_retreatuser_laber">
+						<button type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown">
+							<span class="glyphicon glyphicon-search search-caret"></span>
+						</button>
+						<ul class="dropdown-menu dropdown-menu-right" role="menu">
+						</ul>
+					</div>
+					
+				</div>	
+				<div class="input-group" id="J_auto_none" style="display:none">
+					<input type="text" class="form-control" id="J_retreatkeyuserc">
+					
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+<!-- 退钥匙 end -->
+<!-- 还钥匙 begin -->
+<div id="backkey_layer" class="ibox-content" style="display: none">
+	<form id="backkey_form" name="backkey_form" class="form-horizontal">
+		<div class="form-group">			
+			<label class="col-sm-3 control-label">房源编号：</label>	
+			<p class="col-sm-3 form-control-static" id="back_houseid"></p>				
+			<label class="col-sm-3 control-label">钥匙编号：</label>	
+			<p class="col-sm-3 form-control-static" id="back_keycode"></p>	
+		</div>
+		<div class="form-group">			
+			<label class="col-sm-3 control-label">借用人：</label>	
+			<p class="col-sm-3 form-control-static" id="back_lendusername"></p>				
+			<label class="col-sm-3 control-label">所在组店：</label>	
+			<p class="col-sm-3 form-control-static" id="back_shop"></p>	
+		</div>
+	</form>
+</div>
+<!-- 还钥匙 end -->
+<!-- 撤销钥匙 begin -->
+<div id="revokekey_layer" class="ibox-content" style="display: none">
+	<form id="revokekey_form" name="revokekey_form" class="form-horizontal">
+		<div class="form-group">			
+			<label class="col-sm-3 control-label">房源编号：</label>	
+			<p class="col-sm-3 form-control-static">
+				<a id="revoke_houseid" target="_blank"></a>
+			</p>
+			<label class="col-sm-3 control-label">领钥匙人：</label>	
+			<p class="col-sm-3 form-control-static" id="revoke_lendusername"></p>					
+				
+		</div>
+		<div class="form-group">			
+			<label class="col-sm-3 control-label">钥匙编号：</label>	
+			<p class="col-sm-3 form-control-static" id="revoke_keycode"></p>			
+		</div>
+		<div class="form-group">			
+			<label class="col-sm-12" style="text-align:center;font-size: 16px;">是否确认撤销？</label>			
+		</div>
+	</form>
+</div>
+<!-- 撤销钥匙 end -->

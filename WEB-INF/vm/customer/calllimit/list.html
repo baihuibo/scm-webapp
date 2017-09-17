@@ -1,0 +1,198 @@
+#set($plugins = ["table","chosen","autoSearch"])
+
+<script>
+    //    var buy_view_permission = $shiro.hasPermission("SCM:CUSTOM:BUY_VIEW"); // 买卖客户详情查看
+    //    var lease_view_permission = $shiro.hasPermission("SCM:CUSTOM:LEASE_VIEW"); // 租赁客户详情查看
+</script>
+<div class="ibox">
+    <div class="row">
+        <div class="ibox-title">
+            <h5>客户免打扰</h5>
+            <div class="ibox-tools">
+                <a class="collapse-link ui-sortable">
+                    <i class="fa fa-chevron-up"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="electronic-chapter"></div>
+
+        <div class="ibox-content">
+            <form id="J_query" class="form-horizontal" role="form">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">客户类型：</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" id="userType" name="userType">
+                                    <option value="1" selected>客户</option>
+                                    <option value="2">业主</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">客户名称：</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="userName" autocomplete="off">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">客户编码：</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="userCode" autocomplete="off">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">业务类型：</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" id="businessType" name="businessType">
+                                    <option value="">全部</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">电话：</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="customername" autocomplete="off">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">小区：</label>
+                            <div class="col-sm-8">
+                                <div class="input-group">
+                                    <input type="text" name="communityId" class="form-control" id="communityId" autocomplete="off">
+                                    <div class="input-group-btn">
+                                        <button type="button" class="btn btn-white dropdown-toggle" data-toggle="">
+                                            <span class="glyphicon glyphicon-search search-caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-right" role="menu"></ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">楼号：</label>
+                            <div class="col-sm-8">
+                                <select class="form-control">
+                                    <option value="">所有</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">房间号：</label>
+                            <div class="col-sm-8">
+                                <select class="form-control">
+                                    <option value="">所有</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row btns">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="col-sm-5 col-sm-offset-5">
+                                <button id="J_search" type="button" class="btn btn-success btn_size">查 询</button>
+                                <button id="J_reset" type="button" class="btn btn-white btn_size">重 置</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="ibox-title"><h5>免打扰列表</h5></div>
+        <div class="ibox-content">
+            <div class="row row-lg">
+                <div class="col-sm-12">
+                    <div class="example-wrap">
+                        <!-- Example Pagination -->
+                        <table id="J_dataTable_list" class="table table-hover table-striped table table-bordered tables">
+                        </table>
+                        <!-- End Example Pagination -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="J_edit_dialog" class="ibox-content" style="display: none;">
+    <form id="J_addForm" class="form-horizontal" role="form">
+        <div class="row">
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">
+                            请选择要限制的职务：
+                        </label>
+                        <div class="col-sm-8">
+                            <div class="checkbox checkbox-primary checkbox-inline">
+                                <input name="myinfo" id="myinfo1" value="1" type="checkbox">
+                                <label for="myinfo1">经纪人</label>
+                            </div>
+                            <div class="checkbox checkbox-primary checkbox-inline">
+                                <input name="myinfo" id="myinfo2" value="1" type="checkbox">
+                                <label for="myinfo2">店经理</label>
+                            </div>
+                            <div class="checkbox checkbox-primary checkbox-inline">
+                                <input name="myinfo" id="myinfo3" value="1" type="checkbox">
+                                <label for="myinfo3">区经理</label>
+                            </div>
+                            <div class="checkbox checkbox-primary checkbox-inline">
+                                <input name="myinfo" id="myinfo4" value="1" type="checkbox">
+                                <label for="myinfo4">区总监</label>
+                            </div>
+                            <div class="checkbox checkbox-primary checkbox-inline">
+                                <input name="myinfo" id="myinfo5" value="1" type="checkbox">
+                                <label for="myinfo5">所有人</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">免打扰原因：</label>
+                        <div class="col-sm-8">
+                            <div class="col-sm-6">
+                                <select class="form-control">
+                                    <option value="">减少电话量</option>
+                                    <option value="">房源无效</option>
+                                    <option value="">其他</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-6">
+                                <select class="form-control">
+                                    <option value="">来电太频繁</option>
+                                    <option value="">不想接电话</option>
+                                    <option value="">上班时间电话太多</option>
+                                    <option value="">电话打扰生活</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script src="$link.contextPath/resources/script/customer/calllimit/list.js"></script>
+
+

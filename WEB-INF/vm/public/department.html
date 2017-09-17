@@ -1,0 +1,172 @@
+#set($plugins = ["table","chosen","ztree"])
+
+<!-- 查询条件 begin -->
+<div class="ibox">
+	<div class="ibox-title">
+		<h5>客源查询</h5>
+		<div class="ibox-tools">
+			<a class="collapse-link ui-sortable"> <i class="fa fa-chevron-up"></i>
+			</a>
+		</div>
+	</div>
+	<div class="ibox-content">
+		<form class="form-horizontal" role="form" id="J_black_form">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">所属部门：</label>
+						<div class="col-sm-7">
+							<input id="J_deptLevel" type="hidden" class="form-control" value="">
+							<div class="input-group">
+								<input id="J_deptName" type="text" class="form-control radius-3 float-l" autocomplete="off">
+								<div class="input-group-btn">
+									<button id="J_deptSelect" data-toggle="dropdown" class="btn dropdown-toggle btn-dept float-l" type="button"><span class="caret"></span>
+	                            	</button>
+	                            </div>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+					
+						<!-- <input id="J_type" type="text" class="form-control" value=""> -->
+						<label class="col-sm-3 control-label">所属人：</label>
+						<div class="col-sm-7">
+							<div class="input-group">
+								<input type="text" class="form-control" id="J_user" autocomplete="off">
+								<div class="input-group-btn">
+									<button type="button" class="btn btn-white dropdown-toggle" data-toggle="">
+										<span class="glyphicon glyphicon-search search-caret"></span>
+									</button>
+									<ul class="dropdown-menu dropdown-menu-right" role="menu">
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12 text-cen">
+					<div class="form-group">
+						<button id="J_search" type="button" class="btn btn-success pr5">查 询</button>
+						<button id="J_reset" type="reset" class="btn btn-default">重 置</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<!-- 查询条件end -->
+
+<!-- 列表  begin -->
+<div class="ibox float-e-margins">
+	<div class="ibox-content">
+		<div class="row row-lg">
+			<div class="col-sm-12">
+				<!-- Example Pagination -->
+				<div class="example-wrap ptb10">
+					<table id="J_dataTable" class="table table-hover table-striped">
+						<thead>
+							<tr>
+								<th data-field="assess">评价</th>
+								<th data-field="name">客户姓名<br>客户编号
+								</th>
+								<th data-field="sell">商机</th>
+								<th data-field="phone">查看电话</th>
+								<th data-field="price">承受价位<br>租期
+								</th>
+								<th data-field="area">需求面积</th>
+								<th data-field="direction">户型结构</th>
+								<th data-field="urgency">紧急程度</th>
+								<th data-field="time">看房时间</th>
+								<th data-field="place">商圈</th>
+								<th data-field="place">合租意向</th>
+								<th data-field="last">录入时间<br>最后跟进时间
+								</th>
+								<th data-field="belong">归属部门<br>归属人
+								</th>
+								<th data-field="number">带看次数<br>带看时间
+								</th>
+								<th data-field="opt">操作</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+				<!-- End Example Pagination -->
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 列表  end -->
+
+#parse("/customer/guide/add_dialog.html")
+<script type="text/javascript">
+	$(function(){
+		// 部门自动补全查询
+		//searchDept($('#J_deptName'), false, 'left');
+		
+		// 部门自动补全查询
+		searchContainer.searchUserListByComp($('#J_user'), false, 'left');
+		
+		// 初始化表格数据
+		$('#J_dataTable').bootstrapTable({
+			data : [
+				{
+					"assess" : "A",
+					"name" : "张先生<br><a href='http://local.cbs.bacic5i5j.com:8083/sales/customer/main/leasedetail.htm'>ASD0001</a>",
+					"sell" : "录入",
+					"phone" : '<a href="#">查看</a>',
+					"price" : "200万~420万<br>全款",
+					"area" : "100㎡~200㎡",
+					"structure" : "2室~3室-2厅",
+					"direction" : "朝南",
+					"urgency" : "一个月内",
+					"time" : "下班后",
+					"place" : "三里屯",
+					"last" : "2015-08-01-10:15:04<br>2015-08-01-10:15:04",
+					"belong" : "南新仓A组<br>张三",
+					"number" : "5次<br>2015-08-27",
+					"opt" : '<a type="guide" data-id="ASD0001" data-name="张先生" href="javascript:void(0);" class="btn btn-outline btn-success btn-xs">带看</a>',
+				}
+			]
+		});
+	})
+	
+	// 显示部门树状结构
+	$('#J_deptSelect').on('click', function() {
+		showDeptTree($('#J_deptName'), $('#J_deptLevel'));
+		//showDeptTree($('#J_deptName'), $('#J_deptLevel'), $('#J_type')); // 兼容客源调配-转公客
+	});
+	
+	//带看录入
+	$('#J_dataTable').delegate('a', 'click', function(event){
+		if(this.type =='guide'){
+			// TODO 清空预计带看时间、所属人、陪看人
+			
+			// 清空带看房源
+			$('#J_guide_dataTable tbody').html('');	
+			$('#J_guide_houses').val('');
+			
+			$('#J_cusId').html($(this).attr('data-id'));
+			$('#J_cusName').html($(this).attr('data-name'));
+			$('#J_checkPhone').attr('data-customerId', $(this).attr('data-id'));
+			
+			commonContainer.modal(
+				'带看录入',
+				$('#J_add_guide_dialog'),
+				function(index, layero) {
+					// TODO 保存带看信息
+					layer.close(index);
+				}, 
+				{
+					area: ['680px','80%'],
+					btns: [ '保存', '取消' ]
+				}
+			);
+		}
+	})
+</script>
+<script type="text/javascript" src="$link.contextPath/resources/js/department.js"></script>

@@ -1,0 +1,36 @@
+<div class="ibox">
+	<div class="ibox-title">
+		<h5>业务类型选择</h5>
+		<div class="ibox-tools">
+			<a class="collapse-link ui-sortable"> <i class="fa fa-chevron-up"></i>
+			</a>
+		</div>
+	</div>
+	<div class="ibox-content">
+		<form class="form-horizontal" role="form" id="">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<label class="col-sm-3 control-label"><span
+							class="text-danger">*</span>业务类型：</label>
+						<div id="type" class="col-sm-7">
+						#if($shiro.hasPermission("SCM:HOUSE:LEASE:ADD"))
+							<div class="radio radio-primary radio-inline"><input type="radio" id="type1" name="type" value="1"><label for="type1">租赁</label></div>
+						#end	
+						#if($shiro.hasPermission("SCM:HOUSE:BUY:ADD"))
+							<div class="radio radio-primary radio-inline"><input type="radio" id="type2" name="type" value="2"><label for="type2">买卖</label></div>
+						#end
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12 text-cen">
+					<div class="form-group">
+						<button id="J_add_btn" type="button" class="btn btn-success pr5">确定</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<script type="text/javascript"
+		src="$link.contextPath/resources/script/house/main/add.js?v=1"></script>

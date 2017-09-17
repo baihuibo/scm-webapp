@@ -1,0 +1,42 @@
+<config>
+	<asset>	
+		<resource id="ui2" url="ui3.swf" tip=""/>
+		<!----  
+		<resource id="ui2" url="ui.swf" tip=""/>
+		<resource id="ui2" url="item2.swf" tip=""/>
+		<resource id="ui2" url="collectables.swf" tip=""/>
+		<resource id="ui2" url="ui_reconstruct.swf" tip=""/>
+		-->
+	</asset>
+	<!--
+	<loading>
+		<resource id="ui2" url="Loading.swf" tip=""/>
+	</loading>
+	-->
+	<data>
+		<resource id="config" url="config.xml" tip="数据"/>
+		<!--
+		<resource id="house" url="house.xml" tip="数据"/>
+		<resource id="bed" url="bed.xml" tip="数据"/>
+		<resource id="prop" url="prop.xml" tip="数据"/>
+		-->
+	</data>
+	<image>
+		<resource id="floor" url="assets/floor.jpg" tip="jpg"/>
+		<resource id="door1" url="assets/door1.jpg" tip="jpg"/>
+		<resource id="door2" url="assets/door2.jpg" tip="jpg"/>
+		<resource id="door3" url="assets/door3.jpg" tip="jpg"/>
+		<resource id="window1" url="assets/window1.jpg" tip="jpg"/>
+		<resource id="window2" url="assets/window2.jpg" tip="jpg"/>
+		<resource id="window3" url="assets/window3.jpg" tip="jpg"/>
+		<resource id="watermark" url="assets/watermark.jpg" tip="jpg"/>
+		<!--
+		<resource id="Lena" url="Lena.jpg" tip="jpg"/>
+		-->
+	</image>
+	<!-->
+	<lang>
+		<resource id="ch_lang" url="ch_lang.txt" tip="语言包"/>
+	</lang>
+	<-->
+</config>

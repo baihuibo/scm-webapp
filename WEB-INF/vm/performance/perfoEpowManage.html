@@ -1,0 +1,235 @@
+#set($plugins = ["table","chosen","autoSearch","laydate","ztree"])
+<div class="ibox">
+	<div class="ibox-title">
+		<h5>业绩授权申请单管理</h5>
+		<div class="ibox-tools">
+			<a class="collapse-link ui-sortable"> <i class="fa fa-chevron-up"></i></a>
+		</div>
+	</div>
+</div>
+<!-- �б�begin -->
+<div class="ibox float-e-margins">
+	<div class="section" style="padding: 0">
+		<div class="row">
+			<div class="tabs-container" id="tabs-container">
+				<div class="tab-content tab-content-min" id="tab-content"
+					style="margin: 0">
+					<div class="ibox">
+						<div class="ibox-content pd10">
+							<div class="row">
+								<div class="tabs-container">
+									<ul class="nav nav-tabs">
+										<li class="active reset"><a data-toggle="tab" href="#tab-11">我申请的</a></li>
+										<li class="reset"><a data-toggle="tab" href="#tab-12">我审批的</a></li>
+									</ul>
+									<div class="ibox-content">
+										<form class="form-horizontal" id="J_restrictiveform">
+											<div class="row">
+												<div class="col-md-4">
+													<div class="form-group">
+														<label class="col-sm-3 control-label">申请单编号：</label>
+														<div class="col-sm-8">
+															<input type="text" class="form-control" name="applyNo"
+																id="applyNo" autocomplete="off" maxlength="10" oninput="value=value.replace(/[^\d]/g,'')">
+														</div>
+													</div>
+												</div>
+												<div class="col-md-4">
+													<div class="form-group">
+														<label class="col-sm-3 control-label">业务类型：</label>
+														<div class="col-sm-8">
+															<select id="J_business" name="businessType"
+																class="J_chosen form-control" data-placeholder="全部">
+																<option value="">全部</option>
+																<option value="1">普租</option>
+																<option value="2">二手买卖</option>
+															</select>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-4">
+													<div class="form-group">
+														<label class="col-sm-3 control-label">合同编号：</label>
+														<div class="col-sm-8">
+															<input type="text" class="form-control" name="contractNo"
+																id="contractNo" autocomplete="off" maxlength="20" oninput="value=value.replace(/[^0-9a-zA-Z]/g,'')">
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-4">
+													<div class="form-group">
+														<label class="col-sm-3 control-label">业绩调整项：</label>
+														<div class="col-sm-8">
+															<select id="J_perfor" name="adjustPerfName"
+																class="J_chosen form-control" data-placeholder="全部">
+																<option value="">全部</option>
+															</select>
+														</div>
+													</div>
+												</div>	
+												<div class="col-md-4">
+													<div class="form-group">
+														<label class="col-sm-3 control-label">申请日期：</label>
+														<div class="col-sm-4">
+															<input id="J_begindate" name="beginTime"
+																class="J_chosen form-control" readonly
+																style="background-color: #FFFFFF;">
+														</div>
+														<div style="float: left; padding: 7px 0px;">-</div>
+														<div class="col-sm-4">
+															<input id="J_enddate" name="endTime"
+																class="J_chosen form-control" readonly
+																style="background-color: #FFFFFF;">
+														</div>
+													</div>
+												</div>											
+												<div class="col-md-4">
+													<div class="form-group">
+														<label class="col-sm-3 control-label">审批状态：</label>
+														<div class="col-sm-8">
+															<select id="J_business" name="approveState"
+																class="J_chosen form-control" data-placeholder="全部">
+																<option value="">全部</option>
+																<option value="1">待审批</option>
+																<option value="2">审批中</option>
+																<option value="3">已审批</option>
+																<option value="5">已驳回</option>	
+															</select>
+														</div>
+													</div>
+												</div>		
+											</div>
+											<div class="row">																					
+												<div class="col-md-4">
+													<div class="form-group">
+														<label class="col-sm-4 control-label">申请人所属部门：</label>
+														<div class="col-sm-7">
+															<div class="input-group">
+																<input id="J_level_id" name="level" type="hidden">
+																<input id="J_deptName" type="text" data-id="" class="form-control radius-3 float-l" readonly="readonly" autocomplete="off" style="background-color:#fff;">							
+																<div class="input-group-btn">
+																	<button id="J_deptSelect" data-toggle="dropdown"
+																		class="btn dropdown-toggle btn-dept" type="button">
+																		<span class="caret"></span>
+																	</button>
+																</div>
+															</div>
+
+														</div>
+													</div>
+												</div>
+												<div class="col-md-4">
+													<div class="form-group">
+														<label class="col-sm-3 control-label">申请人：</label>
+														<div class="col-sm-8">
+															<div class="input-group">
+																<input type="text" class="form-control" id="J_user"
+																	name=createBy autocomplete="off">
+																<div class="input-group-btn">
+																	<button type="button"
+																		class="btn btn-white dropdown-toggle" data-toggle="">
+																		<span class="glyphicon glyphicon-search search-caret"></span>
+																	</button>
+																	<ul class="dropdown-menu dropdown-menu-right"
+																		role="menu"
+																		style="padding-top: 0px; max-height: 375px; max-width: 800px; overflow: auto; width: auto; transition: 0.3s; left:-110px; right: auto; min-width: 145px;">
+																	</ul>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</form>
+									</div>
+									<div class="tab-content pd5" id="tab-content1">
+										<div id="tab-11" class="tab-pane active">
+										<div class="row">
+												<div class="col-md-12 text-cen">
+													<div class="form-group">
+														<button id="J_search" type="button"
+															class="btn btn-success btn_size">查 询</button>
+														<button id="J_reset" type="reset"
+															class="btn btn-white btn_size" onclick="reset()">重 置</button>
+													</div>
+												</div>
+											</div>
+											<a class="btn btn-success btn_size fr"
+												href="newPerfoEpowManage" target="_blank"
+												style="margin-bottom: 10px">新增申请</a>
+											<table id="dataTable"
+												class="table table-hover table-striped table-condensed">
+												<thead>
+													<tr>
+														<th data-field="applyNo">申请单编号</th>
+														<th data-field="contractNo">合同编号</th>
+														<th data-field="businessType">业务类型</th>
+														<th data-field="createBy">申请人</th>
+														<th data-field="fullDeptName">申请人所属部门</th>
+														<th data-field="adjustPerfName">业绩调整项</th>
+														<th data-field="createTime">申请日期</th>
+														<th data-field="lastApproveUserName">最后审批人</th>
+														<th data-field="lastApproveTime">最后审批日期</th>
+														<th data-field="approveState">审批状态</th>
+														<th data-field="oper">操作</th>
+													</tr>
+												</thead>
+											</table>
+										</div>
+										<div id="tab-12" class="tab-pane">
+										<div class="row">
+												<div class="col-md-12 text-cen">
+													<div class="form-group">
+														<button id="J_search1" type="button"
+															class="btn btn-success btn_size">查 询</button>
+														<button id="J_reset1" type="reset"
+															class="btn btn-white btn_size"  onclick="reset()">重 置</button>
+													</div>
+												</div>
+											</div>
+											<a class="btn btn-success btn_size fr"
+												href="#" 
+												style="margin-bottom: 10px; visibility:hidden;">新增申请</a>
+											<table id="dataTable2"
+												class="table table-hover table-striped table-condensed">
+												<thead>
+													<tr>
+														<th data-field="applyNo">申请单编号</th>
+														<th data-field="contractNo">合同编号</th>
+														<th data-field="businessType">业务类型</th>
+														<th data-field="createBy">申请人</th>
+														<th data-field="belongDept">申请人所属部门</th>
+														<th data-field="adjustPerfName">业绩调整项</th>
+														<th data-field="createTime">申请日期</th>
+														<th data-field="lastApproveUserName">最后审批人</th>
+														<th data-field="lastApproveTime">最后审批日期</th>
+														<th data-field="approveState">审批状态</th>
+														<th data-field="oper">操作</th>
+													</tr>
+												</thead>
+											</table>
+										</div>
+										<!-- 撤销模态框 -->
+										<div id="demo_layer_stantard" class="ibox-content"
+											style="display: none">
+											<p class="title_contractNo" style="font-size: 14px; text-align: center;"></p>
+											<label for="name"><span style="color: red;">*</span>备注</label>
+											<textarea id="mem" maxlength="120"
+												style="height: 80px; width: 100%"></textarea>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script
+	src="$link.contextPath/resources/script/performance/perfoAjustManage.js"></script>
+<script type="text/javascript"
+	src="$link.contextPath/resources/js/department.js"></script>

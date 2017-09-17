@@ -1,0 +1,1195 @@
+#set($plugins = ["table","chosen","laydate","validator"])
+<style>
+.phone-show{
+    padding-right: 30px;
+    float: left;
+    width: 100%;
+    position: relative;
+    word-wrap: break-word;
+    word-break: break-all;    
+}
+.add-p{
+    position: absolute;
+    right: 0;
+    text-align: center;
+    display: inline;
+}
+</style>
+<div class="ibox float-e-margins">
+	<div class="row">
+		<div class="tabs-container">
+			<ul class="nav nav-tabs" id="lease-add"
+				style="background-color: #EBEBEB">
+				<li class="active"><a class="taba" data-toggle="tab"
+					href="#tab-1"> 选择楼盘信息</a></li>
+				<li class=""><a class="taba"> 房源物理信息</a></li>
+				<li class=""><a class="taba"> 业主及联系人信息</a></li>
+				<li class=""><a class="taba"> 房源详细信息</a></li>
+				<li class=""><a class="taba"> 证贷及报价</a></li>
+			</ul>
+			<div class="tab-content">
+				<div id="tab-1" class="tab-pane active">
+					<div class="panel-body">
+					<div class="ibox-content">
+						<form id="form1" name="form1" class="form-horizontal" role="form">
+							<!-- <div class="col-md-12">
+							<h4 class="business-title">选择楼盘信息</h4>
+						</div> -->
+							<div class="row">
+								<div class="pl10 font-bold font-blue info-tit">选择楼盘信息</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="form-group">
+										<label class="col-sm-2 control-label"><span
+											class="text-danger">*</span>楼盘: </label>
+										<div class="col-sm-10">
+											<div class="input-group">
+												<input type="text" class="form-control" id="J_build" autocomplete="off">
+												<div class="input-group-btn">
+													<button type="button" class="btn btn-white dropdown-toggle" data-toggle="">
+														<span class="glyphicon glyphicon-search search-caret"></span>
+													</button>
+													<ul class="dropdown-menu dropdown-menu-right" role="menu">
+													</ul>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label class="col-sm-4 control-label"><span
+											class="text-danger">*</span>栋座:</label>
+										<div class="col-sm-8">
+											<select id="J_building" name="buildingid"
+												class="J_chosen form-control" data-placeholder="请选择">
+												<!-- <option value="">请选择</option> -->
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label class="col-sm-4 control-label">单元:</label>
+										<div class="col-sm-8">
+											<select id="unit" name="buildingunitid"
+												class="J_chosen form-control" data-placeholder="请选择">
+												<!-- <option value="">请选择</option> -->
+											</select>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label class="col-sm-4 control-label"><span
+											class="text-danger">*</span>楼层:</label>
+										<div class="col-sm-8">
+											<select id="floor" name="buildingfloorid"
+												class="J_chosen form-control" data-placeholder="请选择">
+												<!-- <option value="">请选择</option> -->
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label class="col-sm-4 control-label"><span
+											class="text-danger">*</span>门牌号:</label>
+										<div class="col-sm-8">
+											<select id="houseNumber" name="buildinghouseid"
+												class="J_chosen form-control" data-placeholder="请选择">
+												<!-- <option value="">请选择</option> -->
+											</select>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12 text-cen" style="margin-bottom:200px;margin-top:40px;">
+									<div class="form-group">
+										<button type="button" class="btn btn-success pr5 J_next">下一步</button>
+									</div>
+								</div>
+							</div>
+						</form>
+						</div>
+					</div>
+				</div>
+				<div id="tab-2" class="tab-pane">
+					<div class="panel-body">
+					<div class="ibox-content">
+						<form id="form2" name="form2" class="form-horizontal" role="form">
+							<div class="row">
+								<div class="pl10 font-bold font-blue info-tit">房源物理信息</div>
+							</div>
+							<div class="normal">
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<label class="col-sm-2 control-label">喷涂地址:</label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" name="address" id="address"
+													value="" readonly>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<label class="col-sm-2 control-label">证载地址:</label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" name="cardaddress" id="cardaddress"
+													value="" readonly>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<label class="col-sm-2 control-label">其他地址:</label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" name="otheraddress" id="otheraddress"
+													value="" readonly>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="fictitious" style="display:none">
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group">
+											<label class="col-sm-4 control-label"><span
+											class="text-danger">*</span>区域:</label>
+											<div class="col-sm-8">
+												<select id="area"
+													class="J_chosen form-control" data-placeholder="请选择">
+													<option value="">全部</option>
+													
+												</select>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<div class="bootstrap-table table-list">
+										<div class="fixed-table-container">
+											<table id="dataTableAdress"
+												class="table table-hover  table-striped"
+												style="border-bottom: none">
+												<thead>
+													<tr>
+														<th class="col-md-2"></th>
+														<th class="col-md-2">楼盘</th>
+														<th class="col-md-2">栋座</th>
+														<th class="col-md-2">单元</th>
+														<th class="col-md-2">楼层</th>
+														<th class="col-md-2">门牌号</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td class="col-md-2"><span
+											class="text-danger">*</span>喷涂</td>
+														<td class="col-md-2">
+															<div class="col-sm-10 col-sm-offset-1">
+																<input type="text" class="form-control" id="spraypropertyname" value="">
+															</div>
+														</td>
+														<td class="col-md-2">
+														<div class="form-group">
+															<div class="col-sm-10 col-sm-offset-1">
+																<input type="text" class="form-control" id="spraybuildingname" name="spraybuildingname" value="">
+															</div>
+														</div>
+														</td>
+														<td class="col-md-2">
+														<div class="form-group">
+															<div class="col-sm-10 col-sm-offset-1">
+																<input type="text" class="form-control" id="sprayunitname" name="sprayunitname" value="">
+															</div>
+														</div>
+														</td>
+														<td class="col-md-2">
+														<div class="form-group">
+															<div class="col-sm-10 col-sm-offset-1">
+																<input type="text" class="form-control" id="sprayfloorname" name="sprayfloorname" value="">
+															</div>
+														</div>
+														</td>
+														<td class="col-md-2">
+														<div class="form-group">
+															<div class="col-sm-10 col-sm-offset-1">
+																<input type="text" class="form-control" id="sprayhouseno" name="sprayhouseno" value="">
+															</div>
+														</div>
+														</td>
+													</tr>
+													<tr>
+														<td class="col-md-2">证载</td>
+														<td class="col-md-2">
+															<div class="col-sm-10 col-sm-offset-1">
+																<input type="text" class="form-control" id="propertyname" value="">
+															</div>
+														</td>
+														<td class="col-md-2">
+														<div class="form-group">
+															<div class="col-sm-10 col-sm-offset-1">
+																<input type="text" class="form-control" id="buildingname" name="buildingname" value="">
+															</div>
+														</div>
+														</td>
+														<td class="col-md-2">
+														<div class="form-group">
+															<div class="col-sm-10 col-sm-offset-1">
+																<input type="text" class="form-control" id="unitname" name="unitname" value="">
+															</div>
+														</div>
+														</td>
+														<td class="col-md-2">
+														<div class="form-group">
+															<div class="col-sm-10 col-sm-offset-1">
+																<input type="text" class="form-control" id="floorname" name="floorname" value="">
+															</div>
+														</div>
+														</td>
+														<td class="col-md-2">
+														<div class="form-group">
+															<div class="col-sm-10 col-sm-offset-1">
+																<input type="text" class="form-control" id="houseno" name="houseno" value="">
+															</div>
+														</div>
+														</td>
+													</tr>
+													<tr>
+														<td class="col-md-2">其他</td>
+														<td class="col-md-2">
+															<div class="col-sm-10 col-sm-offset-1">
+																<input type="text" class="form-control" id="propertyothername" value="">
+															</div>
+														</td>
+														<td class="col-md-2">
+														<div class="form-group">
+															<div class="col-sm-10 col-sm-offset-1">
+																<input type="text" class="form-control" id="buildingothername" name="buildingothername" value="">
+															</div>
+														</div>
+														</td>
+														<td class="col-md-2">
+														<div class="form-group">
+															<div class="col-sm-10 col-sm-offset-1">
+																<input type="text" class="form-control" id="unitothersname" name="unitothersname" value="">
+															</div>
+														</div>
+														</td>
+														<td class="col-md-2">
+														<div class="form-group">
+															<div class="col-sm-10 col-sm-offset-1">
+																<input type="text" class="form-control" id="floorothername" name="floorothername" value="">
+															</div>
+														</div>
+														</td>
+														<td class="col-md-2">
+														<div class="form-group">
+															<div class="col-sm-10 col-sm-offset-1">
+																<input type="text" class="form-control" id="otherno" name="otherno" value="">
+															</div>
+														</div>
+														</td>
+													</tr>													
+												</tbody>
+											</table>
+										</div>
+									</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-8">
+									<div class="form-group">
+										<label class="col-sm-2 control-label"><span
+											class="text-danger">*</span>户型:</label>
+										<div class="col-sm-10">
+											<div class="col-sm-2">
+												<div class="col-xs-8">
+													<select id="bedroom" name="bedroom"
+														class="J_chosen form-control layout" data-placeholder="请选择">
+														<!-- <option value="">请选择</option> -->
+													</select>
+												</div>
+												<div class="col-xs-4">
+													<label class="control-label">室</label>
+												</div>
+											</div>
+											<div class="col-sm-2">
+												<div class="col-xs-8">
+													<select id="livingroom" name="livingroom"
+														class="J_chosen form-control layout" data-placeholder="请选择">
+														<!-- <option value="">请选择</option> -->
+													</select>
+												</div>
+												<div class="col-xs-4">
+													<label class="control-label">厅</label>
+												</div>
+											</div>
+											<div class="col-sm-2">
+												<div class="col-xs-8">
+													<select id="kitchen" name="kitchen"
+														class="J_chosen form-control layout" data-placeholder="请选择">
+														<!-- <option value="">请选择</option> -->
+													</select>
+												</div>
+												<div class="col-xs-4">
+													<label class="control-label">厨</label>
+												</div>
+											</div>
+											
+											<div class="col-sm-2">
+												<div class="col-xs-8">
+													<select id="toilet" name="toilet"
+														class="J_chosen form-control layout" data-placeholder="请选择">
+														<!-- <option value="">请选择</option> -->
+													</select>
+												</div>
+												<div class="col-xs-2">
+													<label class="control-label">卫</label>
+												</div>
+											</div>
+											
+											<div class="col-sm-2">
+												<div class="col-xs-8">
+													<select id="balcony" name="balcony"
+														class="J_chosen form-control layout" data-placeholder="请选择">
+														<!-- <option value="">请选择</option> -->
+													</select>
+												</div>
+												<div class="col-xs-2">
+													<label class="control-label">阳</label>
+												</div>
+											</div>
+											
+										</div>
+
+									</div>
+								</div>
+								<div class="col-md-4" id="floorCon" style="display:none">
+									<div class="form-group">
+										<label class="col-sm-4 control-label"><span
+											class="text-danger">*</span>当前楼层:</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control J_maxArea"
+												name="floor" id="vifloor" autocomplete="off">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-4 control-label"><span
+											class="text-danger">*</span>朝向:</label>
+										<div class="col-sm-8" id="towards"></div>
+									</div>
+								</div>
+							
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-4 control-label"><span
+											class="text-danger">*</span>总楼层数:</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control J_maxArea"
+												name="houseallfloor" id="totalnum" autocomplete="off" maxlength='10'>
+										</div>
+									</div>
+								</div>
+							
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-4 control-label"><span
+											class="text-danger">*</span>建筑年代:</label>
+										<div class="col-sm-8" layout="row">
+											<div flex>
+												<select id="buildingyear" name="buildyear"
+													class="J_chosen form-control" data-placeholder="请选择">
+													<option value="">请选择</option>
+												</select>
+											</div>
+											<div class="split">年</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-4 control-label"><span
+											class="text-danger">*</span>建筑类型:</label>
+										<div class="col-sm-8">
+											<select id="buildingtype" name="buildingtype"
+												class="J_chosen form-control" data-placeholder="请选择">
+												<option value="">请选择</option>
+											</select>
+										</div>
+									</div>
+								</div>
+							
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-4 control-label"><span
+											class="text-danger">*</span>建筑结构:</label>
+										<div class="col-sm-8">
+											<select id="architecture" name="buildingstructure"
+												class="J_chosen form-control" data-placeholder="请选择">
+												<option value="">请选择</option>
+											</select>
+										</div>
+									</div>
+								</div>
+							
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-4 control-label"><span
+											class="text-danger">*</span>产权性质:</label>
+										<div class="col-sm-8">
+											<select id="houseown" name="houseown"
+												class="J_chosen form-control" data-placeholder="请选择">
+												<option value="">请选择</option>
+											</select>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-4 control-label"><span
+											class="text-danger">*</span>户型结构:</label>
+										<div class="col-sm-8">
+											<select id="layoutstructure" name="layoutstructure"
+												class="J_chosen form-control" data-placeholder="请选择">
+												<option value="">请选择</option>
+											</select>
+										</div>
+									</div>
+								</div>
+							
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-4 control-label"><span
+											class="text-danger">*</span>规划用途:</label>
+										<div class="col-sm-8">
+											<select id="housetype" name="planneduses"
+												class="J_chosen form-control" data-placeholder="请选择">
+												<option value="">请选择</option>
+											</select>
+										</div>
+									</div>
+								</div>
+							
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-4 control-label"><span
+											class="text-danger">*</span>建筑面积:</label>
+										<div class="col-sm-8" layout="row">
+											<div flex>
+												<input type="text" class="form-control"
+												name="buildarea" id="floorarea" autocomplete="off" maxlength='10'>
+											</div>
+											<div class="split">平方米</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- 新增开始 -->
+							<div class="row">
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-4 control-label">土地使用年限:</label>
+										<div class="col-sm-8">
+											<select id="landuselife" name="landUselife"
+												class="J_chosen form-control" data-placeholder="请选择">
+												<option value="">请选择</option>
+											</select>
+										</div>
+									</div>
+								</div>
+							
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-4 control-label">卫生间是否带窗:</label>
+										<div class="col-sm-8">
+											<select id="ishavewindow" name="hasWindow"
+												class="J_chosen form-control" data-placeholder="请选择">
+												<option value="">请选择</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-4 control-label">是否有花园:</label>
+										<div class="col-sm-8">
+											<select id="whethergarden" name="hasGarden"
+												class="J_chosen form-control" data-placeholder="请选择">
+												<option value="">请选择</option>
+											</select>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-4 control-label">是否有地下室:</label>
+										<div class="col-sm-8">
+											<select id="whetherbasement" name="hasBasement"
+												class="J_chosen form-control" data-placeholder="请选择">
+												<option value="">请选择</option>
+											</select>
+										</div>
+									</div>
+								</div>
+							
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-4 control-label">是否有车库:</label>
+										<div class="col-sm-8">
+											<select id="whethergarage" name="hasCarport"
+												class="J_chosen form-control" data-placeholder="请选择">
+												<option value="">请选择</option>
+											</select>
+										</div>
+									</div>
+								</div>
+							
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-4 control-label">首层层高:</label>
+										<div class="col-sm-8" layout="row">
+											<div flex>
+												<input type="text" class="form-control"
+												name="firstFloorHeight" id="firststorey" autocomplete="off" maxlength='10'>
+											</div>
+											<div class="split">米</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-4 control-label">叠加方式:</label>
+										<div class="col-sm-8">
+											<select id="buildingsstackedway" name="overlayType"
+												class="J_chosen form-control" data-placeholder="请选择">
+												<option value="">请选择</option>
+											</select>
+										</div>
+									</div>
+								</div>
+							
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-4 control-label">冷气费:</label>
+										<div class="col-sm-8" layout="row">
+											<div flex>
+												<input type="text" class="form-control"
+													name="coldAirCost" id="airconditioningfee" autocomplete="off" maxlength='10'>
+											</div>
+											<div class="split">元/平方米/月 </div>
+										</div>	
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-4 control-label">空调方式:</label>
+										<div class="col-sm-8">
+											<select id="airconditiontype" name="airConditionType"
+												class="J_chosen form-control" data-placeholder="请选择">
+												<option value="">请选择</option>
+											</select>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-4 control-label">等级:</label>
+										<div class="col-sm-8">
+											<select id="shopslevel" name="level"
+												class="J_chosen form-control" data-placeholder="请选择">
+												<option value="">请选择</option>
+											</select>
+										</div>
+									</div>
+								</div>								
+							
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-4 control-label">车位数量:</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control"
+												name="carPortNum" id="parkingplacenum" autocomplete="off" maxlength='10'>
+										</div>
+									</div>
+								</div>
+							
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-4 control-label">总高:</label>
+										<div class="col-sm-8" layout="row">
+											<div flex>
+												<input type="text" class="form-control"
+												name="totalHeight" id="totalheight" autocomplete="off" maxlength='10'>
+											</div>
+											<div class="split">米</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-4 control-label">进深:</label>
+										<div class="col-sm-8" layout="row">
+											<div flex>
+												<input type="text" class="form-control"
+												name="depth" id="depth" autocomplete="off" maxlength='10'>
+											</div>
+											<div class="split">米</div>
+										</div>
+									</div>
+								</div>
+							
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-4 control-label">净高:</label>
+										<div class="col-sm-8" layout="row">
+											<div flex>
+												<input type="text" class="form-control"
+													name="clearHeight" id="clearheight" autocomplete="off" maxlength='10'>
+											</div>
+											<div class="split">米</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-4 control-label">门宽:</label>
+										<div class="col-sm-8" layout="row">
+											<div flex>
+												<input type="text" class="form-control"
+												name="doorWidth" id="doorwidth" autocomplete="off" maxlength='10'>
+											</div>
+											<div class="split">米</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">							
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-4 control-label">实得率:</label>
+										<div class="col-sm-8" layout="row">
+											<div flex>
+												<input type="text" class="form-control"
+												name="gainsRate" id="realyield" autocomplete="off" maxlength='10'>
+											</div>
+											<div class="split">%</div>
+										</div>
+									</div>
+								</div>
+							</div>      
+							<!-- 新增结束 -->
+							<!-- <input type="hidden" name="floor" id="floor"></input>  -->
+							<input type="hidden" name="schoolid" id="schoolid"></input> 	
+							<input type="hidden" name="schoolname" id="schoolname"></input>
+							
+							<input type="hidden" name="district" id="district"></input> 
+							<input type="hidden" name="districtname" id="districtname"></input> 	
+							<input type="hidden" name="busiid" id="busiid"></input> 
+							<input type="hidden" name="businame" id="businame"></input> 
+							<input type="hidden" name="subdistrictoffice" id="subdistrictoffice"></input> 	
+							<input type="hidden" name="subdistrictofficename" id="subdistrictofficename"></input>
+							<input type="hidden" name="responsiblepersonid" id="responsiblepersonid"></input> 
+							 <input type="hidden" name="subwaystationids" id="subwaystationids"></input> 		
+							<div class="row">
+								<div class="col-md-12 text-cen" style="margin-bottom:200px;margin-top:40px;">
+									<div class="form-group">
+										<button type="button" class="btn btn-success pr5 J_next">下一步</button>
+									</div>
+								</div>
+							</div>
+						</form>
+						</div>
+					</div>
+				</div>
+				<div id="tab-3" class="tab-pane">
+					<div class="panel-body">
+					<div class="ibox-content">
+						<form id="form3" name="form3" class="form-horizontal" role="form">
+							<!-- <div class="row">
+							<div class="pl10 font-bold font-blue info-tit">业主及联系人信息</div>
+						</div> -->
+							<div class="row">
+								<div class="col-md-12">
+									<h4 class="pl10 font-bold font-blue info-tit">业主及联系人信息</h4>
+								</div>
+								<div class="col-md-11"></div>
+								<div class="col-md-1" style="text-align: right;">
+									<div class="font-bold font-blue">
+										<a id="J_add_people" class="btn btn-success btn-sm">
+											<i class="glyphicon glyphicon-plus"></i> 添加
+										</a>
+									</div>
+								</div>
+								<div class="col-md-12 m-b-sm pt6">
+									<div class="table-list">
+										<div class="fixed-table-container">
+											<table id="dataTablePeople"
+												class="table table-hover  table-striped"
+												style="border-bottom: none">
+												<thead>
+													<tr>
+														<th class="col-md-2">联系人类别</th>
+														<th class="col-md-2">姓名</th>
+														<th class="col-md-2">性别</th>
+														<th class="col-md-3">号码</th>
+														<th class="col-md-2">与产权人关系</th>
+														<th class="col-md-1">操作</th>
+													</tr>
+												</thead>
+												<tbody>												
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label class="col-sm-3 control-label"><span
+										class="text-danger">*</span>新购房需求：</label>
+										<div class="col-sm-9">
+										<div class="radio radio-primary radio-inline"><input type="radio" id="newdemand1" name="newdemand" value="1"><label for="newdemand1">有</label></div><div class="radio radio-primary radio-inline"><input type="radio" id="newdemand2" name="newdemand" value="2"><label for="newdemand2">无</label></div></div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label class="col-sm-3 control-label"><span
+											class="text-danger">*</span>来源：</label>
+										<div class="col-sm-5">
+											<select id="customerSource" name="source"
+												class="form-control m-b" data-placeholder="请选择" required>
+												<option value="">请选择</option>
+											</select>
+										</div>
+										<div class="col-sm-4 none"></div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12 text-cen" style="margin-bottom:200px;margin-top:40px;">
+									<div class="form-group">
+										<button type="button" class="btn btn-success pr5 J_next">下一步</button>
+									</div>
+								</div>
+							</div>
+						</form>
+						</div>
+					</div>
+				</div>
+				<div id="tab-4" class="tab-pane">
+					<div class="panel-body">
+					<div class="ibox-content">
+						<form id="form4" name="form4" class="form-horizontal" role="form">
+							<div class="row">
+								<div class="pl10 font-bold font-blue info-tit">房源详情信息</div>
+							</div>
+							<div class="row">
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-4 control-label">装修状况:</label>
+										<div class="col-sm-8">
+											<select id="decorationStatus" name="decorationstatus"
+												class="J_chosen form-control" data-placeholder="请选择">
+												<option value="">请选择</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-4 control-label">装修年限:</label>
+										<div class="col-sm-8">
+											<select id="fitmentYear" name="fitmentyear"
+												class="J_chosen form-control" data-placeholder="请选择">
+												<option value="">请选择</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-4 control-label"><span
+											class="text-danger">*</span>使用现状:</label>
+										<div class="col-sm-8">
+											<select id="useStatus" name="usestatus"
+												class="J_chosen form-control" data-placeholder="请选择">
+												<option value="">请选择</option>
+											</select>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-4 control-label">腾空时间:</label>
+										<div class="col-sm-4">
+											<select id="freetimeType" name="freetimetype"
+												class="J_chosen form-control" data-placeholder="请选择">
+												<option value="">请选择</option>
+											</select>
+										</div>
+										<div class="col-sm-4 freetime" style="display:none">
+												<input type="text" id="freetime" name="freetime" class="form-control">
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-4 control-label">户籍信息:</label>
+										<div class="col-sm-8">
+											<select id="census" name="census"
+												class="J_chosen form-control" data-placeholder="请选择">
+												<option value="">请选择</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4 nonecensus" style="display:none">
+									<div class="form-group">
+										<label class="col-sm-4 control-label">户籍迁出时间:</label>
+										<div class="col-sm-8">
+											<select id="censusChectoutType" name="censuschectoutType"
+												class="J_chosen form-control" data-placeholder="请选择">
+												<option value="">请选择</option>
+											</select>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12 text-cen" style="margin-bottom:200px;margin-top:40px;">
+									<div class="form-group">
+										<button type="button" class="btn btn-success pr5 J_next">下一步</button>
+									</div>
+								</div>
+							</div>
+						</form>
+						</div>
+					</div>
+				</div>
+				<div id="tab-5" class="tab-pane">
+					<div class="panel-body">
+					<div class="ibox-content">
+						<form id="form5" name="form5" class="form-horizontal" role="form">
+							<div class="row">
+								<div class="pl10 font-bold font-blue info-tit">证贷情况</div>
+							</div>
+							<div class="row">
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-4 control-label"><span
+											class="text-danger">*</span>证贷情况:</label>
+										<div class="col-sm-8">
+											<select id="certLoan" name="certloan"
+												class="J_chosen form-control" data-placeholder="请选择">
+												<option value="">请选择</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-4 control-label">契税票日期:</label>
+										<div class="col-sm-8">
+											<input type="text" id="deedDate" class="form-control"
+												name="taxdate">
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-4 control-label">房产证签发日期:</label>
+										<div class="col-sm-8">
+											<input type="text" id="dateIssue" class="form-control"
+												name="housecodedate">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-4 control-label">上次购房价:</label>
+										<div class="col-sm-8" layout="row">
+											<div flex>
+												<input type="text" name="lastbuyprice" class="form-control" maxlength='10'>
+											</div>
+											<div class="split">万元</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-4 control-label"><span
+											class="text-danger">*</span>购房年限:</label>
+											<div class="col-sm-8">
+												<select id="buyYears" name="buyyears"
+													class="J_chosen form-control" data-placeholder="请选择">
+													<option value="">请选择</option>
+												</select>
+											</div>
+									</div>
+								</div>
+							</div>
+							<div class="withoutCredit" style="display:none">
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group">
+											<label class="col-sm-4 control-label">贷款银行:</label>
+											<div class="col-sm-8">
+												<select id="loanbank" name="loanbank"
+													class="J_chosen form-control" data-placeholder="请选择">
+													<option value="">请选择</option>
+													<!-- <option value="1">北京银行</option>
+													<option value="2">工商银行</option> -->
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+										
+											<label class="col-sm-4 control-label">抵押权人:</label>
+											<div class="col-sm-8">
+												<input type="text" class="form-control"
+													name="pledgeuser">
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<label class="col-sm-4 control-label">贷款额:</label>
+											<div class="col-sm-6">
+												<input type="text" id="dateIssue" class="form-control"
+													name="loancount">
+											</div>
+											<div class="col-sm-2">
+												<label class="control-label">万元</label>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group">
+											<label class="col-sm-4 control-label">贷款年限:</label>
+											<div class="col-sm-8">
+												<input type="text" id="dateIssue" class="form-control"
+													name="loanyears">
+											</div>
+
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="pl10 font-bold font-blue info-tit">报价相关信息</div>
+							</div>
+							<div class="row">
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-4 control-label"><span
+											class="text-danger">*</span>委托价:</label>
+										<div class="col-sm-8" layout="row">
+											<div flex>
+												<input type="text" class="form-control" name="entrustprice" maxlength='10'>
+											</div>
+											<div class="split">万元</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-4 control-label">最低报价:</label>
+										<div class="col-sm-8" layout="row">
+											<div flex>
+												<input type="text" class="form-control" name="price" maxlength='10'>
+											</div>
+											<div class="split">万元</div>
+										</div>	
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-4 control-label">物业费:</label>
+										<div class="col-sm-8" layout="row">
+											<div flex>
+												<input type="text" class="form-control" id="propertyfee" name="propertyfee" maxlength='10'>
+											</div>
+											<div class="split">元/平方米/月 </div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-4 control-label">暖气费:</label>
+										<div class="col-sm-8" layout="row">
+											<div flex>
+												<input type="text" class="form-control" id="heatingfee"	name="heatingcost" maxlength='10'>
+											</div>
+											<div class="split">元/平方米/月 </div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-8">
+									<div class="form-group">
+										<label class="col-sm-2 control-label"><span
+											class="text-danger">*</span>税种：</label>
+										<div class="col-sm-9 J_electric" id="taxType">
+											
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-8">
+									<div class="form-group">
+										<label class="col-sm-2 control-label">备注：</label>
+										<div class="col-sm-10">
+											<textarea rows="3" name="memo" id="memo" cols="100%"
+												class="form-control" maxlength="500"></textarea>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12 text-cen">
+									<div class="form-group">
+										<button type="button" class="btn btn-success pr5 J_next">保存</button>
+										<!-- <button type="button" class="btn btn-success pr5  J_nextadd">保存并录入证件</button> -->
+									</div>
+								</div>
+							</div>
+						</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+<!-- 添加联系人 begin -->
+<div id="addppeople_layer" class="ibox-content" style="display: none">
+	<form id="addppeople_form" name="addppeople_form" class="form-horizontal">
+		<div class="row">
+			<div class="col-sm-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>联系人类别:</label>
+					<div class="col-sm-8">
+						<select id="contactType" name="contactType"
+							class="J_chosen form-control" data-placeholder="请选择">
+							<option value="">请选择</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span
+						class="text-danger">*</span>姓名：</label>
+					<div class="col-sm-7">
+						<input type="text" class="form-control" id="customerName" name="customerName" >
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span
+						class="text-danger">*</span>性别：</label>
+					<div id="gender" class="col-sm-7">
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<div class="row">
+			<div class="col-sm-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>联系方式类别:</label>
+					<div class="col-sm-8">
+						<select id="phonetype" name=""
+							class="J_chosen form-control phonetype" data-placeholder="请选择">
+							<option value="1">国内手机</option>
+							<option value="2">国内座机</option>
+							<option value="3">国外电话</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span
+						class="text-danger">*</span>电话：</label>
+					<div class="col-sm-7">
+						<input type="text" class="form-control" id="customerPhone" name="customerPhone" >
+						<div class="remark" style="margin-top: 3px;display: none;color:#ed5565;">注:国内座机格式区号（3或4位）-固话（7或8位）</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>与产权人关系:</label>
+					<div class="col-sm-8">
+						<select id="ownership" name="ownership"
+							class="J_chosen form-control" data-placeholder="请选择">
+							<option value="">请选择</option>
+						</select>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</form>
+</div>
+<!-- 添加联系人 end -->	
+<!-- 添加电话 begin -->
+#parse("/public/edit_phone.html")
+	<!-- js插件 -->
+	<script type="text/javascript"
+		src="$link.contextPath/resources/script/house/main/update-bootstrap-suggest.min.js?v=3"></script>
+	<script type="text/javascript"
+		src="$link.contextPath/resources/script/house/main/buy_add.js?v=3"></script>
+<script
+src="$link.contextPath/resources/script/house/main/validate.js"></script>
+</div>

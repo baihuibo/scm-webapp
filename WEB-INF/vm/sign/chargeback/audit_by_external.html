@@ -1,0 +1,416 @@
+#set($plugins = ["table","chosen"])
+<div class="ibox">
+	<div class="ibox-title">
+		<h5>对外客服审批</h5>
+		<div class="ibox-tools">
+			<a class="collapse-link ui-sortable"> 
+				<i class="fa fa-chevron-up"></i>
+			</a>
+		</div>
+	</div>
+	<div class="ibox-content tab-pane">
+		<div class="row pt6 mb20">
+			<div class="col-md-4">
+				<div class="form-group">
+					<input id="J_signnumberid" type="hidden" value="" />
+					<label class="col-sm-12 control-label" id="signnumber"></label>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-12 control-label" id="strauditstatus"></label>
+				</div>
+			</div>
+		</div>	
+		<div class="tabs-container">
+			<ul class="nav nav-tabs block-tabs-nav" id="operationLog">
+				<li class="active"><a data-toggle="tab" href="#yangyongTab-1">退单信息</a></li>
+				<li><i>|</i></li>
+				<li id="J_feiychuli" class=""><a data-toggle="tab" href="#yangyongTab-2">费用处理</a></li>
+				<li><i>|</i></li>
+				<li id="J_fileList" class=""><a data-toggle="tab" href="#yangyongTab-3">附件管理</a></li>
+				<li><i>|</i></li>
+				<li class="" id="J_supplementalagreement"><a data-toggle="tab" href="#yangyongTab-4">补充协议</a></li>
+				<li><i>|</i></li>
+				<li class="" id="J_shenpi"><a data-toggle="tab" href="#yangyongTab-5">审批流程</a></li>
+				<li><i>|</i></li>
+				<li class="" id="J_yeji"><a data-toggle="tab" href="#yangyongTab-6">业绩信息</a></li>
+			</ul>
+		</div>
+		<div class="tab-content mb20">
+			<div id="yangyongTab-1" class="tab-pane active">
+				<form id="addContractForm" class="form-horizontal ptb10" role="form">
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<label class="col-sm-4 control-label"><span style="color:#ff0000">*</span>合同编号：</label>
+								<div class="col-sm-8 control-label text-left" id="addContractNumber"></div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label class="col-sm-4 control-label">业务类型：</label>
+								<div class="col-sm-8 control-label text-left" id="addBusinessType"></div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label class="col-sm-4 control-label">所属部门：</label>
+								<div class="col-sm-8 control-label text-left" id="addEpartment"></div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<label class="col-sm-4 control-label">客户姓名：</label>
+								<div class="col-sm-8 control-label text-left" id="addCustomerName"></div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label class="col-sm-4 control-label">业主姓名：</label>
+								<div class="col-sm-8 control-label text-left" id="addOwnerName"></div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label class="col-sm-4 control-label">佣金总额（元）：</label>
+								<div class="col-sm-8 control-label text-left" id="addBackCommis"></div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<label class="col-sm-4 control-label">实收佣金（元）：</label>
+								<div class="col-sm-8 control-label text-left" id="addPaidCommission"></div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label class="col-sm-4 control-label">房源编号：</label>
+								<div class="col-sm-8 control-label text-left" id="addHousing"></div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label class="col-sm-4 control-label">客源编号：</label>
+								<div class="col-sm-8 control-label text-left" id="addTourists"></div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<label style="padding:7px 15px 0 0;" class="col-sm-4 control-label"><span style="color:#ff0000">*</span>是否付赔偿款：</label>
+								<div class="col-sm-8 control-label text-left" id="proPeichang"></div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label style="padding:7px 15px 0 0;" class="col-sm-4 control-label"><span style="color:#ff0000">*</span>是否收违约金：</label>
+								<div class="col-sm-8 control-label text-left" id="proShouweiyj"></div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label style="padding:7px 15px 0 0;" class="col-sm-4 control-label"><span style="color:#ff0000">*</span>是否退单：</label>
+								<div class="col-sm-8 control-label text-left" id="proTuidan"></div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<label class="col-sm-4 control-label"><span style="color:#ff0000">*</span>退单类型：</label>
+								<div class="col-sm-8 control-label text-left" id="tuiDval"></div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label style="padding:7px 15px 0 0;" class="col-sm-4 control-label"><span style="color:#ff0000">*</span>是否转佣：</label>
+								<div class="col-sm-8 control-label text-left" id="proZhuany"></div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label style="padding:7px 15px 0 0;" class="col-sm-4 control-label"><span style="color:#ff0000">*</span>是否退佣：</label>
+								<div class="col-sm-8 control-label text-left" id="proTuiyong"></div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<label class="col-sm-4 control-label"><span style="color:#ff0000">*</span>实退佣金（元）：</label>
+								<div class="col-sm-8 control-label text-left" id="shituiYj"></div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label class="col-sm-4 control-label">退佣比例：</label>
+								<div class="col-sm-8 control-label text-left" id="addCommissionRate"></div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group" id="">
+							<label style="padding-top:7px;" class="col-sm-1 control-label"><span style="color:#ff0000">*</span>申请说明：</label>
+							<div class="col-sm-11 control-label text-left" id="explainConten">
+							</div>
+						</div>
+					</div>
+					<div class="row ptb10">
+						<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>审计信息</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<label class="col-sm-4 control-label">创建人：</label>
+								<div class="col-sm-8 control-label text-left" id="createByName"></div>
+							</div>	
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label class="col-sm-4 control-label">创建时间：</label>
+								<div class="col-sm-8 control-label text-left" id="createTime"></div>
+							</div>	
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label class="col-sm-4 control-label">最后修改人：</label>
+								<div class="col-sm-8 control-label text-left" id="updateByName"></div>
+							</div>	
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<label class="col-sm-4 control-label">最后修改时间：</label>
+								<div class="col-sm-8 control-label text-left" id="updateTime"></div>
+							</div>
+						</div>
+					</div>
+					<div id="jiaoYiInfor" style="display:none;">
+						<div class="row ptb10">
+							<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>交易状态信息</div>
+						</div>
+						<div class="row">
+							<div class="col-md-4">
+								<div class="form-group">
+									<label class="col-sm-4 control-label">评估费：</label>
+									<div class="col-sm-8 control-label text-left" id="valuationfee"></div>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<label class="col-sm-4 control-label">网签：</label>
+									<div class="col-sm-8 control-label text-left" id="netsign"></div>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<label class="col-sm-4 control-label">房源检验：</label>
+									<div class="col-sm-8 control-label text-left" id="roomcheck"></div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-4">
+								<div class="form-group">
+									<label class="col-sm-4 control-label">贷款：</label>
+									<div class="col-sm-8 control-label text-left" id="loan"></div>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<label class="col-sm-4 control-label">过户：</label>
+									<div class="col-sm-8 control-label text-left" id="changeName"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div id="yangyongTab-2" class="tab-pane">
+				<div class="ibox-content">
+					<div class="row ptb10">
+						<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>费用处理(付款)</div>
+					</div>
+					<form class="form-horizontal" role="form">
+						<div class="row">
+							<div class="col-md-4">
+								<div class="form-group" style="padding-left:6px">
+									<label class="col-sm-3 control-label">应付总额(元)：</label>
+									<div class="col-sm-8">
+										<input class="form-control" name="" id="" value="" readonly="" type="text">
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+					<div class="ibox float-e-margins mb20">
+				  		<div class="row row-lg">
+							<div class="col-sm-12">
+								<table id="J_cost_dataTable" class="table table-hover table-striped table table-bordered tables table-condensed">
+									<thead>
+										<tr>
+											<th data-field="a">序号</th>
+											<th data-field="b">费用类型</th>
+											<th data-field="c">单据号</th>
+											<th data-field="d">款项名称</th>
+											<th data-field="e">付款单位</th>
+											<th data-field="f">收款方</th>
+											<th data-field="g">收款人</th>
+											<th data-field="h">转入合同</th>
+											<th data-field="j">金额/元</th>
+											<th data-field="k">付款日期</th>
+											<th data-field="l">开户人姓名<br />银行账户</th>
+											<th data-field="m">开户人证件类型</br>证件编号</th>
+											<th data-field="n">支付方式</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="ibox float-e-margins mb20">
+						<div class="row ptb10">
+							<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>费用处理(收款)</div>
+						</div>
+						<form class="form-horizontal" role="form">
+							<div class="row">
+								<div class="col-md-4">
+									<div class="form-group" style="padding-left:6px">
+										<label class="col-sm-3 control-label">应收总额(元)：</label>
+										<div class="col-sm-8">
+											<input class="form-control" name="" id="" value="" readonly="" type="text">
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>
+						<div class="row row-lg">
+							<div class="col-sm-12 mb20">
+								<table id="J_costreceipt_dataTable" class="table table-hover table-striped table table-bordered tables table-condensed">
+									<thead>
+										<tr>
+											<th data-field="a">序号</th>
+											<th data-field="b">费用类型</th>
+											<th data-field="c">收据编号</th>
+											<th data-field="d">收款批次单号</th>
+											<th data-field="e">款项名称</th>
+											<th data-field="f">收款单位</th>
+											<th data-field="g">付款方</th>
+											<th data-field="h">付款单位/个人</th>
+											<th data-field="j">金额/元</th>
+											<th data-field="k">收款日期</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="yangyongTab-3" class="tab-pane">
+				<div class="tab-pane">
+					<table id="attachmentList" class="table table-hover table-striped table-bordered">
+						<thead>
+							<tr>
+								<th data-field="">
+									<div class="th-inner">序号</div>
+								</th>
+								<th data-field="">
+									<div class="th-inner">附件类型</div>
+								</th>
+								<th data-field="">
+									<div class="th-inner">最新上传日期</div>
+								</th>
+								<th data-field="">
+									<div class="th-inner">最新上传人</div>
+								</th>
+								<th data-field="">
+									<div class="th-inner">备注</div>
+								</th>
+								<th data-field="">
+									<div class="th-inner">操作</div>
+								</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+			</div>
+			<div id="yangyongTab-4" class="tab-pane">
+				<div class="tab-pane">
+					<table id="retreatList" class="table table-hover table-striped table-bordered">
+						<thead>
+							<tr>
+								<th data-field="">
+									<div class="th-inner">类型</div>
+								</th>
+								<th data-field="">
+									<div class="th-inner">编号</div>
+								</th>
+								<th data-field="">
+									<div class="th-inner">经办部门</div>
+								</th>
+								<th data-field="">
+									<div class="th-inner">经办人</div>
+								</th>
+								<th data-field="">
+									<div class="th-inner">状态</div>
+								</th>
+								<th data-field="">
+									<div class="th-inner">最新状态时间</div>
+								</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+			</div>
+			<div id="yangyongTab-5" class="tab-pane">
+				<!-- 审批流程图 str -->
+				<!-- #parse("/sign/chargeback/examine.html") -->
+				<!-- 审批流程图 end -->
+				<iframe id="J_srcimg" frameborder="0" style="width: 100%; height: 560px;"></iframe>
+				<div class="ibox-content">
+				 	<div class="row row-lg">
+						<div class="col-sm-12" id="J_dataTable">
+							
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="yangyongTab-6" class="tab-pane">
+				<iframe class="ibox-content" id="J_srcyeji" width="100%"; height="800px"; style="padding:10px 0;"></iframe>
+			</div>
+		</div>
+		<form class="form-horizontal ptb10" role="form" id="J_formnone">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group mb20">
+						<label class="col-sm-1 control-label" style="margin-left:37px;"><span class="color_red">*</span>审批意见：</label>
+						<div class="col-sm-9">
+							<textarea type="text" id="J_auditrecordcontent" name="followcontent" class="form-control" style="min-height:150px !important;max-height:150px !important;" maxlength="500"></textarea>
+						</div>
+						<input type="hidden" value="" id="J_auditresult" />
+					</div>
+				</div>
+				<div class="col-md-12 text-cen mb20">
+					<div class="form-group" id="J_btn_button">
+						
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<div class="ibox-content" id="seeInfor" style="display:none;">
+	<div class="row ptb10">
+		<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i> <span id="fujianType"></span></div>
+	</div>
+	<div class="row" style="max-height:370px;overflow:auto;" id="fujianConten"></div>
+</div>
+<script src="$link.contextPath/resources/script/sign/chargeback/auditbybusiness.js"></script>

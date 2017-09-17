@@ -1,0 +1,161 @@
+#set($plugins = ["table", "ztree" , "laydate" , "chosen"])
+<div ng-controller="agreementEditCtrl as $ctrl" ng-cloak="">
+    <div class="ibox">
+        <div class="ibox-title">
+            <h5>合同信息</h5>
+        </div>
+        <div class="ibox-content">
+            <form class="form-horizontal" role="form">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">协议编号：</label>
+                            <div class="col-sm-8">
+                                <input type="text" readonly="readonly" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">审核状态：</label>
+                            <div class="col-sm-8">
+                                <input type="text" readonly="readonly" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="tabs-container">
+        <ul class="nav nav-tabs">
+            <li class="active"><a>协议信息</a></li>
+        </ul>
+    </div>
+    <div class="ibox">
+        <div class="ibox-title">
+            <h5>协议信息</h5>
+            <div class="ibox-tools">
+                <a class="collapse-link ui-sortable"> <i class="fa fa-chevron-up"></i></a>
+            </div>
+        </div>
+        <div class="ibox-content">
+            <form class="form-horizontal" role="form">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label required">合同编号：</label>
+                            <div class="col-sm-8" layout="row">
+                                <a ng-href="{{$ctrl.contractHref}}"
+                                   class="btn-link btn" flex
+                                   style="border-bottom: 1px solid #a7a7a7; color: blue;"
+                                   target="_blank">{{$ctrl.contractDetail.contract_code}}</a>
+                                <button type="button" class="btn btn-link"
+                                        ng-click="$ctrl.choseContract()">
+                                    <span class="glyphicon glyphicon-search search-caret"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">所属部门：</label>
+                            <div class="col-sm-8">
+                                <input type="text" readonly="readonly" class="form-control"
+                                       ng-value="$ctrl.contractDetail.dept_name">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">协议类型：</label>
+                            <div class="col-sm-8" ng-if="$ctrl.agrtType">
+                                <input type="text" readonly="readonly" class="form-control"
+                                       ng-value="$ctrl.agrtType | agrtType">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row ptb10">
+                    <div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>审计信息</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">创建人：</label>
+                            <div class="col-sm-8">
+                                <input type="text" readonly="readonly" class="form-control"
+                                       ng-value="$ctrl.contractDetail.input_user">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">创建时间：</label>
+                            <div class="col-sm-8">
+                                <input type="text" readonly="readonly" class="form-control"
+                                       ng-value="$ctrl.contractDetail.crt_dttm">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">最后修改人：</label>
+                            <div class="col-sm-8">
+                                <input type="text" readonly="readonly" class="form-control"
+                                       ng-value="$ctrl.contractDetail.lastupt_user">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">最后修改时间：</label>
+                            <div class="col-sm-8">
+                                <input type="text" readonly="readonly" class="form-control"
+                                       ng-value="$ctrl.contractDetail.lastupt_dttm">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row ptb10">
+                    <div class="pl10 font-bold font-blue info-tit">
+                        <i class="glyphicon glyphicon-minus"></i>协议信息
+                        <button class="btn btn-success btn-xs pull-right" type="button"
+                                ng-click="$ctrl.selectAgreement()">
+                            选择条款
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <form novalidate ng-submit="$ctrl.save($ctrl.codeForm)" name="$ctrl.codeForm">
+            <agreement-code
+                    ng-repeat="code in $ctrl.codes"
+                    agrt-type="$ctrl.agrtType"
+                    code="code" index="$index" payment-type="$ctrl.paymentType"
+                    contract="$ctrl.contractDetail"></agreement-code>
+
+            <div class="ibox-content text-center">
+                <button class="btn btn-success" type="submit">
+                    保存
+                </button>
+                <button class="btn btn-default" type="button" ng-click="$ctrl.back()">
+                    取消
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="$link.contextPath/resources/js/department.js"></script>
+<script src="$link.contextPath/resources/script/sign/sign-common.module.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/paging.component.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/select-agreement-layer.component.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/reject-layer.component.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/sign-phone-number-btn.component.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/sign-card-type.directive.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/sign-work-flow-user-layer.component.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/agreement-code.component.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/chose-contract.component.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/sign-laydate.directive.js"></script>
+<script src="$link.contextPath/resources/script/sign/agreement/agreement-edit.module.js"></script>

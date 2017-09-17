@@ -1,0 +1,383 @@
+#set($plugins = ["table","chosen","laydate","autoSearch","ztree"])
+<style>
+label{
+ color: #676a6c;
+
+}
+.bx-prev{ 
+    width: 50px;
+    height: 50px;
+    text-indent: -999999px;
+    z-index: 999;
+    position: absolute;
+    float: left;
+    left: 10PX;
+    top: 70px;
+}
+.bx-next{ 
+    width: 50px;
+    height: 50px;
+    text-indent: -999999px;
+    z-index: 999;
+    position: absolute;
+    float: right;
+    top: 70px;
+    right: 10px;
+    }
+    .evaluate{
+    margin-bottom:30px;
+    }
+</style>
+<div ng-controller="inquisitionDetailCtrl as $ctrl" ng-cloak>
+<div class="ibox">
+	<div class="row">
+		<div class="ibox-title">
+			<h5>处理举报</h5>
+			<div class="ibox-tools">
+				<a class="collapse-link ui-sortable"> <i
+									class="fa fa-chevron-up"></i>
+				</a>
+			</div>
+		</div>
+				
+		<div class="ibox-content">
+			<div class="inquisition_info_content">				
+				<div class="row">
+					<div class="col-sm-4">
+						<dl class="dl-horizontal">
+							<dt>楼盘：</dt>
+							<dd id="conmmunityName">{{$ctrl.detail.housesInquBase.conmmunityName}}</dd>
+						</dl>
+					</div>
+					<div class="col-sm-4">
+						<dl class="dl-horizontal">
+							<dt>详细地址：</dt>
+							<dd><a ng-click="$ctrl.checkAddress()">查看</a></dd>
+						</dl>
+					</div>
+					<div class="col-sm-4">
+						<dl class="dl-horizontal">
+							<dt>房源录入时间：</dt>
+							<dd id="bookinTime">{{$ctrl.detail.housesInquBase.bookinTime}}</dd>
+						</dl>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-4">
+						<dl class="dl-horizontal">
+							<dt>房源编号：</dt>
+							<dd><a ng-href="{{::$ctrl.houselink}}" target="_blank" id="housesId">{{::$ctrl.detail.housesInquBase.housesId}}</a></dd>
+						</dl>
+					</div>
+					<div class="col-sm-4">
+						<dl class="dl-horizontal">
+							<dt>所属部门：</dt>
+							<dd id="deptName">{{$ctrl.detail.housesInquBase.deptName}}</dd>
+						</dl>
+					</div>
+					<div class="col-sm-4">
+						<dl class="dl-horizontal">
+							<dt>所属人：</dt>
+							<input type="hidden" ng-model="$ctrl.detail.housesInquBase.staffId" id="J_usid" >
+							<dd><a id="userName">{{$ctrl.detail.housesInquBase.userName}}</a></dd>
+						</dl>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-4">
+						<dl class="dl-horizontal">
+							<dt>户型：</dt>
+							<dd id="housesLayout">{{$ctrl.detail.housesInquBase.housesLayout}}</dd>
+						</dl>
+					</div>
+					<div class="col-sm-4">
+						<dl class="dl-horizontal">
+							<dt>建筑面积：</dt>
+							<dd id="acreage">{{$ctrl.detail.housesInquBase.acreage}}平方米</dd>
+						</dl>
+					</div>
+					#if($shiro.hasPermission("SCM:HOUSE:INQUISITION:ALLOCATION"))
+					<div class="col-sm-4">
+						<dl class="dl-horizontal">
+							<dt id="inquese">实勘人：</dt>
+							<dd id="inquName">{{$ctrl.detail.housesInquBase.inquName}}</dd>
+						</dl>
+					</div>
+					#else 
+					<div class="col-sm-4">
+						<dl class="dl-horizontal">
+							<dt id="">实勘人：</dt>
+							<dd id="inquName">{{$ctrl.detail.housesInquBase.inquName}}</dd>
+						</dl>
+					</div>						
+					#end
+				</div>
+				<div class="row">
+					<div class="col-sm-4">
+						<dl class="dl-horizontal">
+							<dt>上传人：</dt>
+							<dd id="uploadName">{{$ctrl.detail.housesInquBase.uploadName}}</dd>
+						</dl>
+					</div>
+					<div class="col-sm-4">
+						<dl class="dl-horizontal">
+							<dt>上传时间：</dt>
+							<dd id="uploadTime">{{$ctrl.detail.housesInquBase.uploadTime}}</dd>
+						</dl>
+					</div>
+					<div class="col-sm-4">
+						<dl class="dl-horizontal">
+							<dt>上传方式：</dt>
+							<dd id="uploadWay">{{$ctrl.detail.housesInquBase.uploadWay}}</dd>
+						</dl>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-4">
+						<dl class="dl-horizontal">
+							<dt>图片张数：</dt>
+							<dd id="imgNumTotal">{{$ctrl.detail.housesInquBase.imgNumTotal}}</dd>
+						</dl>
+					</div>
+					<div class="col-sm-4">
+						<dl class="dl-horizontal">
+							<dt>举报编号：</dt>
+							<dd id="reportNo">{{$ctrl.detail.housesReportDetail.reportNo}}</dd>
+						</dl>
+					</div>
+					<div class="col-sm-4">
+						<dl class="dl-horizontal"></dl>
+					</div>
+				</div>										
+			</div>
+				
+		</div>
+		
+	</div>
+	<form role="form">
+	 <div class="form-group">
+			<div class=" panel panel-success ">
+				<div class="col-sm-12 panel-heading">
+					<h3 class="col-sm-3 panel-title">
+						被举报图&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<span>被举报实勘编号&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span
+							class="report_in_number" id="coverReportNo">{{$ctrl.detail.housesReportDetail.coverReportNo}}</span></span>
+					</h3>
+
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<!-- 被举报的户型图-->
+						<div class="img_report_in">
+						<p class="topic picterTotal">
+							
+							<span>图片总数&nbsp;<span class="aparted_in_number">{{$ctrl.detail.housesPicture1.length}}</span></span>
+						</p>
+						<div class="panel-body proxy_con">
+							<sign-slider type="radio" name="btSelectItem" list="$ctrl.detail.housesPicture1" alt="户型图"></sign-slider>
+						</div>
+						</div>
+						<!-- 被举报的室内图 -->
+						<div class="img_reported_in">
+						<p class="topic picterTotal">
+							
+							<span>图片总数&nbsp;<span class="indoored_in_number">{{$ctrl.detail.housesPicture2.length}}</span></span>
+						</p>
+						<div class="panel-body proxy_con">
+							<sign-slider type="radio" name="btSelectItem" list="$ctrl.detail.housesPicture2" alt="室内图"></sign-slider>
+						</div>	
+						</div>
+						<div class="row">
+							<div class="col-md-1"></div>
+							 <div class="col-md-10">
+						    	<label for="name" class="col-sm-1">原实勘评价：</label>
+						    	<div class="col-sm-11 break-word m-b" id="originalMemo">
+						    		{{$ctrl.detail.housesReportDetail.originalMemo}}
+						    	</div>
+							</div> 
+							<div class="col-md-1"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+	    </div>
+	   
+		<div style="clear:both;"></div>
+		<div class="form-group">
+			<div class="panel panel-success">
+				<div class="col-sm-12 panel-heading">
+					<h3 class="col-sm-3 panel-title">
+						举报图&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span>举报实勘编号&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<span class="report_in_number" id="inquId">{{$ctrl.detail.housesReportDetail.inquId}}</span>
+						</span>
+					</h3>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<!-- 举报的户型图 -->
+						<div class="img_report_outer">
+						<p class="topic picterTotal">
+							
+							<span>图片总数&nbsp;<span class="apart_in_number">{{$ctrl.detail.housesInquBase.imgNumDoorTotal}}</span></span>
+						</p>
+						<div class="panel-body proxy_con">
+							<sign-slider type="radio" name="btSelectItem_m" list="$ctrl.detail.housesPicture3" alt="户型图"></sign-slider>
+						</div>
+						</div>
+						<!-- 举报的室内图 -->
+						<div class="img_report_in">
+						<p class="topic picterTotal">
+							
+							<span>图片总数&nbsp;<span class="indoor_in_number">{{$ctrl.detail.housesInquBase.imgNumIndoorTotal}}</span></span>
+						</p>
+						<div class="panel-body proxy_con">
+							<sign-slider type="radio" name="btSelectItem_m" list="$ctrl.detail.housesPicture4" alt="室内图"></sign-slider>
+						</div>
+						</div>
+						<div class="row">
+							<div class="col-md-1"></div>
+							 <div class="col-md-10">
+						    	<label for="name" class="col-sm-1">举报评价：</label>
+						    	<div class="col-sm-11 break-word m-b" id="reportMemo">
+						    		{{$ctrl.detail.housesReportDetail.reportMemo}}
+						    	</div>
+							</div> 
+							<div class="col-md-1"></div>
+						</div>
+						<div class="row">
+							<div class="col-md-1"></div>
+							<div class="col-md-10 evaluate">
+								<label for="name" class="col-sm-1">举报原因：</label>
+								<div class="col-sm-11 break-word" id="reportReason">
+									{{$ctrl.detail.housesReportDetail.reportReason}}
+								</div>
+							</div>
+							<div class="col-md-1"></div>
+						</div>
+						<div></div>
+					</div>
+				</div>
+			</div>
+		</div>   
+		<div class="row ">
+			<div class="col-md-5">
+				
+			</div>
+			<div class="col-md-4">
+				<div>
+					<div class="col-sm-8  col-sm-off set-4" >
+						<button id="" type="button" class="btn btn-success pr5 apart">户型图比较</button>
+						<button id="" type="button" class="btn btn-success pr5 indoor">室内图比较</button>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-2">
+				
+			</div>
+		</div>
+	    <div class="form-group">
+	    	<label for="name"><span style="color:red;">*</span>处理举报结果描述</label>
+	    	<textarea maxlength="500" id="handleResults" class="form-control" rows="2"></textarea>
+	  	</div>
+	  	 <div class="row ">
+			<div class="col-md-5">
+				
+			</div>
+			<div class="col-md-4">
+				<div>
+					<div class="col-sm-8  col-sm-off set-4">
+						<a id="real"  class="btn btn-success pr5">&nbsp;&nbsp;真实举报&nbsp;&nbsp;</a>
+						<a id="no"  class="btn btn-success pr5">&nbsp;&nbsp;驳回举报&nbsp;&nbsp;</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-2">
+				
+			</div>
+		</div>
+		
+    </form>
+</div>
+
+<!-- 图片对比模态框 -->
+<div id="demo_layer_stantard3" class="ibox-content"
+	style="display: none">
+	<p>说明：“+”放大、“-”缩小、可使鼠标滚轮放大缩小。</p>
+	<div class="inq_deta-imgBox">
+		<div class="inq_imageBox">
+			<fieldset class="inq_deta_fieldset thumbBox">
+				<legend class="inq_deta_legend">线上图片</legend>
+			</fieldset>
+		</div>
+		<div class="inq_imageBox1">
+			<fieldset class="inq_deta_fieldset thumbBox1">
+				<legend class="inq_deta_legend">打假图片</legend>
+			</fieldset>
+		</div>
+	</div>
+	<span class="enlarge" id="btnZoomIn">＋</span> <span class="narrow"
+		id="btnZoomOut">－</span>
+</div>
+
+<!-- 图片对比模态框 -->
+<div id="demo_layer_stantard3" class="ibox-content"
+	style="display: none">
+	<p>说明：“+”放大、“-”缩小、也可使鼠标滚轮放大缩小。</p>
+	<div class="inq_deta-imgBox">
+		<div class="inq_imageBox">
+			<fieldset class="inq_deta_fieldset thumbBox">
+				<legend class="inq_deta_legend">线上图片</legend>
+			</fieldset>
+		</div>
+		<div class="inq_imageBox1">
+			<fieldset class="inq_deta_fieldset thumbBox1">
+				<legend class="inq_deta_legend">打假图片</legend>
+			</fieldset>
+		</div>
+	</div>
+	<span class="enlarge" id="btnZoomIn">＋</span> <span class="narrow"
+		id="btnZoomOut">－</span>
+</div>
+
+<!-- 查看实勘中变更实勘人模态框 -->
+<div id="change_inquese" class="ibox-content1" style="display: none">
+<form id="" name="" class="form-horizontal">
+<div class="row" style="padding-top: 20px;">
+	<div class="col-md-12">
+		<div class="form-group">
+			<label class="col-sm-3 control-label"><span class="text-danger">*</span>实勘人：</label>
+			<div class="col-sm-8">
+				<div class="input-group">
+					<input type="text" class="form-control" id="J_user"
+						autocomplete="off" name="belonguserid">
+					<div class="input-group-btn">
+						<button type="button" class="btn btn-white dropdown-toggle"
+							data-toggle="">
+							<span class="glyphicon glyphicon-search search-caret"></span>
+						</button>
+						<ul class="dropdown-menu dropdown-menu-right" role="menu"
+							style="padding-top: 0px; max-height: 375px; max-width: 800px; overflow: auto; width: auto; transition: 0.3s; left: -110px; right: auto; min-width: 145px;">
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</form>
+</div>	
+</div>
+<script src="$link.contextPath/resources/script/sign/sign-common.module.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/slider.component.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/sign-checkbox.component.js"></script>
+<script src="$link.contextPath/resources/js/viewer.js"></script>
+<script src="$link.contextPath/resources/js/jquery.bxslider.js"></script>
+<link rel="stylesheet" type="text/css" href="$link.contextPath/resources/css/viewer.css">
+<script
+	src="/sales/resources/script/house/inquisition/antifraud/deal_report.module.js"></script>
+<script src="/sales/resources/script/house/inquisition/antifraud/deal_report.js"></script>
+<script src="/sales/resources/script/house/inquisition/inquisition_check/cropbox.js"></script>
+  <script src="/sales/resources/script/house/public/check_address.js"></script>
+<script type="text/javascript" src="$link.contextPath/resources/js/department.js"></script>
+ 
+

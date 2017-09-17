@@ -1,0 +1,46 @@
+#set($plugins = ["table","chosen","linkage","autoSearch"])
+<style>
+	.fieldBodr{border:1px solid #CBD5DD;}
+	.alteration{min-height: 45px;max-height: 90px;overflow: auto;line-height: 20px;text-align: left;padding:0 5px;}
+	.form-horizontal .control-div {
+		padding: 7px 0;
+		margin-bottom: 0;
+	}
+</style>
+<div class="row ptb10">
+	<div class="tabs-container">
+		<ul class="nav nav-tabs">
+			<li class="active"><a data-toggle="tab" href="#111" id="payDetailBtn">基本信息</a></li>
+			<li class=""><a data-toggle="tab" href="#222" id="approhisBtn">审批历史</a></li>
+			<li class=""><a data-toggle="tab" href="#333" id="operaLogBtn">操作日志</a></li>
+		</ul>
+	</div>
+	<div class="tab-content" id="" style="padding:10px 0;">
+		<div id="111" class="tab-pane active ibox-content">
+			<div id="bascInfor" class="form-horizontal">
+			</div>
+			<div style="padding-top:15px;text-align:center;">
+				<button id="submitBtn" type="button" class="btn btn-success pr5 btn_size">提交</button>
+				<!--<a  type="button" class="btn btn-success pr5">取消</button>-->
+				<a href="javascript:window.opener=null;window.open('','_self');window.close();" class="btn btn-success J_add_device">取消</a>
+			</div>
+		</div>
+		<div id="222" class="tab-pane ibox-content">审批历史</div>
+		<div id="333" class="tab-pane ibox-content">
+			<table id="operaLogTab" class="table table-hover table-striped table-bordered">
+				<thead>
+					<tr>
+						<th data-field="id">序号</th>
+						<th data-field="name">操作人</th>
+						<th data-field="type">岗位</th>
+						<th data-field="beforeowner">所属部门</th>
+						<th data-field="afterowner">操作类型</th>
+						<th data-field="afterowner">操做内容</th>
+						<th data-field="afterowner">操作时间</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+	</div>
+</div>
+<script src="$link.contextPath/resources/script/finance/payment/payModify.js"></script>

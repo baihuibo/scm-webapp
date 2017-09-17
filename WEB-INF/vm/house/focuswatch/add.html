@@ -1,0 +1,66 @@
+<div id="focus_watch_add">
+    <!-- 添加集中看房 start -->
+    <div id="I_focus_watch_add_layer" class="ibox-content"
+         style="margin:0 10px 0 10px; display:none;"
+         ng-controller="focusWatchAddCtrl as $ctrl">
+
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-3 control-label">
+                    <span class="text-danger">*</span>
+                    看房时间：
+                </label>
+                <div class="col-sm-8" layout="row">
+                    <div flex>
+                        <input type="text" id="add_focus_begindate"
+                               class="form-control"/>
+                    </div>
+
+                    <div class="split">-</div>
+
+                    <div flex>
+                        <input type="text" id="add_focus_enddate"
+                               class="form-control"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hr-line-dashed"></div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label">
+                    <span class="text-danger">*</span>
+                    联系人：
+                </label>
+                <div class="col-sm-8">
+                    <div class="input-group">
+                        <input type="text" class="form-control J_belongperson"
+                               id="I_focus_watch_connect">
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown">
+                                <span class="glyphicon glyphicon-search search-caret"></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right" role="menu"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hr-line-dashed"></div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label">
+                    备注：
+                </label>
+                <div class="col-sm-8">
+                    <textarea ng-model="$ctrl.memo" rows="5" class="form-control" maxlength="500"></textarea>
+                    <div class="help-block text-right">限制字数({{$ctrl.memo.length || 0}} / 500)</div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- 添加集中看房 end -->
+</div>
+
+
+<script type='text/javascript' src="$link.contextPath/resources/script/house/focuswatch/add.js"></script>

@@ -1,0 +1,231 @@
+#set($plugins = ["table","chosen","laydate","autoSearch","ztree"])
+ <style>
+/*  #laydate_table{
+display:none !important;
+}  */
+</style>
+<script>
+function cleanSpelChar(th){   
+	  if(/["'<>%;)(&+]/.test(th.value)){      
+	  $(th).val(th.value.replace(/["'<>%;)(&+]/,""));   
+	  } 
+	 
+	}
+</script>
+<div class="ibox">
+	<div class="row">
+		<div class="ibox-title">
+			<h5>收益业绩总额调整管理</h5>
+			<div class="ibox-tools">
+				<a class="collapse-link ui-sortable"> <i
+					class="fa fa-chevron-up"></i>
+				</a>
+			</div>
+		</div>
+
+		<div class="ibox-content">
+			<form id="J_query" class="form-horizontal" role="form">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">业务类型：</label>
+							<div class="col-sm-8">
+								<select id="customertype" name="businessType"
+									class="J_chosen form-control" data-placeholder="全部">
+									<option value="">全部</option>									
+									<option value="1">普租</option>
+									<option value="2">二手买卖</option>
+									<option value="3">一手买卖</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">调整金额：</label>
+							<div class="col-sm-8" layout="row">
+								<div flex>
+									<input class="form-control" placeholder=""  name="beginAdjustAmount" oninput="check(this)" onChange="allCheck(this)">
+								</div>
+								<div class="split">-</div>
+								<div flex>
+									<input class="form-control" placeholder="" name="endAdjustAmount" oninput="check(this)" onChange="allCheck(this)">
+								</div>
+							</div>
+						</div>
+					</div>
+                    <div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-3 control-label">业绩类型：</label>
+										<div class="col-sm-8">
+										   <select data-placeholder="全部" id="J_perfType" class="form-control" name="perfType" >
+										        <option value="">全部</option>
+							                     <!--<option value="">请选择</option>
+							                     <option value="1">房源录入人业绩</option>
+							                     <option value="2">收钥匙人业绩</option>
+							                     <option value="3">委托书业绩</option>
+							                     <option value="4">实勘人业绩</option>
+							                     <option value="5">实勘预约人业绩</option>
+							                     <option value="6">成交人业绩</option>
+							                     <option value="7">合作人业绩</option>
+							                     <option value="8">奖励共享业绩</option>
+							                     <option value="19">房源收盘业绩</option>
+							                     <option value="20">贷款分单业绩</option> -->
+							                </select>
+										</div>
+									</div>
+								</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">操作人：</label>
+							<div class="col-sm-8">
+								<div class="input-group">
+									<input type="text" class="form-control" id="J_user" name="operatorId"
+										autocomplete="off">
+									<div class="input-group-btn">
+										<button type="button" class="btn btn-white dropdown-toggle"
+											data-toggle="">
+											<span class="glyphicon glyphicon-search search-caret"></span>
+										</button>
+										<ul class="dropdown-menu dropdown-menu-right" role="menu"
+											style="padding-top: 0px; max-height: 375px; max-width: 800px; overflow: auto; width: auto; transition: 0.3s; left: -310px; right: auto; min-width: 145px;">
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">调整日期：</label>
+							<div class="col-sm-4">
+								<input id="J_begindate" name="beginAdjustDate"
+									class="J_chosen form-control" readonly
+									style="background-color: #FFFFFF;">
+							</div>
+							<div style="float: left; padding: 7px 0px;">-</div>
+							<div class="col-sm-4">
+								<input id="J_enddate" name="endAdjustDate"
+									class="J_chosen form-control" readonly
+									style="background-color: #FFFFFF;">
+							</div>
+						</div>
+					</div>
+					 <div class="col-md-4">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">合同编号：</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" name="contractNo" id=""
+									autocomplete="off">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">业绩归属月：</label>
+							<div class="col-sm-4">
+								<input id="J_beginmonth" name="beginBelongMonth"
+									class="J_chosen form-control" readonly
+									style="background-color: #FFFFFF;">
+							</div>
+							<div style="float: left; padding: 7px 0px;">-</div>
+							<div class="col-sm-4">
+								<input id="J_endmonth" name="endBelongMonth"
+									class="J_chosen form-control" readonly
+									style="background-color: #FFFFFF;">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row btns">
+					<div class="col-md-12">
+						<div class="form-group">
+							<div class="col-sm-6 col-sm-offset-6">
+								<button id="J_search" type="button"
+									class="btn btn-success btn_size">查 询</button>
+								<button id="J_reset" type="reset"
+														class="btn btn-white btn_size">重 置</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+
+		<div class="ibox-content">
+			<div class="row row-lg">
+				<div class="col-sm-12">
+					<div class="example-wrap">
+						<div class="row all">
+							<div class="btn-group hidden-xs fr" id="exampleToolbar"
+								role="group">
+								<a id="history"  href="/sales/performanceIncome/openImportDetail.html" target='_blank'
+									class="btn btn-success btn-size pr5">批量调整历史</a>
+							</div>
+							<div class="btn-group hidden-xs fr" id="exampleToolbar"
+								role="group">
+								<button id="J_del" type="button"
+									class="btn btn-success pr5 btn-size">批量调整</button>
+							</div>
+							<div class="btn-group hidden-xs fr" id="exampleToolbar "
+								role="group">
+								<a id="add1" href="/sales/performanceIncome/add1.html" target='_blank'
+									class="btn btn-success pr5 btn-size">新增业绩调整</a>
+							</div>
+						</div>
+						<!-- Example Pagination -->
+
+						<table id="J_dataTable_list"
+							class="table table-hover table-striped table-condensed table table-bordered tables">
+							<thead>
+								<tr>
+									<th data-field="incomeId">调整编号</th>
+									<th data-field="contractNo">合同编号</th>
+									<th data-field="perfType">业绩类型</th>
+									<th data-field="adjustDate">调整时间</th>
+									<th data-field="businessType">业务类型</th>
+									<th data-field="adjustAmount">调整金额</th>
+									<th data-field="belongerName">被调整人</th>
+									<th data-field="belongMonth">业绩归属月</th>
+									<th data-field="content">被调整人所属部门</th>
+									<th data-field="operatorName">操作人</th>
+									<th data-field="memo">调整原因</th>
+								</tr>
+							</thead>
+						</table>
+						<!-- End Example Pagination -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="demo_layer_stantard2" class="ibox-content" style="display: none">
+ 	<div class="all_of">
+		<div class="upload1">
+			<a id="exceldown" style="text-decoration:underline">下载批量调整模板</a>
+		</div>
+		<div class="upload2">
+			<input type="file" name="file1" id="file1" style="display: none" />
+		</div>
+		<h5 class="up_btn">批量上传</h5>
+		<p style="color: red; text-align: center; margin-top: 5%;">备注：附件格式为：*.xlsx或
+			*.xls</p>
+		<div class="onload"></div> 
+		    <form id= "uploadForm">  
+
+</form>
+	</div>
+
+</div>
+<script
+	src="/sales/resources/script/performance/perfIncomeTotal/list.js"></script>
+
+<script type="text/javascript"
+	src="$link.contextPath/resources/js/department.js"></script>
+
+

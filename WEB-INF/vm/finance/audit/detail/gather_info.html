@@ -1,0 +1,526 @@
+<div class="gather_info form-horizontal">
+	<div class="row">
+		<div class="pl10 font-bold font-blue info-tit">
+			<i class="glyphicon glyphicon-minus"></i>申请信息
+		</div>
+	</div>
+	<div class="row m-t-md">
+		<div class="col-md-4">
+			<div class="form-group">
+				<label class="col-sm-3 control-label">所属部门：</label>
+				<div class="col-sm-7 control-div">
+					{{$ctrl.detail.belongDeptName}}
+				</div>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="form-group">
+				<label class="col-sm-3 control-label">查账编号：</label>
+				<div class="col-sm-7 control-div">
+					{{$ctrl.detail.auditNo}}
+				</div>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="form-group">
+				<label class="col-sm-3 control-label">申请人：</label>
+				<div class="col-sm-7 control-div">
+					{{$ctrl.detail.createByName}}
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-4">
+			<div class="form-group">
+				<label class="col-sm-3 control-label">申请时间：</label>
+				<div class="col-sm-7 control-div">
+					{{$ctrl.detail.createTime}}
+				</div>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="form-group">
+				<label class="col-sm-3 control-label">查账状态：</label>
+				<div class="col-sm-7 control-div">
+					{{$ctrl.detail.auditStatusName}}
+				</div>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="form-group">
+				<label class="col-sm-3 control-label">审核人：</label>
+				<div class="col-sm-7 control-div">
+					{{$ctrl.detail.auditByName}}
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-4">
+			<div class="form-group">
+				<label class="col-sm-3 control-label">审核时间：</label>
+				<div class="col-sm-7 control-div">
+					{{$ctrl.detail.auditTime}}
+				</div>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="form-group">
+				<label class="col-sm-3 control-label">收款批次：</label>
+				<div class="col-sm-7 control-div">
+					{{$ctrl.detail.batchId}}
+				</div>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="form-group">
+				<label class="col-sm-3 control-label">合同编号：</label>
+				<div class="col-sm-7 control-div">
+					{{$ctrl.detail.contractCode}}
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="form-group">
+				<label class="col-sm-1 control-label">查账申请原因：</label>
+				<div class="col-sm-7 control-div">
+					{{$ctrl.detail.auditReason}}
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="pl10 font-bold font-blue info-tit">
+			<i class="glyphicon glyphicon-minus"></i>出纳查账信息
+		</div>
+	</div>
+	<form class="form-horizontal" id="form1">
+		<!-- 支票 -->
+		<div class="paymenyType1" ng-if="$ctrl.detail.paymenyType==6">
+			<div class="row m-t-md">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">支付方式：</label>
+						<div class="col-sm-7 control-div">
+							{{$ctrl.detail.paymenyTypeStr}}
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">支票号：</label>
+						<div class="col-sm-7 control-div">
+							{{$ctrl.detail.payerAccountNo}}
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">支付金额：</label>
+						<div class="col-sm-7 control-div">
+							{{$ctrl.detail.amount}}
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">出票日期：</label>
+						<div class="col-sm-7 control-div">
+							{{$ctrl.detail.paymentTime | date2stamp | date:'yyyy-MM-dd'}}
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4"> 
+					<div class="form-group">
+						<label class="col-sm-3 control-label">出票单位：</label>
+						<div class="col-sm-7 control-div">
+							{{$ctrl.detail.payerName}}
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<dt class="col-sm-3 control-label">接收日期：</dt>
+						 <dd>
+							<div class="col-sm-7">	
+								<input type="text" class="form-control" name="chequeReceiveTime"  id="chequeReceiveTime"  
+								sign-laydate
+								format="YYYY-MM-DD" 
+								ng-value="$ctrl.detail.chequeReceiveTime" ng-if="$ctrl.detail.chequeReceiveTime==undefined">
+								
+								
+								<input type="text" class="form-control" name="chequeReceiveTime"  id="chequeReceiveTime"  
+								format="YYYY-MM-DD" 
+								ng-value="$ctrl.detail.chequeReceiveTime" ng-if="$ctrl.detail.chequeReceiveTime!==undefined" readonly>
+								<!--  <input type="text" class="form-control"
+								 format="YYYY-MM-DD"
+								 ng-readonly="$ctrl.chequeReadonly"
+                                 sign-laydate 
+                                 placeholder="请选择接收日期"
+                                 ng-value="$ctrl.detail.chequeReceiveTime" required> -->					
+							</div>
+						</dd>
+					</div>
+				</div>
+			</div>
+			<div class="row" ng-if="$ctrl.detail.chequeReceiveTime!=null">
+				<div class="col-md-4">
+					<div class="form-group">
+						<dt class="col-sm-3 control-label">存入银行日：</dt>
+						 <dd>
+							<div class="col-sm-7">	
+								<input type="text" class="form-control" 
+								name="chequeCheckinTime"  id="chequeCheckinTime"
+								sign-laydate
+								ng-value="$ctrl.detail.chequeCheckinTime" ng-if="$ctrl.detail.chequeCheckinTime==undefined">
+								
+								<input type="text" class="form-control" 
+								name="chequeCheckinTime"  id="chequeCheckinTime"
+								ng-value="$ctrl.detail.chequeCheckinTime" ng-if="$ctrl.detail.chequeCheckinTime!==undefined" readonly>
+								<!-- <input type="text" class="form-control"
+								 format="YYYY-MM-DD"
+								 ng-readonly="$ctrl.checkiReadonly"
+                                 sign-laydate 
+                                 placeholder="请选择接收日期"
+                                 ng-model="$ctrl.detail.chequeCheckinTime" required> -->					
+							</div>
+						</dd>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<dt class="col-sm-3 control-label">存入银行：</dt>
+						 <dd>
+							<div class="col-sm-7">	
+								<input type="text" class="form-control" name="chequeCheckinName"  id="chequeCheckinName" ng-value="$ctrl.detail.chequeCheckinName" ng-readonly="$ctrl.detail.chequeCheckinName==undefined?false:true">					
+							</div>
+						</dd>
+					</div>
+				</div> 
+				<div class="col-md-4">
+					<div class="form-group">
+						<dt class="col-sm-3 control-label">银行账号：</dt>
+						 <dd>
+							<div class="col-sm-7">	
+								<input type="text" class="form-control" name="chequeCheckinNo"  id="chequeCheckinNo" ng-value="$ctrl.detail.chequeCheckinNo" ng-readonly="$ctrl.detail.chequeCheckinNo==undefined?false:true">					
+							</div>
+						</dd>
+					</div>
+				</div> 
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<dt class="col-sm-3 control-label">到账日：</dt>
+						 <dd>
+							<div class="col-sm-7">	
+								<input type="text" class="form-control" 
+								name="chequeConfirmTime"
+								sign-laydate  
+								id="chequeConfirmTime" 
+								ng-value="$ctrl.detail.chequeConfirmTime" ng-if="$ctrl.detail.auditStatusName!=='已到账' && $ctrl.detail.auditStatusName!=='未到账' && $ctrl.detail.chequeReceiveTime!==undefined && $ctrl.detail.chequeCheckinTime!==undefined">
+								
+								<input type="text" class="form-control" 
+								name="chequeConfirmTime"
+								id="chequeConfirmTime"
+								ng-value="$ctrl.detail.chequeConfirmTime" readonly ng-if="$ctrl.detail.auditStatusName=='已到账' || $ctrl.detail.auditStatusName=='未到账'">
+								<!-- <input type="text" class="form-control"
+								 format="YYYY-MM-DD"
+                                 sign-laydate 
+                                 placeholder="请选择接收日期"
+                                 ng-model="$ctrl.detail.chequeConfirmTime" required> -->				
+							</div>
+						</dd>
+					</div>
+				</div> 
+			</div>			
+		</div>
+		<!-- pos -->
+		<div class="paymenyType2" ng-if="$ctrl.detail.paymenyType==4">
+			<div class="row m-t-md">
+				<div class="col-md-4">
+					<dl class="dl-horizontal">
+						<dt>支付方式：</dt>
+						<dd>{{$ctrl.detail.paymenyTypeStr}}</dd>
+					</dl>
+				</div>
+				<div class="col-md-4">
+					<dl class="dl-horizontal">
+						<dt>刷卡日期：</dt>
+						<dd>{{$ctrl.detail.paymentTime | date2stamp | date:'yyyy-MM-dd'}}</dd>
+					</dl>
+				</div>
+				<div class="col-md-4">
+					<dl class="dl-horizontal">
+						<dt>刷卡金额：</dt>
+						<dd>{{$ctrl.detail.amount}}</dd>
+					</dl>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<dl class="dl-horizontal">
+						<dt>刷卡方式：</dt>
+						<dd>{{$ctrl.detail.payeeAccountName}}</dd>
+					</dl>
+				</div>
+				<div class="col-md-4">
+					<dl class="dl-horizontal">
+						<dt>收款账号：</dt>
+						<dd>{{$ctrl.detail.payeeAccountNo}}</dd>
+					</dl>
+				</div>
+				<div class="col-md-4">
+					<dl class="dl-horizontal">
+						<dt>卡号：</dt>
+						<dd>{{$ctrl.detail.payerAccountNo}}</dd>
+					</dl>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<dl class="dl-horizontal">
+						<dt>12位参考号：</dt>
+						<dd>{{$ctrl.detail.transNumber}}</dd>
+					</dl>
+				</div>
+				<div class="col-md-4">
+					<dl class="dl-horizontal">
+						<dt>终端号：</dt>
+						<dd>{{$ctrl.detail.terminalNumber}}</dd> 
+					</dl>
+				</div>
+			</div>
+		</div>
+		<!-- 支付宝 -->
+		<div class="paymenyType3"  ng-if="$ctrl.detail.paymenyType==1">
+			<div class="row m-t-md">
+				<div class="col-md-4">
+					<dl class="dl-horizontal">
+						<dt>支付方式：</dt>
+						<dd>{{$ctrl.detail.paymenyTypeStr}}
+						</dd>
+					</dl>
+				</div>
+				<div class="col-md-4">
+					<dl class="dl-horizontal">
+						<dt>存入日期：</dt>
+						<dd>{{$ctrl.detail.paymentTime | date2stamp | date:'yyyy-MM-dd'}}
+						</dd>
+					</dl>
+				</div>
+				<!-- <div class="col-md-4">
+					<div class="form-group">
+						<dt class="col-sm-3 control-label">存入日期：</dt>
+						 <dd>
+							<div class="col-sm-7">	
+								<input type="text" class="form-control" name="chequeCheckinTime"  id="chequeCheckinTime" ng-value="$ctrl.detail.chequeCheckinTime">		
+							</div>
+						</dd>
+					</div>
+				</div> -->
+				<div class="col-md-4">
+					<dl class="dl-horizontal">
+						<dt>存入金额：</dt>
+						<dd>{{$ctrl.detail.amount}}</dd>
+					</dl>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<dl class="dl-horizontal">
+						<dt>收款账号：</dt>
+						<dd>{{$ctrl.detail.payeeAccountNo}}</dd>
+					</dl>
+				</div>
+				<div class="col-md-4">
+					<dl class="dl-horizontal">
+						<dt>收款银行：</dt>
+						<dd>{{$ctrl.detail.payeeAccountName}}</dd>
+					</dl>
+				</div>
+				<div class="col-md-4">
+					<dl class="dl-horizontal">
+						<dt>交易号：</dt>
+						<dd>{{$ctrl.detail.transNumber}}</dd>
+					</dl>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<dl class="dl-horizontal">
+						<dt>付款人全称：</dt>
+						<dd>{{$ctrl.detail.payerName}} </dd>
+					</dl>
+				</div>
+				<div class="col-md-4">
+					<dl class="dl-horizontal">
+						<dt>支付宝账号：</dt>
+						<dd>{{$ctrl.detail.payerAccountNo}}</dd>
+					</dl>
+				</div>
+			</div>
+		</div>
+		<!-- 转账 -->
+		<div class="paymenyType4"  ng-if="$ctrl.detail.paymenyType==3">
+			<div class="row m-t-md">
+				<div class="col-md-4">
+					<dl class="dl-horizontal">
+						<dt>支付方式：</dt>
+						<dd>{{$ctrl.detail.paymenyTypeStr}}</dd>
+					</dl>
+				</div>
+				<div class="col-md-4">
+					<dl class="dl-horizontal">
+						<dt>支付日期：</dt>
+						<dd>{{$ctrl.detail.paymentTime | date2stamp | date:'yyyy-MM-dd'}}</dd>
+					</dl>
+				</div>
+				<div class="col-md-4">
+					<dl class="dl-horizontal">
+						<dt>支付金额：</dt>
+						<dd>{{$ctrl.detail.amount}}</dd>
+					</dl>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<dl class="dl-horizontal">
+						<dt>收款银行：</dt>
+						<dd>{{$ctrl.detail.payeeAccountName}}</dd>
+					</dl>
+				</div>
+				<div class="col-md-4">
+					<dl class="dl-horizontal">
+						<dt>收款账号：</dt>
+						<dd>{{$ctrl.detail.payeeAccountNo}}</dd>
+					</dl>
+				</div>
+				<div class="col-md-4">
+					<dl class="dl-horizontal">
+						<dt>汇款人全称：</dt>
+						<dd>{{$ctrl.detail.payerName}}</dd>
+					</dl>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<dl class="dl-horizontal">
+						<dt>付款人账号：</dt>
+						<dd>{{$ctrl.detail.payerAccountNo}}</dd>
+					</dl>
+				</div>
+			</div>
+		</div>
+		<!-- 银行存款 -->
+		<div class="paymenyType5" ng-if="$ctrl.detail.paymenyType==2">
+			<div class="row m-t-md">
+				<div class="col-md-4">
+					<dl class="dl-horizontal">
+						<dt>支付方式：</dt>
+						<dd>{{$ctrl.detail.paymenyTypeStr}}</dd>
+					</dl>
+				</div>
+				<div class="col-md-4">
+					<dl class="dl-horizontal">
+						<dt>存入日期：</dt>
+						<dd>{{$ctrl.detail.paymentTime | date2stamp | date:'yyyy-MM-dd'}}</dd>
+					</dl>
+				</div>
+				<div class="col-md-4">
+					<dl class="dl-horizontal">
+						<dt>存入金额：</dt>
+						<dd>{{$ctrl.detail.amount}}</dd>
+					</dl>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<dl class="dl-horizontal">
+						<dt>银行名称：</dt>
+						<dd>{{$ctrl.detail.payeeAccountName}}</dd>
+					</dl>
+				</div>
+				<div class="col-md-4">
+					<dl class="dl-horizontal">
+						<dt>收款账号：</dt>
+						<dd>{{$ctrl.detail.payeeAccountNo}}</dd>
+					</dl>
+				</div>
+				<div class="col-md-4">
+					<dl class="dl-horizontal">
+						<dt>营业网点：</dt>
+						<dd>{{$ctrl.detail.payerName}}</dd>
+					</dl>
+				</div>
+			</div>
+		</div>
+		<!-- 结算卡 -->
+		<div class="paymenyType6" ng-if="$ctrl.detail.paymenyType==5">
+			<div class="row m-t-md">
+				<div class="col-md-4">
+					<dl class="dl-horizontal">
+						<dt>支付方式：</dt>
+						<dd>{{$ctrl.detail.paymenyTypeStr}}</dd>
+					</dl>
+				</div>
+				<div class="col-md-4">
+					<dl class="dl-horizontal">
+						<dt>支付时间：</dt>
+						 <dd>{{$ctrl.detail.paymentTime | date2stamp | date:'yyyy-MM-dd'}}</dd>
+					</dl>
+				</div>
+				<div class="col-md-4">
+					<dl class="dl-horizontal">
+						<dt>支付金额：</dt>
+						<dd>{{$ctrl.detail.amount}}</dd>
+					</dl>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<dl class="dl-horizontal">
+						<dt>收款银行：</dt>
+						<dd>{{$ctrl.detail.payeeAccountName}}</dd>
+					</dl>
+				</div>
+				<div class="col-md-4">
+					<dl class="dl-horizontal">
+						<dt>收款账号：</dt>
+						<dd>{{$ctrl.detail.payeeAccountNo}}</dd>
+					</dl>
+				</div>
+				<div class="col-md-4">
+					<dl class="dl-horizontal">
+						<dt>结算卡号：</dt>
+						<dd>{{$ctrl.detail.terminalNumber}}</dd>
+					</dl>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<dl class="dl-horizontal">
+						<dt>交易号：</dt>
+						<dd>{{$ctrl.detail.transNumber}}</dd>
+					</dl>
+				</div>
+			</div>
+		</div>
+	</form>
+	<div class="row text-cen">
+		<div class="form-group">
+			<!-- <button id="J_preserve" type="button" class="btn btn-success btn_size" ng-if="$ctrl.detail.paymenyType!=6 && $ctrl.detail.paymenyType!=1 && $ctrl.detail.chequeCheckinTime==null" ng-click="$ctrl.receiveAndSaveBank(1)">保 存</button> -->
+			<button id="J_accept" type="button" class="btn btn-success btn_size" ng-if="$ctrl.detail.paymenyType==6 && $ctrl.detail.chequeReceiveTime==null" ng-click="$ctrl.receiveAndSaveBank(2)">接 收</button>
+			<button id="J_deposit" type="button" class="btn btn-success btn_size" ng-if="$ctrl.detail.paymenyType==6 && $ctrl.detail.chequeReceiveTime!=null && $ctrl.detail.chequeCheckinTime==null" ng-click="$ctrl.receiveAndSaveBank(3)">存入银行</button>
+			<div ng-if="($ctrl.detail.chequeReceiveTime!==undefined && $ctrl.detail.chequeCheckinTime!==undefined) || $ctrl.detail.paymenyType!==6">
+				<button id="J_account" type="button" class="btn btn-danger btn_size" ng-click="$ctrl.bankArrival(1)" ng-if="$ctrl.detail.auditStatus!=0 && $ctrl.detail.auditStatus!=1">到 账</button>
+				<button id="J_noaccount" type="button" class="btn btn-success btn_size" ng-click="$ctrl.bankArrival(0)"  ng-if="$ctrl.detail.auditStatus!=0 && $ctrl.detail.auditStatus!=1">未到账</button>
+			</div>
+		</div>
+	</div>
+</div>

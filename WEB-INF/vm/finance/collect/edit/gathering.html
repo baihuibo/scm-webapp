@@ -1,0 +1,506 @@
+<!-- 录入收款 -->
+<div class="panel-body">
+	<div class="ibox-content">
+		<div class="pl10 font-bold font-blue info-tit">
+			<i class="glyphicon glyphicon-minus"></i>录入收款						
+		</div>
+		<div class="row">
+			<a class="btn btn-success pr5 m-t-sm" 
+				ng-click="$ctrl.addgathering()">添加收款</a>	
+		</div>
+		<div class="row row-lg">
+			<div class="col-sm-12">
+				<div class="example-wrap ptb10">
+					<table id="J_gatheringdataTable" class="table table-hover table-striped table-condensed" 
+						data-query-params="queryParams" data-mobile-responsive="true" 
+						data-pagination="true" data-icon-size="outline"
+						data-striped="true" data-search="false">
+						<thead>
+							<tr>
+								<th data-field="">支付方式</th>
+								<th data-field="">收款金额</th>
+								<th data-field="">收款日期</th>
+								
+								<th data-field="">操作</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="item in $ctrl.payList">
+								<td>{{item.paymenyType| showKeyCodeTypes : 'financePayType'}}</td>
+								<td>{{item.amount}}</td>
+								<td>{{item.paymentTime | deleteMinute}}</td>
+								<td> 
+									<a class="btn btn-xs btn-success btn-outline" ng-if="item.auditStatus!='已到账'" ng-click="$ctrl.modifyPay(item , $index)">修改</a>
+									<a class="btn btn-xs btn-danger btn-outline" ng-if="item.auditStatus!='已到账'" ng-click="$ctrl.removePay(item , $index)">删除</a>
+								 </td>
+							</tr>
+						</tbody>
+					</table>
+					<div style="text-align:right;">收款总金额：{{$ctrl.skzje}}</div>
+				</div>
+			</div>
+		</div>
+		<div class="row  m-t-md"  ng-if="$ctrl.client">
+			<div class="col-md-2">
+				<dl class="dl-horizontal">
+					<dt>客户编号：</dt>
+					<dd>{{$ctrl.buyDetail.clientId}}</dd>
+				</dl>
+			</div>
+			<div class="col-md-2">
+				<dl class="dl-horizontal">
+					<dt>客户姓名：</dt>
+					<dd>{{$ctrl.buyDetail.clientName}}</dd>
+				</dl>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 text-cen">
+				<div class="form-group">
+					<button type="button" class="btn btn-success btn_size J_next"  ng-click="$ctrl.tab(1)">下一步</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- 添加收据 -->
+<!-- <div id="gathering_layer" class="ibox-content" style="display: none">
+	<form class="form-horizontal" role="form" id="J_contractform">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">支付方式：</label>
+					<div class="col-sm-8">	
+						<select id="J_financePayType" name="financePayType" class="J_chosen form-control" data-placeholder="请选择">
+							
+						</select>{{$ctrl.financePayType}}
+						<select class="form-control" chosen
+		                                         ng-model="$ctrl.financePayType" required
+		                                         ng-options="item.valueCode as item.valueName for item in $ctrl.financePayType" name="financePayType" id="financePayType">
+		                	<option value="">请选择</option>
+		                </select>						
+					</div>
+				</div>
+			</div>
+		</div>
+		支票
+		<div class="row" ng-if="$ctrl.financePayType==1">
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>支付日期：</label>
+					<div class="col-sm-8">	
+						<input type="text" class="form-control" name="" id="">					
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>支付金额：</label>
+					<div class="col-sm-8">	
+						<input type="text" class="form-control" name="" id="">					
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>支票号：</label>
+					<div class="col-sm-8">	
+						<input type="text" class="form-control" name="" id="">					
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>出票单位：</label>
+					<div class="col-sm-8">	
+						<input type="text" class="form-control" name="" id="">					
+					</div>
+				</div>
+			</div>
+			
+		</div>
+		支付宝
+		<div class="row" ng-if="$ctrl.financePayType==2">
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>存入日期：</label>
+					<div class="col-sm-8">	
+						<input type="text" class="form-control" name="" id="">					
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>存入金额：</label>
+					<div class="col-sm-8">	
+						<input type="text" class="form-control" name="" id="">					
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span class="text-danger">*</span>支付宝账户名称：</label>
+					<div class="col-sm-7">	
+						<select id="" name="" class="J_chosen form-control" data-placeholder="请选择">
+							<option value="1">支付宝-爱家营</option>
+							<option value="2">支付宝-我爱我家</option>
+							<option value="3">支付宝-相寓爱家营</option>
+						</select>						
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>收款账号：</label>
+					<div class="col-sm-8">	
+						<input type="text" class="form-control" name="" id="">					
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>交易号：</label>
+					<div class="col-sm-8">	
+						<input type="text" class="form-control" name="" id="">					
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>付款人全称：</label>
+					<div class="col-sm-8">	
+						<input type="text" class="form-control" name="" id="">					
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">支付宝账号：</label>
+					<div class="col-sm-8">	
+						<input type="text" class="form-control" name="" id="">					
+					</div>
+				</div>
+			</div>
+		</div>
+		转账
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>支付日期：</label>
+					<div class="col-sm-8">	
+						<input type="text" class="form-control" name="" id="">					
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>支付金额：</label>
+					<div class="col-sm-8">	
+						<input type="text" class="form-control" name="" id="">					
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>收款银行：</label>
+					<div class="col-sm-8">	
+						<select id="" name="" class="J_chosen form-control" data-placeholder="请选择">
+							<option value="1">北京银行来广营支行</option>
+							<option value="2">中国交通银行上地支行</option>
+						</select>						
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>收款账号：</label>
+					<div class="col-sm-8">	
+						<select id="" name="" class="J_chosen form-control" data-placeholder="请选择">
+							<option value="1">10001</option>
+							<option value="2">10002</option>
+							<option value="3">10003</option>
+						</select>						
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>付款人全称：</label>
+					<div class="col-sm-8">	
+						<input type="text" class="form-control" name="" id="">					
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>付款人账号：</label>
+					<div class="col-sm-8">	
+						<input type="text" class="form-control" name="" id="">					
+					</div>
+				</div>
+			</div>
+		</div>
+		pos刷卡
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>刷卡日期：</label>
+					<div class="col-sm-8">	
+						<input type="text" class="form-control" name="" id="">					
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>刷卡金额：</label>
+					<div class="col-sm-8">	
+						<input type="text" class="form-control" name="" id="">					
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>刷卡方式：</label>
+					<div class="col-sm-8">	
+						<select id="" name="" class="J_chosen form-control" data-placeholder="请选择">
+							<option value="1">我爱我家POS机收款</option>
+							<option value="2">爱家营POS机收款</option>
+						</select>				
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>收款账号：</label>
+					<div class="col-sm-8">	
+						<select id="" name="" class="J_chosen form-control" data-placeholder="请选择">
+							<option value="1">10001</option>
+							<option value="2">10002</option>
+							<option value="3">10003</option>
+						</select>						
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>卡号：</label>
+					<div class="col-sm-8">	
+						<input type="text" class="form-control" name="" id="">								
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>12位参考号：</label>
+					<div class="col-sm-8">	
+						<input type="text" class="form-control" name="" id="">								
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>终端号：</label>
+					<div class="col-sm-8">	
+						<input type="text" class="form-control" name="" id="">								
+					</div>
+				</div>
+			</div>
+		</div>
+		现金
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>收款日期：</label>
+					<div class="col-sm-8">	
+						<input type="text" class="form-control" name="" id="">								
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>收款金额：</label>
+					<div class="col-sm-8">	
+						<input type="text" class="form-control" name="" id="">								
+					</div>
+				</div>
+			</div>
+		</div>
+		银行存款
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>存入日期：</label>
+					<div class="col-sm-8">	
+						<input type="text" class="form-control" name="" id="">								
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>存入金额：</label>
+					<div class="col-sm-8">	
+						<input type="text" class="form-control" name="" id="">								
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>银行名称：</label>
+					<div class="col-sm-8">	
+						<select id="" name="" class="J_chosen form-control" data-placeholder="请选择">
+							<option value="1">北京银行东四支行</option>
+						</select>				
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>收款账号：</label>
+					<div class="col-sm-8">	
+						<select id="" name="" class="J_chosen form-control" data-placeholder="请选择">
+							<option value="1">10001</option>
+							<option value="2">10002</option>
+							<option value="3">10003</option>
+						</select>				
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>营业网点：</label>
+					<div class="col-sm-8">	
+						<input type="text" class="form-control" name="" id="">								
+					</div>
+				</div>
+			</div>
+		</div>
+		结算卡
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>支付日期：</label>
+					<div class="col-sm-8">	
+						<input type="text" class="form-control" name="" id="">								
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>支付时间（时分）：</label>
+					<div class="col-sm-8">	
+						<input type="text" class="form-control" name="" id="">								
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>支付金额：</label>
+					<div class="col-sm-8">	
+						<input type="text" class="form-control" name="" id="">								
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>收款银行：</label>
+					<div class="col-sm-8">	
+						<select id="" name="" class="J_chosen form-control" data-placeholder="请选择">
+							<option value="1">建行东四支行</option>
+						</select>				
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>收款账号：</label>
+					<div class="col-sm-8">	
+						<select id="" name="" class="J_chosen form-control" data-placeholder="请选择">
+							<option value="1">10001</option>
+							<option value="2">10002</option>
+							<option value="3">10003</option>
+						</select>				
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>交易号：</label>
+					<div class="col-sm-8">	
+						<input type="text" class="form-control" name="" id="">								
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>结算卡号：</label>
+					<div class="col-sm-8">	
+						<input type="text" class="form-control" name="" id="">								
+					</div>
+				</div>
+			</div>
+		</div>
+		退款余额
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>支付日期：</label>
+					<div class="col-sm-8">	
+						<input type="text" class="form-control" name="" id="">								
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>转入合同编号：</label>
+					<div class="col-sm-8">	
+						<select id="" name="" class="J_chosen form-control" data-placeholder="请选择">
+							<option value="1">AFC001</option>
+							<option value="2">AFC002</option>
+						</select>									
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>退款单号：</label>
+					<div class="col-sm-8">	
+						<select id="" name="" class="J_chosen form-control" data-placeholder="请选择">
+							<option value="1">T001</option>
+							<option value="2">T002</option>
+						</select>									
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>支付金额：</label>
+					<div class="col-sm-8">	
+						<input type="text" class="form-control" name="" id="" readonly>								
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">是否需查账：</label>
+					<div class="col-sm-8" id="">
+						<div class="checkbox checkbox-primary checkbox-inline">
+							<input type="checkbox" id="" name="" value="">
+							<label for=""></label>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">查账原因：</label>
+					<div class="col-sm-8">
+						<textarea class="form-control" maxlength="500"></textarea>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div> -->

@@ -1,0 +1,428 @@
+<div class="ibox">
+	<div class="ibox-title">
+		<h5>房屋基本情况</h5>
+	</div>
+	<div class="ibox-content">
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>房屋类型：</label>
+					<div id="housingType" class="col-sm-8"></div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>所属区域：</label>
+					<div class="col-sm-8">
+						<select id="housingDistrictId" name="housingDistrictId" class="form-control"
+							data-placeholder="请选择区县">
+						</select>
+					</div>
+					<!-- <div class="col-sm-3">
+						<select id="housingTownId" name="housingTownId" class="form-control"
+							data-placeholder="请选择乡镇">
+						</select>
+					</div> -->
+				<!-- 	<div class="col-sm-3">
+						<input name="housingAddr" class="J_phone form-control" placeholder="">
+					</div> -->
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>房产证地址:</label>
+					<div class="col-sm-8">
+						<input name="housingAddr" class="J_phone form-control" placeholder="请输入房产证地址">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>购房资格核验：</label>
+					<div id="restrictedPurchase" class="col-sm-8"></div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>业主唯一住房：</label>
+					<div id="ownerOnlyHousing" class="col-sm-8"></div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>房产满五年：</label>
+					<div id="fullFiveYears" class="col-sm-8">
+					<div class="radio radio-primary radio-inline">
+		                    <input type="radio" id="d2" name="fullFiveYears"
+		                           ng-model="$ctrl.fullFiveYears" required ng-value="0">
+		                    <label for="d2">否</label>
+		                </div>
+						<div class="radio radio-primary radio-inline">
+		                    <input type="radio" id="d1" name="fullFiveYears"
+		                           ng-model="$ctrl.fullFiveYears" required ng-value="1">
+		                    <label for="d1">是</label>
+		                </div>
+		                
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4" ng-if="$ctrl.fullFiveYears==1">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>满五年依据：</label>
+					<div class="col-sm-8">
+						<select class="form-control"
+		                       ng-model="$ctrl.fullfive_gist" chosen required
+		                       ng-options="item.valueCode as item.valueName for item in $ctrl.fullfiveGist"
+		                       id="fullFiveGist" name="fullFiveGist">
+		                   <option value="">请选择</option>
+		               </select>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4" ng-if="$ctrl.fullFiveYears==1 && $ctrl.fullfive_gist==3">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span class="text-danger">*</span>其他描述:</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" id="fullFiveMemo"
+							name='fullFiveMemo' autocomplete="off">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>建筑总层数：</label>
+					<div class="col-sm-8" layout="row">
+						<div flex>
+							<input type="text" class="form-control" id="totalFloor"
+							name='totalFloor' autocomplete="off">
+						</div>
+						<label class="control-label">层</label>
+					</div>
+					
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>地上层数：</label>
+					<div class="col-sm-8" layout="row">
+						<div flex>
+							<input type="text" class="form-control" id="upperFloors"
+							name='upperFloors' autocomplete="off">
+						</div>
+						<label class="control-label">层</label>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>地下层数：</label>
+					<div class="col-sm-8" layout="row">
+						<div flex>
+							<input type="text" class="form-control" id="underFloors"
+								name='underFloors' autocomplete="off">
+						</div>
+						<label class="control-label">层</label>
+					</div>
+		
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>房屋楼层数：</label>
+					<div class="col-sm-8" layout="row">
+						<div flex>
+							<input type="text" class="form-control" id="buildingTotal"
+								name='buildingTotal' autocomplete="off">
+						</div>
+						<label class="control-label">层</label>
+					</div>
+					
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>建筑面积：</label>
+					<div class="col-sm-8" layout="row">
+						<div flex>
+							<input type="text" class="form-control" id="buildArea"
+								name="buildArea" autocomplete="off">
+						</div>
+						<label class="control-label">平方米</label>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>房屋设计用途：</label>
+					<div class="col-sm-8">
+						<!-- <select name="designUsesId" id="designUsesId" class="form-control"
+							data-placeholder="请选择">
+						</select> -->
+						<select class="form-control"
+		                       ng-model="$ctrl.planned_uses" chosen required
+		                       ng-options="item.valueCode as item.valueName for item in $ctrl.plannedUses"
+		                       id="designUsesId" name="designUsesId">
+		                   <option value="">请选择</option>
+		               </select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4" ng-if="$ctrl.planned_uses==8">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span class="text-danger">*</span>其他用途描述：</label>
+					<div class="col-sm-8">
+						<input type="text" name='otherUses' class="form-control" id="otherUses" autocomplete="off">
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>带车位：</label>
+					<div id="carPort" class="col-sm-8">
+					    <div class="radio radio-primary radio-inline">
+		                    <input type="radio" id="carPort2" name="carPort"
+		                           ng-model="$ctrl.car_port" required ng-value="0">
+		                    <label for="carPort2">否</label>
+		                </div>
+						<div class="radio radio-primary radio-inline">
+		                    <input type="radio" id="carPort1" name="carPort"
+		                           ng-model="$ctrl.car_port" required ng-value="1">
+		                    <label for="carPort1">是</label>
+		                </div>
+		               
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4" ng-if="$ctrl.car_port==1">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>车位产权证号：</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" name='carPortNumber'
+							id="carPortNumber" autocomplete="off">
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4" ng-if="$ctrl.car_port==1">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>车位位置：</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" id="carPortLocation"
+							name='carPortLocation' autocomplete="off">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="ibox">
+	<div class="ibox-title">
+		<h5>房屋权属情况</h5>
+	</div>
+	<div class="ibox-content">
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>所有权证号：</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" id="certificateNum"
+							name='certificateNum' autocomplete="off">
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>填发单位：</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" id="unitName"
+							name='unitName' autocomplete="off">
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>房屋出租：</label>
+					<div id="isHouseLease" class="col-sm-8"></div>
+		
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span class="text-danger">*</span>土地使用权获得方式：</label>
+					<div class="col-sm-8">
+						<!-- <select id='useingMode' name='useingMode' class="form-control"
+							data-placeholder="请选择">
+							<option value="">请选择</option>
+						</select> -->
+						<select class="form-control"
+		                       ng-model="$ctrl.useing_mode" chosen required
+		                       ng-options="item.valueCode as item.valueName for item in $ctrl.useingMode"
+		                       id="useingMode" name="useingMode" >
+		                   <option value="">请选择</option>
+		               </select>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4" ng-if="$ctrl.useing_mode==3">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span class="text-danger">*</span>其他描述：</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" id="certificateMemo" name='certificateMemo' autocomplete="off">
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>土地使用权证：</label>
+					<div id="isLandCertificate" class="col-sm-8">
+						<div class="radio radio-primary radio-inline">
+		                    <input type="radio" id="isLandCertificate2" name="isLandCertificate"
+		                           ng-model="$ctrl.isLandCertificate" required ng-value="0">
+		                    <label for="isLandCertificate2">否</label>
+		                </div>
+						<div class="radio radio-primary radio-inline">
+		                    <input type="radio" id="isLandCertificate1" name="isLandCertificate"
+		                           ng-model="$ctrl.isLandCertificate" required ng-value="1">
+		                    <label for="isLandCertificate1">是</label>
+		                </div>
+		                
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4" ng-if="$ctrl.isLandCertificate==1">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span class="text-danger">*</span>土地使用权证编号：</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" id="landCertificate" name="landCertificate" autocomplete="off">
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span class="text-danger">*</span>房屋性质：</label>
+					<div class="col-sm-8">
+						<!-- <select id="houseProperty" name='houseProperty'
+							class="form-control " data-placeholder="请选择">
+							<option value="">请选择</option>
+						</select> -->
+						<select class="form-control"
+		                       ng-model="$ctrl.house_property" chosen required
+		                       ng-options="item.valueCode as item.valueName for item in $ctrl.houseProperty"
+		                       id="houseProperty" name="houseProperty">
+		                   <option value="">请选择</option>
+		               </select>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4" ng-if="$ctrl.house_property==6">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>其他房屋：</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" id="otherHouse"
+							name='otherHouse' autocomplete="off">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row ptb10">
+			<div class="pl10 font-bold font-blue info-tit" style="line-height: inherit;">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label"><span
+							class="text-danger">*</span>房屋抵押：</label>
+						<div id="houseCharge" class="col-sm-7">
+							
+						</div>
+		
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row houseCharge" style='display:none'>
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-md-11 control-label"></label>
+					<div class="pull-right">
+						<a id="" type='mortgage' class="J_addmortgage btn btn-primary btn-sm"
+							style="margin-top: 10px;"><i
+							class="glyphicon glyphicon-plus"></i>新增</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 m-b-sm ">
+				<div class="bootstrap-table table-list">
+					<div class="fixed-table-container">
+						<table id="dataTableMortgage"
+							class="table table-hover fixed-table-container table-striped table-condensed"
+							style="border-bottom: none">
+							<thead>
+								<tr>
+									<th class='col-md-2'><div class="th-inner">
+											<span class="text-danger">*</span>抵押权人姓名
+										</div></th>
+									<th class='col-md-2'><div class="th-inner">
+											<span class="text-danger">*</span>抵押金额（元）
+										</div></th>
+									<th class='col-md-2'><div class="th-inner">抵押注销条件</div></th>
+									<th class='col-md-2'><div class="th-inner">办理注销手续日期</div></th>
+									<th class='col-md-2'><div class="th-inner">备注</div></th>
+									<th class='col-md-2'><div class="th-inner">操作</div></th>
+								</tr>
+							</thead>
+							<tbody>
+		
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 text-cen" style="margin-bottom:200px;margin-top:40px;">
+				<div class="form-group">
+					<button type="button" class="btn btn-success pr5 J_next">下一步</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

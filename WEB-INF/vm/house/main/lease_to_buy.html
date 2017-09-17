@@ -1,0 +1,284 @@
+#set($plugins = ["table","chosen","laydate","autoSearch","validator"])
+<div class="ibox">
+	<div class="ibox-title">
+		<h5>此房出售快捷登记入口</h5>
+		
+	</div>
+	<div class="ibox-content">
+	<form id="formleasetobuy" name="formleasetobuy" class="form-horizontal" role="form">
+		<div class="row ptb10">
+			<div class="pl10 font-bold font-blue info-tit">补全买卖房源数据</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span
+											class="text-danger">*</span>购房需求：</label>
+					<div id="J_newBuyDemand" class="col-sm-7"></div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span
+											class="text-danger">*</span>户籍信息:</label>
+					<div class="col-sm-7">
+						<select id="census" name="houseHoldInfo"
+							class="J_chosen form-control" data-placeholder="请选择">
+							<option value="">请选择</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4 nonecensus" style="display:none">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span
+											class="text-danger">*</span>户籍迁出时间:</label>
+					<div class="col-sm-7">
+						<select id="censusChectoutType" name="houseHoldEvacuationDate"
+							class="J_chosen form-control" data-placeholder="请选择">
+							<option value="">请选择</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">装修状况:</label>
+					<div class="col-sm-7">
+						<select id="decorationStatus" name="decorateLevel"
+							class="J_chosen form-control" data-placeholder="请选择">
+							<option value="">请选择</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">装修年限:</label>
+					<div class="col-sm-7">
+						<select id="fitmentYear" name="decorateTime"
+							class="J_chosen form-control" data-placeholder="请选择">
+							<option value="">请选择</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span
+											class="text-danger">*</span>使用现状:</label>
+					<div class="col-sm-7">
+					<select id="useStatus" name="statusNow"
+							class="J_chosen form-control" data-placeholder="请选择">
+							<option value="">请选择</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">腾空时间:</label>
+					<div class="col-sm-4">
+						<select id="freetimeType" name="freetimeType"
+							class="J_chosen form-control" data-placeholder="请选择">
+							<option value="">请选择</option>
+						</select>
+					</div>
+					<div class="col-sm-3 freetime" style="display:none">
+							<input type="text" id="freetime" name="freeTime" class="form-control">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row ptb10">
+			<div class="pl10 font-bold font-blue info-tit">证贷情况</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>证贷情况:</label>
+					<div class="col-sm-6">
+						<select id="certLoan" name="certLoan"
+							class="J_chosen form-control" data-placeholder="请选择">
+							<option value="">请选择</option>
+						</select>
+
+					</div>
+					<!-- <label class="col-sm-2 control-label">元/月</label> -->
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">契税票日期:</label>
+					<div class="col-sm-7">
+						<input type="text" id="taxDate" name="taxDate" class="form-control">
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label">房产证签发日期:</label>
+					<div class="col-sm-8">
+						<input type="text" id="housecodeDate" name="housecodeDate" class="form-control">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">		
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label">上次购房价：</label>
+					<div class="col-sm-5">
+						<input type="text" class="form-control" name="lastBuyprice" id="lastBuyprice" autocomplete="off">
+					</div>
+					<label class="control-label">万元</label>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span
+											class="text-danger">*</span>购房年限:</label>
+					<div class="col-sm-7">
+					<select id="buyYears" name="buyYears"
+							class="J_chosen form-control" data-placeholder="请选择">
+							<option value="">请选择</option>
+						</select>
+					</div>
+				</div>
+			</div>			
+		</div>
+		<div class="withoutCredit" style="display:none">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">贷款银行:</label>
+						<div class="col-sm-8">
+							<select id="certLoan" name="loanBank"
+								class="J_chosen form-control" data-placeholder="请选择">
+								<option value="">请选择</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">抵押权人:</label>
+						<div class="col-sm-8">
+							<input type="text" id="deedDate" class="form-control"
+								name="diyaquanren">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">贷款额:</label>
+						<div class="col-sm-6">
+							<input type="text" id="dateIssue" class="form-control"
+								name="load">
+						</div>
+						<div class="col-sm-2">
+							<label class="control-label">万元</label>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">贷款年限:</label>
+						<div class="col-sm-8">
+							<input type="text" id="dateIssue" class="form-control"
+								name="loadYears">
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row ptb10">
+			<div class="pl10 font-bold font-blue info-tit">报价信息</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						 class="text-danger">*</span>委托价:</label>
+					<div class="col-sm-6">
+						<input type="text" name="entrustprice"  class="form-control"
+							id="entrustprice"/>
+					</div>
+					<div class="col-sm-2">
+						<label class="control-label">万元</label>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">最低报价:</label>
+					<div class="col-sm-7">
+						<input type="text" class="form-control"
+							name="price" id="price" autocomplete="off">
+					</div>
+					<div class="col-sm-2">
+						<label class="control-label">万元</label>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">物业费：</label>
+					<div class="col-sm-5">
+						<input type="text" class="form-control" value="$!vo.propertyFee" name="propertyFee" id="propertyFee" autocomplete="off">
+					</div>
+					<label class="control-label">元/月/平方米</label>
+				</div>
+			</div>
+		</div>		
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label">暖气费：</label>
+					<div class="col-sm-5">
+						<input type="text" class="form-control" value="$!vo.heatingCost" name="heatingCost" id="heatingCost" autocomplete="off">
+					</div>
+					<label class="control-label">元/平方米</label>
+				</div>
+			</div>
+			<div class="col-md-8">
+				<div class="form-group">
+					<label class="col-sm-2 control-label"><span
+						class="text-danger">*</span>税种：</label>
+					<div class="col-sm-9 J_electric" id="taxType">
+						
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-1 control-label">备注：</label>
+					<div class="col-sm-11">
+						<textarea rows="3" name="memo" id="memo" cols="100%"
+							class="form-control" maxlength="500"></textarea>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-12 text-cen">
+			<div class="form-group">
+				<button id="J_leasetobuy_btn" type="button" class="btn btn-success pr5">确定</button>
+			</div>
+		</div>
+		</form>
+	</div>
+</div>
+<script type="text/javascript"
+		src="$link.contextPath/resources/script/house/main/lease_to_buy.js?v=1"></script>
+		<script
+src="$link.contextPath/resources/script/house/main/validate.js"></script>		

@@ -1,0 +1,140 @@
+#set($plugins = ["table","chosen","laydate","linkage","autoSearch"])
+<div class="ibox">
+	<div class="ibox-title">
+		<h5>付款管理查询</h5>
+		<div class="ibox-tools">
+			<a class="collapse-link ui-sortable"> <i class="fa fa-chevron-up"></i>
+			</a>
+		</div>
+	</div>
+	<div class="ibox-content">	
+		<form id="queryCriteria" class="form-horizontal" role="form">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">付款单编号：</label>
+						<div class="col-sm-8">
+							<input name="paymentNumber" type="text" class="form-control">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">应付款日期：</label>
+						<div class="col-sm-4"><input name="payStartTime" id="paymentstarttime" type="text" class="form-control" readonly="readonly" style="width:97%;background-color:#fff;"></div>
+						<div style="float:left; padding:7px 0px;">-</div>
+						<div class="col-sm-4"><input name="payEndTime" id="paymentendtime" type="text" class="form-control" readonly="readonly" style="width:96%;margin-left:2%;background-color:#fff;"></div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">付款状态：</label>
+						<div class="col-sm-8">
+							<select name="paidStatus" class="J_chosen form-control" id="paidStatus">
+								<option value="">全部</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<div class="col-sm-5  col-sm-offset-5">
+	                        <button id="payQueryBtn" type="button" class="btn btn-success btn_size">查 询</button>
+	                        <button id="J_reset" type="reset" class="btn btn-white btn_size">重 置</button>
+	                    </div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<div class="ibox">
+	<div class="ibox-title">
+		<h5>付款管理列表</h5>
+	</div>
+	<div class="ibox-content">
+		<div class="tab-pane">
+			#if($shiro.hasPermission("SCM:FINANCE:PAYMENT:CASH:CONFIRM"))
+			<div style="padding-bottom:8px;">
+				<a href="javascript:;" class="btn btn-success J_add_device" id="surePayBtn">确认付款</a>
+			</div>
+			#end
+			<table id="paymentList" class="table table-hover table-striped table-bordered">
+				<thead>
+					<tr>
+						<th data-field="">
+							<div class="th-inner">付款单编号</div>
+						</th>
+						<th data-field="">
+							<div class="th-inner">应付款日期</div>
+						</th>
+						<th data-field="">
+							<div class="th-inner">合同编号</div>
+						</th>
+						<th data-field="">
+							<div class="th-inner">收款人</div>
+						</th>
+						<th data-field="">
+							<div class="th-inner">金额</div>
+						</th>
+						<th data-field="">
+							<div class="th-inner">付款状态</div>
+						</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+	</div>
+</div>
+<form id="paySureData" class="form-horizontal" role="form" style="display:none;height:185px;margin-top:10px;">
+	<div class="form-group">
+		<label class="col-sm-3 control-label"><span style="color:#ff0000">*</span>领款人类型：</label>
+		<div class="col-sm-8">
+			<select name="payeeType" class="J_chosen form-control" id="payeeType">
+				<option value="1">同收款人</option>
+				<option value="2">代理人</option>
+				<option value="3">员工</option>
+			</select>
+		</div>
+	</div>
+	<div id="changeState">
+		<div class="form-group">
+			<label class="col-sm-3 control-label"><span style="color:#ff0000">*</span>领款人姓名：</label>
+			<div class="col-sm-8">
+				<input name="payeeName" type="text" class="form-control" id="payeeName" disabled="disabled" autocomplete="off">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label"><span style="color:#ff0000">*</span>证件类型：</label>
+			<div class="col-sm-8">
+				<select name="payeeCardType" disabled="disabled" class="J_chosen form-control" id="certiType">
+					<option value="">请选择</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label"><span style="color:#ff0000">*</span>证件号码：</label>
+			<div class="col-sm-8">
+				<input name="payeeCardNumber" type="text" class="form-control" id="payeeCardNumber" disabled="disabled" autocomplete="off">
+			</div>
+		</div>
+	</div>
+	<div class="form-group" style="display:none;" id="staffName">
+		<label class="col-sm-3 control-label"><span style="color:#ff0000">*</span>员工：</label>
+		<div class="col-sm-8">
+			<div class="input-group">
+				<input type="text" name="" data-id="" class="form-control" id="payeeUserId">
+				<div class="input-group-btn">
+					<button type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown">
+						<span class="glyphicon glyphicon-search search-caret"></span>
+					</button>
+					<ul class="dropdown-menu dropdown-menu-right" role="menu">
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
+<script src="$link.contextPath/resources/script/finance/payment/cash_list.js"></script>

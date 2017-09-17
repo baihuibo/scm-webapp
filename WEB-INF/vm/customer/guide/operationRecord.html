@@ -1,0 +1,136 @@
+#set($plugins = ["table","chosen"])
+<style>
+	#detailsRecord .chosen-container .chosen-results{max-height:120px;}
+</style>
+<!--租赁详情_跟进记录-->
+<div class="row ptb10">
+	<div class="tabs-container">
+		<ul class="nav nav-tabs">
+			<li class="active"><a data-toggle="tab" href="#cijiangboTab-11" id="followRecord">跟进记录</a></li>
+			<li class=""><a data-toggle="tab" href="#cijiangboTab-12" id="Journal">操作日志</a></li>
+			<li class="" id="pastDemand" style="display:none;"><a data-toggle="tab" href="#cijiangboTab-13">过往需求</a></li>
+		</ul>
+	</div>
+	<div class="tab-content" id="detailsRecord" style="padding:10px 0;">
+		<div id="cijiangboTab-11" class="tab-pane active ibox-content" style="padding-bottom: 100px;">
+			<form class="form-horizontal" role="form">
+				<div class="col-md-4" style="padding-bottom:10px;">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">跟进类型：</label>
+						<div class="col-sm-8">
+							<select class="J_chosen form-control" name="" id="followType">
+								<option value="">请选择</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</form>
+				<table id="cijiangboDataTable1" class="table table-hover table-striped table-bordered">
+					<thead>
+						<tr>
+							<th data-field="id">跟进部门</th>
+							<th data-field="name">跟进人</th>
+							<th data-field="type">跟进类型</th>
+							<th data-field="beforeowner">跟进时间</th>
+							<th data-field="afterowner" class="col-sm-5 remark_all pd10">跟进内容</th>
+						</tr>
+					</thead>
+				</table>
+		</div>
+		<div id="cijiangboTab-12" class="tab-pane">
+			<div class="tabs-container">
+				<ul class="nav nav-tabs block-tabs-nav" id="operationLog">
+					<li class="active"><a data-toggle="tab" href="#cijiangboTab-111" id="keyInformation">关键信息操作日志</a></li>
+					<li><strong>|</strong></li>
+					<li class=""><a data-toggle="tab" href="#cijiangboTab-121" id="generalContent">常规内容操作日志</a></li>
+				</ul>
+			</div>
+			<div class="tab-content ibox-content" style="padding-bottom:100px;">
+				<div id="cijiangboTab-111" class="tab-pane active">
+					<form class="form-horizontal" style="padding:10px 0;" role="form">
+						<div class="col-md-4" style="padding-bottom:10px;">
+							<div class="form-group">
+								<label class="col-sm-3 control-label">操作类型：</label>
+								<div class="col-sm-8">
+									<select class="J_chosen form-control" name="" id="importantOptType">
+										<option value="">请选择</option>
+									</select>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div id="cijiangboTab-121" class="tab-pane">
+					<form class="form-horizontal" style="padding:10px 0;" role="form">
+						<div class="col-md-4" style="padding-bottom:10px;">
+							<div class="form-group">
+								<label class="col-sm-3 control-label">操作类型：</label>
+								<div class="col-sm-8">
+									<select class="J_chosen form-control" name="" id="normalOptType">
+										<option value="">请选择</option>
+									</select>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+				<table id="cijiangboDataTable11" class="table table-hover table-striped table-bordered">
+					<thead>
+						<tr>
+							<th data-field="id">操作部门</th>
+							<th data-field="name">操作人</th>
+							<th data-field="type">操作类型</th>
+							<th data-field="beforeowner" class="col-sm-5 remark_all pd10">操作内容</th>
+							<th data-field="afterowner">操作时间</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+		<div id="cijiangboTab-13" class="tab-pane ibox-content">
+			<table id="cijiangboDataTable3" class="table table-hover table-striped table-bordered">
+				<thead>
+					<tr>
+						<th data-field="id">客户姓名（客户编号）</th>
+						<th data-field="name">登记人</th>
+						<th data-field="type">所属人</th>
+						<th data-field="beforeowner">合并前销售阶段</th>
+						<th data-field="afterowner">最后跟进时间</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+	</div>
+</div>
+<!--带看反馈-->
+<div id="feedback" class="ibox-content layui-layer-wrap" style="display:none">
+	<h4 class="pl10 font-bold font-blue info-tit">客户信息</h4>
+	<form class="form-horizontal pl10" role="form">
+		<div style="padding-bottom:8px;font-size:18px;" id="CustomerInfor"></div>
+		<div class="row">
+			<div class="form-group">
+				<label style="padding: 7px 0;text-align: left;" class="col-sm-2 control-label">返回店面时间：</label>
+				<div class="col-sm-6">
+					<div class="form-control-static" id="returnTime"></div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label style="padding-right:14px;" class="col-sm-2 control-label">附件列表：</label>
+				<div class="col-sm-6" id="fileListContet" style="overflow-y:auto;max-height:100px;padding-top:6px;"></div>
+			</div>
+		</div>
+	</form>
+	<h4 class="pl10 font-bold font-blue info-tit">带看房源</h4>
+	<div class="tab-pane pt6">
+		<div class="bootstrap-table" style="max-height:150px;overflow-y:auto;">
+			<table id="seeListings" class="table"></table>
+		</div>
+	</div>
+	<!--<div class="tab-pane pt6">
+        <table id="addseeListings" class="table table-hover table-striped"></table>
+    </div>-->
+</div>
+<!--带看反馈-->
+<!--租赁详情_跟进记录-->
+<script type='text/javascript' src="$link.contextPath/resources/script/customer/guide/operationRecord.js"></script>

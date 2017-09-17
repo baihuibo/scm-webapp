@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tools>
+
+	<toolbox scope="application">
+		<tool class="com.wiwj.cbs.common.shiro.Permission" />
+	</toolbox>
+
+	<toolbox scope="request">
+		<tool class="org.apache.velocity.tools.view.LinkTool">
+			<key>link</key>
+		</tool>
+	</toolbox>
+
+	<toolbox scope="request">
+		<tool class="org.apache.velocity.tools.generic.NumberTool" />
+	</toolbox>
+
+</tools>
+	

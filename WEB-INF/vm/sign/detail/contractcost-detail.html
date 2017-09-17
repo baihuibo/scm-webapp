@@ -1,0 +1,302 @@
+<div class="ibox">
+		<div class="ibox-content">
+			<form class="form-horizontal" role="form" id="J_costform">
+				<div class="cost_detail">
+					<div class="row ptb10">
+						<div class="pl10 font-bold font-blue info-tit">
+							<i class="glyphicon glyphicon-minus"></i>收款信息
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="col-sm-4 control-label">应收总额（元）：</label>
+								<div class="col-sm-5">	
+									<input type="text" class="form-control" readonly  ng-value="$ctrl.costdetail.costList.sumReceivableAmount">					
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="col-sm-4 control-label">在途金额（元）：</label>
+								<div class="col-sm-5">	
+									<input type="text" class="form-control" readonly ng-value="$ctrl.costdetail.costList.sumTransitAmount">					
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="col-sm-4 control-label">实收总额（元）：</label>
+								<div class="col-sm-5">	
+									<input type="text" class="form-control" readonly ng-value="$ctrl.costdetail.costList.sumPaidAmount">					
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="col-sm-4 control-label">退款总额（元）：</label>
+								<div class="col-sm-5">	
+									<input type="text" class="form-control" readonly ng-value="$ctrl.costdetail.costList.sumRefundAmount">					
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						 <div class="example-wrap ptb10">
+							#if($shiro.hasPermission("SCM:SALES:LEASE_CONTRACT_DETAILED_RECEIVABLES"))
+						 	<div class="col-md-12 text-right mb20">
+								<a target="_blank" class="btn btn-success btn-sm" id="collectPlan" ng-if="!$ctrl.other">录入收款</a>
+							</div>
+							#end
+							<table id="J_costdataTable" class="table table-hover table-striped table-bordered" style="margin-bottom:0px;">
+								 <thead>
+									<tr>
+										<th class="col-md-1">应收金额/元</th>
+										<th class="col-md-1">服务费调整</th>
+										<th class="col-md-1">应收日期</th>
+										<th class="col-md-1">在途金额/元<br/>（审批中）</th>
+										<th class="col-md-1">实收金额/元<br/>（已审批）</th>
+										<th class="col-md-1">退款金额/元</th>
+										<th class="col-md-1">类型</th>
+										<th class="col-md-1">款项名称</th>
+										<th class="col-md-1">收款单位</th>
+										<th class="col-md-1">付款方</th>
+										<th class="col-md-1">付款单位/个人</th>
+										<th class="col-md-1">操作</th>
+									</tr>
+								</thead>																
+							</table>
+							<ul class="firsttable">
+								<li ng-repeat="items in $ctrl.costdetail.costList.contract">
+									<div class="row">
+								 		<span class="col-md-1">{{::items.receivableAmount}}</span>
+								 		<span class="col-md-1">{{::items.costChange}}<br><a href="/sales/contract/discount/detail?discountId={{::items.discountId}}"  target="_blank">{{::items.discountNumber}}</a></span>
+								 		<span class="col-md-1">{{::items.estCollectionDate}}</span>
+								 		<span class="col-md-1">{{::items.transitAmount}}</span>
+								 		<span class="col-md-1">{{::items.paidAmount}}</span>
+								 		<span class="col-md-1">{{::items.refundAmount}}</span>
+								 		<span class="col-md-1">{{::items.moneyType}}</span>
+								 		<span class="col-md-1">{{::items.fundName}}</span>
+								 		<span class="col-md-1">{{::items.payee}}</span>
+								 		<span class="col-md-1">{{::items.payer}}</span>
+								 		<span class="col-md-1">{{::items.payerName}}</span>
+								 		<span class="col-md-1">
+											<button id ="cbtn" class="btn btn-outline btn-success btn-xs mt-3 m-r-xs " data-toggle="collapse" data-target="#J_fold{{$index}}" >展开</button>
+										</span>
+							 		</div>
+							 		<ul class="secondtable collapse" id="J_fold{{$index}}">
+							 			<li ng-repeat="items in items.chargeslist">
+							 				<div class="row">
+										 		<span class="col-md-1 col-md-offset-2" ng-if="items.lastAuditTime==''">-</span>
+										 		<span class="col-md-1 col-md-offset-2" ng-if="items.lastAuditTime!=''">{{::items.lastAuditTime}}</span>
+										 		<span class="col-md-1">{{::items.transitAmount}}</span>
+										 		<span class="col-md-1">{{::items.paidAmount}}</span>
+										 		<span class="col-md-1">{{::items.refundAmount}}</span>
+										 		<span class="col-md-1">收据<br><a href="/sales/finance/receipt/detail.htm?receiptId={{::items.receiptId}}" target="_blank">{{items.receiptCode}}</a></span>
+										 		<span class="col-md-1">收款批次<br><a href="/sales/finance/collect/batchDetail.htm?batchId={{::items.batchId}}" target="_blank">{{items.batchId}}</a></span>
+										 		<span class="col-md-1">状态<br>{{::items.auditStatus}}</span>
+										 		<span class="col-md-1">收据打印次数<br>{{::items.printCount}}</span>
+									 		</div>
+								 		</li>
+								 		
+							 		</ul>
+						 		</li>
+						 		
+						 	</ul>
+						</div> 
+					</div>
+				</div>
+				<div class="cost_detail">
+					<div class="row ptb10">
+						<div class="pl10 font-bold font-blue info-tit">
+							<i class="glyphicon glyphicon-minus"></i>非佣金收款信息
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<label class="col-sm-4 control-label">在途金额（元）：</label>
+								<div class="col-sm-7">	
+									<input type="text" class="form-control"  readonly ng-value="$ctrl.costdetail.nonlist.sumTransitAmount">					
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label class="col-sm-4 control-label">实收总额（元）：</label>
+								<div class="col-sm-7">	
+									<input type="text" class="form-control" readonly ng-value="$ctrl.costdetail.nonlist.sumPaidAmount">					
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						 <div class="example-wrap ptb10">
+							<table id="J_cost1dataTable" class="table table-hover table-striped table-bordered">
+								 <thead>
+									<tr>
+										<th>收据</th>
+										<!-- <th>发票</th> -->
+										<th>收款批次</th>
+										<th>录入日期</th>
+										<th>在途金额/元<br/>（审批中）</th>
+										<th>实收金额/元<br/>（已审批）</th>
+										<th>款项名称</th>
+										<th>收款单位</th>
+										<th>付款方</th>
+										<th>付款单位/个人</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="items in $ctrl.costdetail.nonlist.nonCommission">
+										<td><a href="/sales/finance/receipt/detail.htm?receiptId={{::items.receiptId}}" target="_blank">{{items.receiptNumber}}</a></td>
+										<!-- <td>{{items.invoiceNumber}}</td> -->
+										<td><a href="/sales/finance/collect/batchDetail.htm?batchId={{::items.batchId}}" target="_blank">{{items.batchId}}</a></td>
+										<td>{{::items.collectionTime}}</td>
+										<td>{{::items.transitAmount}}</td>
+										<td>{{::items.paidAmount}}</td>
+										<td>{{::items.fundName}}</td>
+										<td>{{::items.payee}}</td>
+										<td>{{::items.payer}}</td>
+										<td>{{::items.payerName}}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div> 
+					</div>
+				</div>
+				<div class="cost_detail">
+					<div class="row ptb10">
+						<div class="pl10 font-bold font-blue info-tit">
+							<i class="glyphicon glyphicon-minus"></i>发票信息
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<label class="col-sm-4 control-label">面值总计（元）：</label>
+								<div class="col-sm-7">	
+									<input type="text" class="form-control" readonly ng-value="$ctrl.costdetail.invoicelist.sumInvoiceAmount">	 				
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						 <div class="example-wrap ptb10">
+							<table id="J_cost2dataTable" class="table table-hover table-striped table-bordered">
+								 <thead>
+									<tr >
+										<th>序号</th>
+										<th>发票编号</th>
+										<th>发票名称</th>
+										<th>发票金额</th>
+										<th>录入人</th>
+										<th>录入日期</th>
+										<th>状态</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="items in $ctrl.costdetail.invoicelist.invoice">
+										<td>{{::$index+1}}</td>
+										<td><a href="/sales/finance/invoice/invoicedetail.html?invoiceId={{::items.invoiceId}}" target="_blank">{{::items.invoiceNumber}}</a></td>
+										<td>{{::items.invoiceName}}</td>
+										<td>{{::items.invoiceAmount}}</td>
+										<td>{{::items.createByName}}</td>
+										<td>{{::items.createTime}}</td>
+										<td>{{::items.invoiceStatus}}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div> 
+					</div>
+				</div>
+				<div class="cost_detail">
+					<div class="row ptb10">
+						<div class="pl10 font-bold font-blue info-tit">
+							<i class="glyphicon glyphicon-minus"></i>付款信息
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<label class="col-sm-4 control-label">应付总额（元）：</label>
+								<div class="col-sm-7">	
+									<input type="text" class="form-control" readonly ng-value="$ctrl.costdetail.paymentlist.sumPayAmount">					
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label class="col-sm-4 control-label">在途金额（元）：</label>
+								<div class="col-sm-7">	
+									<input type="text" class="form-control" readonly readonly ng-value="$ctrl.costdetail.paymentlist.sumTransitAmount">					
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label class="col-sm-4 control-label">实付总额（元）：</label>
+								<div class="col-sm-7">	
+									<input type="text" class="form-control" readonly readonly ng-value="$ctrl.costdetail.paymentlist.sumRealPayAmount">					
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						 <div class="example-wrap ptb10">
+						 	#if($shiro.hasPermission("SCM:SALES:LEASE_CONTRACT_DETAILED_PAYMENT"))
+						 	<div class="col-md-12 text-right mb20">
+								<a class="btn btn-success btn-sm" target='_blank' id="paymentadd" ng-if="!$ctrl.other">录入付款申请</a>
+							</div>
+							#end
+							<table id="J_cost3dataTable" class="table table-hover table-striped table-bordered">
+								 <thead>
+									<tr>
+										<th>序号</th>
+										<th>费用类型</th>
+										<th>付款单号</th>
+										<th>付款申请单号</th>
+										<th>款项名称</th>
+										<th>付款单位</th>
+										<th>收款方</th>
+										<th>收款人</th>
+										<th>应付金额/元</th>
+										<th>付款日期</th>
+										<th>在途金额/元<br>（审批中）</th>
+										<th>实付日期</th>
+										<th>实付金额/元<br>（已审批）</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr  ng-repeat="items in $ctrl.costdetail.paymentlist.payment">
+										<td>{{::$index+1}}</td>
+										<td>{{::items.moneyType}}</td>
+										<td><a href="/sales/finance/payment/detail.htm?paymentId={{::items.paymentId}}"  target="_blank">{{items.paymentNumber}}</a></td>
+										<td ng-if="items.paymentType=='1'">
+											<a href="/sales/finance/payment/apply/detail.htm?paymentType=1&applyId={{::items.batchNumber}}" target="_blank">
+											{{::items.applyNumber}}</a></td>
+										<td ng-if="items.paymentType=='2'">
+											<a href="/sales/finance/payment/apply/detail.htm?paymentType=2&applyId={{::items.batchNumber}}" target="_blank">
+											{{::items.applyNumber}}</a></td>
+										<td ng-if="items.paymentType=='3'">
+											<a href="/sales/finance/payment/apply/detail.htm?paymentType=3&applyId={{::items.batchNumber}}" target="_blank">
+											{{::items.applyNumber}}</a></td>
+										
+										<td>{{::items.fundName}}</td>
+										<td>{{::items.payer}}</td>
+										<td>{{::items.receiverType}}</td>
+										<td>{{::items.receiverName}}</td>
+										<td>{{::items.payAmount}}</td>
+										<td>{{::items.payTime}}</td>
+										<td>{{::items.transitAmount}}</td>
+										<td>{{::items.realPayTime}}</td>
+										<td>{{::items.realPayAmount}}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div> 
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>

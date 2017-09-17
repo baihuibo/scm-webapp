@@ -1,0 +1,67 @@
+#set($plugins = ["table","chosen"])
+<div class="ibox">
+	<div class="ibox-title">
+		<h5>我的任务</h5>
+		<div class="ibox-tools">
+			<a class="collapse-link ui-sortable"> <i class="fa fa-chevron-up"></i></a>
+		</div>
+	</div>
+</div>
+<!-- 列表begin -->
+#set($plugins = ["table","chosen"])
+<div class="ibox float-e-margins">
+	<div class="section" style="padding:0">
+		<div class="row">
+			<div class="tabs-container" id="tabs-container">
+				<div class="tab-content tab-content-min" id="tab-content" style="margin:0">
+					<div class="ibox">
+						<div class="ibox-content pd10">
+							<div class="row">
+								<div class="tabs-container">
+									<ul class="nav nav-tabs">
+										<li class="active"><a data-toggle="tab" href="#tab-11">待处理任务</a></li>
+										<li class=""><a data-toggle="tab" href="#tab-12"> 已处理任务</a></li>
+									</ul>
+									<div class="tab-content pd5" id="tab-content1">
+										<div id="tab-11" class="tab-pane active">
+											<table id="dataTable" class="table table-hover table-striped table-condensed">
+											<thead>
+												<tr>
+													<th data-field="id">信息编号</th>
+													<th data-field="customerName">姓名</th>
+													<th data-field="customerTypeName">客户类型</th>
+													<th data-field="businessTypeName">业务类型</th>
+													<th data-field="reasonDisplay" class="col-sm-6">上榜原因</th>
+													<th data-field="nodeStateName">状态</th>
+													<th data-field="nodeStateName">操作</th>
+												</tr>
+											</thead>
+											</table>
+										</div>
+										<div id="tab-12" class="tab-pane">
+											<table id="dataTable2" class="table table-hover table-striped table-condensed">
+											<thead>
+												<tr>
+													<th data-field="id">信息编号</th>
+													<th data-field="customerName">姓名</th>
+													<th data-field="customerTypeName">客户类型</th>
+													<th data-field="businessTypeName">业务类型</th>
+													<th data-field="reasonDisplay">上榜原因</th>
+													<th data-field="nodeStateName">状态</th>
+													<th data-field="approvalTime">操作时间</th>
+												</tr>
+											</thead>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 列表end -->
+<script src="$link.contextPath/resources/script/restrictive/mytask.js"></script>

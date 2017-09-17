@@ -1,0 +1,77 @@
+<!-- 
+委托书我的任务列表页
+
+房源-委托信息管理
+接口名称：委托信息管理-我的任务
+/house/proxy/searchHouseProxy_MyTask
+ -->
+#set($plugins = ["table","chosen","laydate","ztree","autoSearch"])
+
+<div class="ibox">
+		#if($shiro.hasPermission("SCM:HOUSE:PROXY:VIEW"))
+			<input type="hidden" value="1" id="temp_view"></input>
+		#end
+		#if($shiro.hasPermission("SCM:HOUSE:PROXY:MODIFY"))
+			<input type="hidden" value="1" id="temp_modify"></input>
+		#end
+		#if($shiro.hasPermission("SCM:HOUSE:PROXY:AUDIT:FIRST"))
+			<input type="hidden" value="1" id="temp_first"></input>
+		#end
+		#if($shiro.hasPermission("SCM:HOUSE:PROXY:AUDIT:SECOND"))
+			<input type="hidden" value="1" id="temp_second"></input>
+		#end
+		#if($shiro.hasPermission("SCM:HOUSE:PROXY:AUDIT:THIRD"))
+			<input type="hidden" value="1" id="temp_third"></input>
+		#end
+		#if($shiro.hasPermission("SCM:HOUSE:PROXY:MODIFY:CODE"))
+			<input type="hidden" value="1" id="temp_modify_code"></input>
+		#end
+		#if($shiro.hasPermission("SCM:HOUSE:PROXY:CANCEL"))
+			<input type="hidden" value="1" id="temp_cansel"></input>
+		#end
+	<div class="tabs-container mt10">
+		<ul class="nav nav-tabs">
+			<li class="active"><a data-toggle="tab" href="#tab-1">待处理</a></li>
+			<li class=""><a data-toggle="tab" href="#tab-2" id="tab_02">待抽查</a></li>
+			<li class=""><a data-toggle="tab" href="#tab-3" id="tab_03">已完成</a></li>
+		</ul>
+		<div class="tab-content">
+			<div id="tab-1" class="tab-pane active">
+				#parse("/house/proxy/mytask_01.html")
+			</div>
+			<div id="tab-2" class="tab-pane">
+				#parse("/house/proxy/mytask_02.html")
+			</div>
+			<div id="tab-3" class="tab-pane">
+				#parse("/house/proxy/mytask_03.html")
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<!-- 修改委托书编号 -->
+<div id="J_editproxy_code" class="ibox-content" style="margin:0 10px 0 10px; display:none;">
+	<form id="J_form_settime" class="form-horizontal form_settime_ath" style="width:90%;">
+		<div class="col-md-12 m-b-sm pt6 setsingletime_ath">
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-6 control-label" style="white-space: nowrap;">原委托书编号：</label>
+					<div id="J_proxycode_old" class="form-control-static"></div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-12 m-b-sm">
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-6 control-label">请输入委托书编号：</label>
+					<input id="J_proxycode_new" name="proxycode" maxlength="50" class="form-control w160"/>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+<!-- 修改委托书编号 end -->
+<script type='text/javascript' src="$link.contextPath/resources/script/house/proxy/mytasks.js"></script>
+<script type="text/javascript" src="$link.contextPath/resources/js/department.js"></script>

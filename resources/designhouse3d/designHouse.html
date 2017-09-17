@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"> 
+    <head>
+        <title>六方盒装修设计软件</title>
+        <meta name="renderer" content="webkit">   
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link rel="stylesheet" href="assets/css/house.css?v=01"/>
+				
+		<script type="text/javascript" src="swfobject.js?v=01"></script>
+		<script type="text/javascript" src="assets/js/jquery-1.7.2.min.js?v=01"></script>
+		<script type="text/javascript" src="assets/js/houseDesign.js?v=01"></script>
+
+		<script type="text/javascript">
+			
+			function init(){
+				var webSiteBasePath = webSitePath();
+				//alert("webSiteBasePath="+webSiteBasePath);
+				houseDesign.setTop(40);
+				houseDesign.setBeforeunloadInterval(20000);	// 设置多少毫秒后提示开始用户关闭提醒
+				houseDesign.setLaunchVars("openCommand", getParameterValue("openCommand", ""));
+				houseDesign.setLaunchVars("language", getParameterValue("language", "zh_CN"));
+						
+				//添加业务参数
+				houseDesign.setLaunchVars("fangyuanID", getParameterArray("houseId"));
+				houseDesign.setLaunchVars("shikanID", getParameterArray("inqId"));
+				//设置系统属性
+				houseDesign.setLaunchVars("viewType", 1);
+				houseDesign.setLaunchVars("showRoomName", "true");
+				houseDesign.setLaunchVars("showRoomArea", "false");
+				houseDesign.setLaunchVars("wallHeight", 260);
+				houseDesign.setLaunchVars("wallLength", 24);
+				//设计图参数
+				houseDesign.setLaunchVars("getDataUrl", webSiteBasePath +"/designhouse3d/getDataUrl");
+				houseDesign.setLaunchVars("saveDataUrl", webSiteBasePath +"/designhouse3d/saveDataUrl");
+				houseDesign.setLaunchVars("getListUrl", webSiteBasePath +"/designhouse3d/getListUrl");
+				//户型图参数
+				houseDesign.setLaunchVars("getLayoutDataUrl", webSiteBasePath +"/designhouse3d/getLayoutDataUrl");
+				houseDesign.setLaunchVars("saveLayoutDataUrl", webSiteBasePath +"/designhouse3d/saveLayoutDataUrl");
+				houseDesign.setLaunchVars("getLayoutListUrl", webSiteBasePath +"/designhouse3d/getLayoutListUrl");
+				houseDesign.setLaunchVars("queryLayoutUrl", webSiteBasePath +"/designhouse3d/queryLayoutUrl");
+
+				//删除户型图
+				houseDesign.setLaunchVars("deleteDataUrl", webSiteBasePath +"/designhouse3d/deleteDataUrl");
+				houseDesign.setLaunchVars("deleteLayoutDataUrl", webSiteBasePath +"/designhouse3d/deleteLayoutDataUrl");
+				
+				//静态资源引用
+// 				houseDesign.setLaunchVars("imageUrl", "http://local.cbs.bacic5i5j.com:8080/sales/designhouse3d/images/");
+				
+				houseDesign.flashplayerVersion = "11.2.0";
+				houseDesign.embedSWF("HouseDesign.swf", "flashContent");
+				
+			}
+			
+        </script>
+        
+</head>
+    <body scroll="no" onload="init()">
+    <!-- <div class="soft-top" id="houseDesignHeader">
+    <div class="soft-logo" onclick="document.getElementById('gohome').click();">
+        <a id="gohome" href="/" target="_blank"></a>
+    </div> -->
+
+</div><div id="flashContent">
+			<div style="text-align:center;margin-top:100px;">
+	            <img src="http://www.1jia1hu.com/test/assets/no-flash.png?v=01" alt="no-flash">
+	            </br></br>
+	            <div class="txt">
+	                <p>您还没有安装Flash或Flash版本过低</p>
+	                </br>
+	                <p>点击<a href="http://www.adobe.com/go/getflashplayer" target="_blank">这里</a>去下载最新Flash</p>
+	            </div>
+	        </div>
+    	</div><!-- end flashContent -->
+   </body>
+</html>

@@ -1,0 +1,114 @@
+#set($plugins = ["table","chosen","laydate"])
+<div class="ibox float-e-margins">
+	<div class="section">
+		<div class="row">
+			<div id="tabs-container" class="tabs-container">
+				<div class="tab-container">
+					<ul class="nav nav-tabs">
+						<li>
+							<a href="$link.contextPath/house/keyadmin/pend_list.htm">待处理<span id="J_waitkeycount"></span></a>
+						</li>
+						<li>
+							<a href="$link.contextPath/house/keyadmin/list.htm">钥匙在管</a>
+						</li>
+						<li>
+							<a href="$link.contextPath/house/keyadmin/back_list.htm">退钥匙记录</a>
+						</li>
+						<li class="active">
+							<a href="#"> 日盘点管理</a>
+						</li>
+					</ul>
+				</div>
+				<div class="tab-content tab-content-min">
+					<!-- 查询条件 begin -->
+					<div class="ibox float-e-margins" style="margin-bottom: 10px;">
+					    <div class="ibox-title">
+					        <h5>查询条件</h5>
+					        <div class="ibox-tools">
+					            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+					        </div>
+					    </div>
+						<div class="ibox-content">
+							<div class="row">
+						        <form id="J_query" class="form-horizontal" role="form">
+									<div class="col-md-5">
+										<div class="form-group">
+											<label class="col-sm-3 control-label">盘点日期：</label>
+											<div class="col-sm-4">
+												<input id="J_begindate" name="begindate" class="form-control" placeholder="">
+											</div>
+											<div style="float:left; padding:7px 10px;">-</div>
+											<div class="col-sm-4">
+												<input id="J_enddate" name="enddate" class="form-control" placeholder="">
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<label class="col-sm-4 control-label">盘点状态：</label>
+											<div class="col-sm-6">
+												<select id="J_type" name="type" class="J_chosen form-control" data-placeholder="全部">
+								                     <option value="">全部</option>
+								                 </select>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<button id="J_search" type="button" class="btn btn-success btn_size">查询</button>
+											<button id="J_reset" type="reset" class="btn btn-white btn_size">重 置</button>
+										</div>
+									</div>
+								</form>
+					    	</div>
+						</div>
+					</div>
+					<!-- 查询条件 end -->
+					
+					<!-- 查询列表 begin -->
+					<div class="ibox float-e-margins">
+						<div class="ibox-title">
+					        <h5>日盘点管理列表</h5>
+					     </div>
+					    <div class="ibox-content">
+					    	<div class="row row-lg">
+					    		<div class="col-md-12 text-right">
+					    		#if($shiro.hasPermission("SCM:HOUSE:KEY:VIEW"))
+									<input type="hidden" value="1" id="temp_view"></input>
+								#end
+					    		#if($shiro.hasPermission("SCM:HOUSE:KEY:DAILYSUM"))
+									<button id="J_manualCheck" type="button" class="btn btn-success btn-sm">当日盘点</button>
+								#end
+								</div>
+								<div class="col-sm-12 ptb10">
+							  		<table id="J_dataTable" class="table table-hover table-striped table table-bordered tables table-condensed">
+							  			<thead>
+											<tr>
+												<th data-field=inputdate>盘点时间<br/>盘点状态</th>
+												<th data-field="checkusername">盘点人</th>
+												<th data-field="keynum">在管钥匙数量</th>
+												<th data-field="inshopnum">实际在店数量</th>
+												<th data-field="lendnum">借出未还数量</th>
+												<th data-field="waitchangeshopnum">待转店确认数量</th>
+												<th class="col-sm-3 remark_all" data-field="memo">备注</th>
+												<th data-field="id">操作</th>
+											</tr>
+										</thead>
+							  		</table>
+							  	</div>
+							</div>
+					  	</div>
+					</div>
+					<!-- 查询列表 end -->
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 
+
+ -->
+#parse("/key/check_manual.html")
+
+<script type="text/javascript" src="$link.contextPath/resources/script/key/waitkeycount.js"></script>
+<script type="text/javascript" src="$link.contextPath/resources/script/key/check_list.js?V=3"></script>

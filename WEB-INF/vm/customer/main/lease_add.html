@@ -1,0 +1,1905 @@
+#set($plugins = ["table","chosen","laydate","autoSearch","validator"])
+<div class="ibox">
+	<div class="ibox-title">
+		<h5>租赁客源添加</h5>
+		<div class="ibox-tools">
+			<a class="collapse-link ui-sortable"> <i class="fa fa-chevron-up"></i>
+			</a>
+		</div>
+	</div>
+	<div class="ibox-content">
+		<form class="form-horizontal" role="form" id="J_black_form">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<label class="col-sm-3 control-label"><span
+							class="text-danger">*</span>联系电话：</label>
+						<div class="col-sm-6">
+							<input id="J_phone" name="" class="form-control" placeholder=""
+								readonly="readonly">
+						</div>
+						<div class="col-sm-1 m-l-sm">
+							<a class="btn btn-white btn-bitbucket" id="J_add_phone"> <i
+								class="glyphicon glyphicon-plus"></i>
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12 text-cen">
+					<div class="form-group">
+						<button id="J_add_btn" type="button" class="btn btn-success pr5">确定</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<!-- 添加电话 begin -->
+<div id="addphone_layer" class="ibox-content" style="display: none">
+	<form id="addphone_form" name="addphone_form" class="form-horizontal">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="form-group">
+					<div class="col-sm-3">
+						<select id="phoneType" name="infoType"
+							class="J_chosen form-control" data-placeholder="请选择">
+						</select>
+					</div>
+					<div class="col-sm-7 m-l-sm">
+						<input id="phone" name="" class="form-control" placeholder="">
+						<div class="remark" style="margin-top: 3px;display: none;color:#ed5565;">注:座机格式区号（3或4位）-固话（7或8位）
+</div>
+					</div>
+					<div class="col-sm-1 m-l-sm">
+						<button id="J_addphone" type="button" class="btn btn-success pr5">添加</button>
+					</div>
+				</div>
+			</div>
+		</div>
+			 <div class="tab-pane pt6 m-b-sm">
+				<div class="bootstrap-table" style="height:320px;overflow-y:auto;">
+					<table id="J_phone_dataTable" class="table table-hover table-striped singlewatch_ath table-bordered">
+						<thead>
+							<tr style="height: 30px;">
+								<th data-field="phone">电话</th>
+								<th data-field="opt">操作</th>
+							</tr>
+						</thead>
+						<tbody></tbody>
+					</table>
+				</div>
+			</div>
+		
+		<div class="col-md-12 m-b-sm">
+			<div class="bootstrap-table">
+				<div id="prompt" style="color:#ff0000;">备注：至少添加一个手机号码</div>
+			</div>
+		</div>
+	</form>
+</div>
+<!-- 添加电话的修改 end -->
+<!-- 添加楼盘 begin -->
+<div id="addfloor_layer" class="ibox-content" style="display: none">
+	<form id="addfloor_form" name="lease_form" class="form-horizontal">
+		<div class="form-group">
+			<label class="col-sm-3 control-label">需求楼盘：</label>
+			<div class="col-sm-8">
+				<div class="input-group">
+					<input type="text" class="form-control" id="J_build" autocomplete="off">
+					<div class="input-group-btn">
+						<button type="button" class="btn btn-white dropdown-toggle" data-toggle="">
+							<span class="glyphicon glyphicon-search search-caret"></span>
+						</button>
+						<ul class="dropdown-menu dropdown-menu-right" role="menu" style="padding-top: 0px; max-height: 375px; max-width: 800px; overflow: auto; width: auto; transition: 0.3s; left: -110px; right: auto; min-width: 145px;">
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+<!-- 添加楼盘 end -->
+
+<!-- 添加商圈 begin -->
+<div id="addarea_layer" class="ibox-content" style="display: none">
+	<form id="addarea_form" name="addarea_form" class="form-horizontal">
+		<div class="form-group">
+			<label class="col-sm-3 control-label"><span
+							class="text-danger">*</span>商圈：</label>
+			<div class="col-sm-8">
+				<div class="input-group">
+					<input type="text" class="form-control" id="J_business" autocomplete="off">
+					<div class="input-group-btn">
+						<button type="button" class="btn btn-white dropdown-toggle" data-toggle="">
+							<span class="glyphicon glyphicon-search search-caret"></span>
+						</button>
+						<ul class="dropdown-menu dropdown-menu-right" role="menu" style="padding-top: 0px; max-height: 375px; max-width: 800px; overflow: auto; width: auto; transition: 0.3s; left: -110px; right: auto; min-width: 145px;">
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">所属行政区：</label>
+			<div class="col-sm-8">
+				<select id="J_region" name="infoType" class="J_chosen form-control"
+					data-placeholder="请选择">
+					<option value="">请选择</option>
+				</select>
+			</div>
+		</div>
+	</form>
+</div>
+<!-- 添加商圈 end -->
+
+<!-- 租赁新增 begin -->
+<!-- <div id="lease_layer" class="ibox-content" style="display: none">
+	<form id="lease_form" name="lease_form" class="form-horizontal">
+		<div class="form-group">
+			<label class="col-sm-3 control-label">需求类型：</label>
+			<div class="col-sm-8">
+				<select id="infotype" name="infoType" class="J_chosen form-control"
+					data-placeholder="请选择">
+					<option>请选择</option>
+					<option value="0">住宅</option>
+					<option value="1">商铺</option>
+					<option value="2">写字楼</option>
+				</select>
+			</div>
+		</div>
+	</form>
+</div> -->
+<div id="lease_add_layer" class="ibox-content" style="display: none;">
+<div class="ibox">
+	<div id="formtop">
+	
+		<div class="col-md-12">
+			<h4 class="business-title">客户信息</h4>
+		</div>
+		<div class="row ptb10">
+			<div class="pl10 font-bold font-blue info-tit">基本信息</div>
+		</div>
+		<form id="J_addForm" class="form-horizontal" role="form">
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span
+						class="text-danger">*</span>客户姓名：</label>
+					<div class="col-sm-7">
+						<input type="text" class="form-control" id="customerName" name="customerName" >
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">性别：</label>
+					<div id="gender" class="col-sm-7">
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">户籍：</label>
+					<div id="hometown" class="col-sm-7">
+					</div>
+				</div>
+			</div>
+		</div>
+ 		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">国籍：</label>
+					<div class="col-sm-7">
+						<select id="nationalityCode" name="nationalityCode"
+							class="form-control m-b" data-placeholder="请选择" >
+							<option value="">请选择</option>
+							<!-- <option value="1">中国</option>
+							<option value="2">中国香港</option>
+							<option value="2">中国台湾</option>
+							<option value="2">美国</option>
+							<option value="2">英国</option> -->
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-5">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">方便看房时间：</label>
+					<div id="watchHouseTime" class="col-sm-7">
+
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-1 control-label"><span
+						class="text-danger">*</span>联系电话：</label>
+					<div class="col-sm-9">
+						<input type="text" readonly="readonly" class="form-control" name="phones" id="J_phone_layer"
+							autocomplete="off">
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+		<!-- 客户信息end -->
+
+		<!-- 需求类型begin -->
+		<form  name=""  class="form-horizontal" role="form">
+		<div class="row m-t-sm m-b-sm">
+			<div class="col-md-12" style="background: #666; color: #fff;">
+				<label class="col-sm-1 control-label">物业类型：</label>
+				<div id="J_demandType" class="col-sm-11">
+					
+				</div>
+			</div>
+		</div>
+		</form>
+		</div>
+		
+		<!-- 需求类型end -->
+
+		<!-- 住宅需求begin -->
+		<div id="residence" class="form1 form">
+		<form id="form1" name="form1"  class="form-horizontal" role="form">
+			<div class="col-md-12">
+				<h4 class="business-title">住宅需求</h4>
+			</div>
+			<div class="row ptb10">
+				<div class="pl10 font-bold font-blue info-tit">房源需求</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label"><span
+							class="text-danger">*</span>价格区间：</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control J_minPrice" name="minPrice" id=""  autocomplete="off" required>
+						</div>
+						<div class="control-spacing">-</div>
+						<div class="col-sm-3">
+							<input type="text" class="form-control J_maxPrice" name="maxPrice"  autocomplete="off" id="" required>
+						</div>
+						<label class="control-label">元/月</label>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label"><span
+							class="text-danger">*</span>需求面积：</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control J_minArea" name="minArea" id="" autocomplete="off">
+						</div>
+						<div class="control-spacing">-</div>
+						<div class="col-sm-3">
+							<input type="text" class="form-control J_maxArea" name="maxArea" id="" autocomplete="off">
+						</div>
+						<label class="control-label">平方米</label>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label"><span
+							class="text-danger">*</span>户型：</label>
+						<div class="col-sm-3">
+							<select id="J_bedRoom1" name="bedRoom1" class="J_chosen form-control J_bedRoom1" data-placeholder="请选择">
+								<option value="">请选择</option>							
+							</select>
+							<!-- <input type="text" class="form-control" id="bedRoom1" autocomplete="off"> -->
+						</div>
+						<div class="control-spacing">或</div>
+						<div class="col-sm-3">
+							<select id="J_bedRoom2" name="bedRoom2" class="J_chosen form-control J_bedRoom2" data-placeholder="请选择">
+								<option value="">请选择</option>							
+							</select>
+							</div>
+						<label class="control-label">室</label>
+						<input type="hidden" class="form-control" id="" value='1,1'>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">户型结构：</label>
+						<div class="col-sm-7">
+							<select id="" name="roomTypeId"
+								class="J_chosen form-control J_layoutStructure" data-placeholder="请选择">
+								<option value="">请选择</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">家具：</label>
+						<div id="J_furniture1" class="col-sm-9 J_furniture">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<label class="col-sm-1 control-label">家电：</label>
+						<div id="J_electric1" class="col-sm-9 J_electric">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row ptb10">
+				<div class="pl10 font-bold font-blue info-tit">区域需求</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<label class="col-md-11 control-label" style="text-align: left;">
+							需求楼盘: </label>
+						<div class="col-md-1">
+							<a  onclick="addfloor('residence')" class="btn-green btn-bitbucket"
+								style="float: right; margin-top: 10px;"><i
+								class="glyphicon glyphicon-plus"></i></a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12 m-b-sm ">
+					<div class="bootstrap-table table-list">
+						<div class="fixed-table-container">
+							<table id="dataTableFloor" class="table table-hover  table-striped"
+								style="border-bottom: none">
+								<thead>
+									<tr>
+										<th data-field="id">楼盘</th>
+										<th data-field="opt">操作</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<label class="col-md-11 control-label required" style="text-align: left;">
+							商圈:
+						</label>
+						<div class="col-md-1">
+							<a id=""  onclick="addarea('residence')"  class="btn-green btn-bitbucket"
+								style="float: right; margin-top: 10px;"><i
+								class="glyphicon glyphicon-plus"></i></a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12 m-b-sm">
+					<div class="bootstrap-table table-list">
+						<div class="fixed-table-container">
+							<table id="dataTableArea" class="table table-hover  table-striped"
+								data-query-params="queryParams" data-mobile-responsive="true"
+								data-pagination="true" data-icon-size="outline"
+								data-striped="true" data-search="false">
+								<thead>
+									<tr>
+										<th data-field="id">商圈</th>
+										<th data-field="price">所属行政区</th>
+										<th data-field="opt">操作</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row ptb10">
+				<div class="pl10 font-bold font-blue info-tit">其他需求</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">入住时间：</label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control enterTime" id="enterTime" name="enterTime">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">租期：</label>
+						<div class="col-sm-7">
+							<input type="text" class="form-control rentTime" name="rentTime">
+						</div>
+						<label class="col-sm-1 control-label">月</label>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">合租意向：</label>
+						<div class="col-sm-8">
+							<select id="J_rentMode" name="rentModeId" class="form-control J_rentMode"
+								data-placeholder="请选择" style="display: none;">
+								 <!-- <option value="">请选择</option> -->
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">付租方式：</label>
+						<div class="col-sm-8">
+							<select id="J_paymentMode" name="payTypeId" class="form-control J_paymentMode"
+								data-placeholder="请选择" style="display: none;">
+								<option value="">请选择</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">押金：</label>
+						<div class="col-sm-8">
+							<select id="J_foregift" name="depositTypeId" class="form-control J_foregift"
+								data-placeholder="请选择" style="display: none;">
+								<option value="">请选择</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">紧急度：</label>
+						<div class="col-sm-8">
+							<select id="J_urgency" name="urgencyTypeId" class="form-control J_urgency"
+								data-placeholder="请选择" style="display: none;">
+								<option value="">请选择</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-8">
+					<div class="form-group">
+						<label class="col-sm-2 control-label">其他需求：</label>
+						<div class="col-sm-4">
+							<select id="J_isBill" name="isNeedBill" class="form-control J_isBill"
+								data-placeholder="请选择" style="display: none;">
+								<option value="">请选择</option>
+							</select>
+						</div>
+						<div id="J_bill1" class="col-sm-6 J_bill"
+							style="padding-left: 10px; display:none">
+						</div>
+					</div>
+				</div>
+			</div>
+			</form>
+		</div>
+		<!-- 住宅需求end -->
+		
+		<!-- 平房需求begin -->
+		<div id="bungalow"  class="form6 form" style="display: none">
+		<form id="form6" name=""  class="form-horizontal" role="form">
+			<div class="col-md-12">
+				<h4 class="business-title">平房需求</h4>
+			</div>
+			<div class="row ptb10">
+				<div class="pl10 font-bold font-blue info-tit">房源需求</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label"><span
+							class="text-danger">*</span>价格区间：</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control J_minPrice" name="minPrice" id="" required>
+						</div>
+						<div class="control-spacing">-</div>
+						<div class="col-sm-3">
+							<input type="text" class="form-control J_maxPrice" name="maxPrice" id="" required>
+						</div>
+						<label class="control-label">元/月</label>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label"><span
+							class="text-danger">*</span>需求面积：</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control J_minArea" name="minArea" id="" autocomplete="off">
+						</div>
+						<div class="control-spacing">-</div>
+						<div class="col-sm-3">
+							<input type="text" class="form-control J_maxArea" name="maxArea" id="" autocomplete="off">
+						</div>
+						<label class="control-label">平方米</label>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label"><span
+							class="text-danger">*</span>户型：</label>
+						<div class="col-sm-3">
+							<select id="J_bedRoom1" name="bedRoom1" class="J_chosen form-control J_bedRoom1" data-placeholder="请选择">
+								<option value="">请选择</option>							
+							</select>
+							<!-- <input type="text" class="form-control" id="bedRoom1" autocomplete="off"> -->
+						</div>
+						<div class="control-spacing">或</div>
+						<div class="col-sm-3">
+							<select id="J_bedRoom2" name="bedRoom2" class="J_chosen form-control J_bedRoom2" data-placeholder="请选择">
+								<option value="">请选择</option>							
+							</select>
+							</div>
+						<label class="control-label">室</label>
+						<input type="hidden" class="form-control" id="" value='1,1'>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">户型结构：</label>
+						<div class="col-sm-7">
+							<select id="J_layoutStructure" name="roomTypeId"
+								class="J_chosen form-control J_layoutStructure" data-placeholder="请选择">
+								<option value="">请选择</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">家具：</label>
+						<div id="J_furniture6" class="col-sm-9 J_furniture">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<label class="col-sm-1 control-label">家电：</label>
+						<div id="J_electric6" class="col-sm-9 J_electric">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row ptb10">
+				<div class="pl10 font-bold font-blue info-tit">区域需求</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<label class="col-md-11 control-label" style="text-align: left;">
+							需求楼盘: </label>
+						<div class="col-md-1">
+							<a id="" onclick="addfloor('bungalow')" class="btn-green btn-bitbucket"
+								style="float: right; margin-top: 10px;"><i
+								class="glyphicon glyphicon-plus"></i></a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12 m-b-sm ">
+					<div class="bootstrap-table table-list">
+						<div class="fixed-table-container">
+							<table id="dataTableFloor" class="table table-hover  table-striped"
+								style="border-bottom: none">
+								<thead>
+									<tr>
+										<th data-field="id">楼盘</th>
+										<th data-field="opt">操作</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<label class="col-md-11 control-label" style="text-align: left;">
+							<span class="text-danger">*</span>商圈:
+						</label>
+						<div class="col-md-1">
+							<a id="" onclick="addarea('bungalow')"  class="btn-green btn-bitbucket"
+								style="float: right; margin-top: 10px;"><i
+								class="glyphicon glyphicon-plus"></i></a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12 m-b-sm">
+					<div class="bootstrap-table table-list">
+						<div class="fixed-table-container">
+							<table id="dataTableArea" class="table table-hover  table-striped"
+								data-query-params="queryParams" data-mobile-responsive="true"
+								data-pagination="true" data-icon-size="outline"
+								data-striped="true" data-search="false">
+								<thead>
+									<tr>
+										<th data-field="id">商圈</th>
+										<th data-field="price">所属行政区</th>
+										<th data-field="opt">操作</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row ptb10">
+				<div class="pl10 font-bold font-blue info-tit">其他需求</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">入住时间：</label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control enterTime" id="enterTime1"  name="enterTime">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">租期：</label>
+						<div class="col-sm-7">
+							<input type="text" class="form-control rentTime" name="rentTime">
+						</div>
+						<label class="col-sm-1 control-label">月</label>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">合租意向：</label>
+						<div class="col-sm-8">
+							<select id="J_rentMode" name="rentModeId" class="form-control J_rentMode"
+								data-placeholder="请选择" style="display: none;">
+								 <!-- <option value="">请选择</option> -->
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">付租方式：</label>
+						<div class="col-sm-8">
+							<select id="J_paymentMode" name="payTypeId" class="form-control J_paymentMode"
+								data-placeholder="请选择" style="display: none;">
+								<option value="">请选择</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">押金：</label>
+						<div class="col-sm-8">
+							<select id="J_foregift" name="depositTypeId" class="form-control J_foregift"
+								data-placeholder="请选择" style="display: none;">
+								<option value="">请选择</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">紧急度：</label>
+						<div class="col-sm-8">
+							<select id="J_urgency" name="urgencyTypeId" class="form-control J_urgency"
+								data-placeholder="请选择" style="display: none;">
+								<option value="">请选择</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-8">
+					<div class="form-group">
+						<label class="col-sm-2 control-label">其他需求：</label>
+						<div class="col-sm-4">
+							<select id="J_isBill" name="isNeedBill" class="form-control J_isBill"
+								data-placeholder="请选择" style="display: none;">
+								<option value="">请选择</option>
+							</select>
+						</div>
+						<div id="J_bill6" class="col-sm-6 J_bill"
+							style="padding-left: 10px; display:none">
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+		</div>
+		<!-- 平房需求end -->
+		
+		<!-- 别墅需求begin -->
+		<div id="villa"  class="form7 form" style="display: none">
+		<form id="form7" name=""  class="form-horizontal" role="form">
+			<div class="col-md-12">
+				<h4 class="business-title">别墅需求</h4>
+			</div>
+			<div class="row ptb10">
+				<div class="pl10 font-bold font-blue info-tit">房源需求</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label"><span
+							class="text-danger">*</span>价格区间：</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control J_minPrice" name="minPrice" id="" required>
+						</div>
+						<div class="control-spacing">-</div>
+						<div class="col-sm-3">
+							<input type="text" class="form-control J_maxPrice" name="maxPrice" id="" required>
+						</div>
+						<label class="control-label">元/月</label>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label"><span
+							class="text-danger">*</span>需求面积：</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control J_minArea" name="minArea" id="" autocomplete="off">
+						</div>
+						<div class="control-spacing">-</div>
+						<div class="col-sm-3">
+							<input type="text" class="form-control J_maxArea" name="maxArea" id="" autocomplete="off">
+						</div>
+						<label class="control-label">平方米</label>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label"><span
+							class="text-danger">*</span>户型：</label>
+						<div class="col-sm-3">
+							<select id="J_bedRoom1" name="bedRoom1" class="J_chosen form-control J_bedRoom1" data-placeholder="请选择">
+								<option value="">请选择</option>							
+							</select>
+							<!-- <input type="text" class="form-control" id="bedRoom1" autocomplete="off"> -->
+						</div>
+						<div class="control-spacing">或</div>
+						<div class="col-sm-3">
+							<select id="J_bedRoom2" name="bedRoom2" class="J_chosen form-control J_bedRoom2" data-placeholder="请选择">
+								<option value="">请选择</option>							
+							</select>
+							</div>
+						<label class="control-label">室</label>
+						<input type="hidden" class="form-control" id="" value='1,1'>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">户型结构：</label>
+						<div class="col-sm-7">
+							<select id="J_layoutStructure" name="roomTypeId"
+								class="J_chosen form-control J_layoutStructure" data-placeholder="请选择">
+								<option value="">请选择</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">家具：</label>
+						<div id="J_furniture7" class="col-sm-9 J_furniture">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<label class="col-sm-1 control-label">家电：</label>
+						<div id="J_electric7" class="col-sm-9 J_electric">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row ptb10">
+				<div class="pl10 font-bold font-blue info-tit">区域需求</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<label class="col-md-11 control-label" style="text-align: left;">
+							需求楼盘: </label>
+						<div class="col-md-1">
+							<a id="" onclick="addfloor('villa')" class="btn-green btn-bitbucket"
+								style="float: right; margin-top: 10px;"><i
+								class="glyphicon glyphicon-plus"></i></a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12 m-b-sm ">
+					<div class="bootstrap-table table-list">
+						<div class="fixed-table-container">
+							<table id="dataTableFloor" class="table table-hover  table-striped"
+								style="border-bottom: none">
+								<thead>
+									<tr>
+										<th data-field="id">楼盘</th>
+										<th data-field="opt">操作</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<label class="col-md-11 control-label" style="text-align: left;">
+							<span class="text-danger">*</span>商圈:
+						</label>
+						<div class="col-md-1">
+							<a id="" onclick="addarea('villa')"  class="btn-green btn-bitbucket"
+								style="float: right; margin-top: 10px;"><i
+								class="glyphicon glyphicon-plus"></i></a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12 m-b-sm">
+					<div class="bootstrap-table table-list">
+						<div class="fixed-table-container">
+							<table id="dataTableArea" class="table table-hover  table-striped"
+								data-query-params="queryParams" data-mobile-responsive="true"
+								data-pagination="true" data-icon-size="outline"
+								data-striped="true" data-search="false">
+								<thead>
+									<tr>
+										<th data-field="id">商圈</th>
+										<th data-field="price">所属行政区</th>
+										<th data-field="opt">操作</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row ptb10">
+				<div class="pl10 font-bold font-blue info-tit">其他需求</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">入住时间：</label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control enterTime" id="enterTime2"  name="enterTime">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">租期：</label>
+						<div class="col-sm-7">
+							<input type="text" class="form-control rentTime" name="rentTime">
+						</div>
+						<label class="col-sm-1 control-label">月</label>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">合租意向：</label>
+						<div class="col-sm-8">
+							<select id="J_rentMode" name="rentModeId" class="form-control J_rentMode"
+								data-placeholder="请选择" style="display: none;">
+								 <!-- <option value="">请选择</option> -->
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">付租方式：</label>
+						<div class="col-sm-8">
+							<select id="J_paymentMode" name="payTypeId" class="form-control J_paymentMode"
+								data-placeholder="请选择" style="display: none;">
+								<option value="">请选择</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">押金：</label>
+						<div class="col-sm-8">
+							<select id="J_foregift" name="depositTypeId" class="form-control J_foregift"
+								data-placeholder="请选择" style="display: none;">
+								<option value="">请选择</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">紧急度：</label>
+						<div class="col-sm-8">
+							<select id="J_urgency" name="urgencyTypeId" class="form-control J_urgency"
+								data-placeholder="请选择" style="display: none;">
+								<option value="">请选择</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-8">
+					<div class="form-group">
+						<label class="col-sm-2 control-label">其他需求：</label>
+						<div class="col-sm-4">
+							<select id="J_isBill" name="isNeedBill" class="form-control J_isBill"
+								data-placeholder="请选择" style="display: none;">
+								<option value="">请选择</option>
+							</select>
+						</div>
+						<div id="J_bill7" class="col-sm-6 J_bill"
+							style="padding-left: 10px; display:none">
+						</div>
+					</div>
+				</div>
+			</div>
+			</form>
+		</div>
+		<!-- 别墅需求end -->
+		
+		<!-- 车位/车库需求begin -->
+		<div id="parking" class="form5 form" style="display: none">
+		<form id="form5" name=""  class="form-horizontal" role="form">
+			<div class="col-md-12">
+				<h4 class="business-title">车位/车库需求</h4>
+			</div>
+			<div class="row ptb10">
+				<div class="pl10 font-bold font-blue info-tit">房源需求</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label"><span
+							class="text-danger">*</span>价格区间：</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control J_minPrice" name="minPrice" id="" required>
+						</div>
+						<div class="control-spacing">-</div>
+						<div class="col-sm-3">
+							<input type="text" class="form-control J_maxPrice" name="maxPrice" id="" required>
+						</div>
+						<label class="control-label">元/月</label>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">段位区号：</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control J_minSegment" name="minSegment" id="" autocomplete="off">
+						</div>
+						<div class="control-spacing">-</div>
+						<div class="col-sm-3">
+							<input type="text" class="form-control J_maxSegment" name="maxSegment" id="" autocomplete="off">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">不要数字：</label>
+						<div class="col-sm-7">
+							<input type="text" class="form-control" name="exludeNumber" id="" autocomplete="off">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row ptb10">
+				<div class="pl10 font-bold font-blue info-tit">区域需求</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<label class="col-md-11 control-label" style="text-align: left;">
+							需求楼盘: </label>
+						<div class="col-md-1">
+							<a id="" onclick="addfloor('parking')" class="btn-green btn-bitbucket"
+								style="float: right; margin-top: 10px;"><i
+								class="glyphicon glyphicon-plus"></i></a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12 m-b-sm ">
+					<div class="bootstrap-table table-list">
+						<div class="fixed-table-container">
+							<table id="dataTableFloor" class="table table-hover  table-striped"
+								style="border-bottom: none">
+								<thead>
+									<tr>
+										<th data-field="id">楼盘</th>
+										<th data-field="opt">操作</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<label class="col-md-11 control-label" style="text-align: left;">
+							<span class="text-danger">*</span>商圈:
+						</label>
+						<div class="col-md-1">
+							<a id="" onclick="addarea('parking')"  class="btn-green btn-bitbucket"
+								style="float: right; margin-top: 10px;"><i
+								class="glyphicon glyphicon-plus"></i></a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12 m-b-sm">
+					<div class="bootstrap-table table-list">
+						<div class="fixed-table-container">
+							<table id="dataTableArea" class="table table-hover  table-striped"
+								data-query-params="queryParams" data-mobile-responsive="true"
+								data-pagination="true" data-icon-size="outline"
+								data-striped="true" data-search="false">
+								<thead>
+									<tr>
+										<th data-field="id">商圈</th>
+										<th data-field="price">所属行政区</th>
+										<th data-field="opt">操作</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row ptb10">
+				<div class="pl10 font-bold font-blue info-tit">其他需求</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">租期：</label>
+						<div class="col-sm-7">
+							<input type="text" class="form-control rentTime" name="rentTime">
+						</div>
+						<label class="col-sm-1 control-label">月</label>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">付租方式：</label>
+						<div class="col-sm-8">
+							<select id="J_paymentMode" name="payTypeId" class="form-control J_paymentMode"
+								data-placeholder="请选择" style="display: none;">
+								<option value="">请选择</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">押金：</label>
+						<div class="col-sm-8">
+							<select id="J_foregift" name="depositTypeId" class="form-control J_foregift"
+								data-placeholder="请选择" style="display: none;">
+								<option value="">请选择</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">紧急度：</label>
+						<div class="col-sm-8">
+							<select id="J_urgency" name="urgencyTypeId" class="form-control J_urgency"
+								data-placeholder="请选择" style="display: none;">
+								<option value="">请选择</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-8">
+					<div class="form-group">
+						<label class="col-sm-2 control-label">其他需求：</label>
+						<div class="col-sm-4">
+							<select id="J_isBill" name="isNeedBill" class="form-control J_isBill"
+								data-placeholder="请选择" style="display: none;">
+								<option value="">请选择</option>
+							</select>
+						</div>
+						<div id="J_bill5" class="col-sm-6 J_bill"
+							style="padding-left: 10px; display:none">
+						</div>
+					</div>
+				</div>
+			</div>
+			</form>
+		</div>
+		<!-- 车位/车库需求end -->
+
+		<!-- 商铺需求begin -->
+		<div id="shops" class="form2 form" style="display: none">
+		<form id="form2" name=""  class="form-horizontal" role="form">
+			<div class="col-md-12">
+				<h4 class="business-title">商铺需求</h4>
+			</div>
+			<div class="row ptb10">
+				<div class="pl10 font-bold font-blue info-tit">房源需求</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label"><span
+							class="text-danger">*</span>价格区间：</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control J_minPrice" name="minPrice" id="" required>
+						</div>
+						<div class="control-spacing">-</div>
+						<div class="col-sm-3">
+							<input type="text" class="form-control J_maxPrice" name="maxPrice" id="" required>
+						</div>
+						<label class="control-label">元/月</label>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">需求面积：</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control J_minArea" name="minArea" id="" autocomplete="off">
+						</div>
+						<div class="control-spacing">-</div>
+						<div class="col-sm-3">
+							<input type="text" class="form-control J_maxArea" name="maxArea" id="" autocomplete="off">
+						</div>
+						<label class="control-label">平方米</label>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">物管费：</label>
+						<div class="col-sm-2">
+							<input type="text" class="form-control J_minPropertyFee" name="minPropertyFee" id="" autocomplete="off">
+						</div>
+						<div class="control-spacing">-</div>
+						<div class="col-sm-2">
+							<input type="text" class="form-control J_maxPropertyFee" name="maxPropertyFee" id="" autocomplete="off">
+						</div>
+						<label class="control-label">元/平方米/月</label>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">门宽：</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control J_minDoorWidth" name="minDoorWidth" id="" autocomplete="off">
+						</div>
+						<div class="control-spacing">-</div>
+						<div class="col-sm-3">
+							<input type="text" class="form-control J_maxDoorWidth" name="maxDoorWidth" id="" autocomplete="off">
+						</div>
+						<label class="control-label">米</label>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">层高：</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control J_minFloorHeight" name="minFloorHeight" id="" autocomplete="off">
+						</div>
+						<div class="control-spacing">-</div>
+						<div class="col-sm-3">
+							<input type="text" class="form-control J_maxFloorHeight" name="maxFloorHeight" id="" autocomplete="off">
+						</div>
+						<label class="control-label">米</label>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">装修：</label>
+						<div class="col-sm-7">
+							<select id="J_decorationStatus" name="fitmentTypeId"
+								class="J_chosen form-control J_decorationStatus" data-placeholder="请选择">
+								<!-- <option value="">请选择</option> -->
+								<!-- <option value="11">简装</option> -->
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">特殊需求：</label>
+						<div id="" class="col-sm-9 J_specialNeeds">
+							
+						</div>
+					</div>
+				</div>
+				<div class="col-md-8">
+					<div class="form-group">
+						<label class="col-sm-2 control-label">位置类型：</label>
+						<div id="" class="col-sm-10 J_locationType">
+							
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row ptb10">
+				<div class="pl10 font-bold font-blue info-tit">区域需求</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<label class="col-md-11 control-label" style="text-align: left;">
+							需求楼盘: </label>
+						<div class="col-md-1">
+							<a id="" onclick="addfloor('shops')" class="btn-green btn-bitbucket"
+								style="float: right; margin-top: 10px;"><i
+								class="glyphicon glyphicon-plus"></i></a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12 m-b-sm ">
+					<div class="bootstrap-table table-list">
+						<div class="fixed-table-container">
+							<table id="dataTableFloor" class="table table-hover  table-striped"
+								style="border-bottom: none">
+								<thead>
+									<tr>
+										<th data-field="id">楼盘</th>
+										<th data-field="opt">操作</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<label class="col-md-11 control-label" style="text-align: left;">
+							<span class="text-danger">*</span>商圈:
+						</label>
+						<div class="col-md-1">
+							<a id="" onclick="addarea('shops')"  class="btn-green btn-bitbucket"
+								style="float: right; margin-top: 10px;"><i
+								class="glyphicon glyphicon-plus"></i></a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12 m-b-sm">
+					<div class="bootstrap-table table-list">
+						<div class="fixed-table-container">
+							<table id="dataTableArea" class="table table-hover  table-striped"
+								data-query-params="queryParams" data-mobile-responsive="true"
+								data-pagination="true" data-icon-size="outline"
+								data-striped="true" data-search="false">
+								<thead>
+									<tr>
+										<th data-field="id">商圈</th>
+										<th data-field="price">所属行政区</th>
+										<th data-field="opt">操作</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row ptb10">
+				<div class="pl10 font-bold font-blue info-tit">其他需求</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">租期：</label>
+						<div class="col-sm-7">
+							<input type="text" class="form-control rentTime" name="rentTime">
+						</div>
+						<label class="col-sm-1 control-label">月</label>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">付租方式：</label>
+						<div class="col-sm-8">
+							<select id="J_paymentMode" name="payTypeId" class="form-control J_paymentMode"
+								data-placeholder="请选择" style="display: none;">
+								<option value="">请选择</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">押金：</label>
+						<div class="col-sm-8">
+							<select id="J_foregift" name="depositTypeId" class="form-control J_foregift"
+								data-placeholder="请选择" style="display: none;">
+								<option value="">请选择</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">紧急度：</label>
+						<div class="col-sm-8">
+							<select id="J_urgency" name="urgencyTypeId" class="form-control J_urgency"
+								data-placeholder="请选择" style="display: none;">
+								<option value="">请选择</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-8">
+					<div class="form-group">
+						<label class="col-sm-2 control-label">其他需求：</label>
+						<div class="col-sm-4">
+							<select id="J_isBill" name="isNeedBill" class="form-control J_isBill"
+								data-placeholder="请选择" style="display: none;">
+								<option value="">请选择</option>
+							</select>
+						</div>
+						<div id="J_bill2" class="col-sm-6 J_bill"
+							style="padding-left: 10px; display:none">
+						</div>
+					</div>
+				</div>
+			</div>
+			</form>
+		</div>
+		<!-- 商铺需求end -->
+		
+		
+		<!-- 写字楼需求begin -->
+		<div id="office" class="form3 form" style="display: none">
+		<form id="form3" name=""  class="form-horizontal" role="form">
+			<div class="col-md-12">
+				<h4 class="business-title">写字楼需求</h4>
+			</div>
+			<div class="row ptb10">
+				<div class="pl10 font-bold font-blue info-tit">房源需求</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label"><span
+							class="text-danger">*</span>价格区间：</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control J_minPrice" name="minPrice" id="" required>
+						</div>
+						<div class="control-spacing">-</div>
+						<div class="col-sm-3">
+							<input type="text" class="form-control J_maxPrice" name="maxPrice" id="" required>
+						</div>
+						<label class="control-label">元/月</label>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">需求面积：</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control J_minArea" name="minArea" id="" autocomplete="off">
+						</div>
+						<div class="control-spacing">-</div>
+						<div class="col-sm-3">
+							<input type="text" class="form-control J_maxArea" name="maxArea" id="" autocomplete="off">
+						</div>
+						<label class="control-label">平方米</label>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">物管费：</label>
+						<div class="col-sm-2">
+							<input type="text" class="form-control J_minPropertyFee" name="minPropertyFee" id="" autocomplete="off">
+						</div>
+						<div class="control-spacing">-</div>
+						<div class="col-sm-2">
+							<input type="text" class="form-control J_maxPropertyFee" name="maxPropertyFee" id="" autocomplete="off">
+						</div>
+						<label class="control-label">元/平方米/月</label>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label" style="padding-right: 0px !important;"><span
+							class="text-danger">*</span>可办公人数：</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control J_minOfficeSeat" name="minOfficeSeat" id="" autocomplete="off">
+						</div>
+						<div class="control-spacing">-</div>
+						<div class="col-sm-3">
+							<input type="text" class="form-control J_maxOfficeSeat" name="maxOfficeSeat" id="" autocomplete="off">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">装修：</label>
+						<div class="col-sm-7">
+							<select id="J_decorationStatus" name="fitmentTypeId"
+								class="J_chosen form-control J_decorationStatus" data-placeholder="请选择">
+								<!-- <option value="">请选择</option> -->
+								<!-- <option value="11">简装</option> -->
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row ptb10">
+				<div class="pl10 font-bold font-blue info-tit">区域需求</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<label class="col-md-11 control-label" style="text-align: left;">
+							需求楼盘: </label>
+						<div class="col-md-1">
+							<a id="" onclick="addfloor('office')" class="btn-green btn-bitbucket"
+								style="float: right; margin-top: 10px;"><i
+								class="glyphicon glyphicon-plus"></i></a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12 m-b-sm ">
+					<div class="bootstrap-table table-list">
+						<div class="fixed-table-container">
+							<table id="dataTableFloor" class="table table-hover  table-striped"
+								style="border-bottom: none">
+								<thead>
+									<tr>
+										<th data-field="id">楼盘</th>
+										<th data-field="opt">操作</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<label class="col-md-11 control-label" style="text-align: left;">
+							<span class="text-danger">*</span>商圈:
+						</label>
+						<div class="col-md-1">
+							<a id="" onclick="addarea('office')"  class="btn-green btn-bitbucket"
+								style="float: right; margin-top: 10px;"><i
+								class="glyphicon glyphicon-plus"></i></a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12 m-b-sm">
+					<div class="bootstrap-table table-list">
+						<div class="fixed-table-container">
+							<table id="dataTableArea" class="table table-hover  table-striped"
+								data-query-params="queryParams" data-mobile-responsive="true"
+								data-pagination="true" data-icon-size="outline"
+								data-striped="true" data-search="false">
+								<thead>
+									<tr>
+										<th data-field="id">商圈</th>
+										<th data-field="price">所属行政区</th>
+										<th data-field="opt">操作</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row ptb10">
+				<div class="pl10 font-bold font-blue info-tit">其他需求</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">租期：</label>
+						<div class="col-sm-7">
+							<input type="text" class="form-control rentTime" name="rentTime">
+						</div>
+						<label class="col-sm-1 control-label">月</label>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">付租方式：</label>
+						<div class="col-sm-8">
+							<select id="J_paymentMode" name="payTypeId" class="form-control J_paymentMode"
+								data-placeholder="请选择" style="display: none;">
+								<option value="">请选择</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">押金：</label>
+						<div class="col-sm-8">
+							<select id="J_foregift" name="depositTypeId" class="form-control J_foregift"
+								data-placeholder="请选择" style="display: none;">
+								<option value="">请选择</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">紧急度：</label>
+						<div class="col-sm-8">
+							<select id="J_urgency" name="urgencyTypeId" class="form-control J_urgency"
+								data-placeholder="请选择" style="display: none;">
+								<option value="">请选择</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-8">
+					<div class="form-group">
+						<label class="col-sm-2 control-label">其他需求：</label>
+						<div class="col-sm-4">
+							<select id="J_isBill" name="isNeedBill" class="form-control J_isBill"
+								data-placeholder="请选择" style="display: none;">
+								<option value="">请选择</option>
+							</select>
+						</div>
+						<div id="J_bill3" class="col-sm-6 J_bill"
+							style="padding-left: 10px; display:none">
+						</div>
+					</div>
+				</div>
+			</div>
+			</form>
+		</div>
+		<!-- 写字楼需求end -->
+		
+		
+		<!-- 厂房/仓库需求begin -->
+		<div id="warehouse" class="form4 form" style="display: none">
+		<form id="form4" name=""  class="form-horizontal" role="form">
+			<div class="col-md-12">
+				<h4 class="business-title">厂房/仓库需求</h4>
+			</div>
+			<div class="row ptb10">
+				<div class="pl10 font-bold font-blue info-tit">房源需求</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label"><span
+							class="text-danger">*</span>价格区间：</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control J_minPrice" name="minPrice" id="" required>
+						</div>
+						<div class="control-spacing">-</div>
+						<div class="col-sm-3">
+							<input type="text" class="form-control J_maxPrice" name="maxPrice" id="" required>
+						</div>
+						<label class="control-label">元/月</label>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">需求面积：</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control J_minArea" name="minArea" id="" autocomplete="off">
+						</div>
+						<div class="control-spacing">-</div>
+						<div class="col-sm-3">
+							<input type="text" class="form-control J_maxArea" name="maxArea" id="" autocomplete="off">
+						</div>
+						<label class="control-label">平方米</label>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">单层高：</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control J_highbefore" name="minFloorHeight" id="" autocomplete="off">
+						</div>
+						<div class="control-spacing">-</div>
+						<div class="col-sm-3">
+							<input type="text" class="form-control J_heightafter" name="maxFloorHeight" id="" autocomplete="off">
+						</div>
+						<label class="control-label">米</label>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">长：</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control J_longbefore" name="minLength" id="" autocomplete="off">
+						</div>
+						<div class="control-spacing">-</div>
+						<div class="col-sm-3">
+							<input type="text" class="form-control J_longafter" name="maxLength" id="" autocomplete="off">
+						</div>
+						<label class="control-label">米</label>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">宽：</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control J_minDoorWidth" name="minWidth" id="" autocomplete="off">
+						</div>
+						<div class="control-spacing">-</div>
+						<div class="col-sm-3">
+							<input type="text" class="form-control J_maxDoorWidth" name="maxWidth" id="" autocomplete="off">
+						</div>
+						<label class="control-label">米</label>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">总高：</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control J_minHeight" name="minHeight" id="" autocomplete="off">
+						</div>
+						<div class="control-spacing">-</div>
+						<div class="col-sm-3">
+							<input type="text" class="form-control J_maxHeight" name="maxHeight" id="" autocomplete="off">
+						</div>
+						<label class="control-label">米</label>
+					</div>
+				</div>
+			</div>
+			<div class="row ptb10">
+				<div class="pl10 font-bold font-blue info-tit">区域需求</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<label class="col-md-11 control-label" style="text-align: left;">
+							需求楼盘: </label>
+						<div class="col-md-1">
+							<a id="" onclick="addfloor('warehouse')" class="btn-green btn-bitbucket"
+								style="float: right; margin-top: 10px;"><i
+								class="glyphicon glyphicon-plus"></i></a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12 m-b-sm ">
+					<div class="bootstrap-table table-list">
+						<div class="fixed-table-container">
+							<table id="dataTableFloor" class="table table-hover  table-striped"
+								style="border-bottom: none">
+								<thead>
+									<tr>
+										<th data-field="id">楼盘</th>
+										<th data-field="opt">操作</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<label class="col-md-11 control-label" style="text-align: left;">
+							<span class="text-danger">*</span>商圈:
+						</label>
+						<div class="col-md-1">
+							<a id="" onclick="addarea('warehouse')"  class="btn-green btn-bitbucket"
+								style="float: right; margin-top: 10px;"><i
+								class="glyphicon glyphicon-plus"></i></a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12 m-b-sm">
+					<div class="bootstrap-table table-list">
+						<div class="fixed-table-container">
+							<table id="dataTableArea" class="table table-hover  table-striped"
+								data-query-params="queryParams" data-mobile-responsive="true"
+								data-pagination="true" data-icon-size="outline"
+								data-striped="true" data-search="false">
+								<thead>
+									<tr>
+										<th data-field="id">商圈</th>
+										<th data-field="price">所属行政区</th>
+										<th data-field="opt">操作</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row ptb10">
+				<div class="pl10 font-bold font-blue info-tit">其他需求</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">租期：</label>
+						<div class="col-sm-7">
+							<input type="text" class="form-control rentTime" name="rentTime">
+						</div>
+						<label class="col-sm-1 control-label">月</label>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">付租方式：</label>
+						<div class="col-sm-8">
+							<select id="J_paymentMode" name="payTypeId" class="form-control J_paymentMode"
+								data-placeholder="请选择" style="display: none;">
+								<option value="">请选择</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">押金：</label>
+						<div class="col-sm-8">
+							<select id="J_foregift" name="depositTypeId" class="form-control J_foregift"
+								data-placeholder="请选择" style="display: none;">
+								<option value="">请选择</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">紧急度：</label>
+						<div class="col-sm-8">
+							<select id="J_urgency" name="urgencyTypeId" class="form-control J_urgency"
+								data-placeholder="请选择" style="display: none;">
+								<option value="">请选择</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-8">
+					<div class="form-group">
+						<label class="col-sm-2 control-label">其他需求：</label>
+						<div class="col-sm-4">
+							<select id="J_isBill" name="isNeedBill" class="form-control J_isBill"
+								data-placeholder="请选择" style="display: none;">
+								<option value="">请选择</option>
+							</select>
+						</div>
+						<div id="J_bill4" class="col-sm-6 J_bill"
+							style="padding-left: 10px; display:none">
+						</div>
+					</div>
+				</div>
+			</div>
+			</form>
+		</div>
+		<!-- 厂房/仓库需求end -->
+		<!-- 我家需求begin -->
+		<div class="our">
+		<form class="form-horizontal" action="" id="ourform">
+		<div class="col-md-12">
+			<h4 class="business-title">我家需求</h4>
+		</div>
+		<div class="row ptb10">
+			<div class="pl10 font-bold font-blue info-tit">我家知道</div>
+		</div>
+		<div class="row">
+			<div class="col-md-8">
+				<div class="form-group">
+					<label class="col-sm-2 control-label"><span
+						class="text-danger">*</span>客户来源：</label>					
+					<div class="col-sm-4">
+						<select id="customerSource" name="sourceId"
+							class="form-control m-b" data-placeholder="请选择" required>
+							<option value="">请选择</option>
+						</select>
+					</div>
+					<div class="col-sm-4 none">
+						<!-- <select id="customerSource" name="customerSource"
+							class="form-control m-b" data-placeholder="请选择" required>
+							<option value="">请选择</option>
+						</select> -->
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>客户评价：</label>
+					<div class="col-sm-8">
+						<select id="J_finalAssessment" name="customerFinalAssessmentId"
+							class="form-control m-b" data-placeholder="请选择" required>
+							<option value="">请选择</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">			
+			<div class="col-md-8">
+				<div class="form-group">
+					<label class="col-sm-2 control-label">备注：</label>
+					<div class="col-sm-10">
+						<textarea rows="3" name="memo" id="memo" maxlength="400" cols="100%" class="form-control"></textarea>
+						<span class="help-block text-right">还可输入 400 个字</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		</form>
+		</div>
+		<!--我家需求end  -->
+		<!-- <div class="col-md-12 text-cen">
+			<div class="form-group">
+				<button id="J_search" type="button" class="btn btn-success pr5">保
+					存</button>
+			</div>
+		</div> -->
+	<!-- </form> -->
+</div>
+</div>
+<!-- 租赁新增 end -->
+<script
+	src="$link.contextPath/resources/script/customer/main/lease_add.js"></script>
+<script
+src="$link.contextPath/resources/script/customer/main/validate.js"></script>
+
+	

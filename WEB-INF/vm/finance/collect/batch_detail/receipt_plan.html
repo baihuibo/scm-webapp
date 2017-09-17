@@ -1,0 +1,113 @@
+<!-- 收款计划 -->
+<div class="receipt_plan">
+	<div class="row">
+		<div class="pl10 font-bold font-blue info-tit">
+			<i class="glyphicon glyphicon-minus"></i>收款计划
+		</div>
+	</div>
+	<div ng-repeat="(key,items) in $ctrl.detail.contractPlanList">
+		<div class="row m-t-md">
+			<strong>合同{{key+1}}</strong>
+		</div>
+		<div class="row m-t-md">
+			<div class="col-md-3">
+				<dl class="dl-horizontal">
+					<dt>合同编号：</dt>
+					<dd>{{items.contractCode}}</dd>
+				</dl>
+			</div>
+			<div class="col-md-3">
+				<dl class="dl-horizontal">
+					<dt>收款来源：</dt>
+					<dd>{{items.collectionSourceStr}}</dd>
+				</dl>
+			</div>
+			<div class="col-md-3">
+				<dl class="dl-horizontal">
+					<dt>客户姓名：</dt>
+					<dd>{{items.contractClientName}}</dd>
+				</dl>
+			</div>
+			<div class="col-md-3">
+				<dl class="dl-horizontal">
+					<dt>业主姓名：</dt>
+					<dd>{{items.contractOwnerName}}</dd>
+				</dl>
+			</div>
+		</div>
+		<div class="row m-t-md">
+			<strong>款项{{key+1}}</strong>
+		</div>
+		<div class="row row-lg">
+			<div class="col-sm-12">
+				<div class="example-wrap ptb10">
+					<table id="J_funddataTable" class="table table-hover table-striped singlewatch_ath table-bordered">
+						<thead>
+							<tr>
+								<th>序号</th>
+								<th>款项名称</th>
+								<th>应收日期</th>
+								<th>应收金额</th>
+								<th>待收金额</th>
+								<th>实收金额（已审批）</th>
+								<th>在途金额（审批中） </th>
+								<th>退款金额</th>
+								<th>收款公司</th>
+								<th>付款方</th>
+								<th>付款单位/个人</th>
+								<th>本次收取金额</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="(key,item) in items.planList">
+								<td>{{key+1}}</td>
+								<td>{{item.fundName}}</td>
+								<td>{{item.estCollectionDate | date2stamp | date:'yyyy-MM-dd'}}</td>
+								<td>{{item.receivableAmount}}</td>
+								<td>{{item.paidAmount}}</td>
+								<td>{{item.actualAmount}}</td>
+								<td>{{item.transitAmount}}</td>
+								<td>{{item.refundAmount}}</td>
+								<td>{{item.payeeStr}}</td>
+								<td>{{item.payerStr}}</td>
+								<td>{{item.payerName}}</td>
+								<td>{{item.amount}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div ng-repeat="(key,items) in $ctrl.detail.clientPlanList">
+		<div class="row m-t-md">
+			<strong>买卖意向</strong>
+		</div>
+		<div class="row m-t-md">
+			<div class="col-md-3">
+				<dl class="dl-horizontal">
+					<dt>客户编号：</dt>
+					<dd>{{items.clientId}}</dd>
+				</dl>
+			</div>
+			<div class="col-md-3">
+				<dl class="dl-horizontal">
+					<dt>客户姓名：</dt>
+					<dd>{{items.clientName}}</dd>
+				</dl>
+			</div>
+			<div class="col-md-3">
+				<dl class="dl-horizontal">
+					<dt>收款来源：</dt>
+					<dd>{{items.collectionSourceStr}}</dd>
+				</dl>
+			</div>
+			<div class="col-md-3">
+				<dl class="dl-horizontal">
+					<dt>房源编号：</dt>
+					<dd>{{items.houseId}}</dd>
+				</dl>
+			</div>
+		</div>
+	</div>
+</div>

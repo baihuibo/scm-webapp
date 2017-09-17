@@ -1,0 +1,114 @@
+<!-- 审核记录 begin -->
+<div id="keyrecord_layer" class="ibox-content" style="display: none">
+	<form id="auditrecord_form" name="auditrecord_form" class="form-horizontal">
+		<div class="row">
+			<div class="form-group">
+				<label class="col-sm-3 control-label">房源编号：</label>
+				<label class="col-sm-3 control-label text-left" id="J_keyhouseId"></label>
+			</div>
+			<div class="form-group">
+				<input id="J_userid" type="hidden" value="" >
+				<label class="col-sm-3 control-label">收钥匙人：</label>
+				<label class="col-sm-3 control-label text-left"><a id="J_userName"></a></label>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-7">
+					<label class="col-sm-5 control-label"><span class="text-danger">*</span>钥匙数量：</label>
+					<input type="text" class="col-sm-2 form-control" id="up_keynum" name="keynum" value="" placeholder="" required style="width:31%; margin-left:3px" oninput="this.value=this.value.replace(/[^\d]/g,'')">
+					<label class="col-sm-3 control-label text-left">把/套</label>
+				</div>
+				<div class="col-sm-5">
+					<label class="col-sm-3 control-label">共</label>
+					<input type="text" class="col-sm-5 form-control" id="up_groupkeynum" name="roupkeynum" value="" placeholder="" required style="width:40%;" oninput="this.value=this.value.replace(/[^\d]/g,'')">
+					<label class="col-sm-3 control-label text-left">套</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">门禁卡：</label>
+				<input type="text" class="col-sm-2 form-control" id="up_doorcodenum" name="doorcodenum" value="" placeholder="" required style="width:18.2%;" oninput="this.value=this.value.replace(/[^\d]/g,'')">
+				<label class="col-sm-3 control-label text-left">张</label>
+			</div>
+		</div>
+	</form>
+</div>
+
+
+<script>
+var keyInsertUrl = basePath + '/house/keyadmin/keyinsert';
+var houseId=getQueryString("houseid");
+
+function checkedkeyshow(houseId,operationType){
+	if($("#temp_key_collect").val()==undefined){
+		commonContainer.alert("无权限");
+		return false;
+	}
+	commonContainer.modal(
+		'收钥匙',
+		$('#keyrecord_layer'),
+		function(index, layero) {
+			var up_keynum = $('#up_keynum').val();
+			var up_groupkeynum = $('#up_groupkeynum').val();
+			var up_doorcodenum = $('#up_doorcodenum').val();
+			if(up_keynum == '' || up_groupkeynum == ''){
+				layer.alert('钥匙数量和钥匙套数为必填项，请输入');
+				return false;
+			}
+			jsonPostAjax(
+				keyInsertUrl,
+				{	
+					houseid : houseId,
+					rekeyuserid : $('#J_userid').val(),
+					keynum : $('#up_keynum').val(),
+					groupkeynum : $('#up_groupkeynum').val(),
+					doorcodenum : $('#up_doorcodenum').val(),
+					operationtype : operationType                      // 钥匙信息类型   1，租赁 2，买卖
+				},
+				function(result) {
+					layer.close(index);
+					layer.msg("操作成功");
+					location.reload();
+				}
+			)
+			layer.close(index);
+		}, 
+		{
+			overflow :false,
+			area : ['500px'],
+			btns : ['保存', '关闭'],
+			success: function() {
+				$('#J_keyhouseId').html(houseId);
+				Inquire();
+				$('#J_userid').val('');
+				$('#J_userName').text('');
+				$('#up_keynum').val('');
+				$('#up_groupkeynum').val('');
+				$('#up_doorcodenum').val('');	
+			}
+		}
+	);
+}
+
+function Inquire(){
+	jsonGetAjax(
+		basePath + '/custom/common/getcuruserinfo',
+		{},
+		function(result) {
+			$('#J_userName').text(result.data.userName);
+			$('#J_userid').val(result.data.userId);
+		}
+	)
+}
+
+//点击跳转房源编号详情
+$('#J_userName').on('click',function(){
+	var userId = $('#J_userid').val();
+	getUserStaffInfo(userId);
+})
+
+
+function getQueryString(name) { // js获取url地址以及 取得后面的参数
+	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); 
+	var r = window.location.search.substr(1).match(reg); 
+	if (r != null) return unescape(r[2]); return null; 
+}
+</script>

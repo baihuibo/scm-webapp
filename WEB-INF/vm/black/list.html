@@ -1,0 +1,147 @@
+#set($plugins = ["table","chosen","laydate"])
+
+	<!-- 查询条件 begin -->
+	<div class="ibox">
+		<div class="ibox-title">
+			<h5>黑名单查询</h5>
+			<div class="ibox-tools">
+				<a class="collapse-link ui-sortable"> <i class="fa fa-chevron-up"></i>
+				</a>
+			</div>
+		</div>
+		<div class="ibox-content">
+			<form class="form-horizontal" role="form" id="J_black_form">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">录入日期</label>
+							<div class="col-sm-8" layout="row">
+								<div flex><input id="J_begindate" name="begindate" class="J_chosen form-control" readonly style="background-color: #FFFFFF;"></div>
+								<div class="split">-</div>
+								<div flex><input id="J_enddate" name="enddate" class="J_chosen form-control" readonly style="background-color: #FFFFFF;"></div>
+							</div>
+						</div>
+					</div>					
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">业务类型</label>
+							<div class="col-sm-8">
+								<select id="infotype"name="infoType" class="J_chosen form-control" data-placeholder="所有">
+									<option value="">所有</option>
+<!-- 									<option value="1">租赁客户</option>
+									<option value="2">买卖客户</option> -->
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">编号</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" id="infoid" name="infoid" placeholder="">
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">电话</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" id="info"name="info" placeholder="">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">审批状态</label>
+							<div class="col-sm-8">
+								<select id="isPass" name="isPass" class="J_chosen J_isPass form-control" data-placeholder="所有">
+									<option value="">所有</option>	                
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+						<label class="col-sm-3"></label>
+						<div class="checkbox checkbox-primary checkbox-inline">
+							<input id="myinfo" name="myinfo" value="1" type="checkbox">
+							<label>我审批的</label>
+						</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12 text-cen">
+                        <div class="form-group">
+                             <button id="J_search" type="button" class="btn btn-success btn_size">查 询</button>
+                             <button id="J_resetblack" type="reset" class="btn btn-white btn_size">重 置</button>
+                        </div>
+                    </div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<!-- 查询条件 end -->
+	
+	<!-- 列表 begin -->
+	<div class="ibox float-e-margins">
+		<div class="ibox-title"><h5>黑名单列表</h5></div>
+		<div class="ibox-content">
+			<div class="row row-lg">
+				<div class="col-sm-12">
+					<div class="example-wrap ptb10">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="col-sm-4"></div>
+								<div class="col-sm-5"></div>
+								<div class="col-sm-2">
+									<select id="J_status" name="status2" class="J_chosen form-control" data-placeholder="审批状态">
+										<option value="">审批状态</option>
+									</select>
+								</div>
+								<div class="col-md-1">
+									<button id="J_edit_status" type="button" class="btn btn-success btn-sm ml10">修改状态</button>
+								</div>
+							</div>
+
+						</div>
+						<p>
+	                    </p>
+						<table id="J_dataTable" class="table table-hover table-striped table-condensed" >
+							<thead>
+								<tr>
+									<th data-field="info" class="col-sm-2">名单内容</br>信息编号</th>
+									<th data-field="userid" class="col-sm-2">录入人</br>录入日期</th>
+									<th data-field="ispass" class="col-sm-2">审批状态</br>审批日期</th>
+									<th data-field="memo" class="col-sm-2">备注信息</th>
+									<th data-field="opt" class="col-sm-4">操作</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 列表 end -->
+
+
+<!-- 编辑备注信息 begin -->
+<div id="demo_layer" class="ibox-content" style="display: none">
+	<form id="demo_form" name="demo_form" class="form-horizontal">
+		<div class="form-group">
+			<label class="col-sm-3 control-label">备注信息：</label>
+			<div class="col-sm-8">
+				<textarea class="form-control" placeholder="请输入备注信息" id="J_memo" name="memo" maxlength="200"></textarea>
+			</div>
+		</div>
+	</form>
+</div>
+<!-- 编辑备注信息 end -->
+
+<!-- 自定义js -->
+<script src="$link.contextPath/resources/script/black/list.js"></script>
+

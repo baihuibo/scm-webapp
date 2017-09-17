@@ -1,0 +1,784 @@
+
+
+
+<div id="ownership_layer" class="" style="display: none">
+	<form id="ownership_form" name="ownership_form" class="form-horizontal">
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>所有权证号:</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" id="certificateNum"
+							name='certificateNum' autocomplete="off"
+							ng-value="$ctrl.buyInfoContract.salesHouseCertificateVo.certificateNum">
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>填发单位:</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" id="unitName"
+							name='unitName' autocomplete="off"
+							ng-value="$ctrl.buyInfoContract.salesHouseCertificateVo.unitName">
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>房屋出租:</label>
+					<div id="isHouseLease" class="col-sm-6"></div>
+
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>土地使用权获得方式:</label>
+					<div class="col-sm-8">
+						<select id='certificateMemo' name='certificateMemo' class="form-control"
+							data-placeholder="请选择">
+							<option value="">请选择</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>其他描述:</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" id="useingModeother"
+							name='useingModeother' autocomplete="off" readonly='readonly' ng-if="$ctrl.buyInfoContract.salesHouseCertificateVo.useingMode!=3">
+							<input type="text" class="form-control" id="useingModeother"
+							name='useingModeother' autocomplete="off"
+							ng-value="$ctrl.buyInfoContract.salesHouseCertificateVo.certificateMemo" ng-if="$ctrl.buyInfoContract.salesHouseCertificateVo.useingMode==3">
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>土地使用权证:</label>
+					<div id="isLandCertificate" class="col-sm-4"></div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4" ng-if="$ctrl.buyInfoContract.salesHouseCertificateVo.isLandCertificate==1">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>土地使用权证编号:</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" id="landCertificate" name="landCertificate" autocomplete="off"
+						ng-value="$ctrl.buyInfoContract.salesHouseCertificateVo.landCertificate">
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>房屋性质:</label>
+					<div class="col-sm-8">
+						<select id="houseNature" name='houseNature'
+							class="form-control " data-placeholder="请选择">
+							<option value="">请选择</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>其他房屋:</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" id="otherHouse"
+							name='otherHouse' autocomplete="off"
+							ng-value="$ctrl.buyInfoContract.salesHouseCertificateVo.otherHouse"  ng-if="$ctrl.buyInfoContract.salesHouseCertificateVo.houseNature==6">
+							<input type="text" class="form-control" id="otherHouse"
+							name='otherHouse' autocomplete="off" readonly='readonly'  ng-if="$ctrl.buyInfoContract.salesHouseCertificateVo.houseNature!=6">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row ptb10">
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-1 control-label"><span
+						class="text-danger">*</span>房屋抵押:</label>
+					<div id="houseCharge" class="col-sm-7"></div>
+
+				</div>
+			</div>
+		</div>
+		<!-- <div class="row">
+	<div class="col-md-4">
+		<div class="form-group">
+			<label class="col-sm-3 control-label"><span
+				class="text-danger">*</span>房屋抵押:</label>
+			<div id="houseCharge" class="col-sm-7">
+				<div class="radio radio-primary radio-inline">
+					<input type="radio" id="genderId1" name="genderId" value="1"><label
+						for="genderId1">已设定</label>
+				</div>
+				<div class="radio radio-primary radio-inline">
+					<input type="radio" id="genderId2" name="genderId" value="2"><label
+						for="genderId2">未设定</label>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div> -->
+		<div class="row houseCharge" ng-if="$ctrl.buyInfoContract.salesHouseCertificateVo.isHouseCharge==2">
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-md-11 control-label"></label>
+					<div class="col-md-1">
+						<a id="" type='mortgage'
+							class="J_addmortgage btn-green btn-bitbucket"
+							style="float: right; margin-top: 10px;"><i
+							class="glyphicon glyphicon-plus"></i></a>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 m-b-sm ">
+				<div class="bootstrap-table table-list">
+					<div class="fixed-table-container">
+						<table id="dataTableMortgage"
+							class="table table-hover fixed-table-container table-striped table-condensed"
+							style="border-bottom: none">
+							<thead>
+								<tr>
+									<th class='col-md-2'><div class="th-inner">
+											<span class="text-danger">*</span>抵押权人姓名
+										</div></th>
+									<th class='col-md-2'><div class="th-inner">
+											<span class="text-danger">*</span>抵押金额（元）
+										</div></th>
+									<th class='col-md-2'><div class="th-inner">抵押注销条件</div></th>
+									<th class='col-md-2'><div class="th-inner">办理注销手续日期</div></th>
+									<th class='col-md-2'><div class="th-inner">备注</div></th>
+									<th class='col-md-2'><div class="th-inner">操作</div></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="item in $ctrl.buyInfoContract.salesHouseCertificateVo.mortgageList">
+									<td>{{item.mortgageName}}</td>
+									<td>{{item.pawnAmount}}</td>
+									<td>{{item.cancellationConditions}}</td>
+									<td>{{item.transactDate}}</td>
+									<td>{{item.memo}}</td>
+									<td>
+										<div class="text-left">
+											<a type="mortgage" class="J_editmortgage btn btn-outline btn-success btn-xs mt-3" data-name={{item.mortgageName}} data-money={{item.pawnAmount}} data-condition={{item.cancellationConditions}} data-date={{item.transactDate}} data-remark={{item.memo}}>修改</a>
+											<a type="del-ownerAgent" class="btn btn-outline btn-success btn-xs mt-3">删除</a>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+
+
+<div id="capital_layer" class="" style="display: none">
+	<form id="capital_form" name="capital_form" class="form-horizontal">
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>成交价：</label>
+					<div class="col-sm-3">
+						<input type="text" class="form-control J_priceCover"
+							id="transactionPrice" name='transactionPrice' autocomplete="off"
+							ng-value="$ctrl.buyInfoContract.salesTradeFundTransferVo.transactionPrice">
+					</div>
+					<label class="col-sm-1 control-label">元</label> <label
+						class="col-sm-4 control-label color_red"></label>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>主体价（网签价）：</label>
+					<div class="col-sm-3">
+						<input type="text" class="form-control J_priceCover"
+							id="mainPrice" name='mainPrice' autocomplete="off"
+							ng-value="$ctrl.buyInfoContract.salesTradeFundTransferVo.mainPrice">
+					</div>
+					<label class="col-sm-1 control-label">元</label> <label
+						class="col-sm-4 control-label color_red"></label>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label">装修设施补偿价：</label>
+					<div class="col-sm-3">
+						<input type="text" class="form-control J_priceCover"
+							id="compensationPrice" name='compensationPrice' autocomplete="off" 
+							ng-value="$ctrl.buyInfoContract.salesTradeFundTransferVo.compensationPrice">
+					</div>
+					<label class="col-sm-1 control-label">元</label> <label
+						class="col-sm-4 control-label color_red"></label>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label">定金金额：</label>
+					<div class="col-sm-3">
+						<input type="text" class="form-control J_priceCover" id="deposit"
+							name='deposit' autocomplete="off"
+							ng-value="$ctrl.buyInfoContract.salesTradeFundTransferVo.deposit">
+					</div>
+					<label class="col-sm-1 control-label">元</label> <label
+						class="col-sm-4 control-label color_red"></label>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>定金交付方式：</label>
+					<div class="col-sm-8">
+						<select name="deliveryConditions" id='deliveryConditions'
+							class="form-control " data-placeholder="请选择">
+							<option value="">请选择</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>付款方式：</label>
+					<div class="col-sm-8">
+						<select name="payType" id='payType' class="form-control "
+							data-placeholder="请选择">
+							<option value="">请选择</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>付款次数：</label>
+					<div class="col-sm-8">
+						<select name="loanNum" id='payTimes' class="form-control"
+							data-placeholder="请选择" value="1">
+							<option value="">请选择</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>贷款金额：</label>
+					<div class="col-sm-3">
+						<input type="text" class="form-control J_priceCover"
+							id="loanAmount" name='loanAmount' autocomplete="off"
+							ng-value="$ctrl.buyInfoContract.salesTradeFundTransferVo.loanAmount">
+					</div>
+					<label class="col-sm-1 control-label">元</label> <label
+						class="col-sm-4 control-label color_red"></label>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>未批贷款解决方式：</label>
+					<div class="col-sm-8">
+						<select name="noBatchLoan" id='noBatchLoan' class="form-control"
+							data-placeholder="请选择">
+							<option value="">请选择</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row ptb10">
+			<div class="pl10 font-bold font-blue info-tit">具体付款方式及期限的约定</div>
+		</div>
+<div id="list">
+			<div class="row" ng-repeat="item in $ctrl.buyInfoContract.salesTradeFundTransferVo.paymentMethodList">
+				<div class="col-md-12">
+					<div class="form-group">
+					
+						<label class="col-md-11 control-label" style="text-align: left;" ng-if="$index==0">
+							第一次付款: </label>
+						<label class="col-md-11 control-label" style="text-align: left;" ng-if="$index==1">
+							第二次付款: </label>
+							<label class="col-md-11 control-label" style="text-align: left;" ng-if="$index==2">
+							第三次付款: </label>
+							<label class="col-md-11 control-label" style="text-align: left;" ng-if="$index==3">
+							第四次付款: </label>
+					</div>
+				</div>
+				<div class="col-md-12 m-b-sm ">
+					<div class="bootstrap-table table-list">
+						<div class="fixed-table-container">
+							<table id="dataTableMoney"
+								class="table table-hover fixed-table-container table-striped"
+								style="border-bottom: none">
+								<thead>
+									<tr>
+										<th><div class="th-inner">付款方式</div></th>
+										<th><div class="th-inner">
+												<span class="text-danger">*</span>付款条件
+											</div></th>
+										<th><div class="th-inner">具体条件</div></th>
+										<th><div class="th-inner">
+												<span class="text-danger">*</span>支付金额（元）
+											</div></th>
+										<th><div class="th-inner">
+												<span class="text-danger">*</span>资金划转方式
+											</div></th>
+										<th><div class="th-inner">备注</div></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>{{$ctrl.buyInfoContract.salesTradeFundTransferVo.payTypeValue}}</td>
+										<td>
+										<div class="form-group">
+											<div class="col-sm-8 col-sm-offset-1" ng-if="$ctrl.buyInfoContract.salesTradeFundTransferVo.payType ==2">
+												<select ng-if="$index==0" id="" name="paymentClause" class="J_chosen form-control" data-placeholder="请选择" ng-value="item.paymentClause">
+													<option value="">请选择</option>
+													<option value="1">甲方解抵押当天</option>
+													<option value="2">房源核验通过当天</option>
+													<option value="3">网签后具体时限内</option>
+													<option value="4">商贷面签</option>
+													<option value="5">公积金初审</option>
+													<option value="6">具体日期</option>
+													<option value="7">其他</option>
+												</select>
+												<select ng-if="$index==1" id="" name="paymentClause" class="J_chosen form-control" data-placeholder="请选择" ng-value="item.paymentClause">
+													<option value="">请选择</option>
+													<option value="8">办理房屋所有权转移登记当天</option>
+													<option value="6">具体日期</option>
+													<option value="7">其他</option>
+												</select>
+												<select ng-if="$index>=2" id="" name="paymentClause" class="J_chosen form-control" data-placeholder="请选择" ng-value="item.paymentClause">
+													<option value="">请选择</option>
+													<option value="9">交付房屋当日</option>
+													<option value="10">户口迁出当日</option>
+													<option value="6">具体日期</option>
+													<option value="7">其他</option>
+												</select>
+												
+											</div>
+											<div class="col-sm-8 col-sm-offset-1" ng-if="$ctrl.buyInfoContract.salesTradeFundTransferVo.payType ==1">
+												<select ng-if="$index==0" id="" name="paymentClause" class="J_chosen form-control" data-placeholder="请选择" ng-value="item.paymentClause">
+													<option value="">请选择</option>
+													<option value="1">甲方解抵押当天</option>
+													<option value="2">房源核验通过当天</option>
+													<option value="3">网签后具体时限内</option>
+													<option value="4">具体日期</option>
+													<option value="5">其他</option>
+												</select>
+												<select ng-if="$index==1" id="" name="paymentClause" class="J_chosen form-control" data-placeholder="请选择" ng-value="item.paymentClause">
+													<option value="">请选择</option>
+													<option value="6">办理房屋所有权转移登记当天</option>
+													<option value="4">具体日期</option>
+													<option value="5">其他</option>
+												</select>
+												<select ng-if="$index>=2" id="" name="paymentClause" class="J_chosen form-control" data-placeholder="请选择" ng-value="item.paymentClause">
+													<option value="">请选择</option>
+													<option value="7">交付房屋当日</option>
+													<option value="8">户口迁出当日</option>
+													<option value="4">具体日期</option>
+													<option value="5">其他</option>
+												</select>
+												
+											</div>
+										</div>
+										</td>
+										<td>{{item.condition}}</td>
+										<td>
+											<div class="col-sm-8 col-sm-offset-1">
+												<div class="form-group">
+													<input class="form-control" name="paymenAmount" placeholder="请输入通讯地址" ng-value="item.paymenAmount">
+												</div>
+											</div>
+										</td>
+										<!-- <label class="color_red">¥：{{item.paymenAmount | signCurrency}}</label> -->
+										<td>
+											<div class="form-group">
+												<div class="col-sm-8 col-sm-offset-1">
+													<select  id="" name="transferWay" class="J_chosen form-control" data-placeholder="请选择" ng-value="item.transferWay">
+														<option value="">请选择</option>
+														<option value="1">资金监管</option>
+														<option value="2">资金存管</option>
+														<option value="3">自行交接</option>
+													</select>
+												</div>
+											</div>
+										</td>
+										<td>{{item.memo}}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+<div id="serviceCharge_layer" class="" style="display: none">
+	<form id="serviceCharge_form" name="detail_form"
+		class="form-horizontal">
+		<div class="row ptb10">
+			<div class="col-md-7">
+				<div class="form-group">
+					<label class="col-sm-2 control-label"><span
+						class="text-danger">*</span>服务费收取对象：</label>
+					<div class="col-sm-7">
+					<sign-checkbox-group
+                            ng-model="$ctrl.serveObj" required>
+                        <sign-checkbox ng-repeat="item in $ctrl.clientType"
+                                       value="item.valueCode" name="chargeObject">
+                            {{::item.valueName}}
+                        </sign-checkbox>
+                    </sign-checkbox-group>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div ng-if="$ctrl.serveObj.indexOf(1) > -1" >
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label"> <span class="text-danger">*</span>业主居间佣金：
+							<span class="help-block" style="font-weight: normal;">（公司规定）</span>
+						</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control" id="" autocomplete="off" readonly='readonly' name="ownBrokerageReceivable"
+								ng-model="$ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownBrokerageReceivable">
+						</div>
+						<label class="control-label">元</label> <label class="color_red" ng-if="$ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownBrokerageReceivable">¥：{{$ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownBrokerageReceivable | signCurrency}}</label>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label"><span class="text-danger">*</span>业主居间佣金：
+							<span class="help-block" style="font-weight: normal;">（合同约定）</span>
+						</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control J_priceCover" id="" autocomplete="off" name="ownBrokerageReceived"
+								ng-model="$ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownBrokerageReceived">
+						</div>
+						<label class="control-label">元</label> <label class="color_red" ng-if="$ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownBrokerageReceived">¥：{{$ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownBrokerageReceived | signCurrency}}</label>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">业主居间折扣：</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control" readonly='readonly' name="ownBrokerageDiscount"  ng-value="$ctrl.getBrokerageDiscount($ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownBrokerageReceived,$ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownBrokerageReceivable)">
+						</div>
+						<label class="control-label">折</label>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label"><span class="text-danger">*</span>业主履约佣金：
+							<span class="help-block" style="font-weight: normal;">（公司规定）</span>
+							</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control J_priceCover" readonly='readonly' name="ownPerformanceReceivable"
+								ng-model="$ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownPerformanceReceivable">
+						</div>
+						<label class="control-label">元</label> <label class="color_red" ng-if="$ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownPerformanceReceivable">¥：{{$ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownPerformanceReceivable | signCurrency}}</label>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label"><span
+							class="text-danger">*</span>业主履约佣金：
+							<span class="help-block" style="font-weight: normal;">（合同约定）</span>
+							</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control J_priceCover" name="ownPerformanceReceived"
+							ng-model="$ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownPerformanceReceived">
+						</div>
+						<label class="control-label">元</label> <label class="color_red" ng-if="$ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownPerformanceReceived">¥：{{$ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownPerformanceReceived | signCurrency}}</label>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">业主履约折扣：</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control" readonly='readonly' name="ownPerformanceDiscount"
+							  ng-value="$ctrl.getBrokerageDiscount($ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownPerformanceReceived,$ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownPerformanceReceivable)">
+						</div>
+						<label class="control-label">折</label>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label"><span class="text-danger">*</span>业主佣金合计：
+							<span class="help-block" style="font-weight: normal;">（公司规定）</span>
+							</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control" readonly='readonly' name="ownTotalReceivable"
+							ng-model="$ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownTotalReceivable">
+						</div>
+						<label class="control-label">元</label> <label class="color_red" ng-if="$ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownTotalReceivable">¥：{{$ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownTotalReceivable | signCurrency}}</label>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label"><span class="text-danger">*</span>业主佣金合计：
+							<span class="help-block" style="font-weight: normal;">（合同约定）</span>
+						</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control J_priceCover" name="ownTotalReceived" readonly
+							ng-value="$ctrl.getPlus($ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownBrokerageReceived,$ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownPerformanceReceived)">
+						</div>
+						<label class="control-label">元</label> <label class="color_red" ng-if="$ctrl.getPlus($ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownBrokerageReceived,$ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownPerformanceReceived)">¥：{{$ctrl.getPlus($ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownBrokerageReceived,$ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownPerformanceReceived) | signCurrency}}</label>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">业主总折扣：</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control" id="" name="ownTotalDiscount" readonly='readonly'
+								ng-value="$ctrl.getBrokerageDiscount($ctrl.getPlus($ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownBrokerageReceived,$ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownPerformanceReceived),$ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownTotalReceivable)">
+						</div>
+						<label class="control-label">折</label>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div ng-if="$ctrl.serveObj.indexOf(2) > -1" >
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label"><span class="text-danger">*</span>客户居间佣金：
+						<span class="help-block" style="font-weight: normal;">（公司规定）</span>
+						</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control" id="" name="cusBrokerageReceivable" readonly='readonly'
+							ng-model="$ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusBrokerageReceivable">
+						</div>
+						<label class="control-label">元</label> <label class="color_red" ng-if="$ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusBrokerageReceivable">¥：{{$ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusBrokerageReceivable | signCurrency}}</label>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label"><span class="text-danger">*</span>客户居间佣金：
+							<span class="help-block" style="font-weight: normal;">（合同约定）</span>
+							</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control J_priceCover" name="cusBrokerageReceived"
+							ng-model="$ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusBrokerageReceived">
+						</div>
+						<label class="control-label">元</label> <label class="color_red" ng-if="$ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusBrokerageReceived">¥：{{$ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusBrokerageReceived | signCurrency}}</label>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">客户居间折扣：</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control" name="cusBrokerageDiscount" readonly='readonly'
+							  ng-value="$ctrl.getBrokerageDiscount($ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusBrokerageReceived,$ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusBrokerageReceivable)">
+						</div>
+						<label class="control-label">折</label>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label"><span class="text-danger">*</span>客户履约佣金：
+						<span class="help-block" style="font-weight: normal;">（公司规定）</span>
+						</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control"  name="cusPerformanceReceivable" readonly='readonly'
+								ng-model="$ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusPerformanceReceivable">
+						</div>
+						<label class="control-label">元</label> <label class="color_red" ng-if="$ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusPerformanceReceivable">¥：{{$ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusPerformanceReceivable | signCurrency}}</label>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label"><span class="text-danger">*</span>客户履约佣金：
+						<span class="help-block" style="font-weight: normal;">（合同约定）</span>
+						</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control J_priceCover" name="cusPerformanceReceived"
+							ng-model="$ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusPerformanceReceived">
+						</div>
+						<label class="control-label">元</label> <label class="color_red" ng-if="$ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusPerformanceReceived">{{$ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusPerformanceReceived | signCurrency}}</label>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">客户履约折扣：</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control" name="cusPerformanceDiscount" readonly='readonly' 
+							ng-value="$ctrl.getBrokerageDiscount($ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusPerformanceReceived,$ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusPerformanceReceivable)">
+						</div>
+						<label class="control-label">折</label>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label"><span class="text-danger">*</span>客户佣金合计：
+						<span class="help-block" style="font-weight: normal;">（公司规定）</span>
+						</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control" name="cusTotalReceivable" readonly='readonly' 
+							ng-model="$ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusTotalReceivable">
+						</div>
+						<label class="control-label">元</label> <label class="color_red" ng-if="$ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusTotalReceivable">¥：{{$ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusTotalReceivable | signCurrency}}</label>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label"><span class="text-danger">*</span>客户佣金合计：
+						<span class="help-block" style="font-weight: normal;">（合同约定）</span>
+						</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control J_priceCover" name="cusTotalReceived" readonly
+							ng-value="$ctrl.getPlus($ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusBrokerageReceived,$ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusPerformanceReceived)">
+						</div>
+						<label class="control-label">元</label> <label class="color_red" ng-if="$ctrl.getPlus($ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusBrokerageReceived,$ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusPerformanceReceived)">¥：{{$ctrl.getPlus($ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusBrokerageReceived,$ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusPerformanceReceived) | signCurrency}}</label>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">客户总折扣：</label>
+						<div class="col-sm-3">
+							<input type="text" class="form-control" readonly='readonly' name="cusTotalDiscount"
+							ng-value="$ctrl.getBrokerageDiscount($ctrl.getPlus($ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusBrokerageReceived,$ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusPerformanceReceivable),$ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusTotalReceivable)">
+						</div>
+						<label class="control-label">折</label>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row ptb10">
+			<div class="pl10 font-bold font-blue info-tit">折扣原因</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>打折原因：</label>
+					<div class="col-sm-8">
+						<select class="form-control" chosen
+                                         ng-model="$ctrl.discount_reason" required
+                                         ng-options="item.valueCode as item.valueName for item in $ctrl.discountReason" name="discountReason" id="discountReason">
+                			<option value="">请选择</option>
+               			 </select>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4" ng-if="$ctrl.discount_reason==4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>员工姓名：</label>
+					<div class="col-sm-7">
+						<div class="input-group">
+							<input type="text" name="discountEmployeesId" class="form-control"
+								id="discountEmployeesId " autocomplete="off">
+							<div class="input-group-btn">
+								<button type="button" class="btn btn-white dropdown-toggle"
+									data-toggle="">
+									<span class="glyphicon glyphicon-search search-caret"></span>
+								</button>
+								<ul class="dropdown-menu dropdown-menu-right" role="menu"
+									style="padding-top: 0px; max-height: 116px; max-width: 800px; overflow: auto; width: auto; transition: 0.3s;"></ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4" ng-if="$ctrl.discount_reason==3">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>合同编号:</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control"
+							id="discountContract" name='discountContract'
+							autocomplete="off">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-8">
+				<div class="form-group">
+					<label class="col-sm-2 control-label"><span
+						class="text-danger">*</span>情况说明：</label>
+					<div class="col-sm-10">
+						<textarea rows="3" name="situationExplain" id="situationExplain"
+							cols="100%" class="form-control" maxlength="500" ng-value="$ctrl.buyInfoContract.salesCompanyServiceChargeVo.situationExplain"></textarea>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row ptb10">
+			<div class="pl10 font-bold font-blue info-tit">审核资料</div>
+		</div>
+		<div class="row">
+			<div class="col-md-8">
+				<div class="form-group">
+					<label class="col-sm-2 control-label"><span
+						class="text-danger">*</span>房屋校验：</label>
+					<!-- <div id="buildingCheck" class="col-sm-10"> -->
+					<div class="col-sm-10">
+						<sign-checkbox-group
+	                            ng-model="$ctrl.buildingCheckValue" required>
+	                        <sign-checkbox ng-repeat="item in $ctrl.buildingCheck"
+	                                   name="buildingCheck"  value="item.valueCode">
+	                            {{::item.valueName}}
+	                        </sign-checkbox>
+	                    </sign-checkbox-group>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4" ng-if="$ctrl.buyInfoContract.salesNoPrintContractVo.houseCheckKey.indexOf(5)>-1">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>其他描述：</label>
+						<div class="col-sm-8">
+					<input type="text" class="form-control" id="houseCheckMemo"
+							name="houseCheckMemo" autocomplete="off" ng-value="$ctrl.buyInfoContract.salesNoPrintContractVo.houseCheckMemo">
+
+						</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+

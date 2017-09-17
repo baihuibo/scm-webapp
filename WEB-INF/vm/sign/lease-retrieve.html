@@ -1,0 +1,190 @@
+#set($plugins = ["chosen"])
+<div class="ibox" ng-controller="leaseRetrieveCtrl as $ctrl" ng-cloak>
+
+    <div class="ibox-title">
+        <h5>租赁房客源限制性检索</h5>
+    </div>
+
+    <div class="ibox-content">
+        <form ng-submit="$ctrl.restrictive(form)" name="form" novalidate>
+            <table class="table table-striped table-bordered table-hover dataTables-example table-condensed">
+                <tbody>
+                <tr>
+                    <th style="width: 20%;">房源编号：</th>
+                    <td>
+                        <a ng-href="{{::$ctrl.houselink}}" target="_blank">{{::$ctrl.houseid}}</a>
+                    </td>
+                    <th style="width: 20%;">客源编号：</th>
+                    <td>
+                        <a ng-href="{{::$ctrl.customerlink}}" target="_blank">{{::$ctrl.clientid}}</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <fieldset>
+                <legend class="clearfix">
+                    <span class="font-blue" style="font-size: 14px;font-weight: bold;">甲方信息</span>
+
+                    <!--<div class="pull-right">
+                        <button type="button" class="btn btn-primary btn-sm"
+                                ng-click="$ctrl.addCard($ctrl.ownerCards)">
+                            <i class="fa fa-user-plus"></i>
+                            新增
+                        </button>
+                    </div>-->
+                </legend>
+                <table class="table table-striped table-bordered table-hover dataTables-example table-condensed">
+                    <tbody>
+                    <tr ng-repeat="card in $ctrl.ownerCards">
+                        <th style="width: 20%;" class="required">
+                            业主有效证件类型：
+                        </th>
+                        <td style="width:20%">
+                            <sign-card-type ng-model="card.idCardTypeId"></sign-card-type>
+                        </td>
+                        <th style="width: 20%;" class="required">
+                            证件编号：
+                        </th>
+                        <td>
+                            <input type="text" class="form-control" required
+                                   card-type="card.idCardTypeId"
+                                   ng-model="card.idCard">
+                        </td>
+                        <td style="width: 10%;">
+                            <a href="javascript:"
+                               ng-if="$ctrl.ownerCards.length > 1"
+                               ng-click="$ctrl.removeCard(card , $ctrl.ownerCards)">
+                                <i class="glyphicon glyphicon-remove text-danger"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <div class="clearfix" style="margin-bottom: 10px;">
+                    <div class="pull-right">
+                        <button type="button" class="btn btn-primary btn-sm"
+                                ng-click="$ctrl.addCard($ctrl.commonOwnerCards , '业主共有人')">
+                            <i class="fa fa-user-plus"></i>
+                            新增
+                        </button>
+                    </div>
+                </div>
+
+                <table class="table table-striped table-bordered table-hover dataTables-example table-condensed">
+                    <tbody>
+                    <tr ng-repeat="card in $ctrl.commonOwnerCards">
+                        <th style="width: 20%;">业主共有人有效证件类型：</th>
+                        <td style="width:20%">
+                            <sign-card-type ng-model="card.idCardTypeId"></sign-card-type>
+                        </td>
+                        <th style="width: 20%;">证件编号：</th>
+                        <td>
+                            <input type="text" class="form-control"
+                                   card-type="card.idCardTypeId"
+                                   ng-model="card.idCard">
+                        </td>
+                        <td style="width: 10%;">
+                            <a type="del_owner"
+                               ng-if="!$first"
+                               ng-click="$ctrl.removeCard(card , $ctrl.commonOwnerCards)">
+                                <i class="glyphicon glyphicon-remove text-danger"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </fieldset>
+
+            <fieldset>
+                <legend class="clearfix">
+                    <span class="font-blue" style="font-size: 14px;font-weight: bold;">乙方信息</span>
+
+                    <!-- <div class="pull-right">
+                         <button type="button"
+                                 class="btn btn-primary btn-sm"
+                                 ng-click="$ctrl.addCard($ctrl.customerCards)">
+                             <i class="fa fa-user-plus"></i>
+                             新增
+                         </button>
+                     </div>-->
+                </legend>
+                <table class="table table-striped table-bordered table-hover dataTables-example table-condensed">
+                    <tbody>
+                    <tr ng-repeat="card in $ctrl.customerCards">
+                        <th style="width: 20%;" class="required">
+                            客户有效证件类型：
+                        </th>
+                        <td style="width:20%">
+                            <sign-card-type ng-model="card.idCardTypeId"></sign-card-type>
+                        </td>
+                        <th style="width: 20%;" class="required">
+                            证件编号：
+                        </th>
+                        <td>
+                            <input type="text" class="form-control" required
+                                   card-type="card.idCardTypeId"
+                                   ng-model="card.idCard">
+                        </td>
+                        <td style="width: 10%;">
+                            <a href="javascript:"
+                               ng-if="$ctrl.customerCards.length > 1"
+                               ng-click="$ctrl.removeCard(card , $ctrl.customerCards)">
+                                <i class="glyphicon glyphicon-remove text-danger"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <div class="clearfix" style="margin-bottom: 10px;">
+                    <div class="pull-right">
+                        <button type="button" class="btn btn-primary btn-sm"
+                                ng-click="$ctrl.addCard($ctrl.customerMultiContractorCards , '客户多签约人')">
+                            <i class="fa fa-user-plus"></i>
+                            新增
+                        </button>
+                    </div>
+                </div>
+
+                <table class="table table-striped table-bordered table-hover dataTables-example table-condensed">
+                    <tbody>
+                    <tr ng-repeat="card in $ctrl.customerMultiContractorCards">
+                        <th style="width: 20%;">客户多签约人类型：</th>
+                        <td style="width:20%">
+                            <sign-card-type ng-model="card.idCardTypeId"></sign-card-type>
+                        </td>
+                        <th style="width: 20%;">证件编号：</th>
+                        <td>
+                            <input type="text" class="form-control"
+                                   card-type="card.idCardTypeId"
+                                   ng-model="card.idCard">
+                        </td>
+                        <td style="width: 10%;">
+                            <a type="del_owner"
+                               ng-if="!$first"
+                               ng-click="$ctrl.removeCard(card , $ctrl.customerMultiContractorCards)">
+                                <i class="glyphicon glyphicon-remove text-danger"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </fieldset>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="text-center" style="padding-bottom: 3em;">
+                        <button type="submit" class="btn btn-primary" style="float: none !important;">
+                            检 索
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="$link.contextPath/resources/script/sign/sign-common.module.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/sign-card-type.directive.js"></script>
+<script src="$link.contextPath/resources/script/sign/lease-retrieve.module.js"></script>

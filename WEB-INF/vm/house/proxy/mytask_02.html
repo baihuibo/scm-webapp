@@ -1,0 +1,190 @@
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="float-e-margins">
+							<div class="ibox-title">
+								<h5>我的任务管理</h5>
+								<div class="ibox-tools">
+									<a class="collapse-link ui-sortable"><i class="fa fa-chevron-up"></i>
+									</a>
+								</div>
+							</div>
+							<div class="ibox-content">
+								<form class="form-horizontal" role="form" id="J_contract_form_02">
+									<div class="row">
+										<div class="col-md-4">
+											<div class="form-group">
+												<label class="col-sm-3 control-label">委托书编号：</label>
+												<div class="col-sm-8">
+													<input id="J_proxyCode_02" name="proxyCode" class="form-control" placeholder="">
+												</div>
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="form-group">
+												<label class="col-sm-3 control-label">房源编号：</label>
+												<div class="col-sm-8">
+													<input id="J_housesId_02" name="housesId" class="form-control" placeholder="">
+												</div>
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="form-group">
+												<label class="col-sm-3 control-label">业务类型：</label>
+												<div class="col-sm-8">
+													<select id="J_businessType_02" name="businessType" class="J_chosen form-control" data-placeholder="全部">
+														<option value="">全部</option>
+													</select>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-4">
+											<div class="form-group">
+												<label class="col-sm-3 control-label">委托状态：</label>
+												<div class="col-sm-8">
+													<select id="J_proxyStatus_02" name="proxyStatus" class="J_chosen form-control" data-placeholder="全部">
+														<option value="">全部</option>
+													</select>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="form-group">
+												<label class="col-sm-3 control-label">一审结果：</label>
+												<div class="col-sm-8">
+													<select id="J_firstInstanceRestult_02" name="firstInstanceRestult" class="J_chosen form-control" data-placeholder="全部">
+														<option value="">全部</option>
+													</select>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="form-group">
+												<label class="col-sm-3 control-label">二审结果：</label>
+												<div class="col-sm-8">
+													<select id="J_secondInstanceRestult_02" name="secondInstanceRestult" class="J_chosen form-control" data-placeholder="全部">
+														<option value="">全部</option>
+													</select>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+						               <div class="col-md-4">
+						                    <div class="form-group">
+						                        <label class="col-sm-3 control-label">签委托部门：</label>
+						                        <input id="J_grouplevel_02" name="grouplevel" type="hidden" class="form-control" autocomplete="off">
+						                        <div class="col-sm-8">
+						                           <div class="input-group">
+						                              <input id="J_deptName_02" name="groupid" type="text" class="form-control radius-3 float-l" autocomplete="off">                   
+						                               <div class="input-group-btn">
+						                                   <button id="J_groupSelect_02" data-toggle="dropdown" class="btn dropdown-toggle btn-dept" type="button"><span class="caret"></span></button>
+						                               </div>
+						                           </div>
+						                       </div>
+						                    </div>
+						                </div>
+										<div class="col-md-4">
+											<div class="form-group">
+												<label class="col-sm-3 control-label">委托时间：</label>
+												<div class="col-sm-8" layout="row">
+													<div flex><input id="J_createTimeStart_02" name="createTimeStart" class="form-control"></div>
+													<div class="split">-</div>
+													<div flex><input id="J_createTimeEnd_02" name="createTimeEnd" class="form-control"></div>
+												</div>                        
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="form-group">
+												<label class="col-sm-3 control-label">是否作废：</label>
+												<div class="col-sm-8">
+													<select id="J_isReject_02" name="isReject" class="J_chosen form-control" data-placeholder="全部">
+														<option value="">全部</option>
+													</select>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-4">
+											<div class="form-group">
+												<label class="col-sm-3 control-label">一审时间：</label>
+												<div class="col-sm-8" layout="row">
+													<div flex><input id="J_firstInstanceTimeStart_02" name="firstInstanceTimeStart" class="form-control"></div>
+													<div class="split">-</div>
+													<div flex><input id="J_firstInstanceTimeEnd_02" name="firstInstanceTimeEnd" class="form-control"></div>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="form-group">
+												<label class="col-sm-3 control-label">一审时效：</label>
+												<div class="col-sm-8">
+													<select id="J_firstInstanceEff" name="firstInstanceEff" class="J_chosen form-control" data-placeholder="全部">
+														<option value="">全部</option>
+													</select>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-12">
+											<div class="form-group">
+												<label class="col-sm-1 control-label">规划用途：</label>
+												<div class="checkbox checkbox-primary checkbox-inline" id="J_plannedUses_02" name="plannedUses" style="margin-top:-5px;"></div>
+											</div>
+										</div>
+									</div>			
+									<div class="row">									
+										<div class="col-md-12">
+						                       <div class="form-group">
+						                           <div class="col-sm-5  col-sm-offset-5">
+						                               <button id="J_search_02" type="button" class="btn btn-success btn_size">查 询</button>
+						                               <button id="J_reset_lease_02" type="reset" class="btn btn-white btn_size">重 置</button>
+						                           </div>
+						                       </div>
+						                   </div>
+									</div>
+								</form>
+							</div>
+							<div class="mt10 float-e-margins">
+								<div class="ibox-title">
+									<h5>我的任务列表</h5>
+				                </div>
+								<div class="ibox-content">
+									<div class="row row-lg">
+										<div class="col-sm-12">
+											<!-- Example Pagination -->
+											<div class="example-wrap ptb10">
+												<p></p>
+												<table id="J_dataTable_task_02" class="table table-hover table-striped table-bordered dataTables-example table-condensed" data-query-params="queryParams" data-mobile-responsive="true" data-pagination="true" data-icon-size="outline" data-striped="true" data-search="false">
+													<thead>
+														<tr>
+															<th data-field="proxyCode">委托书编号</th>
+															<th data-field="housesId">房源编号</th>
+															<th data-field="businessType">业务类型</th>
+															<th data-field="plannedUses">规划用途</th>
+															<th data-field="createByStr">签委托人</th>
+															<th data-field="createTime">委托时间</th>
+															<th data-field="proxyStatus">委托状态</th>
+															<th data-field="firstInstanceRestult">一审结果</th>
+															<th data-field="secondInstanceRestult">二审结果</th>
+															<th data-field="firstInstanceTimeLong">一审时效</th>
+															<th data-field="firstInstanceTime">一审时间</th>
+															<th data-field="rejectByStr">作废人</th>
+															<th data-field="options">操作</th>
+														</tr>
+													</thead>
+												</table>
+											</div>
+											<!-- End Example Pagination -->
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>

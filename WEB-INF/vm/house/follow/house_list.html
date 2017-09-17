@@ -1,0 +1,42 @@
+
+<div class="ibox pd50">
+	<div class="ibox-content">
+		<form id="J_query_detail"  class="form-horizontal mb20" role="form">
+			<div class="row mt10">
+				<div class="customer_info_box">
+					<div class="col-md-12">
+						<h4 class="pl10 font-bold font-black info-tit">跟进记录</h4>
+					</div>
+					<div class="col-md-4" id="isVirtualHide">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">跟进类型:</label>
+							<div class="col-sm-7">
+								<select id="J_houseFollowType" name="houseFollowType" class="J_chosen form-control" data-placeholder="全部">
+									<option value="">全部</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+		<div class="row row-lg">
+			<div class="col-sm-12">
+				<table id="J_recording_dataTable" class="table table-hover table-striped table-bordered table-condensed">
+					<thead>
+						<tr>
+							<th class="col-sm-3 remark_all" data-field="a1">跟进部门</th>
+							<th data-field="b1">跟进人</th>
+							<th data-field="c1">跟进类型</th>
+							<th data-field="d1">跟进时间</th>
+							<th class="col-sm-4 remark_all" data-field="e1">跟进内容</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+#parse("/house/singlewatch/feedback.html")
+<script src="$link.contextPath/resources/script/house/follow/followdetail.js"></script>
+<script src="$link.contextPath/resources/script/house/singlewatch/feedback.js"></script>

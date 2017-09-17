@@ -1,0 +1,70 @@
+<div class="img_report_outer">
+	<span class="glyphicon glyphicon-menu-left menu-left_reported_out"
+		aria-hidden="true"></span>
+	<div class="img_outer">
+		<div class="slider">
+			<div class="slide" ng-repeat="item in $ctrl.list">
+				<div class="out_img">
+				<div ng-if="$ctrl.type!='radio'">
+					<img class="upload_image" ng-src="{{::item.path||item.picturePath}}"  title="{{item.describe}}" curr_rotate="8" >
+				</div>
+				<div ng-if="$ctrl.type=='radio'">
+					<img class="upload_image" ng-src="{{::item.path||item.picturePath}}"  title="{{item.describe}}" alt="{{$ctrl.alt}}" >
+				</div>
+					<!-- <span class="name">户型图</span> -->					
+					<a ng-if="$ctrl.type=='download'&&$ctrl.ifuplpad!=false" class="download" ng-href="{{item.downLoadPath}}" download target="_blank">下载</a>
+					<div class="col-sm-10" ng-if="$ctrl.type=='del'||$ctrl.type=='inqudel'" > 
+	                    <select ng-if="$ctrl.phototype==1" id="photoType" name="photoType" chosen class="form-control layout" ng-model="item.type" data-placeholder="请选择">
+							<option value="">请选择</option>
+							<option value="4">委托书</option>							
+						</select>
+						<select ng-if="$ctrl.phototype==2" id="photoType" name="photoType" chosen class="form-control layout" ng-model="item.type" data-placeholder="请选择">
+							<option value="">请选择</option>
+							<option value="5">产权证书</option>						
+						</select>
+						<select ng-if="$ctrl.phototype==3" id="photoType" name="photoType" chosen class="form-control layout" ng-model="item.type" data-placeholder="请选择">
+							<option value="">请选择</option>
+							<option value="6">书面告知书</option>						
+						</select>
+						<select ng-if="$ctrl.phototype==4" id="photoType" name="photoType" chosen class="form-control layout" ng-model="item.type" data-placeholder="请选择">
+							<option value="">请选择</option>
+							<option value="7">房屋状况说明书</option>						
+						</select>
+						<select ng-if="$ctrl.phototype==8" id="photoType" name="photoType" chosen class="form-control layout" ng-model="item.type" data-placeholder="请选择">
+							<option value="">请选择</option>
+							<option value="8">其他资料</option>						
+						</select>
+						<select ng-if="$ctrl.phototype=='inqu'" id="photoType" name="photoType" 
+							class="form-control layout" ng-model="item.pictureKey" data-placeholder="请选择"
+							ng-options="opt.pictureKey as opt.describe for opt in $ctrl.optionlist">
+							<option value="">请选择</option>
+						</select>
+					</div>	
+					<div class="col-sm-2" ng-if="$ctrl.type=='del'">
+						<a class="btn btn-outline btn-success btn-xs mt-3 pd5" style="margin-top:1px;" ng-click="$ctrl.delfn($ctrl.list,item , $index)">删除</a>		
+					</div>	
+					<div class="col-sm-12" ng-if="$ctrl.type=='inqudel'" style="text-align:center;">
+						<span class="download">{{item.imgDescribe}}</span>	
+					</div>
+					<div class="col-sm-12" ng-if="$ctrl.type=='inqudel'" style="text-align:center;">
+						<a class="btn btn-outline btn-success btn-xs mt-3 pd5" style="margin-top:1px;" ng-click="$ctrl.delfn($ctrl.list,item , $index)">删除</a>		
+					</div>
+					<div class="col-sm-12" ng-if="$ctrl.type=='detail'">
+						<span class="download">{{item.imgDescribe}}</span>
+					</div>
+					<div ng-if="$ctrl.type=='radio'">
+					<div class="col-sm-12">
+						<span class="download reported_out">{{item.imgDescribe}}</span>
+					</div>
+					<div class="col-sm-12 download">
+						<input name="{{$ctrl.name}}" type="radio" 
+							radio-first-checked ng-click="$ctrl.chosenValue = item">
+					</div>
+					</div>
+				</div>
+			</div>
+		</div>	
+	</div>
+	<span class="glyphicon glyphicon-menu-right menu-right_reported_out"
+		aria-hidden="true"></span>
+</div>

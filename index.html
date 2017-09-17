@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>房客源目录列表</title>
+<style>
+li {
+	line-height: 28px;
+}
+
+td {
+	border-top: 1px solid #ccc;
+	border-left: 1px solid #ccc;
+	border-right: 1px solid #ccc;
+	padding: 10px;
+}
+
+.td-bottom {
+	border-bottom: 1px solid #ccc;
+}
+
+.td-noright {
+	border-right: none;
+}
+
+.td-noleft {
+	border-left: none;
+}
+</style>
+</head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content">
+		<div class="ibox float-e-margins" style="margin-left: 20px;">
+			<div class="ibox-title">
+				<h4>销售系统开发目录</h4>
+			</div>
+
+			<div style="float: left; width: 100%">
+				<table cellspacing="0" style="float: left;">
+					<tr>
+						<td class="td-bottom td-noright"><strong>房客源公共组件</strong></td>
+						<td class="td-bottom"><a target="_blank"
+							href="/sales/public/department.htm">部门树状结构-单选</a></td>
+						<td class="td-bottom td-noleft"><a target="_blank"
+							href="/sales/public/multipledepartment.htm">部门树状结构-多选</a></td>
+						<td class="td-bottom td-noleft"><a target="_blank"
+							href="/sales/public/img_upload.htm">图片上传</a></td>
+					</tr>
+				</table>
+			</div>
+
+			<div style="float: left; width: 100%; margin-top: 10px;">
+				<table cellspacing="0" style="float: left;">
+					<tr>
+						<td rowspan="15" class="td-bottom td-noright"><strong>客源管理</strong></td>
+					</tr>
+					<tr>
+						<td><a target="_blank"
+							href="/sales/customer/main/leaselist.htm">租赁客源列表</a></td>
+					</tr>
+					<tr>
+						<td><a target="_blank"
+							href="/sales/customer/main/leaseadd.htm">租赁客源添加</a></td>
+					</tr>
+					<tr>
+						<td><a target="_blank"
+							href="/sales/customer/main/buylist.htm">买卖客源列表</a></td>
+					</tr>
+					<tr>
+						<td><a target="_blank" href="/sales/customer/main/buyadd.htm">买卖客源添加</a></td>
+					</tr>
+					<tr>
+						<td><a target="_blank"
+							href="/sales/customer/main/leasedetail.htm">租赁客源详情</a></td>
+					</tr>
+					<tr>
+						<td><a target="_blank"
+							href="/sales/customer/main/buydetail.htm">买卖客源详情</a></td>
+					</tr>
+					<tr>
+						<td><a target="_blank"
+							href="/sales/customer/proxy/manager.htm">委托书管理</a></td>
+					</tr>
+					<tr>
+						<td><a target="_blank" href="/sales/customer/follow/list.htm">跟进管理</a></td>
+					</tr>
+					<tr>
+						<td><a target="_blank"
+							href="/sales/customer/showings/list.htm">带看管理</a></td>
+					</tr>
+					<tr>
+						<td><a target="_blank"
+							href="/sales/customer/move/movelist.htm">客源调配</a></td>
+					</tr>
+					<tr>
+						<td><a target="_blank"
+							href="/sales/customer/cooperation/cooperationlist.htm">转介客源管理</a></td>
+					</tr>
+					<tr>
+						<td><a target="_blank"
+							href="/sales/customer/rule/leaselist.htm">规则设置</a></td>
+					</tr>
+					<tr>
+						<td class="td-bottom"><a target="_blank"
+												 href="/sales/custom/black/list.htm">黑名单管理</a></td>
+					</tr>
+					<tr>
+						<td class="td-bottom">
+							<a target="_blank"
+							   href="/sales/custom/calllimit/list.htm">房客源免打扰</a>
+						</td>
+					</tr>
+				</table>
+
+				<table cellspacing="0" style="float: left;">
+					<tr>
+						<td rowspan="15" class="td-bottom td-noright td-noleft"><strong>房源管理</strong></td>
+					</tr>
+					<tr>
+						<td class="td-noleft"><a target="_blank" href="/sales/house/main/add.htm">房源录入</a></td>
+						<td class="td-noleft"><a target="_blank" href="/sales/restrictive/mytask/mytask.htm">我的任务</a></td>
+						<td class="td-noleft"><a target="_blank" href="/sales/house/proxy/houseProxyList.html">委托信息管理列表</a></td>
+					</tr>
+					<tr>
+						<td><a target="_blank"
+							href="/sales/house/main/lessorlist.htm">租赁房源列表</a></td>
+						<td class="td-noleft"><a target="_blank"
+							href="/sales/house/main/sellerlist.htm">买卖房源列表</a></td>
+						<td class="td-noleft"><a target="_blank" href="/sales/house/proxy/mytasks.html">我的任务</a></td>
+					</tr>
+					<tr>
+						<td><a target="_blank" href="/sales/house/follow/list.htm">跟进管理</a></td>
+						<td class="td-noleft"><a target="_blank"
+							href="/sales/house/audit/unverifylist.htm">房源审核</a></td>
+						<td class="td-noleft"></td>
+					</tr>
+					<tr>
+						<td><a target="_blank" href="/sales/house/paper/info.htm">房源纸</a></td>
+						<td class="td-noleft"><a target="_blank"
+							href="/sales/house/keyadmin/list.htm">钥匙管理</a></td>
+						<td class="td-noleft"></td>
+					</tr>
+					<tr>
+						<td><a target="_blank" href="#">房源动作管理</a></td>
+						<td class="td-noleft"><a target="_blank"
+							href="/sales/house/virtual/list.htm">虚拟房源管理</a></td>
+						<td class="td-noleft"></td>
+					</tr>
+					<tr>
+						<td><a target="_blank"
+							href="/sales/house/conceal/conceallist.htm">隐藏房源管理</a></td>
+						<td class="td-noleft"><a target="_blank"
+							href="/sales/house/protect/list.htm">房源保护管理</a></td>
+						<td class="td-noleft"></td>
+					</tr>
+					<tr>
+						<td><a target="_blank"
+							href="/sales/house/focuswatch/list.htm">集中看房管理</a></td>
+						<td class="td-noleft"><a target="_blank"
+							href="/sales/house/singlewatch/list.htm">空看管理</a></td>
+						<td class="td-noleft"></td>
+					</tr>
+					<tr>
+						<td><a target="_blank" href="#">带看管理</a></td>
+						<td class="td-noleft"><a target="_blank" href="#">规则设置</a></td>
+						<td class="td-noleft"></td>
+					</tr>
+					<tr>
+						<td><a target="_blank"
+							href="/sales/house/inquisition/inqListPage.htm">实勘列表</a></td>
+						<td class="td-noleft"><a target="_blank"
+							href="/sales/house/inquisitionCtf/inqAntifraudNewsPage.htm">实勘打假管理</a></td>
+						<td class="td-noleft"></td>
+					</tr>
+					<tr>
+						<td><a target="_blank"
+							href="/sales/house/inquisitionMine/myInquisitionPage.htm">我的实勘管理</a></td>
+						<td class="td-noleft"><a target="_blank"
+							href="/sales/restrictive//reasionlist.htm">上榜原因管理</a></td>
+						<td class="td-noleft"></td>
+					</tr>
+					<tr>
+						<td><a target="_blank"
+							href="/sales/business/report/reportlist.htm">业务管理日志</a></td>
+						<td class="td-noleft"><a target="_blank"
+							href="/sales/restrictive/restrictivelist.htm">限制性房客源查询</a></td>
+						<td class="td-noleft"></td>
+					</tr>
+					<tr>
+						<td class="td-bottom"><a target="_blank"
+							href="/sales/business/report/reportlist.htm">房源业务管理日志</a></td>
+						<td class="td-bottom td-noleft"><a target="_blank"
+							href="/sales/business/business_rules.htm">房源业务管理规则设置</a></td>
+						<td class="td-bottom td-noleft"></td>
+					</tr>
+					
+				</table>
+
+				<table cellspacing="0" style="float: left;">
+					<tr>
+						<td rowspan="14" class="td-bottom td-noright td-noleft"><strong>签约管理</strong></td>
+					</tr>
+					<tr>
+						<td><a href="/sales/sign/chargeback/add" target="_blank">退单新增</a></td>
+					</tr>
+					<tr>
+						<td><a href="/sales/sign/chargeback/detail" target="_blank">退单详情</a></td>
+					</tr>
+					<tr>
+						<td><a href="/sales/sign/chargeback/list" target="_blank">退单列表</a></td>
+					</tr>
+					<tr>
+						<td><a href="/sales/sign/chargeback/attachment"
+							target="_blank">附件管理</a></td>
+					</tr>
+					<tr>
+						<td><a href="/sales/sign/chargeback/supplementalagreement"
+							target="_blank">补充协议</a></td>
+					</tr>
+					<tr>
+						<td><a href="/sales/sign/chargeback/cost" target="_blank">费用处理</a></td>
+					</tr>
+					<tr>
+						<td><a href="/sales/sign/chargeback/costdetail"
+							target="_blank">费用执行明细</a></td>
+					</tr>
+					<tr>
+						<td><a href="/sales/sign/chargeback/auditprocess"
+							target="_blank">退单审批流程</a></td>
+					</tr>
+					<tr>
+						<td><a href="/sales/sign/chargeback/auditbybusiness"
+							target="_blank">业务/运营审批</a></td>
+					</tr>
+					<tr>
+						<td><a href="/sales/sign/chargeback/auditbycustomerservice"
+							target="_blank">客服审批</a></td>
+					</tr>
+					<tr>
+						<td><a href="/sales/sign/chargeback/auditbyriskmanager"
+							target="_blank">风控审批</a></td>
+					</tr>
+					<tr>
+						<td><a href="/sales/sign/chargeback/auditbypaid"
+							target="_blank">薪酬审批</a></td>
+					</tr>
+					<tr>
+						<td class="td-bottom"><a
+							href="/sales/sign/chargeback/auditbyfinance" target="_blank">财务审批</a></td>
+					</tr>
+				</table>
+
+				<table cellspacing="0" style="float: left;">
+					
+					<tr>
+						<td><a
+							href="/sales/sign/lease-retrieve.htm?houseid=36822529&customerid=2&buildingNo=3"
+							target="_blank">租赁限制房源检索</a></td>
+					</tr>
+					<tr>
+						<td><a href="/sales/sign/list" target="_blank">租赁草签合同管理</a></td>
+					</tr>
+					<tr>
+						<td><a href="/sales/sign/create-sign"
+							target="_blank">新增草签合同</a></td>
+					</tr>
+					<tr>
+						<td><a href="/sales/sign/lease-list.html" target="_blank">租赁合同管理</a></td>
+					</tr>
+					<tr>
+						<td><a
+							href="/sales/contract/discount/list.html" target="_blank">佣金折扣</a></td>
+					</tr>
+					<tr>
+						<td><a href="/sales/sign/contractSales/salesRetrieve.htm"
+							target="_blank">买卖限制房源检索</a></td>
+					</tr>
+					<tr>
+						<td><a href="/sales/sign/contractSales/contractSalesAdd.htm"
+							target="_blank">买卖合同添加</a></td>
+					</tr>
+					<tr>
+						<td><a href="/sales/sign/contractSales/draftdetail.htm"
+							target="_blank">买卖草签合同详情</a></td>
+					</tr>
+					<tr>
+						<td><a href="/sales/sign/signthecontract/contractdetail.htm"
+							target="_blank">买卖合同详情</a></td>
+					</tr>
+					<tr>
+						<td><a href="/sales/sign/signthecontract/draftlist.htm"
+							target="_blank">买卖草签合同列表</a></td>
+					</tr>
+					<tr>
+						<td><a href="/sales/sign/signthecontract/contractlist.htm"
+							target="_blank">买卖合同列表</a></td>
+					</tr>
+					<tr>
+						<td><a href="/sales/sign/signthecontract/auxiliarylist.htm"
+							target="_blank">附属合同列表</a></td>
+					</tr>
+					<tr>
+						<td class="td-bottom"><a href="/sales/contract/supplagrt/list"
+							target="_blank">补充协议管理列表</a></td>
+					</tr>
+				</table>
+				
+			</div>
+			
+			<div style="float: left; width: 100%; margin-top: 10px;">
+			
+				<table cellspacing="0" style="float: left;">
+					<tr>
+						<td rowspan="14" class="td-bottom td-noright"><strong>财务付款</strong></td>
+					</tr>
+					<tr>
+						<td><a href="/sales/finance/invoice/list.htm" target="_blank">发票号管理</a></td>
+					</tr>
+					<tr>
+						<td><a href="/sales/finance/invoice/makeout.htm" target="_blank">开发票</a></td>
+					</tr>
+					<tr>
+						<td><a href="/sales/finance/payment/apply/payment/add.htm" target="_blank">付款申请</a></td>
+					</tr>
+					<tr>
+						<td><a href="/sales/finance/commoncontract/commonapply.htm" target="_blank">公共合同申请</a></td>
+					</tr>
+					<tr>
+						<td><a href="/sales/finance/payment/apply/refund/add.htm" target="_blank">退款申请</a></td>
+					</tr>
+					<tr>
+						<td><a href="/sales/finance/payment/apply/transfer/add.htm" target="_blank">转款申请</a></td>
+					</tr>
+					<tr>
+						<td><a href="/sales/finance/payment/apply/list.htm"
+							target="_blank">付、退、转申请管理</a></td>
+					</tr>
+					<tr>
+						<td><a href="/sales/finance/payment/cash/list.htm"
+							target="_blank">付款管理（现金）</a></td>
+					</tr>
+					<tr>
+						<td><a href="/sales/finance/payment/noncash/remindlist.htm"
+							target="_blank">付款提醒（非现金）</a></td>
+					</tr>
+					<tr>
+						<td><a href="/sales/finance/payment/noncash/confirmlist.htm"
+							target="_blank">付款确认</a></td>
+					</tr>
+					<tr>
+						<td><a href="/sales/finance/payment/noncash/repaylist.htm"
+							target="_blank">付款失败后重新付款</a></td>
+					</tr>
+					<tr>
+						<td><a href="/sales/finance/payment/listbycashier.htm"
+							target="_blank">付款单管理（出纳）</a></td>
+					</tr>
+					<tr>
+						<td class="td-bottom"><a
+							href="/sales/finance/payment/payfailedlist.htm" target="_blank">付款失败管理</a></td>
+					</tr>
+				</table>
+
+				<table>
+					<tr>
+						<td><a href="/sales/finance/payment/apply/refund/applyedit.htm" target="_blank">退款申请修改</a></td>
+					</tr>
+					<tr>
+						<td><a href="/sales/finance/payment/apply/refund/paymentedit.htm" target="_blank">退款申请付款信息修改</a></td>
+					</tr>
+					<tr>
+						<td><a href="/sales/finance/payment/apply/transfer/applyedit.htm" target="_blank">转款申请修改</a></td>
+					</tr>
+					<tr>
+						<td><a href="/sales/finance/payment/apply/transfer/paymentedit.htm" target="_blank">转款申请付款信息修改</a></td>
+					</tr>
+				</table>
+				<table cellspacing="0" style="float: left;">
+					<tr>
+						<td rowspan="14" class="td-bottom td-noright"><strong>财务收款</strong></td>
+					</tr>
+					<tr>
+						<td><a target="_blank"
+							href="/sales/finance/collect/collectPlan.html">录入收款</a></td>
+					</tr>
+					<tr>
+						<td><a target="_blank"
+							href="/sales/finance/receipt/list.htm">收据管理</a></td>
+					</tr>
+					<tr>
+						<td><a target="_blank"
+							href="/sales/finance/contract/list.html">合同号管理</a></td>
+					</tr>
+					<tr>
+						<td><a target="_blank"
+							href="/sales/finance/audit/list.html">查账管理</a></td>
+					</tr>
+					<tr>
+						<td><a target="_blank" href="/sales/finance/collect/batchList.html">收款批次管理</a></td>
+					</tr>
+					<tr>
+						<td><a target="_blank" href="/sales/finance/receipt/returnList.htm">收据回收管理</a></td>
+					</tr>
+				</table>
+
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

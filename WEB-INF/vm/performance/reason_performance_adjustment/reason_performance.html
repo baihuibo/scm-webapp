@@ -1,0 +1,104 @@
+#set($plugins = ["table","chosen","laydate","linkage","ztree","autoSearch"])
+ <!-- 业绩调整原因管理 -->
+   <div class="ibox">	
+	    <div class="ibox-title">	
+	      <h5>业绩调整原因管理</h5>
+	       <div class="ibox-tools">
+		    <a class="collapse-link ui-sortable"> <i class="fa fa-chevron-up"></i></a>
+           </div>
+	    </div>
+	    <div class="ibox-content">
+		  <div class="tab-content">
+	         <div id="tab-1" class="tab-pane active">
+	           <div class="panel-body">
+		             <form class="form-horizontal" role="form" id="J_reasonform">
+							<!-- <input type="hidden" name="businessType" value="2"> -->
+							<div class="row">
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-4 control-label">请选择业绩类型：</label>
+										<div class="col-sm-7">
+											<select id="perfType" name="perfType" class="J_chosen form-control" data-placeholder="全部">
+												
+												<!-- <option value="2">收钥匙人业绩</option>
+												<option value="3">委托书业绩</option>
+												<option value="4">实勘人业绩</option>
+												<option value="5">实勘预约人业绩</option>
+												<option value="6">实勘拍摄人业绩</option>
+												<option value="7">成交人业绩</option>
+												<option value="8">奖励共享业绩</option>
+												<option value="19">房源委托业绩</option>
+												<option value="20">委托证件业绩</option> -->
+											</select>
+										</div>
+									</div>
+								</div>
+							  <div class="col-md-4 text-center">
+									<div class="form-group">
+										<button id="J_search" type="button" class="btn btn-success btn_size">查 询</button>
+									</div>
+								</div>
+							</div>
+						</form>
+						 <div class="fr mb10">
+				             <a class="btn btn-primary" id="add-onereason"> <i class="glyphicon glyphicon-plus" aria-hidden="true" ></i>添加原因</a>
+						 </div>
+					<div class="ibox-content">
+			          <table class="table table-striped table-bordered table-hover dataTables-example table-condensed"  id="J_dataTable">
+			            <thead>
+			                <tr>
+			                    <th data-field="">业绩类型</th>
+			                    <th data-field="">一级原因</th>
+			                    <th data-field="">二级原因</th>
+			                    <th data-field="">操作</th>
+			                </tr>
+			            </thead>
+			           <!--<tbody>
+			              <tr>
+			                <td><a onclick="view()">6</a></td>
+			                <td>是</td>
+			                <td>2017-01-01</td>
+			                <td>北京我爱我家</td>
+			                <td>V2.0</td>
+			                <td>2017-01-01 08:31:00</td>
+			                <td>4</td>
+			                <td><a onclick="view2()">6</a> </td> 
+			                <td>4</td>
+			                <td>6</td> 
+			              </tr>
+			            </tbody> -->
+			           </table>
+			          </div>
+	           </div>
+	         </div>
+	      </div>
+	      </div>
+	      <!-- 添加一级原因弹窗开始 -->
+	       <div class="ibox-content1" style="display: none" id="primarycause">
+            <table class="table table-striped table-bordered table-hover dataTables-example table-condensed"  id="J_dataTable_1">
+            <thead>
+             <tr>
+             <th>业绩类型</th>
+             <th>一级原因名称</th>
+             <th>二级原因名称</th>
+             </tr>
+            </thead>
+             <tbody>
+              <tr>
+               <td><input type="text" name="perfType" id="J_perfType" readonly="readonly" style="height: 35px;border:none;" maxlength="12" ></td>
+               <td>
+                <input type="text" name="perfReasonId" id="J_perfReasonId" class="hidden">
+                <textarea class="form-control" id="J_levelOneReason" name="levelOneReason" placeholder="请输入一级原因" style="height: 35px;" maxlength="15" ></textarea>
+               </td>
+                <td>
+                 <textarea class="form-control" id="J_levelTwoReason" name="levelTwoReason" placeholder="请输入二级原因" style="height: 35px;" maxlength="15" ></textarea>
+               </td>
+              </tr>
+            </tbody> 
+            </table>
+	       </div>
+	      <!-- 添加一级原因弹窗结束 -->
+	</div>
+<script type="text/javascript" src="$link.contextPath/resources/script/performance/reason_performance/reason_performance.js"></script>
+</body>
+</html>        

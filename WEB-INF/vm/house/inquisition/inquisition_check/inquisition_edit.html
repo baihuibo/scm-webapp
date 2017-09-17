@@ -1,0 +1,395 @@
+#set($plugins =
+["table","chosen","laydate","autoSearch","ztree"])
+<style>
+label{
+ color: #676a6c;
+
+}
+.bx-prev{ 
+    width: 50px;
+    height: 50px;
+    text-indent: -999999px;
+    z-index: 999;
+    position: absolute;
+    float: left;
+    left: 10PX;
+    top: 70px;
+}
+.bx-next{ 
+    width: 50px;
+    height: 50px;
+    text-indent: -999999px;
+    z-index: 999;
+    position: absolute;
+    float: right;
+    top: 70px;
+    right: 10px;
+    }
+    .evaluate{
+    margin-bottom:30px;
+    }
+</style>
+<div ng-controller="inquisitionDetailCtrl as $ctrl" ng-cloak id="ibox">
+<div class="ibox">
+		<div class="ibox-title">
+			<h5>编辑实勘</h5>
+			<div class="ibox-tools">
+				<a class="collapse-link ui-sortable"> <i
+					class="fa fa-chevron-up"></i>
+				</a>
+			</div>
+		</div>
+		<div class="ibox-content">
+
+			<div class="inquisition_info_content">
+				<div class="row">
+					<div class="col-sm-4">
+						<dl class="dl-horizontal">
+							<dt>楼盘：</dt>
+							<dd id="conmmunityName">{{$ctrl.detail.housesInquBase.conmmunityName}}</dd>
+						</dl>
+					</div>
+					<div class="col-sm-4">
+						<dl class="dl-horizontal">
+							<dt>详细地址：</dt>
+							<dd><a ng-click="$ctrl.checkAddress()">查看</a></dd>
+						</dl>
+					</div>
+					<div class="col-sm-4">
+						<dl class="dl-horizontal">
+							<dt>房源录入时间：</dt>
+							<dd id="bookinTime">{{$ctrl.detail.housesInquBase.bookinTime}}</dd>
+						</dl>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-4">
+						<dl class="dl-horizontal">
+							<dt>房源编号：</dt>
+							<dd><a ng-href="{{::$ctrl.houselink}}" target="_blank" id="housesId">{{::$ctrl.detail.housesInquBase.housesId}}</a></dd>
+						</dl>
+					</div>
+					<div class="col-sm-4">
+						<dl class="dl-horizontal">
+							<dt>所属部门：</dt>
+							<dd id="deptName">{{$ctrl.detail.housesInquBase.deptName}}</dd>
+						</dl>
+					</div>
+					<div class="col-sm-4">
+						<dl class="dl-horizontal">
+							<dt>所属人：</dt>
+							<person-show
+                                person-name="$ctrl.detail.housesInquBase.userName"
+                                person-id="$ctrl.detail.housesInquBase.userId"></person-show>
+						</dl>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-4">
+						<dl class="dl-horizontal">
+							<dt>户型：</dt>
+							<dd id="housesLayout">{{$ctrl.detail.housesInquBase.housesLayout}}</dd>
+						</dl>
+					</div>
+					<div class="col-sm-4">
+						<dl class="dl-horizontal">
+							<dt>建筑面积：</dt>
+							<dd id="acreage">{{$ctrl.detail.housesInquBase.acreage}}平方米</dd>
+						</dl>
+					</div>
+					#if($shiro.hasPermission("SCM:HOUSE:INQUISITION:ALLOCATION"))
+					<div class="col-sm-4">
+						<dl class="dl-horizontal">
+							<dt id="inquese" ng-click="$ctrl.inquese()">实勘人：</dt>
+							<person-show
+                                person-name="$ctrl.detail.housesInquBase.inquName"
+                                person-id="$ctrl.detail.housesInquBase.inquId"></person-show>
+						</dl>
+					</div>
+					#else 
+					<div class="col-sm-4">
+						<dl class="dl-horizontal">
+							<dt id="">实勘人：</dt>
+							<person-show
+                                person-name="$ctrl.detail.housesInquBase.inquName"
+                                person-id="$ctrl.detail.housesInquBase.inquId"></person-show>
+						</dl>
+					</div>						
+					#end
+				</div>
+				<div class="row">
+					<div class="col-sm-4">
+						<dl class="dl-horizontal">
+							<dt>上传人：</dt>
+							<person-show  person-name="$ctrl.detail.housesInquBase.uploadName"
+                                person-id="$ctrl.detail.housesInquBase.uploadId"></person-show>
+						</dl>
+					</div>
+					<div class="col-sm-4">
+						<dl class="dl-horizontal">
+							<dt>上传时间：</dt>
+							<dd id="uploadTime">{{$ctrl.detail.housesInquBase.uploadTime}}</dd>
+						</dl>
+					</div>
+					<div class="col-sm-4">
+						<dl class="dl-horizontal">
+							<dt>上传方式：</dt>
+							<dd id="uploadWay">{{$ctrl.detail.housesInquBase.uploadWay}}</dd>
+						</dl>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-4"></div>
+					<div class="col-sm-6"></div>
+					<div class="col-sm-2">
+						<button type="button" id="cancle" class="btn btn-success pr5">删除实勘</button>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-4"></div>
+					<div class="col-sm-6"></div>
+					<div class="col-sm-2">
+						<a class=" norm">查看实勘详细标准</a>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<div class="row">
+			<div class="pull-right pull-right1" style="padding-bottom:4px;">
+			图片大小:上传照片不低于600*450像素,&nbsp;不超过5M &nbsp; 照片类型:jpg&nbsp;
+			上传限制:户型图最多上传5张</div>
+			</div>
+
+		<div class="form-group">
+			<div class=" panel panel-success " style="margin-bottom:0px;">
+				<div class="row panel-heading">
+					<h3 class="col-sm-1 panel-title">户型图</h3>
+					<div class="col-sm-1">
+						<button type="button" style="margin-left: -40%;"
+							class="btn btn-primary btn-sm" id="J_add_out">添加</button>
+					</div>
+					<div class="col-sm-1">
+						<span class="picterTotal">图片总数&nbsp;<span class="apart_in_number">{{$ctrl.detail.housesPicture1.length}}</span></span>
+					</div>
+					<div class="col-sm-9"></div>
+				</div>
+				<div class="panel-body proxy_con">
+					<div class="row">
+						<div class="img_report_in">
+							<div class="panel-body proxy_con">
+								<sign-slider type="inqudel" list="$ctrl.detail.housesPicture1" alt="户型图"></sign-slider>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+		    <div class="pull-right pull-right1">
+							图片大小:上传照片不低于800*600像素,不超过5M&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;照片类型:jpg
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="panel panel-success">
+				<div class="row panel-heading">
+					<h3 class="col-sm-1 panel-title">室内图</h3>
+					<div class="col-sm-1">
+						<button type="button" style="margin-left: -40%;"
+							class="btn btn-primary btn-sm" id="J_add_in" ng-click="$ctrl.addPicter($ctrl.detail.housesPicture2,2)">添加</button>
+					</div>
+					<div class="col-sm-1">
+						<span class="picterTotal">图片总数&nbsp;<span class="indoor_in_number">{{$ctrl.detail.housesPicture2.length}}</span></span>
+					</div>
+					<div class="col-sm-9"></div>
+				</div>
+				<div class="panel-body proxy_con">
+					<div class="row">
+						<div class="img_report_in">
+							<div class="panel-body proxy_con">
+								<sign-slider 
+									type="del" 
+									phototype='inqu' 
+									optionlist="$ctrl.optionlist" 
+									list="$ctrl.detail.housesPicture2" 
+									alt="室内图"></sign-slider>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="name"><span style="color: red;">*</span>请填写评论</label>
+			<textarea maxlength="500" id="comment" ng-model="$ctrl.memo" class="form-control" rows="4"></textarea>
+		</div>
+		<div class="row btns">
+			<div class="col-md-4"></div>
+			<div class="col-md-4"></div>
+			<div class="col-md-4"></div>
+		</div>
+</div>
+<!-- 确认与取消按钮 -->
+<div class="row ">
+	<div class="col-md-5"></div>
+	<div class="col-md-4">
+		<div>
+			<div class="col-sm-8  col-sm-off set-4">
+				<a  type="button" class="btn btn-success pr5" ng-click="$ctrl.subimit()">确认修改</a> <a
+					id="cancles" type="button" class="btn btn-success pr5">取消修改</a>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-2"></div>
+</div>
+<!-- Bootstrap table -->
+<div id="demo_layer" class="ibox-content" style="display: none">
+	<form id="retreatkey_form" name="retreatkey_form"
+		class="form-horizontal">
+		<div class="titles2"
+			style="width: 100%; height: 60px; text_align: center;">
+			<div class="form_group inline">
+				<label class="radio-inline"> <input type="radio"
+					name="lists" checked="checked" id="J_inline" value="2">
+					在线绘制
+				</label>
+			</div>
+			<div class="form_group upload">
+				<label class="radio-inline"> <input type="radio"
+					name="lists" id="J_upload" value="1"> 上传图片
+				</label>
+			</div>
+		</div>
+
+
+	</form>
+</div>
+<!-- flash上传-->
+<div id="demo_layer_flash" class="ibox-content" style="display: none">
+	<form id="retreatkey_form" name="retreatkey_form"
+		class="form-horizontal demo_layer_flash2 ">
+		<div class="form group flash">
+			<!-- 			<iframe frameborder=0 width=950 height=680 marginheight=0 marginwidth=0 scrolling=auto  id="flexFrame"></iframe> -->
+			<iframe frameborder=0
+				style="width: 100%; height: 98%; margin: 0; padding: 0;"
+				marginheight=0 marginwidth=0 scrolling=auto id="flexFrame"></iframe>
+		</div>
+		<!-- <div class="form group discrib">
+			<label for="name">请输入描述</label>
+	    	<textarea class="form-control flash_descri" rows="2"></textarea>
+		</div> -->
+
+	</form>
+</div>
+<!--  户型图图片-->
+<div id="demo_layer_pic" class="ibox-content" style="display: none">
+	<div class="form-group center-block"
+		style="position: relative;padding: 10px 0;"
+		id="upLoadLile">
+		<button id="selectFile" type="button" class="btn btn-success pr5">选择上传图片</button>
+		<div id="fileHidden" style="position:absolute;opacity: 0;position: absolute;top: 12px;">
+			<input type="file" multiple="multiple" accept="image/jpg, image/jpeg"
+				id="upFile" />
+		</div>
+	</div>
+	<div class="row upFileName" id="upFileName"></div>
+</div>
+<!-- Bootstrap table 室内图图片-->
+<div id="demo_layer_pic2" class="ibox-content" style="display: none">
+	<div class="form-group center-block"
+		style="position: relative; padding: 10px 0;"
+		id="upLoadLile">
+		<button id="selectFile2" type="button" class="btn btn-success pr5">选择上传图片</button>
+		<div id="fileHidden2" style="position:absolute;opacity: 0;position: absolute;top: 12px;">
+			<input type="file" multiple="multiple" accept="image/jpg, image/jpeg"
+				id="upFile2" />
+		</div>
+	</div>
+	<div class="row upFileName" id="upFileName2"></div>
+</div>
+<!-- 实勘详细标准的模态框 -->
+<div id="demo_layer_stantard" class="ibox-content" style="display: none">
+		<p class="startands">户型图质量要求</p>
+		<div class="conts">
+			<p class="cont">1、户型图清晰完整、无拉伸变形；</p>
+			<p class="cont">2、有正确的房间文字标注和方向标注；字体不能为镜面反转；</p>
+			<p class="cont">3、户型图墙体颜色必须为黑色；</p>
+			<p class="cont">4、楼外观必须为本房源所在楼的楼体，照片无翻转，不可以带有任何水印，包括本公司“我爱我家”LOGO。</p>
+			
+		</div>
+		<p class="startands">室内图质量要求</p>
+		<div class="conts">
+			<p class="cont">1、每个房间必须拍摄到四面墙（3面墙+房顶/地面）；</p>
+			<p class="cont">2、每套图片中必须放置公司统一的LOGO形象；（卧室或客厅）；</p>
+			<p class="cont">3、图片明亮、清晰（不模糊、没重影）；</p>
+			<p class="cont">4、图片尺寸≥800*600，比例为4:3；</p>
+			<p class="cont">5、图片无倒置、倾斜、拉伸变形；</p>
+			<p class="cont">6、拍摄角度：站在墙角里或进门处；</p>
+			<p class="cont">7、拍摄到业主照片或镜子中出现人像可不处置，如需处置必须用统一的马赛克遮挡；</p>
+			<p class="cont">8、无水印、姓名、电话号码；（包括我爱我家水印）</p>
+			<p class="cont">9、图片内无人物</p>
+		</div>
+</div>
+
+<!-- 删除实勘提示框 -->
+<div id="demo_layers" class="ibox-content" style="display: none">
+	<form id="retreatkey_form" name="retreatkey_form"
+		class="form-horizontal">
+		<p class="del_form">此操作将删除全部实勘图片，且会清空房源实勘人，确定执行此操作？</p>
+	</form>
+</div>
+<!-- 删除原因提示框 -->
+<div id="demo_layer_reson" class="ibox-content" style="display: none">
+	<form id="retreatkey_form" name="retreatkey_form"
+		class="form-horizontal">
+		<div class="form group">
+			<label for="name"><span style="color: red;">*</span>请输入删除原因</label>
+			<textarea maxlength="500" id="reason"
+				class="form-control flash_descri" id="reasons" rows="1"></textarea>
+		</div>
+	</form>
+</div>
+<!-- 查看实勘中变更实勘人模态框 -->
+<div id="change_inquese" class="ibox-content1" style="display: none">
+<form id="" name="" class="form-horizontal">
+<div class="row" style="padding-top: 20px;">
+	<div class="col-md-12">
+		<div class="form-group">
+			<label class="col-sm-3 control-label"><span class="text-danger">*</span>实勘人：</label>
+			<div class="col-sm-8">
+				<div class="input-group">
+					<input type="text" class="form-control" id="J_user"
+						autocomplete="off" name="belonguserid">
+					<div class="input-group-btn">
+						<button type="button" class="btn btn-white dropdown-toggle"
+							data-toggle="">
+							<span class="glyphicon glyphicon-search search-caret"></span>
+						</button>
+						<ul class="dropdown-menu dropdown-menu-right" role="menu"
+							style="padding-top: 0px; max-height: 375px; max-width: 800px; overflow: auto; width: auto; transition: 0.3s; left: -110px; right: auto; min-width: 145px;">
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</form>
+</div>
+
+<script src="$link.contextPath/resources/script/sign/sign-common.module.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/slider.component.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/sign-checkbox.component.js"></script>
+<script src="$link.contextPath/resources/js/viewer.js"></script>
+<script src="$link.contextPath/resources/js/jquery.bxslider.js"></script>
+<link rel="stylesheet" type="text/css" href="$link.contextPath/resources/css/viewer.css">
+<script
+	src="/sales/resources/script/house/inquisition/inquisition_check/inquisition_edit.module.js"></script>
+<script
+	src="/sales/resources/script/house/inquisition/inquisition_check/inquisition_edit.js"></script>
+<script src="/sales/resources/script/house/public/check_address.js"></script>
+<script type="text/javascript"
+	src="$link.contextPath/resources/js/department.js"></script>
+
+
+

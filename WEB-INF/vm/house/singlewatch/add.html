@@ -1,0 +1,232 @@
+#set($plugins = ["table","chosen","laydate","ztree","autoSearch"])
+<!-- 查询条件 begin -->
+<div class="ibox">
+	<div class="ibox-title">
+		<h5>空看管理</h5>
+		<div class="ibox-tools">
+			<a class="collapse-link ui-sortable"><i class="fa fa-chevron-up"></i>
+			</a>
+		</div>
+	</div>
+	<div class="ibox-content">
+		<form class="form-horizontal" role="form" id="J_lease_form">
+						<div class="row">
+				<div class="col-md-4">
+					<!-- <div class="form-group">
+						<label class="col-sm-3 control-label">空看部门：</label>
+						<div class="col-sm-8">	
+							<input type="text" class="form-control" name="J_singledepartment" id="J_singledepartment" autocomplete="off">					
+						</div>
+					</div> -->
+					<div class="form-group">
+						<label class="col-sm-3 control-label">空看部门：</label>
+						<div class="col-sm-6">
+							<input id="J_deptLevel" type="hidden" class="form-control" value="">
+							<div class="input-group">
+								<input id="J_deptName" type="text" class="form-control radius-3" autocomplete="off">
+								<div class="input-group-btn input-group-btn-dept">
+									<button type="button" class="btn btn-white dropdown-toggle" data-toggle="">
+										<span class=""></span>
+									</button>
+									<ul id="J_deptMenu" class="dropdown-menu dropdown-menu-right" role="menu">
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-2">
+							<button id="J_deptSelect" data-toggle="dropdown" class="btn dropdown-toggle btn-dept" type="button"><span class="caret"></span></button>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">空看人：</label>
+						<!-- <div class="col-sm-8">	
+							<input type="text" class="form-control" name="J_singlecustomer" id="J_singlecustomer" autocomplete="off">					
+						</div> -->
+						<div class="col-sm-8">	
+							<div class="input-group">
+								<input type="text" class="form-control" class="lendusername" id="J_sendee">
+								<div class="input-group-btn">
+									<button type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown">
+										<span class="glyphicon glyphicon-search search-caret"></span>
+									</button>
+									<ul class="dropdown-menu dropdown-menu-right" role="menu">
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">空看时间：</label>
+						<div class="col-sm-4">
+							<input id="J_singlestarttime" name="J_singlestarttime" class="form-control" onclick="laydate({istime: false, min: laydate.now(), format: 'YYYY-MM-DD hh:mm'})">
+						</div>
+						<div style="float:left; padding:7px 0px;">-</div>
+						<div class="col-sm-4">
+							<input id="J_singleendtime" name="J_singleendtime" class="form-control" onclick="laydate({istime: false, min: laydate.now(), format: 'YYYY-MM-DD hh:mm'})">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">房源编号：</label>
+						<div class="col-sm-8">
+							<input id="J_singlehouseid" name="J_singlehouseid" class="form-control" placeholder="">
+						</div>
+						</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">状态：</label>
+						<div class="col-sm-8">
+							<select id="J_singlestatus" name="J_singlestatus" class="J_chosen form-control" data-placeholder="请选择">
+								<option value="">全部</option>
+								<option value="0">已完成</option>
+								<option value="1">已返回(未完成)</option>
+								<option value="2">未返回</option>
+								<option value="3">超期作废</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">是否集中看房：</label>
+						<div class="col-sm-8">
+							<select id="J_focuswhether" name="J_focuswhether" class="J_chosen form-control" data-placeholder="请选择">
+								<option value="">请选择</option>
+								<option value="0">是</option>
+								<option value="1">否</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			
+			<div class="row">
+				<div class="col-md-12 text-cen">
+					<div class="form-group">
+						<button id="J_search" type="button" class="btn btn-success pr5">查 询</button>
+						<button id="J_reset_lease" type="reset" class="btn btn-default">清 空</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<!-- 查询条件end -->
+
+
+<!-- 空看返回 start -->
+	<div id="J_editsingleback_layer" class="ibox-content" style="margin:0 10px 0 10px; display:none;">
+		<!-- 房源信息 begin -->
+		<table id="J_back_dataTable" class="table table-hover table-striped table-bordered">
+  			<thead>
+				<tr>
+					<th data-field="id">房源编号</th>
+					<th data-field="name">楼盘</th>
+					<th data-field="address">详细地址</th>
+					<th data-field="time">反馈时间</th>
+					<th data-field="opt">操作</th>
+				</tr>
+			</thead>
+  		</table>  		
+		<!-- 基本信息 begin -->
+		<div class="">
+		    <form id="J_form_edit" class="form-horizontal">
+		    	<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="col-sm-5 control-label">状态：</label>
+							<div id="J_singlestatus" class="col-sm-6 pt6">未返回</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="col-sm-5 control-label">空看部门：</label>
+							<div id="J_singledepart" class="col-sm-6 pt6">淮河店A组</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="col-sm-5 control-label">空看人：</label>
+							<div id="J_singleperson" class="col-sm-6 pt6">张三</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label class="col-sm-5 control-label">外出时间：</label>
+							<div id="J_outtime" class="col-sm-6 pt6">2016-05-01 10：59：59</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label class="col-sm-5 control-label">预计返回时间：</label>
+							<div id="J_estimatetime" class="col-sm-6 pt6">2016-05-01 23：59：59</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label class="col-sm-5 control-label">返回时间：</label>
+							<div class="col-sm-6">
+								<input type="text" id="J_backtime" name="backtime" class="form-control"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label class="col-sm-5 control-label">耗时：</label>
+							<div id="J_keynum" class="col-sm-6 pt6">2h</div>
+						</div>
+					</div>
+				</div>
+				<!-- <div class="row">
+					<div class="col-md-12 check_line">
+						<div class="form-group" style="text-align:center">
+							<button type="button" class="layui-layer-btn0">确 定</button>
+							<button type="button" class="layui-layer-btn1">取 消</button>
+						</div>
+					</div>
+				</div> -->
+			</form>
+		</div>
+		<!-- 基本信息 end -->		
+	</div>
+<!-- 空看返回 end -->
+<!-- 查看地址 start -->
+<div id="J_detail_address_layer" class="ibox-content" style="margin:0 10px 0 10px; display:none;">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="form-group">
+				<label class="col-sm-4 control-label">喷涂地址：</label>
+				<div id="J_address_01" class="col-sm-8 pt6">北京市朝阳区广顺北大街15号</div>
+			</div>
+		</div>
+		<div class="col-md-12">
+			<div class="form-group">
+				<label class="col-sm-4 control-label">证载地址：</label>
+				<div id="J_address_02" class="col-sm-8 pt6">万年花城小区1号楼1单元101室</div>
+				
+			</div>
+		</div>
+		<div class="col-md-12">
+			<div class="form-group">
+				<label class="col-sm-4 control-label">其他地址：</label>
+				<div id="J_address_03" class="col-sm-8 pt6">万年花城小区1号楼1单元101室</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 查看地址 end -->
+
+<script type='text/javascript' src="$link.contextPath/resources/script/house/singlewatch/add.js"></script>

@@ -1,0 +1,18 @@
+#set($plugins = ["chosen"])
+<a id="J_checkHousePhone">查看电话</a>
+<a id="J_checkHouseAddress">查看地址</a>
+<script type="text/javascript">
+// 房源 - 查看电话
+$(document).delegate('#J_checkHousePhone', 'click', function(event){
+	var houseId=1, followType=1, followWay=2;
+	checkPhone(houseId, followType, followWay);
+})
+
+// 房源 - 查看电话
+$(document).delegate('#J_checkHouseAddress', 'click', function(event){
+	var houseId=1, followType=2, followWay=2;
+	checkAddress(houseId, followType, followWay);
+})
+</script>
+<script type="text/javascript" src="/sales/resources/script/house/public/check_phone.js"></script>
+<script type="text/javascript" src="/sales/resources/script/house/public/check_address.js"></script>

@@ -1,0 +1,124 @@
+#set($plugins = ["table","chosen","autoSearch","validator"])
+<style>
+#J_revamp_nextAppvalUserId-error {
+	display: table-footer-group;
+}
+</style>
+<div class="ibox">
+	<div class="ibox-title">
+		<h5>新建业绩调整申请单</h5>
+		<div class="ibox-tools">
+			<a class="collapse-link ui-sortable"> <i class="fa fa-chevron-up"></i></a>
+		</div>
+	</div>
+	<div class="ibox-content">
+		<form class="form-horizontal" role="form" id="newform">
+			<input type="hidden" class="form-control" name="id" id="J_revamp_id"
+				autocomplete="off">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">合同编号：</label>
+						<div class="col-sm-7">
+							<input type="text" class="form-control" name="reid"
+								id="J_revamp_reid" autocomplete="off">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">业务类型：</label>
+						<div class="col-sm-7">
+							<select id="J_revamp_customerTypeId" name="customerTypeId"
+								class="J_chosen form-control" data-placeholder="请选择">
+								<option value="">请选择</option>
+								<option value="1">二手买卖</option>
+								<option value="2">普租</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12 text-cen">
+					<div class="form-group">
+						<button id="J_submit" type="button" class="btn btn-success pr5">查询</button>
+					</div>
+				</div>
+			</div>
+		</form>
+		<div class="ibox-content">
+			<div class="row mt10">
+				<div class="customer_info_box">
+					<div class="customer_info_content">
+						<div class="row">
+							<div class="col-sm-6">
+								<dl class="dl-horizontal">
+									<dt class="J_edit_area">买卖合同号：</dt>
+									<dd id="App_id"></dd>
+								</dl>
+							</div>
+							<div class="col-sm-6">
+								<dl class="dl-horizontal">
+									<dt class="J_edit_area">合同录入日期：</dt>
+									<dd id="App_customerName"></dd>
+								</dl>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-6">
+								<dl class="dl-horizontal">
+									<dt class="J_edit_area">应收总收入：</dt>
+									<dd id="App_houseCardTypeName"></dd>
+								</dl>
+							</div>
+							<div class="col-sm-6">
+								<dl class="dl-horizontal">
+									<dt class="J_edit_area">合同审批日期：</dt>
+									<dd id="App_houseCard"></dd>
+								</dl>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-6">
+								<dl class="dl-horizontal">
+									<dt class="J_edit_area">实收总收入：</dt>
+									<dd id="App_idCard"></dd>
+								</dl>
+							</div>
+							<div class="col-sm-6">
+								<dl id="J_editPhone" class="dl-horizontal">
+									<dt class="J_edit_area">合同收益日期：</dt>
+									<dd id="App_customerTelephone"></dd>
+								</dl>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row ptb10_1">
+				<table id="J_dataTable"
+					class="table table-hover  table-striped table-condensed"
+					data-query-params="queryParams" data-mobile-responsive="true"
+					data-pagination="true" data-striped="true" data-search="false">
+					<thead>
+						<tr>
+							<th data-field="operateUserName">业绩类型</th>
+							<th data-field="jobName">业绩所有人</th>
+							<th data-field="departmentName">所属区/店</th>
+							<th data-field="operateTime">状态</th>
+							<th data-field="operateTime">分配比例</th>
+							<th data-field="operateDesc">操作</th>
+						</tr>
+					</thead>
+				</table>
+				<div class="row">
+					<div class="col-md-12 text-cen">
+						<div class="form-group">
+							<button id="J_submit" type="button" class="btn btn-success btn_size pr5">提交</button>
+							<button id="J_cancel" type="button" class="btn btn-success btn_size pr5">取消</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>

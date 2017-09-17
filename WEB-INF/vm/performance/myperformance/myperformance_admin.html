@@ -1,0 +1,487 @@
+#set($plugins = ["table","chosen","laydate","linkage","ztree","autoSearch"])
+<style>
+#laydate_table{
+display:none !important;
+}
+</style>
+<script type="text/javascript" src="$link.contextPath/resources/script/performance/myperformance/echarts.js"></script>
+ <!-- 我相关的业绩 -->
+   <div class="ibox">	
+	    <div class="ibox-title">	
+	      <h5>我相关的业绩(管理者)</h5>
+	    </div>
+		<div class="tabs-container mt10">
+	       <ul class="nav nav-tabs">
+	        <li class="active"><a data-toggle="tab" href="#tab-1">我的实际业绩</a></li>
+	        <li><a data-toggle="tab" href="#tab-2">我的预计业绩</a></li>
+	       </ul>
+		  <div class="tab-content">
+	         <div id="tab-1" class="tab-pane active">
+	           <div class="panel-body">
+	              <div class="ibox">
+	                <div class="ibox-title"><h5>统计查询</h5></div>
+		            <div class="ibox-content">
+		             <form class="form-horizontal" role="form" id="J_black_form">
+							<!-- <input type="hidden" name="businessType" value="2"> -->
+							<div class="row">
+							<div class="col-md-4">
+								<div class="form-group">
+								<label class="col-sm-3 control-label">业绩产生时间:</label>
+									 <div class="col-sm-9">
+									  <!-- <input class="form-control layer-date" id="createMonth" name="createMonth" onclick=""> -->
+								       <div class="col-sm-5">
+											<input id="J_begindate" name="createMonthStart"
+												class="J_chosen form-control" readonly
+												style="background-color: #FFFFFF;">
+										</div>
+										<div style="float: left; padding: 5px 7px;">-</div>
+										<div class="col-sm-5">
+											<input id="J_enddate" name="createMonthEnd"
+												class="J_chosen form-control" readonly
+												style="background-color: #FFFFFF;">
+										</div>
+								   </div>
+								</div>
+							</div>
+							<div class="col-md-4">
+							
+									<div class="form-group">
+										<label class="col-sm-3 control-label">业绩收益月：</label>
+										<div class="col-sm-8">
+											 <input class="form-control layer-date" id="belongMonth" name="belongMonth" onclick="">
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-3 control-label">业务类型：</label>
+										<div class="col-sm-7">
+											<select id="J_businessType" name="businessType" class="J_chosen form-control" data-placeholder="请选择">
+												<option value="">请选择</option>
+												<option value="3">一手买卖</option>
+												<option value="2">二手买卖</option>
+												<option value="1">普租</option>
+											</select>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-3 control-label">业绩类型：</label>
+										<div class="col-sm-8">
+										   <select data-placeholder="全部" id="J_perfType" class="form-control" name="perfType" >
+							                    <option value="">全部</option>
+							                    <!--<option value="1">房源录入人业绩</option>
+							                     <option value="2">收钥匙人业绩</option>
+							                     <option value="3">委托书业绩</option>
+							                     <option value="4">实勘人业绩</option>
+							                     <option value="5">实勘预约人业绩</option>
+							                     <option value="6">成交人业绩</option>
+							                     <option value="7">合作人业绩</option>
+							                     <option value="8">奖励共享业绩</option>
+							                     <option value="9">房源收盘业绩</option>
+							                     <option value="10">贷款分单业绩</option> -->
+							                </select>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-3 control-label">收支类型：</label>
+										<div class="col-sm-7">
+											<select id="J_incomeType" name="incomeType" class="J_chosen form-control" data-placeholder="请选择">
+												<option value="">请选择</option>
+												<option value="1">实际收入</option>
+												<option value="2">实际扣减</option>
+												
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-3 control-label">合同编号：</label>
+										<div class="col-sm-7">
+											<input type="text" name="contractNo" id="J_contractNo" class="form-control" value="">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+							   <div class="col-md-4">
+								  <div class="form-group">
+										<label class="col-sm-3 control-label">业绩金额：</label>
+										<div class="col-sm-4">
+											<input type="text" class="form-control" name="fundAmountStart" id="fundAmountStart" autocomplete="off">
+										</div>
+										<div class="control-spacing">-</div>
+										<div class="col-sm-4">
+											<input type="text" class="form-control" name="fundAmountEnd" id="fundAmountEnd" autocomplete="off">
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4">
+			                     <label class="col-sm-4 control-label">所属部门：</label>
+			                            <input id="J_deptLevel" type="hidden" class="form-control" value="">
+			                            <div class="input-group">
+			                                <input id="deptId" type="text" data-id="" class="form-control radius-3 float-l" autocomplete="off" value="" name="deptId">
+			                                <div class="input-group-btn">
+			                                    <button id="J_deptSelect" data-toggle="dropdown" class="btn dropdown-toggle btn-dept float-l" type="button"><span class="caret"></span>
+			                                    </button>
+			                                </div>
+			                            </div>
+			                    </div>
+			                    <div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-3 control-label">经纪人：</label>
+										<div class="col-sm-8">
+											<div class="input-group">
+												<input type="text" class="form-control" id="J_user" name="belongers" autocomplete="off">
+												<div class="input-group-btn">
+													<button type="button" class="btn btn-white dropdown-toggle"
+														data-toggle="">
+														<span class="glyphicon glyphicon-search search-caret"></span>
+													</button>
+													<ul class="dropdown-menu dropdown-menu-right" role="menu"
+														style="padding-top: 0px; max-height: 375px; max-width: 800px; overflow: auto; width: auto; transition: 0.3s; left: -110px; right: auto; min-width: 145px;">
+													</ul>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>						
+							</div>
+							<div class="row">
+								<div class="col-md-12 text-center">
+									<div class="form-group">
+										<button id="J_search" type="button" class="btn btn-success btn_size">查 询</button>
+									</div>
+								</div>
+							</div>	
+						</form>
+		            </div>
+		          </div>
+		          <div class="ibox">
+		            <div class="ibox-title">
+		             <h5>统计分析</h5>
+		            </div>
+		            <div class="ibox-content" id="count_div">
+		               <canvas id="main-echarts" width="600" height="400"></canvas>
+		            </div>
+		          </div>
+		          <div class="ibox">
+		           <div class="ibox-content">
+		            <div class="row">
+		             <div class="col-sm-4">
+			             <dl class="dl-horizontal">
+			               <dt class="J_edit_area">一手买卖业绩收入总计：</dt>
+			               <dd id="J_firstpro"></dd>
+			             </dl>
+				      </div>
+				      <div class="col-sm-4">
+			             <dl class="dl-horizontal">
+			               <dt class="J_edit_area">二手买卖业绩收入总计：</dt>
+			               <dd id="J_twopro"></dd>
+			             </dl>
+				      </div>
+				      <div class="col-sm-4">
+			             <dl class="dl-horizontal">
+			               <dt class="J_edit_area">普租业绩收入总计：</dt>
+			               <dd id="J_puzu"></dd>
+			             </dl>
+				      </div>
+		            </div>
+		            <div class="row">
+		             <div class="col-sm-4">
+			             <dl class="dl-horizontal">
+			               <dt class="J_edit_area">一手买卖业绩扣减总计：</dt>
+			               <dd id="J_firstproj"></dd>
+			             </dl>
+				      </div>
+				      <div class="col-sm-4">
+			             <dl class="dl-horizontal">
+			               <dt class="J_edit_area">二手买卖业绩扣减总计：</dt>
+			               <dd id="J_twoproj"></dd>
+			             </dl>
+				      </div>
+				      <div class="col-sm-4">
+			             <dl class="dl-horizontal">
+			               <dt class="J_edit_area">普租业绩扣减总计：</dt>
+			               <dd id="J_puzuj"></dd>
+			             </dl>
+				      </div>
+		            </div>
+		           </div>
+		           </div>
+		          <div class="ibox">
+		           <div class="ibox-title"><h5>业绩流水</h5></div>
+		           <div class="ibox-content">
+			         <table class="table table-striped table-bordered table-hover dataTables-example table-condensed"  id="J_dataTable">
+			            <thead>
+			                <tr>
+			                    <th data-field="createTime">产生时间</th>
+			                    <th data-field="belongMonth">收益月</th>
+			                    <th data-field="belongeName">所属人</th>
+			                    <th data-field="fullName">所属大区/区/店</th>
+			                    <th data-field="businessType">业务类型</th>
+			                    <th data-field="perfType">业绩类型</th>
+			                    <th data-field="incomeType ">收支类型</th>
+			                    <th data-field="">申请备注</th>
+			                </tr>
+			            </thead>
+			           <!--  <tbody>
+			              <tr>
+			                <td><a onclick="view()">6</a></td>
+			                <td>是</td>
+			                <td>2017-01-01</td>
+			                <td>北京我爱我家</td>
+			                <td>V2.0</td>
+			                <td>2017-01-01 08:31:00</td>
+			                <td>4</td>
+			                <td><a onclick="view2()">6</a> </td> 
+			                <td>4</td>
+			                <td>6</td> 
+			              </tr>
+			            </tbody> -->
+			          </table>
+			         </div>
+		          </div>
+	           </div>
+	         </div>
+	       <div id="tab-2" class="tab-pane">
+	           <div class="panel-body">
+	              <div class="ibox">
+	                <div class="ibox-title"><h5>统计查询</h5></div>
+		            <div class="ibox-content">
+		             <form class="form-horizontal" role="form" id="J_black_form1">
+							<!-- <input type="hidden" name="businessType" value="2"> -->
+							<div class="row">
+							<div class="col-md-4">
+								<div class="form-group">
+								<label class="col-sm-3 control-label">业绩产生时间:</label>
+									 <div class="col-sm-9">
+									  <!-- <input class="form-control layer-date" id="createMonth" name="createMonth" onclick=""> -->
+								       <div class="col-sm-5">
+											<input id="J_begindate" name="createMonthStart"
+												class="J_chosen form-control" readonly
+												style="background-color: #FFFFFF;">
+										</div>
+										<div style="float: left; padding: 5px 7px;">-</div>
+										<div class="col-sm-5">
+											<input id="J_enddate" name="createMonthEnd"
+												class="J_chosen form-control" readonly
+												style="background-color: #FFFFFF;">
+										</div>
+								   </div>
+								</div>
+							</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-3 control-label">业务类型：</label>
+										<div class="col-sm-8">
+											<select id="J_businessType" name="businessType" class="J_chosen form-control" data-placeholder="请选择">
+												<option value="">请选择</option>
+												<option value="3">一手买卖</option>
+												<option value="2">二手买卖</option>
+												<option value="1">普租</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-3 control-label">业绩类型：</label>
+										<div class="col-sm-8">
+											<select id="J_perfType" name="perfType" class="J_chosen form-control" data-placeholder="请选择">
+												 <option value="">请选择</option>
+							                     <option value="1">房源录入人业绩</option>
+							                     <option value="2">收钥匙人业绩</option>
+							                     <option value="3">委托书业绩</option>
+							                     <option value="4">实勘人业绩</option>
+							                     <option value="5">实勘预约人业绩</option>
+							                     <option value="6">成交人业绩</option>
+							                     <option value="7">合作人业绩</option>
+							                     <option value="8">奖励共享业绩</option>
+							                     <option value="9">房源收盘业绩</option>
+							                     <option value="10">贷款分单业绩</option>
+											</select>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-3 control-label">收支类型：</label>
+										<div class="col-sm-8">
+											<select id="J_incomeType" name="incomeType" class="J_chosen form-control" data-placeholder="请选择">
+												<option value="">请选择</option>
+												<option value="1">实际收入</option>
+												<option value="2">实际扣减</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-3 control-label">合同编号：</label>
+										<div class="col-sm-8">
+											<input type="text" name="contractNo" id="J_contractNo" class="form-control" value="">
+										</div>
+									</div>
+								</div>
+								 <div class="col-md-4">
+								  <div class="form-group">
+										<label class="col-sm-3 control-label">业绩金额：</label>
+										<div class="col-sm-4">
+											<input type="text" class="form-control" name="fundAmountStart" id="fundAmountStart" autocomplete="off">
+										</div>
+										<div class="control-spacing">-</div>
+										<div class="col-sm-4">
+											<input type="text" class="form-control" name="fundAmountEnd" id="fundAmountEnd" autocomplete="off">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+							 	<div class="col-md-4">
+			                     <label class="col-sm-4 control-label">所属部门：</label>
+			                            <input id="J_deptLevel1" type="hidden" class="form-control" value="">
+			                            <div class="input-group">
+			                                <input id="deptId1" type="text" data-id="" class="form-control radius-3 float-l" autocomplete="off" value="" name="deptId">
+			                                <div class="input-group-btn">
+			                                    <button id="J_deptSelect1" data-toggle="dropdown" class="btn dropdown-toggle btn-dept float-l" type="button"><span class="caret"></span>
+			                                    </button>
+			                                </div>
+			                            </div>
+			                    </div>
+			                    <div class="col-md-4">
+									<div class="form-group">
+										<label class="col-sm-3 control-label">经纪人：</label>
+										<div class="col-sm-8">
+											<div class="input-group">
+												<input type="text" class="form-control" id="J_user1" name="createBy" autocomplete="off">
+												<div class="input-group-btn">
+													<button type="button" class="btn btn-white dropdown-toggle"
+														data-toggle="">
+														<span class="glyphicon glyphicon-search search-caret"></span>
+													</button>
+													<ul class="dropdown-menu dropdown-menu-right" role="menu"
+														style="padding-top: 0px; max-height: 375px; max-width: 800px; overflow: auto; width: auto; transition: 0.3s; left: -110px; right: auto; min-width: 145px;">
+													</ul>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>	
+							</div>
+							<div class="row">
+								<div class="col-md-12 text-center">
+									<div class="form-group">
+										<button id="J_search1" type="button" class="btn btn-success btn_size">查 询</button>
+									</div>
+								</div>
+							</div>	
+						</form>
+		            </div>
+		          </div>
+		          <div class="ibox">
+		            <div class="ibox-title">
+		             <h5>统计分析</h5>
+		            </div>
+		            <div class="ibox-content" id="count_div">
+		                <canvas id="main-echarts1" width="600" height="400"></canvas>
+		            </div>
+		          </div>
+		                <div class="ibox">
+		           <div class="ibox-content">
+		            <div class="row">
+		             <div class="col-sm-4">
+			             <dl class="dl-horizontal">
+			               <dt class="J_edit_area">一手买卖业绩收入总计：</dt>
+			               <dd id="J_firstpro2"></dd>
+			             </dl>
+				      </div>
+				      <div class="col-sm-4">
+			             <dl class="dl-horizontal">
+			               <dt class="J_edit_area">二手买卖业绩收入总计：</dt>
+			               <dd id="J_twopro2"></dd>
+			             </dl>
+				      </div>
+				      <div class="col-sm-4">
+			             <dl class="dl-horizontal">
+			               <dt class="J_edit_area">普租业绩收入总计：</dt>
+			               <dd id="J_puzu2"></dd>
+			             </dl>
+				      </div>
+		            </div>
+		            <div class="row">
+		             <div class="col-sm-4">
+			             <dl class="dl-horizontal">
+			               <dt class="J_edit_area">一手买卖业绩扣减总计：</dt>
+			               <dd id="J_firstproj2"></dd>
+			             </dl>
+				      </div>
+				      <div class="col-sm-4">
+			             <dl class="dl-horizontal">
+			               <dt class="J_edit_area">二手买卖业绩扣减总计：</dt>
+			               <dd id="J_twoproj2"></dd>
+			             </dl>
+				      </div>
+				      <div class="col-sm-4">
+			             <dl class="dl-horizontal">
+			               <dt class="J_edit_area">普租业绩扣减总计：</dt>
+			               <dd id="J_puzuj2"></dd>
+			             </dl>
+				      </div>
+		            </div>
+		           </div>
+		           </div>
+		          <div class="ibox">
+		           <div class="ibox-title"><h5>业绩流水</h5></div>
+		           <div class="ibox-content">
+			         <table class="table table-striped table-bordered table-hover dataTables-example table-condensed"  id="J_dataTable_1">
+			            <thead>
+			                <tr>
+			                   <th data-field="createTime">产生时间</th>
+			                    <th data-field="belongMonth">收益月</th>
+			                    <th data-field="belongeName">所属人</th>
+			                    <th data-field="fullName">所属大区/区/店</th>
+			                    <th data-field="businessType">业务类型</th>
+			                    <th data-field="perfType">业绩类型</th>
+			                    <th data-field="incomeType ">收支类型</th>
+			                    <th data-field="">申请备注</th>
+			                </tr>
+			            </thead>
+			           <!--  <tbody>
+			              <tr>
+			                <td><a onclick="view()">6</a></td>
+			                <td>是</td>
+			                <td>2017-01-01</td>
+			                <td>北京我爱我家</td>
+			                <td>V2.0</td>
+			                <td>2017-01-01 08:31:00</td>
+			                <td>4</td>
+			                <td><a onclick="view2()">6</a> </td> 
+			                <td>4</td>
+			                <td>6</td> 
+			              </tr>
+			            </tbody> -->
+			          </table>
+			         </div>
+		          </div>
+	           </div>
+	         </div>
+	      </div>
+	 </div>
+	</div>
+
+<script type="text/javascript" src="$link.contextPath/resources/script/performance/myperformance/myperformanceadmin_list.js"></script>
+<script type="text/javascript" src="$link.contextPath/resources/js/department.js"></script>
+<script type="text/javascript" src="$basePath/resources/js/plugins/ztree/jquery.ztree.core.js"></script>
+<script type="text/javascript" src="$basePath/resources/js/plugins/ztree/jquery.ztree.excheck.js"></script>
+</body>
+</html>
+		        

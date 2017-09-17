@@ -1,0 +1,193 @@
+#set($plugins = ["table","chosen","laydate","autoSearch","validator"])
+<style>
+.label-num{
+    float: right;
+    margin-left: 5px;
+}
+.num{
+    display: inline-block;
+    width: 30px;
+    height: 20px;
+    padding: 2px 5px;
+    }
+</style>
+<div class="ibox">
+	<div class="ibox-title">
+		<h5>此房出租快捷登记入口</h5>
+		
+	</div>
+	<div class="ibox-content">
+	<form id="formbuytolease" name="formbuytolease" class="form-horizontal" role="form">
+		<div class="row ptb10">
+			<div class="pl10 font-bold font-blue info-tit">待补全租赁房源信息</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">装修状况:</label>
+					<div class="col-sm-7">
+						<select id="decorationStatus" name="decorateLevel"
+							class="J_chosen form-control" data-placeholder="请选择">
+							<option value="">请选择</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">装修年限:</label>
+					<div class="col-sm-7">
+						<select id="fitmentYear" name="decorateTime"
+							class="J_chosen form-control" data-placeholder="请选择">
+							<option value="">请选择</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span
+											class="text-danger">*</span>使用现状:</label>
+					<div class="col-sm-7">
+					<select id="useStatus" name="statusNow"
+							class="J_chosen form-control" data-placeholder="请选择">
+							<option value="">请选择</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">腾空时间:</label>
+					<div class="col-sm-4">
+						<select id="freetimeType" name="freetimeType"
+							class="J_chosen form-control" data-placeholder="请选择">
+							<option value="">请选择</option>
+						</select>
+					</div>
+					<div class="col-sm-3 freetime" style="display:none">
+							<input type="text" id="freetime" name="freeTime" class="form-control">
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">出租形式:</label>
+					<div class="col-sm-7">
+						<select id="rentType" name="rentMode"
+							class="J_chosen form-control" data-placeholder="请选择">
+							<option value="">请选择</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">预计租赁到期日:</label>
+					<div class="col-sm-7">
+						<input type="text" class="form-control" id="dueDate" name="planRentenddt">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row ptb10">
+			<div class="pl10 font-bold font-blue info-tit">待补全租赁房源报价及设施信息</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span
+						class="text-danger">*</span>意向租金:</label>
+					<div class="col-sm-6">
+						<input type="text" class="form-control"
+							id="price" name="price">
+
+					</div>
+					<label class="col-sm-2 control-label">元/月</label>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">押金要求:</label> <label
+						class="control-label" style="float: left">押</label>
+					<div class="col-sm-6">
+
+						<select id="cashMonthNum" name="cashMonthNum"
+							class="J_chosen form-control" data-placeholder="请选择">
+							<option value="">请选择</option>
+							<option value="0">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+						</select>
+					</div>
+					<label class="control-label">月</label>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">付款方式:</label>
+					<div class="col-sm-7">
+						<select id="payType" name="pay"
+							class="J_chosen form-control" data-placeholder="请选择">
+							<option value="">请选择</option>
+						</select>
+	
+					</div>
+					<label class="control-label">月</label>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-1 control-label"><span
+						class="text-danger">*</span>家具状况：</label>
+					<div class="col-sm-9 J_furniture" id="J_furniture" name="">
+						<div class="checkbox checkbox-primary checkbox-inline">
+							<input type="checkbox" id="checkAll-furniture" name=""
+								value="0"><label for="checkAll-furniture">所有</label>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-1 control-label"><span
+						class="text-danger">*</span>房屋设施：</label>
+					<div class="col-sm-9 J_electric" id="J_electric">
+						<div class="checkbox checkbox-primary checkbox-inline">
+							<input type="checkbox" id="checkAll-electric" name=""
+								value="0"><label for="checkAll-electric">所有</label>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-1 control-label">备注：</label>
+					<div class="col-sm-11">
+						<textarea rows="3" name="memo" id="memo" cols="100%"
+							class="form-control" maxlength="500"></textarea>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-12 text-cen">
+			<div class="form-group">
+				<button id="J_buytolease_btn" type="button" class="btn btn-success pr5">确定</button>
+			</div>
+		</div>
+		</form>
+	</div>
+</div>
+<script type="text/javascript"
+		src="$link.contextPath/resources/script/house/main/buy_to_lease.js?v=1"></script>
+		<script
+src="$link.contextPath/resources/script/house/main/validate.js"></script>

@@ -1,0 +1,603 @@
+#set($plugins = ["table","chosen","laydate","autoSearch","ztree"])
+<style>
+.table>thead>tr>th{vertical-align: middle !important;}
+.but-border{ border-bottom:1px solid #D0CDC7;}
+</style>
+<div class="ibox">
+	<div class="ibox-title">
+		<h5>转款申请单修改</h5>
+	</div>
+	<div class="ibox-content">
+		<div class="row ptb10">
+			<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>基本信息</div>
+		</div>
+		<div class="ibox float-e-margins">
+			<div class="ibox-pay">
+				<form id="J_query"  class="form-horizontal" role="form">
+					<div id="J_selectContract" class="row mb10">
+						<div class="col-md-2">
+							<div class="form-group">
+								<label class="col-sm-4 control-label">申请人：</label>
+								<input type="hidden" id="J_userid" value="">
+								<label class="col-sm-8 control-label text-left" id="J_userName"></label>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<div class="col-sm-4" style="background-color:#ddd;">
+									
+									<select id="J_Choosecontract" name="" class="J_chosen form-control" disabled="disabled" data-placeholder="请选择">
+										<option value="">请选择</option>
+										<option value="1">合同编号</option>
+										<option value="2">客户编号</option>
+									</select>
+								</div>
+								<div class="col-sm-7 ml10" id="addContractNum">
+									<div class="input-group">
+										<input type="text" id="addContractNumber" class="form-control" readonly="readonly">
+										<div class="input-group-btn" style="background-color:#ddd;">
+											<button type="button" class="btn btn-white dropdown-toggle" disabled="disabled" data-toggle="">
+												<span class="glyphicon glyphicon-search search-caret"></span>
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+				<div id="J_iboxpay_finance" class="ibox-pay form-horizontal mb20">
+				    <div class="row">
+						<div class="col-sm-4">
+							<label class="col-sm-3 control-label">合同编号：</label>
+							<div id="J_Contract_h" class="col-sm-7 control-div"></div>
+						</div>
+						<div class="col-sm-4">
+							<label class="col-sm-3 control-label">合同类型：</label>
+							<div id="J_typecontract_h" class="col-sm-7 control-div"></div>
+						</div>
+						<div class="col-sm-4">
+							<label class="col-sm-3 control-label">房源编号：</label>
+							<div id="J_houseId_h" class="col-sm-7 control-div"></div>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-sm-4">
+							<label class="col-sm-3 control-label">客户编号：</label>
+							<div id="J_clientId_h" class="col-sm-7 control-div"></div>
+						</div>
+						<div class="col-sm-4">
+							<label class="col-sm-3 control-label">业主姓名：</label>
+							<div id="J_ownerName_h" class="col-sm-7 control-div"></div>
+						</div>
+						<div class="col-sm-4">
+							<label class="col-sm-3 control-label">客户姓名：</label>
+							<div id="J_clientName_h" class="col-sm-7 control-div"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="J_iboxpay" class="ibox-pay form-horizontal mb20">
+			    <div class="row">
+					<div class="col-sm-4">
+						<label class="col-sm-3 control-label">客户编号：</label>
+						<div id="J_clientId" class="col-sm-7 control-div"></div>
+					</div>
+					<div class="col-sm-4">
+						<label class="col-sm-3 control-label">客户姓名：</label>
+						<div id="J_clientname" class="col-sm-7 control-div"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="ibox float-e-margins">
+			<div class="row ptb10">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>收据信息</div>
+			</div>
+	  		<div class="row row-lg">
+				<div class="col-sm-12 ptb10">
+					<table id="J_refunds_dataTable" class="table table-hover table-striped table table-bordered tables table-condensed">
+						<thead>
+							<tr>
+								<th data-field="check"><input id="J_checkall"  name='btSelectAll' type='checkbox'/></th>
+								<th data-field="a">收款批次号</th>
+								<th data-field="b">收据编号</th>
+								<th data-field="c">付款方</th>
+								<th data-field="d">收款单位</th>
+								<th data-field="e">款项</th>
+								<th data-field="f">收据金额</th>
+								<th data-field="g">转款金额</th>
+								<th data-field="h">发票编号</th>
+								<th data-field="k">收据打印张数</th>
+								<th data-field="l">收据回收张数</th>
+								<th data-field="m">回收差异原因</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-12 ptb10 text-right" style=" margin-bottom:20px;" >待退款总金额：<span id="J_paymentmoeny">0.00</span>元</div>
+		<div class="ibox float-e-margins">
+			<div class="row ptb10">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>付款信息</div>
+			</div>
+			<form id="J_query"  class="form-horizontal" role="form">		
+		  		<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">付款方式:</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" id="J_content" name="content" readonly="" placeholder="退款转出">
+							</div>
+						</div>
+					</div>	
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="col-sm-4 control-label"><span class="color_red">*</span>转入新合同编号:</label>
+							<div class="col-sm-8" id="addContractNumnews">
+								<div class="input-group">
+									<input type="text" id="addContractNumbernews" class="form-control" readonly="readonly" style="background-color:#fff;" autocomplete="off">
+									<div class="input-group-btn">
+										<button type="button" class="btn btn-white dropdown-toggle"
+											data-toggle="">
+											<span class="glyphicon glyphicon-search search-caret"></span>
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>	
+				</div>
+			</form>
+		</div>
+		<div class="ibox float-e-margins">
+			<div class="row ptb10">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>差额收据列表</div>
+			</div>
+	  		<div class="row row-lg">
+				<div class="col-sm-12 ptb10">
+					<table id="J_gapReceiptList_dataTable" class="table table-hover table-striped table table-bordered tables table-condensed">
+						<thead>
+							<tr>
+								<th data-field="a">新收据编号</th>
+								<th data-field="b">生成时间</th>
+								<th data-field="c">收款批次号</th>
+								<th data-field="d">原收据编号</th>
+								<th data-field="e">发票编号</th>
+								<th data-field="f">付款方</th>
+								<th data-field="g">收款单位</th>
+								<th data-field="h">款项</th>
+								<th data-field="k">收据金额</th>
+								<th data-field="l">开票状态</th>
+								<th data-field="m">打印状态</th>
+								<th data-field="n">是否回收</th>
+								<th data-field="o">收据打印张数</th>
+								<th data-field="p">收据回收张数</th>
+								<th data-field="q">回收差异原因</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+			</div>
+		</div>	
+		<div id="J_annex" class="ibox float-e-margins" style="display:none">
+			<div class="row ptb10">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>附件信息   《附件标准说明》</div>
+			</div>
+			<div class="col-md-12 text-right mb20">
+				<button id="addAttachment" type="button" class="btn btn-success btn-sm">上传附件</button>
+			</div>
+			<div class="row row-lg">
+				<div class="col-sm-12" id="J_Attachmentupload_dataTable">
+					<table id="J_list_dataTable" class="table table-hover table-striped table table-bordered tables table-condensed">
+						<thead>
+							<tr>
+								<th data-field="a">序号</th>
+								<th data-field="b">附件大类</th>
+								<th data-field="c">附件小类</th>
+								<th data-field="d">上传日期</th>
+								<th data-field="e">操作</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 mb20">
+				<div class="form-group">
+					<label class="col-sm-1 control-label text-right" style="padding-right:10px;">付款原因:</label>
+					<div class="col-sm-10">
+						<textarea type="text" id="J_applyadd" name="remarks" class="form-control" style="min-height:150px !important;max-height:150px !important;" maxlength="500"></textarea>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 mb20">
+				<div class="form-group">
+					<div class="col-sm-8  col-sm-offset-5">
+						<button id="J_paymentbutton" type="button" class="btn btn-success btn_size">提 交</button>
+						<button id="J_reset" type="reset" class="btn btn-white btn_size">取 消</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--star选择合同-->
+<div class="ibox" id="choiceHetong" style="display:none;">
+	<div class="ibox-content">	
+		<form id="J_contractQuery" class="form-horizontal" role="form">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">合同编号：</label>
+						<div class="col-sm-8">
+							<input name="contract_code" type="text" class="form-control">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">合同类型：</label>
+						<div class="col-sm-8">
+							<select name="contract_type" id="businesstype" class="J_chosen form-control">
+								<option value="">全部</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">业主姓名：</label>
+						<div class="col-sm-8">
+							<input type="text" name="owner_name" class="form-control">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">客户姓名：</label>
+						<div class="col-sm-8">
+							<input type="text" name="customer_name" class="form-control">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">收据编号：</label>
+						<div class="col-sm-8">
+							<input type="text" name="customer_code" class="form-control">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">发票编号：</label>
+						<div class="col-sm-8">
+							<input type="text" name="customer_code" class="form-control">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">客户编号：</label>
+						<div class="col-sm-8">
+							<input type="text" name="customer_code" class="form-control">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row ptbottom10">
+				<div class="col-md-12">
+					<div class="form-group">
+						<div class="col-sm-5  col-sm-offset-5">
+	                        <button id="J_searchcontract" type="button" class="btn btn-success btn_size">查 询</button>
+	                        <button id="J_reset" type="reset" class="btn btn-white btn_size">重 置</button>
+	                    </div>
+					</div>
+				</div>
+			</div>
+		</form>
+		<div id="hetConten"></div>
+	</div>
+</div>
+<!--end选择合同-->
+
+<!--star选择新转入合同-->
+<div class="ibox" id="choiceHetongnews" style="display:none;">
+	<div class="ibox-content">	
+		<form id="J_contractQuerynews" class="form-horizontal" role="form">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">合同编号：</label>
+						<div class="col-sm-8">
+							<input name="contract_code" type="text" class="form-control">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">合同类型：</label>
+						<div class="col-sm-8">
+							<select name="contract_type" id="businesstype" class="J_chosen form-control">
+								<option value="">全部</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">业主姓名：</label>
+						<div class="col-sm-8">
+							<input type="text" name="owner_name" class="form-control">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">客户姓名：</label>
+						<div class="col-sm-8">
+							<input type="text" name="customer_name" class="form-control">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">收据编号：</label>
+						<div class="col-sm-8">
+							<input type="text" name="customer_code" class="form-control">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">发票编号：</label>
+						<div class="col-sm-8">
+							<input type="text" name="customer_code" class="form-control">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">客户编号：</label>
+						<div class="col-sm-8">
+							<input type="text" name="customer_code" class="form-control">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row ptbottom10">
+				<div class="col-md-12">
+					<div class="form-group">
+						<div class="col-sm-5  col-sm-offset-5">
+	                        <button id="J_searchcontractnews" type="button" class="btn btn-success btn_size">查 询</button>
+	                        <button id="J_reset" type="reset" class="btn btn-white btn_size">重 置</button>
+	                    </div>
+					</div>
+				</div>
+			</div>
+		</form>
+		<div id="hetContennews"></div>
+	</div>
+</div>
+<!--end选择新转入合同-->
+
+<!--star选择客户-->
+<div class="ibox" id="choicekehu" style="display:none;">
+	<div class="ibox-content">	
+		<form id="J_clientQuery" class="form-horizontal" role="form">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">客户姓名：</label>
+						<div class="col-sm-8">
+							<input name="contract_code" type="text" class="form-control">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">客户编号：</label>
+						<div class="col-sm-8">
+							<input name="contract_code" type="text" class="form-control">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row ptbottom10">
+				<div class="col-md-12">
+					<div class="form-group">
+						<div class="col-sm-5  col-sm-offset-5">
+	                        <button id="J_searchclient" type="button" class="btn btn-success btn_size">查 询</button>
+	                        <button id="J_reset" type="reset" class="btn btn-white btn_size">重 置</button>
+	                    </div>
+					</div>
+				</div>
+			</div>
+		</form>
+		<div id="kehuConten"></div>
+	</div>
+</div>
+<!--end选择客户-->
+<!-- 上传附件 str -->
+<div class="ibox-content" id="attachmentCon" style="display:none;">	
+	<form id="" class="form-horizontal" role="form">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">业务类型：</label>
+					<label class="col-sm-8 control-label text-left" id="J_businessType"></label>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">款项：</label>
+					<label class="col-sm-8 control-label text-left" id="J_Paymenttext"></label>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span style="color:#ff0000">*</span>附件大类：</label>
+					<div class="col-sm-8">
+						<select name="" id="J_attachmentType" class="J_chosen form-control">
+							<option value="">请选择</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span style="color:#ff0000">*</span>附件小类：</label>
+					<div class="col-sm-8">
+						<select name="" id="J_smallattachmentType" class="J_chosen form-control">
+							<option value="">请选择</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12" style=" margin-bottom:20px;">
+				<label class="col-sm-1 control-label" style="margin-left:33px; color:#FF0000;">注意：</label>
+				<div class="col-sm-9">
+					<label class="control-label text-left" id="" style="color:#FF0000; font-weight:normal;">
+						<span style="font-weight:bold" id="J_categoryName"></span><br><br>
+						<span id="J_remarktext"></span>
+					</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-1"></div>
+				<div class="col-sm-8" id="">
+					<button id="selectFile" type="button" class="btn btn-success btn_size">选择文件</button>
+				</div>
+				<div id="fileHidden" style="position:absolute;visibility:hidden;">
+					<input type="file" id="upFile" />
+				</div>
+			</div>
+			</div>
+			<div class="row"><span style="color:#ff0000">*</span>已上传的文件：</div>
+			<div class="row" style="height: 355px;margin:10px 0;border: 2px solid #eee;border-radius: 5px;overflow:auto;" id="upFileName"></div>
+		</div>
+	</form>
+</div>
+<!-- 上传附件 end -->
+
+<!-- 预览附件 str -->
+<div class="ibox-content" id="J_attachmentCon" style="display:none;">	
+	<form id="" class="form-horizontal" role="form">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">业务类型：</label>
+					<label class="col-sm-8 control-label text-left" id="J_businesstype"></label>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">款项：</label>
+					<label class="col-sm-8 control-label text-left" id="J_Paymenttextval"></label>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span style="color:#ff0000">*</span>附件大类：</label>
+					<label class="col-sm-8 control-label text-left" id="J_bigger"></label>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span style="color:#ff0000">*</span>附件小类：</label>
+					<label class="col-sm-8 control-label text-left" id="J_small"></label>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12" style=" margin-bottom:20px;">
+				<label class="col-sm-1 control-label" style="margin-left:33px; color:#FF0000;">注意：</label>
+				<div class="col-sm-9">
+					<label class="control-label text-left" id="" style="color:#FF0000; font-weight:normal;">
+						<span style="font-weight:bold" id="J_titleName"></span><br><br>
+						<span id="J_valremark"></span>
+					</label>
+				</div>
+			</div>
+			</div>
+			<div class="row"><span style="color:#ff0000">*</span>已上传的文件：</div>
+			<div class="row" style="height: 355px;margin:10px 0;border: 2px solid #eee;border-radius: 5px;overflow:auto;" id="J_upFileName"></div>
+		</div>
+	</form>
+</div>
+<!-- 预览附件 end -->
+
+<!-- 预览附件 获取接口数据  str-->
+<div class="ibox-content" id="J_objattachmentCon" style="display:none;">	
+	<form id="" class="form-horizontal" role="form">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">业务类型：</label>
+					<label class="col-sm-8 control-label text-left" id="J_objbusinesstype"></label>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">款项：</label>
+					<label class="col-sm-8 control-label text-left" id="J_objPaymenttextval"></label>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span style="color:#ff0000">*</span>附件大类：</label>
+					<label class="col-sm-8 control-label text-left" id="J_objbigger"></label>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span style="color:#ff0000">*</span>附件小类：</label>
+					<label class="col-sm-8 control-label text-left" id="J_objsmall"></label>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12" style=" margin-bottom:20px;">
+				<label class="col-sm-1 control-label" style="margin-left:33px; color:#FF0000;">注意：</label>
+				<div class="col-sm-9">
+					<label class="control-label text-left" id="" style="color:#FF0000; font-weight:normal;">
+						<span style="font-weight:bold" id="J_objtitleName"></span><br><br>
+						<span id="J_objvalremark"></span>
+					</label>
+				</div>
+			</div>
+			</div>
+			<div class="row"><span style="color:#ff0000">*</span>已上传的文件：</div>
+			<div class="row" style="height: 355px;margin:10px 0;border: 2px solid #eee;border-radius: 5px;overflow:auto;" id="J_objupFileName"></div>
+		</div>
+	</form>
+</div>
+<!-- 预览附件 获取接口数据 end -->
+
+<script src="$link.contextPath/resources/script/finance/payment/apply/paymentedit.js"></script>
+<script type="text/javascript" src="$link.contextPath/resources/js/department.js"></script>

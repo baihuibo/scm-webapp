@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<data>
+	<savepath>
+		<img>
+			<!--生成图片程序路径-->
+			<![CDATA[/house/inquisition/saveImage.html]]>
+		</img>
+		<source>
+			<!--生成可编辑源文件所用程序路径-->
+			<![CDATA[/house/inquisition/saveNotImage.html]]>
+		</source>
+	</savepath>
+	<open3Dpath>
+		<!--打开3D源文件程序路径-->
+		<![CDATA[/house/inquisition/openImagesDir.html]]>
+	</open3Dpath>
+	<xmlpath>
+		<!--打开源文件程序路径-->
+		<![CDATA[/house/inquisition/openImagesDir.html]]>
+	</xmlpath>
+	<bgcolor>
+		<!--3D视图背景色-->
+		<![CDATA[0x807ffe]]>
+	</bgcolor>
+	<furniturecolor>
+		<!--3D视图家具颜色-->
+		<![CDATA[0xEEEEEE,0xEEEEEE,0xEEEEEE,0xEEEEEE,0xEEEEEE,0xEEEEEE,0xEEEEEE,0xEEEEEE,0xEEEEEE,0xEEEEEE,0xEEEEEE,0xEEEEEE,0xEEEEEE,0xEEEEEE,0xEEEEEE,0xEEEEEE,0xEEEEEE,0xEEEEEE,0xEEEEEE]]>
+	</furniturecolor>
+	<canshu>
+		<!--这是需要你接收并传给我的变量名列表-->
+		<name>SectionId</name>
+		<name>UserId</name>
+		<name>FileName</name>
+		<name>CompId</name>
+		<name>HousesId</name>
+	</canshu>
+</data>

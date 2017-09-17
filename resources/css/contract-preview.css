@@ -1,0 +1,127 @@
+/**
+    租赁合同预览样式！！！！勿动
+ */
+
+.preview * {
+    font-family: SimSun, "Times New Roman";
+    line-height: 200%;
+}
+
+.preview .underline_ath {
+    border-bottom: solid 1px #000;
+}
+
+.preview .plr_ath {
+    padding-left: 5px;
+    padding-right: 25px;
+}
+
+.preview .cover_ath h3.fr, .preview .main_ath h3.fr {
+    text-align: right;
+}
+
+.preview h1 span.notes_ath {
+    font-size: 26px;
+}
+
+.preview h4 span.notes_ath {
+    font-size: 18px;
+}
+
+.preview .main_ath, .preview .enclosure_ath {
+    font-size: 16px;
+}
+
+.preview h3 {
+    font-size: 22px;
+}
+
+.preview h4 {
+    font-size: 20px;
+}
+
+.preview ul li {
+    list-style: none;
+    text-align: left;
+}
+
+.preview ul.both_info li.info_01 {
+    text-align: center;
+}
+
+.preview ul.both_info li {
+    list-style: none;
+}
+
+.preview ul.content li {
+    text-indent: 32px;
+}
+
+.preview .str_ath {
+    font-weight: bold;
+}
+
+.preview .f14_ath {
+    font-size: 18px;
+}
+
+.preview .center_ath {
+    text-align: center;
+}
+
+.preview .seal_ath {
+    width: 45%;
+    display: inline-block;
+}
+
+.preview table {
+    width: 100%;
+}
+
+.preview .tableborder {
+    border: 1px solid black;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.preview .tableborder td, .preview .tableborder th {
+    text-align: center;
+    border: 1px solid black;
+}
+
+.preview .w200 {
+    width: 200px;
+    display: inline-block;
+}
+
+.preview .w500 {
+    width: 40%;
+    display: inline-block;
+}
+
+.preview .clearfloat:after {
+    display: block;
+    clear: both;
+    content: "";
+    visibility: hidden;
+    height: 0
+}
+
+.preview .checkbox-mini {
+    width: 12px;
+    height: 12px;
+    vertical-align: middle;
+    display: inline-block;
+    border: 1px solid #333;
+    position: relative;
+}
+
+.preview .checkbox-mini[checked-value="true"]:after,
+.preview .checkbox-mini[checked-value="1"]:after {
+    content: "√";
+    display: block;
+    font-weight: bold;
+    position: absolute;
+    left: -32px;
+    top: -10px;
+}

@@ -1,0 +1,215 @@
+<!-- 录入收据 -->
+<div class="panel-body">
+	<div class="ibox-content">
+		<div class="pl10 font-bold font-blue info-tit">
+			<i class="glyphicon glyphicon-minus"></i>录入收据
+		</div>
+		<div class="row">
+			<a class="btn btn-success pr5 m-t-sm" ng-click="$ctrl.addreceipt()">添加收据</a>	
+		</div>
+		<div class="row row-lg">
+			<div class="col-sm-12">
+				<div class="example-wrap ptb10">
+					<table id="J_receiptdataTable" class="table table-hover table-striped table-condensed" 
+						data-query-params="queryParams" data-mobile-responsive="true" 
+						data-pagination="true" data-icon-size="outline"
+						data-striped="true" data-search="false">
+						<thead>
+							<tr>
+								<!-- <th data-field="">收据编号</th> -->
+								<th data-field="">收款计划来源</th>
+								<th data-field="">合同编号</th>
+								<th data-field="">客户编号</th>
+								<th data-field="">款项</th>
+								<th data-field="">金额</th>
+								<th data-field="">付款方</th>
+								<th data-field="">付款单位/个人</th>
+								<th data-field="">收款单位</th>
+								<!-- <th data-field="">录入时间</th>
+								<th data-field="">开具日期</th> -->
+								<th data-field="">操作</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="item in $ctrl.receiptList">
+								<td ng-if="item.collectionSource==1">租赁合同</td>
+								<td ng-if="item.collectionSource==2">买卖合同</td>
+								<td ng-if="item.collectionSource==3">买卖意向</td>
+								<td>{{item.contractCode}}</td>
+								<td>{{item.refundId}}</td>
+								<td>{{item.fundName}}</td>
+								<td>{{item.amount}}</td>
+								<td ng-if="item.payer==1">客户</td>
+								<td ng-if="item.payer==2">业主</td>
+								<td>{{item.payerName}}</td>
+								<!-- <td>{{item.payee}}</td> -->
+								<td ng-if="item.payee==1">我爱我家</td>
+								<td ng-if="item.payee==2">伟嘉安捷</td>
+								<td> 
+									<a class="btn btn-xs btn-success btn-outline" ng-if="item.printCount==0 || item.printCount==undefined" ng-click="$ctrl.modifyReceipt(item , $index)">修改</a>
+									<a class="btn btn-xs btn-danger btn-outline" ng-if="item.printCount!==0 && item.printCount!==undefined" ng-click="$ctrl.returnReceipt(item , $index)">回收</a>
+									<a class="btn btn-xs btn-danger btn-outline" ng-if="item.printCount==0 || item.printCount==undefined" ng-click="$ctrl.removeReceipt(item , $index)">删除</a>
+								 </td>
+							</tr>
+						</tbody>
+					</table>
+					<div style="text-align:right;">收据总金额：{{$ctrl.sjzje}}</div>
+				</div>
+			</div>
+		</div>		
+		<div class="pl10 font-bold font-blue info-tit">
+			<i class="glyphicon glyphicon-minus"></i>回收收据
+		</div>
+		<div class="row row-lg">
+			<div class="col-sm-12">
+				<div class="example-wrap ptb10">
+					<table id="J_receiptReturndataTable" class="table table-hover table-striped table-condensed" 
+						data-query-params="queryParams" data-mobile-responsive="true" 
+						data-pagination="true" data-icon-size="outline"
+						data-striped="true" data-search="false">
+						<thead>
+							<tr>
+								<th data-field="">收据编号</th>								
+								<th data-field="">合同编号</th>
+								<th data-field="">客户编号</th>
+								<th data-field="">款项</th>
+								<th data-field="">金额</th>								
+								<th data-field="">付款单位/个人</th>
+								
+								<th data-field="">录入日期</th>
+								<th data-field="">回收状态</th>
+								<th data-field="">打印张数</th>
+								<th data-field="">回收张数</th>
+								<th data-field="">差异原因</th>
+								<th data-field="">操作</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="item in $ctrl.receiptReturnList">
+								<td>{{item.receiptCode}}</td>
+								<td>{{item.contractCode}}</td>
+								<td>{{item.refundId}}</td>
+								<td>{{item.fundName}}</td>
+								<td>{{item.amount}}</td>								
+								<td>{{item.payerName}}</td>
+								
+								<td>{{item.createTime}}</td>
+								<td>{{item.recycleStatusStr}}</td>
+								<td>{{item.printCount}}</td>
+								
+								<td><input type="text" ng-model="item.recycleCount"/></td>
+								<td><input type="text" ng-model="item.differentReason"/></td>
+								<td>
+									<a class="btn btn-xs btn-danger btn-outline" ng-click="$ctrl.removeReturnReceipt(item , $index)">删除</a>
+								 </td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>		
+	</div>
+	<div class="row">
+			<div class="col-md-12 text-cen">
+				<div class="form-group">
+					<button type="button" class="btn btn-success btn_size J_submit" ng-click="$ctrl.tab(2)">提交审批</button>
+					<!-- <button type="button" class="btn btn-success btn_size J_next">下一步</button> -->
+				</div>
+			</div>
+		</div>
+</div>
+
+
+
+<!-- 收据编辑 -->
+<!-- <div id="receipt_layer" class="ibox-content" style="display: none">
+	<form class="form-horizontal" role="form" id="J_receiptform">
+		<div cass="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>收据编号：</label>
+					<div class="col-sm-8">	
+						<input type="text" class="form-control" name="" id="" readonly>					
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>收款来源：</label>
+					<div class="col-sm-8">	
+						<select id="" name="" class="J_chosen form-control" data-placeholder="请选择">
+							<option value="1">买卖客源</option>
+							<option value="2">租赁合同</option>
+							<option value="3">买卖合同</option>
+						</select>							
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>客源编号：</label>
+					<div class="col-sm-8">	
+						<input type="text" class="form-control" name="" id="" readonly>					
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>合同编号：</label>
+					<div class="col-sm-8">	
+						<input type="text" class="form-control" name="" id="" readonly>					
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>款项名称：</label>
+					<div class="col-sm-8">	
+						<input type="text" class="form-control" name="" id="">					
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>收款单位：</label>
+					<div class="col-sm-8">	
+						<input type="text" class="form-control" name="" id="" readonly>					
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>付款方：</label>
+					<div class="col-sm-8">	
+						<select id="" name="" class="J_chosen form-control" data-placeholder="请选择">
+							<option value="1">客户</option>
+							<option value="2">业主</option>
+						</select>							
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>付款单位/个人：</label>
+					<div class="col-sm-8">	
+						<input type="text" class="form-control" name="" id="">					
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>金额：</label>
+					<div class="col-sm-8">	
+						<input type="text" class="form-control" name="" id="">					
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div> -->

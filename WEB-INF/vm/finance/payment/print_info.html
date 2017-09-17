@@ -1,0 +1,145 @@
+<style>
+	.table-striped>tbody>tr{background-color:#f9f9f9;}
+	#cashPayment td,#counter td{padding:5px;}
+</style>
+<!--付款单打印信息页-->
+<button id="printBtn" type="button" class="btn btn-success pr5" style="float:right;margin-bottom:10px;">打印</button>
+<div id="printTemplate">
+<div class="tab-content" id="page1">
+	<table class="table table-border table-striped table-bgcolor" id="cashPayment" data-query-params="queryParams" data-mobile-responsive="true" data-pagination="true" data-icon-size="outline" data-striped="true" data-search="false">
+		<tbody>
+			<tr style="height:40px;">
+				<td colspan="8" style="border:1px solid #000;font-size:16px;">业务付款申请单<span style="position:absolute;right:25px;font-size:12px;font-weight:normal;" id="PayNumber"></span></td>
+			</tr>
+			<tr style="height:40px;">
+				<td style="width:12.5%;border:1px solid #000;">房源编号</td>
+				<td style="width:12.5%;border:1px solid #000;" id="housId"></td>
+				<td style="width:12.5%;border:1px solid #000;">付款申请单编号</td>
+				<td style="width:12.5%;border:1px solid #000;" id="payApplyNumber"></td>
+				<td style="width:12.5%;border:1px solid #000;">区/组团/店组编号</td>
+				<td style="width:12.5%;border:1px solid #000;" id="storefrontNum"></td>
+				<td style="width:12.5%;border:1px solid #000;">店组名称</td>
+				<td style="width:12.5%;border:1px solid #000;" id="storefrontName"border:1px solid #000;></td>
+			</tr>
+			<tr style="height:40px;">
+				<td style="border:1px solid #000;">合同编号</td>
+				<td colspan="3" id="contNumber" style="border:1px solid #000;"></td>
+				<td style="border:1px solid #000;">客户姓名</td>
+				<td id="customerName" style="border:1px solid #000;"></td>
+				<td style="border:1px solid #000;">业主姓名</td>
+				<td id="ownerName" style="border:1px solid #000;"></td>
+			</tr>
+			<tr style="height:40px;">
+				<td style="border:1px solid #000;">业务类型</td>
+				<td colspan="3" style="border:1px solid #000;" id="businessType"></td>
+				<td style="border:1px solid #000;">款项名称</td>
+				<td colspan="3" style="border:1px solid #000;" id="moneyName"></td>
+			</tr>
+			<tr style="height:40px;">
+				<td style="border:1px solid #000;">付款方式</td>
+				<td colspan="7" style="border:1px solid #000;" id="paymentMethod"></td>
+			</tr>
+			<tr style="height:40px;">
+				<td colspan="2" style="border:1px solid #000;">转账：开户行具体省市信息</td>
+				<td colspan="2" style="border:1px solid #000;" id="bankAddress"></td>
+				<td style="border:1px solid #000;">收款人账号</td>
+				<td style="border:1px solid #000;" id="beneficiary"></td>
+				<td style="border:1px solid #000;">收款人名称</td>
+				<td style="border:1px solid #000;" id="beneName"></td>
+			</tr>
+			<tr style="height:40px;">
+				<td colspan="2" style="border:1px solid #000;">支票：收款单位名称：</td>
+				<td colspan="6" style="border:1px solid #000;" id="unitName"></td>
+			</tr>
+			<tr style="height:40px;">
+				<td colspan="2" style="border:1px solid #000;">申请付款金额（小写）</td>
+				<td colspan="6" style="border:1px solid #000;" id="amountLower"></td>
+			</tr>
+			<tr style="height:40px;">
+				<td colspan="2" style="border:1px solid #000;">申请付款金额（大写）</td>
+				<td colspan="6" style="border:1px solid #000;" id="amountCapital"></td>
+			</tr>
+			<tr style="height:40px;">
+				<td colspan="6" style="border:1px solid #000;border-right: none;text-align: left;" id="finanAuditor">财务审核人：</td>
+				<td colspan="2" style="border:1px solid #000;border-left: none;text-align: left;" id="drawee">付款人：</td>
+			</tr>
+			<tr style="height:40px;">
+				<td colspan="8" style="border:1px solid #000;text-align:left;" id="payee">收款人：</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div id="CounInform" style=" margin-top:40px;display:none">
+	<table class="table table-border table-striped table-bgcolor" id="returnCost" data-query-params="queryParams" data-mobile-responsive="true" data-pagination="true" data-icon-size="outline" data-striped="true" data-search="false">
+		<tbody id="counter">
+			<tr style="height:40px;">
+				<td colspan="6" style="border:1px solid #000;font-size:16px;">买卖普租业务报销（支持）凭单<span style="position:absolute;right:25px;font-size:12px;font-weight:normal;">付款单号$num$</span></td>
+			</tr>
+			<tr style="height:40px;">
+				<td colspan="6" style="border:1px solid #000;text-align: right;padding-right: 10px;" id="pdDate"></td>
+			</tr>
+			<tr style="height:40px;">
+				<td style="width:12.5%;border:1px solid #000;">合同编号</td>
+				<td style="width:12.5%;border:1px solid #000;">$htbh$</td>
+				<td style="width:12.5%;border:1px solid #000;">业主姓名</td>
+				<td style="width:12.5%;border:1px solid #000;">$yzxm$</td>
+				<td style="width:12.5%;border:1px solid #000;">客户姓名</td>
+				<td style="width:12.5%;border:1px solid #000;">$khxm$</td>
+			</tr>
+			<tr style="height:40px;">
+				<td style="border:1px solid #000;">摘要（申请内容）</td>
+				<td style="border:1px solid #000;">发票张数</td>
+				<td colspan="4" style="border:1px solid #000;">发票金额</td>
+			</tr>
+			<tr id="fap"></tr>
+			<tr style="height:40px;">
+				<td style="border:1px solid #000;">合计张数</td>
+				<td style="border:1px solid #000;">$hjzs$</td>
+				<td style="border:1px solid #000;">付款方式</td>
+				<td style="border:1px solid #000;">$fkfs$</td>
+				<td style="border:1px solid #000;">金额合计</td>
+				<td style="border:1px solid #000;">$jehj$</td>
+			</tr>
+			<tr style="height:40px;">
+				<td colspan="6" style="border:1px solid #000;text-align:left;">申请付款金额（大写）：$dx$</td>
+			</tr>
+			<tr>
+				<td style="border:1px solid #000;">区域名称</td>
+				<td style="border:1px solid #000;">$qymc$</td>
+				<td style="border:1px solid #000;">组团名称</td>
+				<td style="border:1px solid #000;">$ztmc$</td>
+				<td style="border:1px solid #000;">店组名称</td>
+				<td style="border:1px solid #000;">$dzmc$</td>
+			</tr>
+			<tr>
+				<td style="border:1px solid #000;">编码</td>
+				<td style="border:1px solid #000;">$qybm$</td>
+				<td style="border:1px solid #000;">编码</td>
+				<td style="border:1px solid #000;">$ztbm$</td>
+				<td style="border:1px solid #000;">编码</td>
+				<td style="border:1px solid #000;">$dzbm$</td>
+			</tr>
+			<tr>
+				<td style="border:1px solid #000;">转账：开户行具体省市信息</td>
+				<td style="border:1px solid #000;">$khss$</td>
+				<td style="border:1px solid #000;">收款人账号</td>
+				<td style="border:1px solid #000;">$skzh$</td>
+				<td style="border:1px solid #000;">收款人名称</td>
+				<td style="border:1px solid #000;">$skmc$</td>
+			</tr>
+			<tr>
+				<td colspan="6" style="border:1px solid #000;text-align:left;">支票：收款单位名称:$zpsk$</td>
+			</tr>
+			<tr style="height:40px;">
+				<td colspan="4" style="border:1px solid #000;border-right: none;text-align: left;" id="finanAuditor">财务审核人：$cwsqr$</td>
+				<td colspan="2" style="border:1px solid #000;border-left: none;text-align: left;" id="drawee">付款人：$fkr$</td>
+			</tr>
+			<tr style="height:40px;">
+				<td colspan="6" style="border:1px solid #000;text-align:left;" id="payee">收款人：$skr$</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+</div>
+<script src="$link.contextPath/resources/js/pdfobject.js"></script>
+<script src="$link.contextPath/resources/script/finance/payment/print_info.js"></script>

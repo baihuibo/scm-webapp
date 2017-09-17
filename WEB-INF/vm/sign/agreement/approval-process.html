@@ -1,0 +1,54 @@
+<div class="ibox float-e-margins">
+    <div class="ibox-title"><h5>审批流程</h5></div>
+    <div class="ibox-content">
+        <!-- 审批流程图 -->
+        <iframe
+                ng-if="$ctrl.detailObj.audit_status_num > 1 && $ctrl.detailObj.audit_status_num < 5"
+                force-src="$ctrl.ApprovaMapHref" frameborder="0"
+                style="width: 100%; height: 560px;"></iframe>
+
+        <div class="row row-lg" ng-repeat="ApprovalList in $ctrl.contractApprovalList">
+            <div class="col-sm-12">
+                <!-- Example Pagination -->
+                <div class="example-wrap ptb10">
+                    <p></p>
+                    <table class="table table-hover table-striped table-bordered">
+                        <thead>
+                        <tr>
+                            <th style="width: 100px;">流程序号</th>
+                            <th style="width: 100px;">合同类型</th>
+                            <th>审批部门</th>
+                            <th style="width: 150px;">角色</th>
+                            <th style="width: 100px;">审批人</th>
+                            <th style="width: 150px;">审批时间</th>
+                            <th style="width: 100px;">审批结果</th>
+                            <th style="width: 200px;">审批意见</th>
+                            <th style="width: 100px;">审批持续时间</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="item in ApprovalList">
+                            <td>{{$index + 1}}</td>
+                            <td>{{item.type}}</td>
+                            <td>{{item.deptName}}</td>
+                            <td>{{item.roleName}}</td>
+                            <td>{{item.assignee}}</td>
+                            <td>{{item.endTime}}</td>
+                            <td>{{item.statusDesc}}</td>
+                            <td>
+                                <span ng-if="item.status.length < 15">{{item.status}}</span>
+                                <show-text text="item.status"
+                                           ng-if="item.status.length >= 15">
+                                    查看审批意见
+                                </show-text>
+                            </td>
+                            <td>{{item.lastTime}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- End Example Pagination -->
+            </div>
+        </div>
+    </div>
+</div>

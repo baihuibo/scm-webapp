@@ -1,0 +1,183 @@
+#set($plugins = ["table","chosen","laydate","linkage","autoSearch","ztree"])
+<style>
+	ul,li{margin:0;padding:0;}
+	/*.chosen-container .chosen-results{max-height:60px;}*/
+	#documentEntry > li > a:hover,#documentEntry > li > a:hover{background:#EBEBEB;}
+	.imgFile{position:absolute;width:110px;height:30px;left:332px;top:10px;cursor:pointer;opacity:0;}
+	.upFileName{max-height:600px;height:300px;border:3px solid #e9e7e7;border-radius:6px;overflow-y:auto;}
+</style>
+<!--委托书查询-->
+	<div class="ibox">
+	<div class="ibox-title">
+		<h5>委托书管理</h5>
+		<div class="ibox-tools">
+			<a class="collapse-link ui-sortable"> <i class="fa fa-chevron-up"></i>
+			</a>
+		</div>
+	</div>
+	<div class="ibox-content">	
+		<form id="J_seeQuery" class="form-horizontal" role="form">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">房源编号：</label>
+						<div class="col-sm-8">
+							<input name="houseid" type="text" class="form-control">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">业务类型：</label>
+						<div class="col-sm-8">
+							<select name="businesstype" id="businesstype" class="J_chosen form-control">
+								<option value="">全部</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">委托书编号：</label>
+						<div class="col-sm-8">
+							<input type="text" name="proxynum" class="form-control">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+					
+						<label class="col-sm-4 control-label">签委托部门：</label>
+						<div class="col-sm-8">
+							<input id="J_deptLevel" type="hidden" class="form-control" value="">
+							<div class="input-group">
+								<input id="J_deptName" type="text" data-id="" class="form-control radius-3 float-l" autocomplete="off">
+								<div class="input-group-btn">
+									<button id="J_deptSelect" data-toggle="dropdown" class="btn dropdown-toggle btn-dept float-l" type="button"><span class="caret"></span>
+	                            	</button>
+	                            </div>
+							</div>
+						</div>
+					</div>
+					
+						<!--<label class="col-sm-4 control-label">签委托部门：</label>
+						<div class="col-sm-8">
+							<input type="text" name="shopid" class="form-control">
+						</div>-->
+					</div>
+				<div class="col-md-4">
+					<div class="form-group">
+					
+					<label class="col-sm-4 control-label">签委托人：</label>
+						<div class="col-sm-8">
+							<div class="input-group">
+								<input type="text" class="form-control" data-id="" id="J_user" autocomplete="off" name="userid">
+								<div class="input-group-btn">
+									<button type="button" class="btn btn-white dropdown-toggle"
+										data-toggle="">
+										<span class="glyphicon glyphicon-search search-caret"></span>
+									</button>
+									<ul class="dropdown-menu dropdown-menu-left" role="menu" style="padding-top: 0px; max-height: 375px; max-width: 800px; overflow: auto; width: auto; transition: 0.3s; left: -110px; right: auto; min-width: 145px;">
+									</ul>
+								</div>
+							</div>
+						</div>
+					
+					
+						<!--<label class="col-sm-4 control-label">签委托人：</label>
+						<div class="col-sm-8">
+							<input type="text" name="userid" class="form-control">
+						</div>-->
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">委托时间：</label>
+							<div class="col-sm-4"><input name="createstarttime" type="text" class="form-control" id="createstarttime" readonly="readonly" style="background-color:#fff;"></div>
+							<div style="float:left; padding:7px 0px;">-</div>
+							<div class="col-sm-4"><input name="createendtime" type="text" class="form-control" id="createendtime" readonly="readonly" style="background-color:#fff;"></div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-8">
+					<div class="form-group">
+						<label class="col-sm-2 control-label">规划用途：</label>
+						<div class="col-sm-10" id="propertytype">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">是否有效：</label>
+						<div class="col-sm-5">
+							<select name="state" class="J_chosen form-control">
+								<option value="">全部</option>
+								<option value="1">有效</option>
+								<option value="2">无效</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<div class="col-sm-5  col-sm-offset-5">
+	                        <button id="J_search" type="button" class="btn btn-success btn_size">查 询</button>
+	                        <button id="J_reset" type="reset" class="btn btn-white btn_size">重 置</button>
+	                    </div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<div class="ibox">
+	<div class="ibox-title">
+		<h5>委托书列表</h5>
+	</div>
+	<div class="ibox-content">
+		<div class="tab-pane">
+			<table id="proxyQueryResult" class="table table-hover table-striped  table-bordered">
+				<thead>
+					<tr>
+						<th data-field="">
+							<div class="th-inner ">委托书编号</div>
+						</th>
+						<th data-field="">
+							<div class="th-inner ">房源编号</div>
+						</th>
+						<th data-field="">
+							<div class="th-inner ">业务类型</div>
+						</th>
+						<th data-field="">
+							<div class="th-inner ">规划用途</div>
+						</th>
+						<th data-field="">
+							<div class="th-inner ">签委托人</div>
+						</th>
+						<th data-field="">
+							<div class="th-inner ">签委托部门</div>
+						</div>
+						</th>
+						<th data-field="">
+							<div class="th-inner ">是否有效</div>
+						</th>
+						<th data-field="">
+							<div class="th-inner ">委托时间</div>
+						</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+	</div>
+</div>
+<!--委托书查询-->
+#parse("/house/proxy/entering.html")
+<script type="text/javascript" src="$basePath/resources/js/plugins/ztree/jquery.ztree.core.js"></script>
+<script type="text/javascript" src="$basePath/resources/js/plugins/ztree/jquery.ztree.excheck.js"></script>
+<script type="text/javascript" src="$link.contextPath/resources/js/department.js"></script>
+<script src="$link.contextPath/resources/script/house/proxy/list.js"></script>

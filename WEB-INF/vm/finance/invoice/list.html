@@ -1,0 +1,312 @@
+#set($plugins = ["table","chosen","laydate","autoSearch","ztree"])
+<style>
+.table>thead>tr>th{vertical-align: middle !important;}
+</style>
+<div class="ibox">
+	<div class="ibox-title">
+		<h5>发票号管理</h5>
+		<div class="ibox-tools">
+			<a class="collapse-link ui-sortable"> 
+				<i class="fa fa-chevron-up"></i>
+			</a>
+		</div>
+	</div>
+	<div class="ibox-content">
+		<form id="J_query"  class="form-horizontal" role="form">
+			<div class="row">
+				<input type="hidden" id="J_hidden" value="">
+				<input type="hidden" id="J_contractId" value="">
+				<div class="col-md-4">
+					<label class="col-sm-3 control-label">所属公司:</label>
+					<div class="col-sm-8">
+						<select id="J_belongCompanyId" name="belongCompanyId" class="J_chosen form-control" data-placeholder="全部">
+							<option value="">全部</option>
+						</select>
+					</div>
+				</div>
+				<div class="col-md-8">
+					<div class="form-group">
+						<label class="col-sm-1 control-label" style="margin-left:30px">发票编号:</label>
+						<div class="col-sm-2">
+							<select id="J_invoiceNumber" name="" class="J_chosen form-control" data-placeholder="">
+								<option value="1">单一查询</option>
+								<option value="2">区间查询</option>
+							</select>
+						</div>
+						<div class="col-sm-5">
+							<div id="J_invoiceonly" class="col-md-6 pl10" style="display:block;">
+								<input type="text" class="form-control" id="J_inputvalue" name="invoiceNumber">
+							</div>
+							<div id="J_invoiceinput" class="col-md-10 pl10" style="display:none;">
+								<div class="col-md-5">
+									<input type="text" class="form-control" id="J_invoiceStartNumber" name="invoiceStartNumber" placeholder="" >
+								</div>
+								<div style="float:left; padding:0 8px;">-</div>
+								<div class="col-md-5">
+									<input type="text" class="form-control" id="J_invoiceEndNumber" name="invoiceEndNumber" placeholder="" >
+								</div>
+							</div>
+							<label class="col-sm-2 control-label" style="color:#0000FF">（请输入完整发票号，此处不支持模糊查询）</label>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">发票抬头:</label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" id="J_invoiceHeader" name="invoiceHeader" placeholder="">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">合同编号:</label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" id="J_contractNumber" name="contractNumber" placeholder="请输入合同编号">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">收据编号:</label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" id="J_receiptNumber" name="receiptNumber" placeholder="请输入收据编号">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="col-md-3">
+						<div class="form-group">
+							<div class="col-sm-12">
+								<select id="J_timeType" name="timeType" class="J_chosen form-control" data-placeholder="">
+									<option value="1">录入时间</option>
+									<option value="2">激活时间</option>
+									<option value="3">成交时间</option>
+									<option value="4">作废时间</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-9">
+						<div class="form-group">
+							<div class="col-sm-5">
+								<input id="J_startTime" name="startTime" class="J_chosen form-control" placeholder="">
+							</div>
+							<div style="float:left; padding:7px 7px;">-</div>
+							<div class="col-sm-5">
+								<input id="J_endTime" name="endTime" class="J_chosen form-control" placeholder="">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">发票状态:</label>
+						<div class="col-sm-8">
+							<select id="J_invoiceStatus" name="invoiceStatus" class="J_chosen form-control" data-placeholder="全部">
+								<option value="">全部</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">付款方:</label>
+						<div class="col-sm-8">
+							<select id="J_payer" name="payer" class="J_chosen form-control" data-placeholder="全部">
+								<option value="">全部</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<div class="col-md-3">
+							<select id="J_personnelType" name="personnelType" class="J_chosen form-control" data-placeholder="全部">
+								<option value="">全部</option>
+							</select>
+						</div>
+						<div class="col-md-8">
+							<div class="input-group">
+								<input type="text" class="form-control" id="J_user" data-id="" autocomplete="off" name="personnelId">
+								<div class="input-group-btn">
+									<button type="button" class="btn btn-white dropdown-toggle"
+										data-toggle="">
+										<span class="glyphicon glyphicon-search search-caret"></span>
+									</button>
+									<ul class="dropdown-menu dropdown-menu-left" role="menu" style="padding-top: 0px; max-height: 375px; max-width: 800px; overflow: auto; width: auto; transition: 0.3s; left: -110px; right: auto; min-width: 145px;">
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">所属部门:</label>
+						<div class="col-sm-8">
+							<input id="J_deptLevel" name="deptlevel" type="hidden" class="form-control" value="">
+							<div class="input-group">
+								<input id="J_deptName" name="deptId" type="text" class="form-control radius-3 float-l" autocomplete="off">
+								<div class="input-group-btn">
+									<button id="J_deptSelect" data-toggle="dropdown" class="btn dropdown-toggle btn-dept float-l" type="button"><span class="caret"></span>
+	                            	</button>
+	                            </div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">财务中心店:</label>
+						<div class="col-sm-8">	
+							<div class="input-group">
+								<input type="text" class="form-control" id="J_CenterShop" name="belongCenterShopId" data-id="">
+								<div class="input-group-btn">
+									<button type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown">
+										<span class="glyphicon glyphicon-search search-caret"></span>
+									</button>
+									<ul class="dropdown-menu dropdown-menu-right" role="menu">
+									</ul>
+								</div>
+							</div>						
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<div class="col-sm-8  col-sm-offset-5">
+							<button id="J_search" type="button" class="btn btn-success btn_size">查 询</button>
+							<button id="J_reset" type="reset" class="btn btn-white btn_size">重 置</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<div class="ibox float-e-margins">
+	<div class="ibox-title">
+        <h5>发票号管理列表</h5>
+    </div>
+    <div class="ibox-content">
+    	<div class="row">
+    		<div class="col-md-2 text-left">
+    			<div class="form-group">
+    				#if($shiro.hasPermission("SCM:FINANCE:INVOICE:ADD"))
+					<button id="J_Addinvoice" data-auditstep="" type="button" class="btn btn-success pr5">添加</button>
+					#end
+				</div>
+    		</div>
+    		<div class="col-md-10 text-right">
+    			<div class="form-group">
+    				#if($shiro.hasPermission("SCM:FINANCE:INVOICE:DELETE"))
+					<button id="J_del" data-id="" type="button" class="btn btn-success pr5">删除</button>	
+					#end
+					#if($shiro.hasPermission("SCM:FINANCE:INVOICE:ACTIVE"))		
+					<button id="J_activation" data-id="" type="button" class="btn btn-success pr5">激活</button>
+					#end
+					#if($shiro.hasPermission("SCM:FINANCE:INVOICE:INVALID"))
+					<button id="J_void" data-id="" type="button" class="btn btn-success pr5">作废</button>
+					#end
+					#if($shiro.hasPermission("SCM:FINANCE:INVOICE:EXPORT"))
+					<button id="J_result" data-id="" type="button" class="btn btn-success pr5">结果另存为</button>
+					#end
+				</div>
+    		</div>
+    	</div>
+  		<div class="row row-lg">
+			<div class="col-sm-12">
+				<table id="J_dataTable" class="table table-hover table-striped table table-bordered tables table-condensed">
+					<thead>
+						<tr>
+							<th data-field="check">选择</th>
+							<th data-field="b">发票编号</th>
+							<th data-field="c">收据编号</th>
+							<th data-field="d">付款方</th>
+							<th data-field="e">发票抬头</th>
+							<th data-field="f">发票名称</th>
+							<th data-field="g">面值</th>
+							<th data-field="h">发票状态</th>
+							<th data-field="i">合同编号</th>
+							<th data-field="j">所属公司</th>
+							<th data-field="k">所属财务中心店</th>
+							<th data-field="l">录入人<br/>录入时间</th>
+							<th data-field="m">激活人<br/>激活时间</th>
+							<th data-field="n">成交人<br/>成交时间</th>
+							<th data-field="o">财务作废人<br/>财务作废时间</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 添加发票 str -->
+<div id="Addinvoice_layer" class="ibox-content" style="display: none">
+	<form id="Addinvoice_form" name="Addinvoice_form" class="form-horizontal">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span style="color:#ff0000">*</span>发票所属公司:</label>
+					<div class="col-sm-8">
+						<select id="J_Company" name="invoiceBelongCompanyId" class="J_chosen form-control" data-placeholder="全部">
+							<option value="">全部</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span style="color:#ff0000">*</span>所属财务中心店:</label>
+					<div class="col-sm-8">	
+						<div class="input-group">
+							<input type="text" class="form-control" id="J_CenterShopId_pop" name="belongCenterShopId">
+							<div class="input-group-btn">
+								<button type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown">
+									<span class="glyphicon glyphicon-search search-caret"></span>
+								</button>
+								<ul class="dropdown-menu dropdown-menu-right" role="menu">
+								</ul>
+							</div>
+						</div>						
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-2 control-label"><span style="color:#ff0000">*</span>编号起止:</label>
+					<div class="col-sm-4">
+						<input id="J_startNumber" name="startNumber" class="J_chosen form-control" placeholder="" oninput="this.value=this.value.replace(/[^\d]/g,'')">
+					</div>
+					<div style="float:left; padding:7px 3px;">-</div>
+					<div class="col-sm-4">
+						<input id="J_endNumber" name="endNumber" class="J_chosen form-control" placeholder="" oninput="this.value=this.value.replace(/[^\d]/g,'')">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-4 control-label">每本张数:</label>
+					<div class="col-sm-8" style="padding-top:7px"><span id="J_pageindex">0</span></div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>	
+<!-- 添加发票 end -->
+
+<script src="$link.contextPath/resources/script/finance/invoice/list.js"></script>
+<script type="text/javascript" src="$link.contextPath/resources/js/department.js"></script>

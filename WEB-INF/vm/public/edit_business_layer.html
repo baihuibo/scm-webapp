@@ -1,0 +1,168 @@
+<!-- 编辑商圈 begin -->
+<div id="J_editBusinessLayer" class="ibox-content" style="display: none">
+	<form id="J_editForm" name="editForm" class="form-horizontal">
+		<div class="form-group">
+			<!-- <label class="col-sm-3 control-label">修改前：</label>
+			<div class="col-sm-8"> -->
+				<label class="col-sm-2 control-label">原商圈：</label>
+				<div id="J_oldBusiness" class="col-sm-7 ptb7">
+					
+				</div>
+			<!-- </div> -->
+		</div>
+		<div class="form-group clear">
+			<!-- <label class="col-sm-3 control-label">修改后：</label>
+			<div class="col-sm-8"> -->
+				<label id="J_newLabel" class="col-sm-2 control-label"><span class="text-danger">*</span>商圈：</label>
+				<div id="J_newValue" class="col-sm-9 text-right ptb7">
+					<a id="J_addBusiness" class="btn-green btn-bitbucket"><i class="glyphicon glyphicon-plus"></i></a>
+				</div>
+			<!-- </div> -->
+		</div>
+		<div class="form-group clear">
+			<label class="col-sm-2 control-label"></label>
+			<div class="col-sm-9">
+				<div class="bootstrap-table table-list">
+					<div class="fixed-table-container">
+						<table id="J_dataTableBusiness" class="table table-hover table-striped" style="border-bottom: none">
+							<thead>
+								<tr>
+									<th data-field="id">商圈</th>
+									<th data-field="id">所属行政区</th>
+									<th data-field="opt">操作</th>
+								</tr>
+							</thead>
+							<tbody>
+								
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+<!-- 编辑商圈 end -->
+
+<!-- 新增商圈 begin -->
+<div id="J_addBusinessLayer" class="ibox-content" style="display: none">
+	<form id="J_addForm" name="add_form" class="form-horizontal">
+		<div class="form-group">
+			<label class="col-sm-4 control-label"><span class="text-danger">*</span>商圈：</label>
+			<div class="col-sm-7">
+				<div class="input-group">
+					<input id="J_business" type="text" class="form-control" autocomplete="off">
+					<div class="input-group-btn">
+						<button type="button" class="btn btn-white dropdown-toggle" data-toggle="">
+							<span class="glyphicon glyphicon-search search-caret"></span>
+						</button>
+						<ul class="dropdown-menu dropdown-menu-right" role="menu">
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-4 control-label">所属行政区：</label>
+			<div class="col-sm-7">
+				<select id="J_canton" name="infoType" class="J_chosen form-control" data-placeholder="请选择">
+					<option value="">请选择</option>
+				</select>
+			</div>
+		</div>
+	</form>
+</div>
+<!-- 新增商圈 end -->
+<script type='text/javascript' >
+// 初始化原商圈&行政区
+function initBusiness($this_ , scope) {
+	var tbody = $('#J_dataTableBusiness tbody' , scope).empty();
+
+    // 初始化原商圈&行政区
+	$('#J_oldBusiness', scope).html($this_.parent().find('dd').text());
+	
+	// 初始化原商圈&行政区列表
+	var oldBusinessStr = $this_.attr('data-columns') || "";
+	var arrs = oldBusinessStr.split('|');
+	var values = getMappers(arrs[0]);
+	var names = getMappers(arrs[1]);
+
+    values.forEach(function (item , i) {
+        if (item && names[i]) {
+            var item = '<tr id="'+item[0]+'">' +
+                '<td>'+names[i][0]+'</td>' +
+                '<td data-id="'+item[1]+'">'+names[i][1]+'</td>' +
+                '<td><a id="J_removeBuild" class="btn-bitbucket"><i class="glyphicon glyphicon-remove"></i></a></td>' +
+                '</tr>';
+            tbody.append(item);
+        }
+    });
+}
+
+function getMappers(str) {
+    return str.split(/#+/g).filter(function (t2) {
+        return !!t2;
+    }).map(function (t2) {
+         var arr = t2.split(':');
+        if (!isEmpty(arr[0]) && !isEmpty(arr[1])) {
+			return arr;
+        }
+        return null;
+    });
+}
+function isEmpty(key) {
+	return !key || key === 'undefined' || key === 'null';
+}
+
+// 删除需求楼盘
+$(document).delegate('#J_removeBusiness', 'click', function(event){
+	$(this).closest('tr').remove();
+})
+
+// 新增需求楼盘
+$(document).delegate('#J_addBusiness', 'click', function(event){
+	addBusiness($('#J_dataTableBusiness tbody', $(this).closest('form')));
+});
+
+function addBusiness($container){
+    var business = $("#J_business");
+    var $canton = $("#J_canton");
+    business.val('').attr('data-id' , '');
+    commonContainer.modal('添加商圈', $('#J_addBusinessLayer'), function (index, layero) {
+        var id = business.attr('data-id');
+        var cantonid = $canton.val();
+        if (id) {
+            var tr = $('#' + id, $container);
+            var td = tr.find('td[data-id=' + cantonid + ']');
+            if (tr.length && td.length) {
+                commonContainer.alert("该商圈已经添加过");
+                return false;
+            }
+            var canton = '';
+            var selected = $canton.find('option:selected');
+            if (selected.val()) {
+                canton = selected.text();
+            }
+
+            var item = '<tr id="' + id + '">' +
+                '<td>' + business.val() + '</td>' +
+                '<td data-id="' + cantonid + '">' + canton + '</td>' +
+                '<td><a id="J_removeBusiness" class="btn-bitbucket"><i class="glyphicon glyphicon-remove"></i></a></td>' +
+                '</tr>';
+            $container.append(item);
+        } else {
+            commonContainer.alert("请选择商圈");
+            return false;
+        }
+        layer.close(index);
+    }, {
+        overflow: false,
+        area: ['400px', '260px'],
+        btns: ['保存'],
+        success: function () {
+            searchBusiness(business, true, 'right');
+            dimContainer.buildCanton($("#J_canton"), '');
+        }
+    });
+}
+</script>

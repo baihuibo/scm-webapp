@@ -1,0 +1,149 @@
+#set($plugins = ["table","chosen","laydate"])
+<style>
+.table>thead>tr>th{vertical-align: middle !important;}
+#J_initialReceiptNumbers{ word-wrap: break-word; word-break:break-all}
+</style>
+<div class="ibox">
+	<div class="ibox-title">
+		<h5>发票详情</h5>
+		<div class="ibox-tools">
+			<a class="collapse-link ui-sortable"> 
+				<i class="fa fa-chevron-up"></i>
+			</a>
+		</div>
+	</div>
+	<div class="ibox-content">
+		<form id="auditrecord_form" name="auditrecord_form" class="form-horizontal">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">所属公司:</label>
+						<div class="col-sm-8" style="padding-top:7px"><span id="J_belongCompany"></span></div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">发票编号:</label>
+						<div class="col-sm-8" style="padding-top:7px"><span id="J_invoiceId"></span></div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">合同编号:</label>
+						<div class="col-sm-8" style="padding-top:7px"><span><a id="J_strcontractNumber"></a></span></div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">所属财务中心店:</label>
+						<div class="col-sm-8" style="padding-top:7px"><span id="J_belongCenterShopId"></span></div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">付款方:</label>
+						<div class="col-sm-8" style="padding-top:7px"><span id="J_strPayer"></span></div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">姓名:</label>
+						<div class="col-sm-8" style="padding-top:7px"><span id="J_payerName"></span></div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">状态:</label>
+						<div class="col-sm-8" style="padding-top:7px"><span id="J_strinvoiceStatustype"></span></div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">发票名称:</label>
+						<div class="col-sm-8" style="padding-top:7px"><span id="J_strInvoiceStatus"></span></div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">发票类型:</label>
+						<div class="col-sm-8" style="padding-top:7px"><span id="J_strInvoiceType"></span></div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">发票日期:</label>
+						<div class="col-sm-8" style="padding-top:7px"><span id="J_invoiceDate">2016-09-15</span></div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">发票抬头:</label>
+						<div class="col-sm-8" style="padding-top:7px"><span id="J_strinvoiceHeadertype"></span></div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">发票面值:</label>
+						<div class="col-sm-8" style="padding-top:7px"><span><i id="J_invoiceAmount"></i>元</span></div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">成交人:</label>
+						<div class="col-sm-8" style="padding-top:7px"><span id="J_usedByName"></span></div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">所用收据:</label>
+						<div class="col-sm-8" style="padding-top:7px"><span id="J_initialReceiptNumbers"></span></div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">旧发票编号:</label>
+						<div class="col-sm-8" style="padding-top:7px"><span><a id="J_initialInvoiceNumbers" href=""></a></span></div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">成交时间:</label>
+						<div class="col-sm-8" style="padding-top:7px"><span id="J_strusedTime"></span></div>
+					</div>
+				</div>
+			</div>
+		</form>
+		<div class="ibox float-e-margins">
+			<div class="ibox-title">
+		        <h5>操作日志</h5>
+		     </div>
+	  		<div class="row row-lg">
+				<div class="col-sm-12">
+					<table id="J_operationlog_dataTable" class="table table-hover table-striped table table-bordered tables table-condensed">
+						<thead>
+							<tr>
+								<th data-field="nub">序号</th>
+								<th data-field="a">操作部门</th>
+								<th data-field="b">操作人</th>
+								<th data-field="c">操作时间</th>
+								<th data-field="d">操作类型</th>
+								<th class="col-sm-4" data-field="e">操作内容</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="$link.contextPath/resources/script/finance/invoice/detail.js"></script>

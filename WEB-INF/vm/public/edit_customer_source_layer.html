@@ -1,0 +1,72 @@
+<!-- 编辑客户来源 begin -->
+<div id="J_editCustomerSourceLayer" class="ibox-content" style="display: none">
+	<form id="J_editSourceForm" name="editForm" class="form-horizontal">
+		<div class="form-group">
+			<label class="col-sm-4 control-label">原客户来源：</label>
+			<div id="J_oldCustomerSource" class="col-sm-7 ptb7">
+				
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-4 control-label"><span class="text-danger">*</span>客户来源：</label>
+			<div class="col-sm-7">
+				<select id="J_customerSource" name="source" class="form-control" data-placeholder="请选择">
+					<option value="">请选择</option>
+				</select>
+			</div>
+		</div>
+		<div id="J_infoSourceSelector" class="form-group" style="display: none">
+			<label id="J_infoSourceLabel" class="col-sm-4 control-label"></label>
+			<div class="col-sm-7">
+				<select id="J_infoSource" name="infosource" class="form-control" data-placeholder="请选择">
+					<option value="">请选择</option>
+				</select>
+			</div>
+		</div>
+	</form>
+</div>
+<!-- 编辑客户来源 end -->
+
+<script type='text/javascript' >
+// 初始化客户来源（）
+function initCustomerSource($this_) {
+	var hasChildenArr = ['4','8','29','36','43','45'];
+	
+	// 初始化原值
+	$('#J_oldCustomerSource').html($this_.parent().find('dd').text());
+	
+	// 初始化“客户来源”
+	$('#J_customerSource').html('');
+	$('#J_infoSource').html('');
+	$("#J_infoSourceSelector").hide();
+	
+	// 初始化原客户来源&渠道
+	var oldSourceStr = $this_.attr('data-columns');
+	oldSourceStr = formatToComma(oldSourceStr); // 转义字符
+	var oldSourceArr = oldSourceStr.split('|');
+	var oldSource = oldSourceArr[0];
+	var oldInfoSource = oldSourceArr[1];
+	
+	dimContainer.buildDimChosenSelector($("#J_customerSource"), "customerSource", oldSource);
+	if ($.inArray(oldSource, hasChildenArr) >= 0) {
+		initOldValue(oldSource, oldInfoSource);
+	}
+	
+	$('#J_customerSource').on("change", function() {
+		if ($.inArray($(this).val(), hasChildenArr) >= 0) {
+			initOldValue($(this).val(), '');
+		} else {
+			$('#J_infoSource').html('');
+			$('#J_infoSourceSelector').hide();
+		}
+	});
+}
+
+function initOldValue(source, infoSource) {
+	$('#J_infoSource').html('');
+	$('#J_infoSourceSelector').show();
+	$('#J_infoSourceLabel').html($('option:selected', $("#J_customerSource")).text() + '渠道：');
+	dimContainer.buildDimChosenSelector($("#J_infoSource"), "customerSource"+source, infoSource);
+}
+</script>

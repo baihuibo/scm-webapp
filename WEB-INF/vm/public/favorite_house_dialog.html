@@ -1,0 +1,121 @@
+<div class="ibox-content">
+	<form id="J_favorite_query" class="form-horizontal">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">房源编号：</label>
+					<div class="col-sm-7">	
+						<input type="text" class="form-control" name="houseid" autocomplete="off">					
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-3 control-label J_price">价格：</label>
+					<div class="col-sm-3">	
+						<input type="text" class="form-control" name="minPrice" autocomplete="off">					
+					</div>
+					<div class="control-spacing">-</div>
+					<div class="col-sm-3">	
+						<input type="text" class="form-control" name="maxPrice" autocomplete="off">					
+					</div>
+					<label class="control-label J_priceUnit">万/元</label>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">面积：</label>
+					<div class="col-sm-3">	
+						<input type="text" class="form-control" name="minBuildArea" autocomplete="off">					
+					</div>
+					<div class="control-spacing">-</div>
+					<div class="col-sm-3">	
+						<input type="text" class="form-control" name="maxBuildArea" autocomplete="off">					
+					</div>
+					<label class="control-label">平方米</label>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">户型：</label>
+					<div class="col-sm-3">	
+						<select name="minBedRoom" class="J_chosen form-control J_bedRoom" data-placeholder="请选择">
+								<option value="">全部</option>
+						</select>					
+					</div>
+					<div class="control-spacing">-</div>
+					<div class="col-sm-3">	
+						<select name="maxBedRoom" class="J_chosen form-control J_bedRoom" data-placeholder="请选择">
+								<option value="">全部</option>
+						</select>				
+					</div>
+					<label class="control-label">室</label>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">楼盘：</label>
+					<div class="col-sm-7">
+                    	<div class="input-group">
+                        	<input id="J_build" name="conmmunityIds" type="text" class="form-control J_build"> 
+							<div class="input-group-btn">
+                                <button type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown">
+                                    <span class="glyphicon glyphicon-search search-caret"></span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                </ul>
+                            </div>
+                   		</div>
+                   </div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">商圈：</label>
+					<div class="col-sm-7">
+                    	<div class="input-group">
+                        	<input id="J_business" name="businessIds" type="text" class="form-control J_business"> 
+                              <div class="input-group-btn">
+								<button type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown">
+									<span class="glyphicon glyphicon-search search-caret"></span>
+								</button>
+								<ul class="dropdown-menu dropdown-menu-right" role="menu">
+								</ul>
+							</div>
+                   		</div>
+                   </div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 text-cen">
+				<div class="form-group">
+					<button id="J_search" type="button" class="btn btn-success pr5">查 询</button>
+					<button id="J_reset" type="reset" class="btn btn-default">重 置</button>
+				</div>
+			</div>
+		</div>
+	</form>
+		
+	<div class="row">	
+		<div class="col-md-12 ptb10" id="J_favorite_dataTableContent">
+			<!--<table id="J_favorite_dataTable" class="table table-hover table-striped">
+					<thead>
+						<tr>
+							<th data-field="id"></th>
+							<th data-field="housesid">房源编号</th>
+							<th data-field="conmmunityname">楼盘</th>
+							<th data-field="bedroom">户型</th>
+							<th data-field="buildarea">建筑面积</th>
+							<th data-field="entrustprice J_tablePrice">委托价（万元）</th>
+							<th data-field="heading">朝向</th>
+						</tr>
+					</thead>
+			</table>-->
+		</div>
+	</div>
+</div>

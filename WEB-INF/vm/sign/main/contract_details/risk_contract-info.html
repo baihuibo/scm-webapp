@@ -1,0 +1,1462 @@
+
+<div class="panel-body"  layout="row">
+	<div flex>
+		<div class="ibox-content">
+			<div class="ibox-content">
+				<div class="ibox" id="both-sides-info">
+					<div class="customer_info_content">
+							<div class="row ptb10">
+								<div class="pl10 font-bold font-blue info-tit">
+									<i class="glyphicon glyphicon-minus"></i>交易双方基本信息
+								</div>
+							</div>
+							<div id="agent" class="edit">
+								<div class="row">
+									<div class="col-sm-4">
+										<dl class="dl-horizontal">
+											<dt>
+												<span class="text-danger">*</span>单独委托过户：
+											</dt>
+											<dd class="J_detail_areaName" ng-if="$ctrl.buyInfoContractC.salesTradeBothSidesInfoVo.entrustedTransfer==1">是</dd>
+											<dd class="J_detail_areaName" ng-if="$ctrl.buyInfoContractC.salesTradeBothSidesInfoVo.entrustedTransfer==0">否</dd>
+										</dl>
+									</div>
+									<div class="col-sm-4">
+										<dl class="dl-horizontal">
+											<dt>
+												<span class="text-danger">*</span>业主类型：
+											</dt>
+								<!-- 			<dd class="J_detail_areaName" ng-if="$ctrl.buyInfoContractC.salesTradeBothSidesInfoVo.ownerType==1">业主</dd>
+											<dd class="J_detail_areaName" ng-if="$ctrl.buyInfoContractC.salesTradeBothSidesInfoVo.ownerType==2">客户</dd> -->
+											{{$ctrl.buyInfoContractC.salesTradeBothSidesInfoVo.ownerTypeValue}}
+										</dl>
+									</div>
+									<div class="col-sm-4">
+										<dl class="dl-horizontal">
+											<dt>
+												<span class="text-danger">*</span>买方首次购房：
+											</dt>
+											<dd class="J_detail_areaName" ng-if="$ctrl.buyInfoContractC.salesTradeBothSidesInfoVo.firstPurchase==1">是</dd>
+											<dd class="J_detail_areaName" ng-if="$ctrl.buyInfoContractC.salesTradeBothSidesInfoVo.firstPurchase==0">否</dd>
+										</dl>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<label class="col-md-11 control-label"
+												style="text-align: left;"> 业主信息（甲方）: </label>
+		
+										</div>
+									</div>
+									<div class="col-md-12 m-b-sm ">
+										<div class="bootstrap-table table-list">
+											<div class="fixed-table-container">
+												<table
+													class="table table-hover fixed-table-container table-striped"
+													style="border-bottom: none">
+													<thead>
+														<tr>
+															<th class='col-md-2'><div class="th-inner">
+																	<span class="text-danger">*</span>出售方业主姓名
+																</div></th>
+															<th class='col-md-2'><div class="th-inner">证件类型</div></th>
+															<th class='col-md-2'><div class="th-inner">证件号码</div></th>
+															<th class='col-md-3'><div class="th-inner">
+																	<span class="text-danger">*</span>通讯地址
+																</div></th>
+															<th class='col-md-3'><div class="th-inner">
+																	<span class="text-danger">*</span>联系电话
+																</div></th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr ng-repeat="item in $ctrl.buyInfoContractC.salesTradeBothSidesInfoVo.ownerList">
+															<td>{{item.saleName}}</td>
+															<td>{{item.idcardTypeValue}}</td>
+															<td>{{item.idcardNum}}</td>
+															<td>{{item.connectAddr}}</td>
+															<td>{{item.contactPhone}}</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<label class="col-md-11 control-label"
+												style="text-align: left;"> 业主共有人（甲方）: </label>
+		
+										</div>
+									</div>
+									<div class="col-md-12 m-b-sm ">
+										<div class="bootstrap-table table-list">
+											<div class="fixed-table-container">
+												<table
+													class="table table-hover fixed-table-container table-striped"
+													style="border-bottom: none">
+													<thead>
+														<tr>
+															<th class='col-md-2'><div class="th-inner">
+																	<span class="text-danger">*</span>共有人姓名
+																</div></th>
+															<th class='col-md-2'><div class="th-inner">证件类型</div></th>
+															<th class='col-md-2'><div class="th-inner">证件号码</div></th>
+															<th class='col-md-3'><div class="th-inner">
+																	<span class="text-danger">*</span>共有人权证号
+																</div></th>
+															<th class='col-md-3'><div class="th-inner">
+																	<span class="text-danger">*</span>联系电话
+																</div></th>
+														</tr>
+													</thead>
+													<tbody>
+													<tr ng-repeat="item in $ctrl.buyInfoContractC.salesTradeBothSidesInfoVo.ownerCommonList">
+															<td>{{item.commonName}}</td>
+															<td>{{item.idcardTypeValue}}</td>
+															<td>{{item.idcardNum}}</td>
+															<td>{{item.commonIdcardNum}}</td>
+															<td>{{item.contactPhone}}</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<label class="col-md-11 control-label"
+												style="text-align: left;"> 业主代理人信息（甲方）: </label>
+										</div>
+									</div>
+									<div class="col-md-12 m-b-sm ">
+										<div class="bootstrap-table table-list">
+											<div class="fixed-table-container">
+												<table
+													class="table table-hover fixed-table-container table-striped  table-condensed"
+													style="border-bottom: none">
+													<thead>
+														<tr>
+															<th><div class="th-inner">业主代理人姓名</div></th>
+															<th><div class="th-inner">证件类型</div></th>
+															<th><div class="th-inner">证件号码</div></th>
+															<th><div class="th-inner">联系电话</div></th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr ng-repeat="item in $ctrl.buyInfoContractC.salesTradeBothSidesInfoVo.ownerAgentList">
+															<td>{{item.agentName}}</td>
+															<td>{{item.idcardTypeValue}}</td>
+															<td>{{item.idcardNum}}</td>
+															<td>{{item.contactPhone}}</td>
+														</tr>
+														
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<label class="col-md-11 control-label"
+												style="text-align: left;">客户信息（乙方）: </label>
+		
+										</div>
+									</div>
+									<div class="col-md-12 m-b-sm ">
+										<div class="bootstrap-table table-list">
+											<div class="fixed-table-container">
+												<table
+													class="table table-hover fixed-table-container table-striped"
+													style="border-bottom: none">
+													<thead>
+														<tr>
+															<th class='col-md-2'><div class="th-inner">
+																	<span class="text-danger">*</span>客户姓名
+																</div></th>
+															<th class='col-md-2'><div class="th-inner">证件类型</div></th>
+															<th class='col-md-2'><div class="th-inner">证件号码</div></th>
+															<th class='col-md-3'><div class="th-inner">
+																	<span class="text-danger">*</span>通讯地址
+																</div></th>
+															<th class='col-md-3'><div class="th-inner">
+																	<span class="text-danger">*</span>联系电话
+																</div></th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr ng-repeat="item in $ctrl.buyInfoContractC.salesTradeBothSidesInfoVo.clientList">
+															<td>{{item.clientName}}</td>
+															<td>{{item.idcardTypeValue}}</td>
+															<td>{{item.idcardNum}}</td>
+															<td>{{item.connectAddr}}</td>
+															<td>{{item.contactPhone}}</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<label class="col-md-11 control-label"
+												style="text-align: left;"> 客户共有人信息（乙方）: </label>
+		
+										</div>
+									</div>
+									<div class="col-md-12 m-b-sm ">
+										<div class="bootstrap-table table-list">
+											<div class="fixed-table-container">
+												<table
+													class="table table-hover fixed-table-container table-striped"
+													style="border-bottom: none">
+													<thead>
+														<tr>
+															<th class='col-md-3'><div class="th-inner">
+																	<span class="text-danger">*</span>共有人姓名
+																</div></th>
+															<th class='col-md-3'><div class="th-inner">证件类型</div></th>
+															<th class='col-md-3'><div class="th-inner">证件号码</div></th>
+															<!-- <th><div class="th-inner"><span class="text-danger">*</span>共有人权证号</div></th> -->
+															<th class='col-md-3'><div class="th-inner">
+																	<span class="text-danger">*</span>联系电话
+																</div></th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr ng-repeat="item in $ctrl.buyInfoContractC.salesTradeBothSidesInfoVo.clientCommonList">
+															<td>{{item.commonName}}</td>
+															<td>{{item.idcardTypeValue}}</td>
+															<td>{{item.idcardNum}}</td>
+															<td>{{item.contactPhone}}</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<label class="col-md-11 control-label"
+												style="text-align: left;"> 客户代理人信息（乙方）: </label>
+										</div>
+									</div>
+									<div class="col-md-12 m-b-sm ">
+										<div class="bootstrap-table table-list">
+											<div class="fixed-table-container">
+												<table
+													class="table table-hover fixed-table-container table-striped  table-condensed"
+													style="border-bottom: none">
+													<thead>
+														<tr>
+															<th><div class="th-inner">代理人姓名</div></th>
+															<th><div class="th-inner">证件类型</div></th>
+															<th><div class="th-inner">证件号码</div></th>
+															<th><div class="th-inner">联系电话</div></th>
+		
+														</tr>
+													</thead>
+													<tbody>
+														<tr ng-repeat="item in $ctrl.buyInfoContractC.salesTradeBothSidesInfoVo.clientAgentList">
+															<td>{{item.agentName}}</td>
+															<td>{{item.idcardTypeValue}}</td>
+															<td>{{item.idcardNum}}</td>
+															<td>{{item.contactPhone}}</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+					</div>
+				</div>
+				<div class="ibox" id="houses-basic-info">
+					<div class="customer_info_content">
+						<div class="row ptb10">
+							<div class="pl10 font-bold font-blue info-tit">
+								<i class="glyphicon glyphicon-minus"></i>房屋基本情况
+							</div>
+						</div>
+						<div id="basic" class="edit">
+							<div class="row">
+								<div class="col-sm-4">
+									<dl class="dl-horizontal">
+										<dt>
+											<span class="text-danger">*</span>房屋类型：
+										</dt>
+										<dd class="J_detail_areaName" ng-if="$ctrl.buyInfoContractC.salesHouseBaseInfoVo.housingType==1">楼房</dd>
+										<dd class="J_detail_areaName" ng-if="$ctrl.buyInfoContractC.salesHouseBaseInfoVo.housingType==2">平房</dd>
+									</dl>
+								</div>
+								<!-- <div class="col-sm-8">
+									<dl class="dl-horizontal">
+										<dt>
+											<span class="text-danger">*</span>房源地址：
+										</dt>
+										<dd>{{$ctrl.buyInfoContractC.salesHouseBaseInfoVo.housingDistrictName+$ctrl.buyInfoContractC.salesHouseBaseInfoVo.housingTownName +$ctrl.buyInfoContractC.salesHouseBaseInfoVo.housingAddr}}</dd>
+									</dl>
+								</div> -->
+								<div class="col-sm-4">
+									<dl class="dl-horizontal">
+										<dt>
+											<span class="text-danger">*</span>所属区域：
+										</dt>
+										<dd>{{$ctrl.buyInfoContractC.salesHouseBaseInfoVo.housingDistrictName}}</dd>
+									</dl>
+								</div>
+								<div class="col-sm-4">
+									<dl class="dl-horizontal">
+										<dt>
+											<span class="text-danger">*</span>房产证地址：
+										</dt>
+										<dd>{{$ctrl.buyInfoContractC.salesHouseBaseInfoVo.housingAddr}}</dd>
+									</dl>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-4">
+									<dl class="dl-horizontal">
+										<dt>
+											<span class="text-danger">*</span>购房资格核验：
+										</dt>
+										<dd class="J_detail_areaName" ng-if="$ctrl.buyInfoContractC.salesHouseBaseInfoVo.restrictedPurchase==0">否</dd>
+										<dd class="J_detail_areaName" ng-if="$ctrl.buyInfoContractC.salesHouseBaseInfoVo.restrictedPurchase==1">是</dd>
+									</dl>
+								</div>
+								<div class="col-sm-4">
+									<dl class="dl-horizontal">
+										<dt>
+											<span class="text-danger">*</span>业主唯一住房：
+										</dt>
+										<dd class="J_detail_areaName" ng-if="$ctrl.buyInfoContractC.salesHouseBaseInfoVo.ownerOnlyHousing==0">否</dd>
+										<dd class="J_detail_areaName" ng-if="$ctrl.buyInfoContractC.salesHouseBaseInfoVo.ownerOnlyHousing==1">是</dd>
+									</dl>
+								</div>
+								<div class="col-sm-4" ng-if="$ctrl.buyInfoContractC.salesHouseBaseInfoVo.fullFiveYears==1">
+									<dl class="dl-horizontal">
+										<dt>
+											<span class="text-danger">*</span>房产满五年：
+										</dt>
+										<dd class="J_detail_areaName" ng-if="$ctrl.buyInfoContractC.salesHouseBaseInfoVo.fullFiveYears==0">否</dd>
+										<dd class="J_detail_areaName" ng-if="$ctrl.buyInfoContractC.salesHouseBaseInfoVo.fullFiveYears==1">是</dd>
+									</dl>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-4">
+									<dl class="dl-horizontal">
+										<dt>
+											<span class="text-danger">*</span>满五年依据：
+										</dt>
+										<dd>{{$ctrl.buyInfoContractC.salesHouseBaseInfoVo.fullFiveGistValue}}</dd>
+									</dl>
+								</div>
+								<div class="col-sm-8" ng-if="$ctrl.buyInfoContractC.salesHouseBaseInfoVo.fullFiveGist==3">
+									<dl class="dl-horizontal">
+										<dt>
+											<span class="text-danger">*</span>其他描述：
+										</dt>
+										<dd id="J_detail_areaType">{{$ctrl.buyInfoContractC.salesHouseBaseInfoVo.fullFiveMemo}}</dd>
+									</dl>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-4">
+									<dl class="dl-horizontal">
+										<dt>
+											<span class="text-danger">*</span>建筑总层数：
+										</dt>
+										<dd>{{$ctrl.buyInfoContractC.salesHouseBaseInfoVo.totalFloor}}</dd>
+									</dl>
+								</div>
+								<div class="col-sm-4">
+									<dl class="dl-horizontal">
+										<dt>
+											<span class="text-danger">*</span>地上层数：
+										</dt>
+										<dd id="J_detail_areaType">{{$ctrl.buyInfoContractC.salesHouseBaseInfoVo.upperFloors}}</dd>
+									</dl>
+								</div>
+								<div class="col-sm-4">
+									<dl class="dl-horizontal">
+										<dt>
+											<span class="text-danger">*</span>地下层数：
+										</dt>
+										<dd id="J_detail_areaType">{{$ctrl.buyInfoContractC.salesHouseBaseInfoVo.underFloors}}</dd>
+									</dl>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-4">
+									<dl class="dl-horizontal">
+										<dt>
+											<span class="text-danger">*</span>房屋楼层数：
+										</dt>
+										<dd>{{$ctrl.buyInfoContractC.salesHouseBaseInfoVo.buildingTotal}}</dd>
+									</dl>
+								</div>
+								<div class="col-sm-4">
+									<dl class="dl-horizontal">
+										<dt>
+											<span class="text-danger">*</span>建筑面积：
+										</dt>
+										<dd id="J_detail_areaType">{{$ctrl.buyInfoContractC.salesHouseBaseInfoVo.buildArea}}平方米</dd>
+										
+									</dl>
+								</div>
+								<div class="col-sm-4">
+									<dl class="dl-horizontal">
+										<dt>
+											<span class="text-danger">*</span>房屋设计用途：
+										</dt>
+										<dd id="J_detail_areaType">{{$ctrl.buyInfoContractC.salesHouseBaseInfoVo.designUsesIdValue}}</dd>
+									</dl>
+								</div>
+							</div>
+							<div class="row" ng-if="$ctrl.buyInfoContractC.salesHouseBaseInfoVo.designUsesId==10">
+								<div class="col-sm-12">
+									<dl class="dl-horizontal">
+										<dt>
+											<span class="text-danger">*</span>其他用途描述：
+										</dt>
+										<dd>{{$ctrl.buyInfoContractC.salesHouseBaseInfoVo.otherUses}}</dd>
+									</dl>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-4">
+									<dl class="dl-horizontal">
+										<dt>
+											<span class="text-danger">*</span>带车位：
+										</dt>
+										<dd class="J_detail_areaName" ng-if="$ctrl.buyInfoContractC.salesHouseBaseInfoVo.carPort==0">否</dd>
+										<dd class="J_detail_areaName" ng-if="$ctrl.buyInfoContractC.salesHouseBaseInfoVo.carPort==1">是</dd>
+									</dl>
+								</div>
+								<div class="col-sm-4" ng-if="$ctrl.buyInfoContractC.salesHouseBaseInfoVo.carPort==1">
+									<dl class="dl-horizontal">
+										<dt>
+											<span class="text-danger">*</span>车位产权证号：
+										</dt>
+										<dd id="J_detail_areaType">{{$ctrl.buyInfoContractC.salesHouseBaseInfoVo.carPortNumber}}</dd>
+										
+									</dl>
+								</div>
+								<div class="col-sm-4" ng-if="$ctrl.buyInfoContractC.salesHouseBaseInfoVo.carPort==1">
+									<dl class="dl-horizontal">
+										<dt>
+											<span class="text-danger">*</span>车位位置：
+										</dt>
+										<dd id="J_detail_areaType">{{$ctrl.buyInfoContractC.salesHouseBaseInfoVo.carPortLocation}}</dd>
+									</dl>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="ibox" id="houses-ownership-info">
+					<div class="customer_info_content">
+						<div class="row ptb10">
+							<div class="pl10 font-bold font-blue info-tit">
+								<i class="glyphicon glyphicon-minus"></i>房屋权属情况
+							</div>
+						</div>
+						<div id="ownership" class="edit">
+							<div class="row">
+								<div class="col-sm-4">
+									<dl class="dl-horizontal">
+										<dt>
+											<span class="text-danger">*</span>所有权证号：
+										</dt>
+										<dd>{{$ctrl.buyInfoContractC.salesHouseCertificateVo.certificateNum}}</dd>
+									</dl>
+								</div>
+								<div class="col-sm-4">
+									<dl class="dl-horizontal">
+										<dt>
+											<span class="text-danger">*</span>填发单位：
+										</dt>
+										<dd id="J_detail_areaType">{{$ctrl.buyInfoContractC.salesHouseCertificateVo.unitName}}</dd>
+									</dl>
+								</div>
+								<div class="col-sm-4">
+									<dl class="dl-horizontal">
+										<dt>
+											<span class="text-danger">*</span>房屋出租：
+										</dt>
+										<dd class="J_detail_areaName" ng-if="$ctrl.buyInfoContractC.salesHouseCertificateVo.isHouseLease==1">未出租</dd>
+										<dd class="J_detail_areaName" ng-if="$ctrl.buyInfoContractC.salesHouseCertificateVo.isHouseLease==2">已出租</dd>
+									</dl>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-4">
+									<dl class="dl-horizontal">
+										<dt>
+											<span class="text-danger">*</span>土地使用权获得方式：
+										</dt>
+										<dd>{{$ctrl.buyInfoContractC.salesHouseCertificateVo.useingModeValue}}</dd>
+									</dl>
+								</div>
+								<div class="col-sm-4" ng-if="$ctrl.buyInfoContractC.salesHouseCertificateVo.useingMode==3">
+									<dl class="dl-horizontal">
+										<dt>
+											<span class="text-danger">*</span>其他描述：
+										</dt>
+										<dd id="J_detail_areaType">{{$ctrl.buyInfoContractC.salesHouseCertificateVo.certificateMemo}}</dd>
+									</dl>
+								</div>
+								<div class="col-sm-4">
+									<dl class="dl-horizontal">
+										<dt>
+											<span class="text-danger">*</span>土地使用权证：
+										</dt>
+										<dd class="J_detail_areaName" ng-if="$ctrl.buyInfoContractC.salesHouseCertificateVo.isLandCertificate==0">否</dd>
+										<dd class="J_detail_areaName" ng-if="$ctrl.buyInfoContractC.salesHouseCertificateVo.isLandCertificate==1">是</dd>
+									</dl>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-4" ng-if="$ctrl.buyInfoContract.salesHouseCertificateVo.isLandCertificate==1">
+									<dl class="dl-horizontal">
+										<dt>
+											<span class="text-danger">*</span>土地使用权证编号：
+										</dt>
+										<dd>{{$ctrl.buyInfoContractC.salesHouseCertificateVo.landCertificate}}</dd>
+									</dl>
+								</div>
+								<div class="col-sm-4">
+									<dl class="dl-horizontal">
+										<dt>
+											<span class="text-danger">*</span>房屋性质：
+										</dt>
+										<dd>{{$ctrl.buyInfoContractC.salesHouseCertificateVo.houseNatureValue}}</dd>
+									</dl>
+								</div>
+								<div class="col-sm-4" ng-if="$ctrl.buyInfoContractC.salesHouseCertificateVo.houseNature==6">
+									<dl class="dl-horizontal">
+										<dt>
+											<span class="text-danger">*</span>其他房屋：
+										</dt>
+										<dd>{{$ctrl.buyInfoContractC.salesHouseCertificateVo.otherHouse}}</dd>
+									</dl>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-4">
+									<dl class="dl-horizontal">
+										<dt>
+											<span class="text-danger">*</span>房屋抵押：
+										</dt>
+										<dd class="J_detail_areaName" ng-if="$ctrl.buyInfoContractC.salesHouseCertificateVo.isHouseCharge==1">未设定</dd>
+										<dd class="J_detail_areaName" ng-if="$ctrl.buyInfoContractC.salesHouseCertificateVo.isHouseCharge==2">已设定</dd>
+									</dl>
+								</div>
+							</div>
+							<div class="row" ng-if="$ctrl.buyInfoContractC.salesHouseCertificateVo.isHouseCharge==2">
+								<div class="col-md-12 m-b-sm ">
+									<div class="bootstrap-table table-list">
+										<div class="fixed-table-container">
+											<table
+												class="table table-hover fixed-table-container table-striped table-condensed"
+												style="border-bottom: none">
+												<thead>
+													<tr>
+														<th class='col-md-2'><div class="th-inner">
+																<span class="text-danger">*</span>抵押权人姓名
+															</div></th>
+														<th class='col-md-2'><div class="th-inner">
+																<span class="text-danger">*</span>抵押金额（元）
+															</div></th>
+														<th class='col-md-2'><div class="th-inner">抵押注销条件</div></th>
+														<th class='col-md-2'><div class="th-inner">办理注销手续日期</div></th>
+														<th class='col-md-2'><div class="th-inner">备注</div></th>
+														<!-- <th class='col-md-2'><div class="th-inner">操作</div></th> -->
+													</tr>
+												</thead>
+												<tbody>
+													<tr ng-repeat="item in $ctrl.buyInfoContractC.salesHouseCertificateVo.mortgageList">
+															<td>{{item.mortgageName}}</td>
+															<td>{{item.pawnAmount}}</td>
+															<td>{{item.cancellationConditions}}</td>
+															<td>{{item.transactDate}}</td>
+															<td>{{item.memo}}</td>
+														</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>		
+					</div>
+				</div>
+				<div class="ibox" id="between-broker">
+					<div class="customer_info_content">
+						<div class="row ptb10">
+							<div class="pl10 font-bold font-blue info-tit">
+								<i class="glyphicon glyphicon-minus"></i>居间经纪人
+							</div>
+						</div>
+						<div id="intermediary" class="edit">
+							<div class="row">
+								<div class="col-sm-4">
+									<dl class="dl-horizontal">
+										<dt>
+											<span class="text-danger">*</span>第一经纪人姓名：
+										</dt>
+										<dd>{{$ctrl.buyInfoContractC.salesHouseCertificateVo.middlemanNameFirst}}</dd>
+									</dl>
+								</div>
+								<div class="col-sm-4">
+									<dl class="dl-horizontal">
+										<dt>
+											<span class="text-danger">*</span>资格证书编号：
+										</dt>
+										<dd>{{$ctrl.buyInfoContractC.salesHouseCertificateVo.cerificateCodeFirst}}</dd>
+									</dl>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-4">
+									<dl class="dl-horizontal">
+										<dt>
+											<span class="text-danger">*</span>第一经纪人姓名：
+										</dt>
+										<dd>{{$ctrl.buyInfoContractC.salesHouseCertificateVo.middlemanNameSecond}}</dd>
+									</dl>
+								</div>
+								<div class="col-sm-4">
+									<dl class="dl-horizontal">
+										<dt>
+											<span class="text-danger">*</span>资格证书编号：
+										</dt>
+										<dd>{{$ctrl.buyInfoContractC.salesHouseCertificateVo.cerificateCodeSecond}}</dd>
+									</dl>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="ibox" id="money-transfer">
+					<div class="customer_info_content">
+						<div class="row ptb10">
+							<div class="pl10 font-bold font-blue info-tit">
+								<i class="glyphicon glyphicon-minus"></i>客户业主资金交接
+							</div>
+						</div>
+						
+						<div id="capital" class="edit">
+							<div class="row">
+								<div class="col-sm-4">
+									<dl class="dl-horizontal">
+										<dt>
+											<span class="text-danger">*</span>成交价：
+										</dt>
+										<dd>
+											<span>{{$ctrl.buyInfoContractC.salesTradeFundTransferVo.transactionPrice}}</span>元
+											<span class='color_red' ng-if="$ctrl.buyInfoContractC.salesTradeFundTransferVo.transactionPrice">¥：{{$ctrl.buyInfoContractC.salesTradeFundTransferVo.transactionPrice | signCurrency}}</span>
+										</dd>
+									</dl>
+								</div>
+								<div class="col-sm-4">
+									<dl class="dl-horizontal">
+										<dt>
+											<span class="text-danger">*</span>主体价（网签价）：
+										</dt>
+										<dd>
+											<span>{{$ctrl.buyInfoContractC.salesTradeFundTransferVo.mainPrice}}</span>元
+											<span class='color_red' ng-if="$ctrl.buyInfoContractC.salesTradeFundTransferVo.mainPrice">¥：{{$ctrl.buyInfoContractC.salesTradeFundTransferVo.mainPrice | signCurrency}}</span>
+										</dd>
+									</dl>
+								</div>
+								<div class="col-sm-4">
+									<dl class="dl-horizontal">
+										<dt>
+											<span class="text-danger">*</span>装修设施补偿价：
+										</dt>
+										<dd>
+											<span>{{$ctrl.buyInfoContractC.salesTradeFundTransferVo.compensationPrice}}</span>元
+											<span class='color_red' ng-if='$ctrl.buyInfoContractC.salesTradeFundTransferVo.compensationPrice'>¥：{{$ctrl.buyInfoContractC.salesTradeFundTransferVo.compensationPrice | signCurrency}}</span>
+										</dd>
+									</dl>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-4">
+									<dl class="dl-horizontal">
+										<dt>
+											<span class="text-danger">*</span>定金金额：
+										</dt>
+										<dd>
+											<span>{{$ctrl.buyInfoContractC.salesTradeFundTransferVo.deposit}}</span>元
+											<span class='color_red' ng-if="$ctrl.buyInfoContractC.salesTradeFundTransferVo.deposit">¥：{{$ctrl.buyInfoContractC.salesTradeFundTransferVo.deposit | signCurrency}}</span>
+										</dd>
+									</dl>
+								</div>
+								<div class="col-sm-4">
+									<dl class="dl-horizontal">
+										<dt>
+											<span class="text-danger">*</span>定金交付方式：
+										</dt>
+										<dd class="J_detail_areaName">{{$ctrl.buyInfoContractC.salesTradeFundTransferVo.depositTypeValue}}</dd>
+									</dl>
+								</div>
+								<div class="col-sm-4">
+									<dl class="dl-horizontal">
+										<dt>
+											<span class="text-danger">*</span>付款方式：
+										</dt>
+										<dd class="J_detail_areaName">{{$ctrl.buyInfoContractC.salesTradeFundTransferVo.payTypeValue}}</dd>
+									</dl>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-4">
+									<dl class="dl-horizontal">
+										<dt>
+											<span class="text-danger">*</span>付款次数：
+										</dt>
+										<dd>{{$ctrl.buyInfoContractC.salesTradeFundTransferVo.loanNum}}</dd>
+									</dl>
+								</div>
+								<div  ng-if="$ctrl.buyInfoContract.salesTradeFundTransferVo.payType!=1">
+									<div class="col-sm-4">
+										<dl class="dl-horizontal">
+											<dt>
+												<span class="text-danger">*</span>贷款金额：
+											</dt>
+											<dd>
+												<span>{{$ctrl.buyInfoContractC.salesTradeFundTransferVo.loanAmount}}</span>元
+												<span class='color_red' ng-if="$ctrl.buyInfoContractC.salesTradeFundTransferVo.loanAmount">¥：{{$ctrl.buyInfoContractC.salesTradeFundTransferVo.loanAmount | signCurrency}}</span>
+											</dd>
+										</dl>
+									</div>
+									<div class="col-sm-4">
+										<dl class="dl-horizontal">
+											<dt>
+												<span class="text-danger">*</span>未批贷款解决方式：
+											</dt>
+											<dd>{{$ctrl.buyInfoContractC.salesTradeFundTransferVo.noBatchLoanValue}}</dd>
+										</dl>
+									</div>
+								</div>
+							</div>
+						
+						<div class="row ptb10">
+							<div class="pl10 font-bold font-blue info-tit">具体付款方式及期限的约定</div>
+						</div>
+						<div id='list'>
+							<div class="row" ng-repeat="item in $ctrl.buyInfoContractC.salesTradeFundTransferVo.paymentMethodList">
+								<div class="col-md-12">
+									<div class="form-group">
+									
+										<label class="col-md-11 control-label" style="text-align: left;" ng-if="$index==0">
+											第一次付款: </label>
+										<label class="col-md-11 control-label" style="text-align: left;" ng-if="$index==1">
+											第二次付款: </label>
+											<label class="col-md-11 control-label" style="text-align: left;" ng-if="$index==2">
+											第三次付款: </label>
+											<label class="col-md-11 control-label" style="text-align: left;" ng-if="$index==3">
+											第四次付款: </label>
+									</div>
+								</div>
+								<div class="col-md-12 m-b-sm ">
+									<div class="bootstrap-table table-list">
+										<div class="fixed-table-container">
+											<table
+												class="table table-hover fixed-table-container table-striped"
+												style="border-bottom: none">
+												<thead>
+													<tr>
+														<th class="col-md-2"><div class="th-inner">付款方式</div></th>
+														<th class="col-md-2"><div class="th-inner">
+																<span class="text-danger">*</span>付款条件
+															</div></th>
+														<th class="col-md-2"><div class="th-inner">具体条件</div></th>
+														<th class="col-md-2"><div class="th-inner">
+																<span class="text-danger">*</span>支付金额（元）
+															</div></th>
+														<th class="col-md-2"><div class="th-inner">
+																<span class="text-danger">*</span>资金划转方式
+															</div></th>
+														<th class="col-md-2"><div class="th-inner">备注</div></th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td ng-if="item.paymentMode==1">全款</td>
+														<td ng-if="item.paymentMode!=1">贷款</td>
+														<td>{{item.paymentClauseValue}}</td>
+														<td>{{item.condition}}</td>
+														<td>{{item.paymenAmount}}</br>
+														<label class="color_red" ng-if="item.paymenAmount">¥：{{item.paymenAmount | signCurrency}}</label></td>
+														<td>{{item.transferWayValue}}</td>
+														<td>{{item.memo}}</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+						
+						<div class="row">
+						<div class="row ptb10">
+							<div class="pl10 font-bold font-blue info-tit">
+								<i class="glyphicon glyphicon-minus"></i>房屋交付、税费、风险
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-4">
+								<dl class="dl-horizontal">
+									<dt>
+										<span class="text-danger">*</span>交付条件：
+									</dt>
+									<dd>{{$ctrl.buyInfoContractC.salesTradeFundTransferVo.deliveryConditions}}</dd>
+								</dl>
+							</div>
+							<div class="col-sm-4">
+								<dl class="dl-horizontal">
+									<dt>
+										<span class="text-danger">*</span>风险责任转移日期：
+									</dt>
+									<dd class="J_detail_areaName">{{$ctrl.buyInfoContractC.salesTradeFundTransferVo.liabilityShiftValue}}</dd>
+								</dl>
+							</div>
+							<div class="col-sm-4">
+								<dl class="dl-horizontal">
+									<dt>
+										<span class="text-danger">*</span>税费承担方：
+									</dt>
+									<dd class="J_detail_areaName">{{$ctrl.buyInfoContractC.salesTradeFundTransferVo.taxesValue}}</dd>
+		
+								</dl>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-4">
+								<dl class="dl-horizontal">
+									<dt>
+										<span class="text-danger">*</span>增加新税费缴纳方：
+									</dt>
+									<dd>{{$ctrl.buyInfoContractC.salesTradeFundTransferVo.taxPayingPartyValue}}</dd>
+								</dl>
+							</div>
+							<div class="col-sm-4" ng-if="$ctrl.buyInfoContractC.salesTradeFundTransferVo.taxPayingParty==3">
+								<dl class="dl-horizontal">
+									<dt>新税费缴纳方描述：</dt>
+									<dd>{{$ctrl.buyInfoContractC.salesTradeFundTransferVo.taxPayingMemo}}</dd>
+								</dl>
+							</div>
+						</div>
+					</div>				
+				</div>
+			</div>
+			<div class="ibox" id="company-service">
+				<div class="customer_info_content">
+					<div class="row ptb10">
+						<div class="pl10 font-bold font-blue info-tit">
+							<i class="glyphicon glyphicon-minus"></i>公司服务费
+						</div>
+					</div>
+				<div id="serviceCharge" class="edit">
+					<div class="row">
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt>
+									<span class="text-danger">*</span>服务费收取对象：
+								</dt>
+								<dd>{{$ctrl.buyInfoContract.salesCompanyServiceChargeVo.chargeObjectValue}}</dd>
+							</dl>
+						</div>
+	
+					</div>
+					<div ng-if="$ctrl.serveObjC.indexOf(1) > -1" >
+					<div class="row"ng-if="$ctrl.buyInfoContractC.salesTradeBothSidesInfoVo.entrustedTransfer==0">
+						<div class="col-sm-5">
+							<dl class="dl-horizontal">
+								<dt>
+									<span class="text-danger">*</span>业主居间佣金（公司规定）：
+								</dt>
+								<dd>
+									<span>{{$ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownBrokerageReceivable}}</span>元
+									<span class='color_red' ng-if="$ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownBrokerageReceivable">¥：{{$ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownBrokerageReceivable | signCurrency}}</span>
+								</dd>
+							</dl>
+						</div>
+						<div class="col-sm-5">
+							<dl class="dl-horizontal">
+								<dt>
+									<span class="text-danger">*</span>业主居间佣金（合同约定）：
+								</dt>
+								<dd>
+									<span>{{$ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownBrokerageReceived}}</span>元
+									<span class='color_red' ng-if="$ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownBrokerageReceived">¥：{{$ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownBrokerageReceived | signCurrency}}</span>
+								</dd>
+							</dl>
+						</div>
+						<div class="col-sm-2">
+							<dl class="dl-horizontal">
+								<dt>居间折扣：</dt>
+								<dd>{{$ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownBrokerageDiscount}}折</dd>
+							</dl>
+						</div>
+					</div>
+	
+					<div class="row">
+						<div class="col-sm-5">
+							<dl class="dl-horizontal"> 
+								<dt>
+									<span class="text-danger">*</span>业主履约佣金（公司规定）：
+								</dt>
+								<dd>
+									<span>{{$ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownPerformanceReceivable}}</span>元
+									<span class='color_red' ng-if='$ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownPerformanceReceivable'>¥：{{$ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownPerformanceReceivable | signCurrency}}</span>
+								</dd>
+							</dl>
+						</div>
+						<div class="col-sm-5">
+							<dl class="dl-horizontal">
+								<dt>
+									<span class="text-danger">*</span>业主履约佣金（合同约定）：
+								</dt>
+								<dd>
+									<span>{{$ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownPerformanceReceived}}</span>元
+									<span class='color_red' ng-if="$ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownPerformanceReceived">¥：{{$ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownPerformanceReceived | signCurrency}}</span>
+								</dd>
+							</dl>
+						</div>
+						<div class="col-sm-2">
+							<dl class="dl-horizontal">
+								<dt>履约折扣：</dt>
+								<dd>{{$ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownPerformanceDiscount}}折</dd>
+							</dl>
+						</div>
+					</div>
+					<div class="row" ng-if="$ctrl.buyInfoContractC.salesTradeBothSidesInfoVo.entrustedTransfer==0">
+						<div class="col-sm-5">
+							<dl class="dl-horizontal">
+								<dt>
+									<span class="text-danger">*</span>业主佣金合计（公司规定）：
+								</dt>
+								<dd>
+									<span>{{$ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownTotalReceivable}}</span>元
+									<span class='color_red' ng-if="$ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownTotalReceivable">¥：{{$ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownTotalReceivable | signCurrency}}</span>
+								</dd>
+							</dl>
+						</div>
+						<div class="col-sm-5">
+							<dl class="dl-horizontal">
+								<dt>
+									<span class="text-danger">*</span>业主佣金合计（合同约定）：
+								</dt>
+								<dd>
+									<span>{{$ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownTotalReceived}}</span>元
+									<span class='color_red' ng-if="$ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownTotalReceived">¥：{{$ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownTotalReceived | signCurrency}}</span>
+								</dd>
+							</dl>
+						</div>
+						<div class="col-sm-2">
+							<dl class="dl-horizontal">
+								<dt>总折扣：</dt>
+								<dd>{{$ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownTotalDiscount}}折</dd>
+							</dl>
+						</div>
+					</div>
+					<div class="row" ng-if="$ctrl.buyInfoContractC.salesTradeBothSidesInfoVo.entrustedTransfer==1">
+						<div class="col-sm-5">
+							<dl class="dl-horizontal"> 
+								<dt>
+									<span class="text-danger">*</span>业主佣金合计（公司规定）：
+								</dt>
+								<dd>
+									<span>{{$ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownPerformanceReceivable}}</span>元
+									<span class='color_red' ng-if='$ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownPerformanceReceivable'>¥：{{$ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownPerformanceReceivable | signCurrency}}</span>
+								</dd>
+							</dl>
+						</div>
+						<div class="col-sm-5">
+							<dl class="dl-horizontal">
+								<dt>
+									<span class="text-danger">*</span>业主佣金合计（合同约定）：
+								</dt>
+								<dd>
+									<span>{{$ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownPerformanceReceived}}</span>元
+									<span class='color_red' ng-if="$ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownPerformanceReceived">¥：{{$ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownPerformanceReceived | signCurrency}}</span>
+								</dd>
+							</dl>
+						</div>
+						<div class="col-sm-2">
+							<dl class="dl-horizontal">
+								<dt>总折扣：</dt>
+								<dd>{{$ctrl.buyInfoContract.salesCompanyServiceChargeVo.ownPerformanceDiscount}}折</dd>
+							</dl>
+						</div>
+					</div>
+					</div>
+					<div ng-if="$ctrl.serveObjC.indexOf(2) > -1" >
+					<div class="row" ng-if="$ctrl.buyInfoContractC.salesTradeBothSidesInfoVo.entrustedTransfer==0">
+						<div class="col-sm-5">
+							<dl class="dl-horizontal">
+								<dt>
+									<span class="text-danger">*</span>客户居间佣金（公司规定）：
+								</dt>
+								<dd>
+									<span>{{$ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusBrokerageReceivable}}</span>元
+									<span class='color_red' ng-if="$ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusBrokerageReceivable">¥：{{$ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusBrokerageReceivable | signCurrency}}</span>
+								</dd>
+							</dl>
+						</div>
+						<div class="col-sm-5">
+							<dl class="dl-horizontal">
+								<dt>
+									<span class="text-danger">*</span>客户居间佣金（合同约定）：
+								</dt>
+								<dd>
+									<span>{{$ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusBrokerageReceived}}</span>元
+									<span class='color_red' ng-if="$ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusBrokerageReceived">¥：{{$ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusBrokerageReceived | signCurrency}}</span>
+								</dd>
+							</dl>
+						</div>
+						<div class="col-sm-2">
+							<dl class="dl-horizontal">
+								<dt>居间折扣：</dt>
+								<dd>{{$ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusBrokerageDiscount}}折</dd>
+							</dl>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-5">
+							<dl class="dl-horizontal">
+								<dt>
+									<span class="text-danger">*</span>客户履约佣金（公司规定）：
+								</dt>
+								<dd>
+									<span>{{$ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusPerformanceReceivable}}</span>元
+									<span class='color_red' ng-if="$ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusPerformanceReceivable">¥：{{$ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusPerformanceReceivable | signCurrency}}</span>
+								</dd>
+							</dl>
+						</div>
+						<div class="col-sm-5">
+							<dl class="dl-horizontal">
+								<dt>
+									<span class="text-danger">*</span>客户履约佣金（合同约定）：
+								</dt>
+								<dd>
+									<span>{{$ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusPerformanceReceived}}</span>元
+									<span class='color_red' ng-if="$ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusPerformanceReceived">¥：{{$ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusPerformanceReceived | signCurrency}}</span>
+								</dd>
+							</dl>
+						</div>
+						<div class="col-sm-2">
+							<dl class="dl-horizontal">
+								<dt>履约折扣：</dt>
+								<dd>{{$ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusPerformanceDiscount}}折</dd>
+							</dl>
+						</div>
+					</div>
+					<div class="row" ng-if="$ctrl.buyInfoContractC.salesTradeBothSidesInfoVo.entrustedTransfer==0">
+						<div class="col-sm-5">
+							<dl class="dl-horizontal">
+								<dt>
+									<span class="text-danger">*</span>客户佣金合计（公司规定）：
+								</dt>
+								<dd>
+									<span>{{$ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusTotalReceivable}}</span>元
+									<span class='color_red' ng-if="$ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusTotalReceivable">¥：{{$ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusTotalReceivable | signCurrency}}</span>
+								</dd>
+							</dl>
+						</div>
+						<div class="col-sm-5">
+							<dl class="dl-horizontal">
+								<dt>
+									<span class="text-danger">*</span>客户佣金合计（合同约定）：
+								</dt>
+								<dd>
+									<span>{{$ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusTotalReceived}}</span>元
+									<span class='color_red' ng-if="$ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusTotalReceived">¥：{{$ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusTotalReceived | signCurrency}}</span>
+								</dd>
+							</dl>
+						</div>
+						<div class="col-sm-2">
+							<dl class="dl-horizontal">
+								<dt>总折扣：</dt>
+								<dd>{{$ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusTotalDiscount}}折</dd>
+							</dl>
+						</div>
+					</div>
+					<div class="row" ng-if="$ctrl.buyInfoContractC.salesTradeBothSidesInfoVo.entrustedTransfer==1">
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt>
+									<span class="text-danger">*</span>客户佣金合计（公司规定）：
+								</dt>
+								<dd>
+									<span>{{$ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusPerformanceReceivable}}</span>元
+									<span class='color_red' ng-if="$ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusPerformanceReceivable">¥：{{$ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusPerformanceReceivable | signCurrency}}</span>
+								</dd>
+							</dl>
+						</div>
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt>
+									<span class="text-danger">*</span>客户佣金合计（合同约定）：
+								</dt>
+								<dd>
+									<span>{{$ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusPerformanceReceived}}</span>元
+									<span class='color_red' ng-if="$ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusPerformanceReceived">¥：{{$ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusPerformanceReceived | signCurrency}}</span>
+								</dd>
+							</dl>
+						</div>
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt>总折扣：</dt>
+								<dd>{{$ctrl.buyInfoContract.salesCompanyServiceChargeVo.cusPerformanceDiscount}}折</dd>
+							</dl>
+						</div>
+					</div>
+					</div>
+					<div ng-if="$ctrl.discount_res">
+					<div class="row ptb10">
+						<div class="pl10 font-bold font-blue info-tit">折扣原因</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">
+							<dl class="dl-horizontal">
+								<dt>打折原因：</dt>
+								<dd>{{$ctrl.buyInfoContractC.salesCompanyServiceChargeVo.discountReasonValue}}</dd>
+							</dl>
+						</div>
+						<div class="col-md-4" ng-if="$ctrl.buyInfoContractC.salesCompanyServiceChargeVo.discountReason==4">
+							<dl class="dl-horizontal">
+								<dt>员工姓名：</dt>
+								<dd>{{$ctrl.buyInfoContractC.salesCompanyServiceChargeVo.discountEmployeesName}}</dd>
+							</dl>
+						</div>
+						<div class="col-md-4" ng-if="$ctrl.buyInfoContractC.salesCompanyServiceChargeVo.discountReason==3">
+							<dl class="dl-horizontal">
+								<dt>合同编号：</dt>
+								<dd>{{$ctrl.buyInfoContractC.salesCompanyServiceChargeVo.discountContract}}</dd>
+							</dl>
+						</div>
+							
+					</div>
+					<div class="row">
+						<div class="col-sm-12">
+							<dl class="dl-horizontal">
+								<dt>情况说明：</dt>
+								<dd>{{$ctrl.buyInfoContractC.salesCompanyServiceChargeVo.situationExplain}}</dd>
+							</dl>
+						</div>
+					</div>
+					</div>
+					<div class="row ptb10">
+						<div class="pl10 font-bold font-blue info-tit">审核资料</div>
+					</div>
+					<div class="row">
+						<div class="col-md-8">
+							<dl class="dl-horizontal">
+								<dt>房屋校验：</dt>
+								<dd>{{$ctrl.buyInfoContractC.salesNoPrintContractVo.houseCheckValue}}</dd>
+							</dl>
+						</div>
+						<div class="col-md-4" ng-if="$ctrl.buyInfoContractC.salesNoPrintContractVo.houseCheckKey.indexOf(5)>-1">
+							<dl class="dl-horizontal">
+								<dt>其他描述：</dt>
+								<dd>{{$ctrl.buyInfoContractC.salesNoPrintContractVo.houseCheckMemo}}</dd>
+							</dl>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="ibox" id="contract-print">
+			<div class="customer_info_content">
+				<div class="row ptb10">
+					<div class="pl10 font-bold font-blue info-tit">
+						<i class="glyphicon glyphicon-minus"></i>合同非打印项
+					</div>
+				</div>
+				<div id="unpritable" class="edit">
+					<div class="row">
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt>成交店所属大区：</dt>
+								<dd>{{$ctrl.buyInfoContractC.salesNoPrintContractVo.dealAreaName}}</dd>
+							</dl>
+						</div>
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt>成交店所属组团：</dt>
+								<dd>{{$ctrl.buyInfoContractC.salesNoPrintContractVo.dealGroupName}}</dd>
+							</dl>
+						</div>
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt>成交店所属店面：</dt>
+								<dd>{{$ctrl.buyInfoContractC.salesNoPrintContractVo.dealShopName}}</dd>
+							</dl>
+						</div>
+					
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt>资金存管银行：</dt>
+								<dd>{{$ctrl.buyInfoContractC.salesNoPrintContractVo.depositoryBank}}</dd>
+							</dl>
+						</div>
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt>过户后的新房产证地址：</dt>
+								<dd>{{$ctrl.buyInfoContractC.salesNoPrintContractVo.newBuildingAddr}}</dd>
+							</dl>
+						</div>
+						<div class="col-sm-4">
+							<dl class="dl-horizontal"> 
+								<dt>过户后的新房产证号：</dt>
+								<dd>{{$ctrl.buyInfoContractC.salesNoPrintContractVo.housePropertyCardCode}}</dd>
+							</dl>
+						</div>
+
+						<div class="col-sm-4">
+							<dl class="dl-horizontal"> 
+								<dt>评估费：</dt>
+								<dd>{{$ctrl.buyInfoContractC.salesNoPrintContractVo.valuationFeeValue}}</dd>
+							</dl>
+						</div>
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt>房源核验：</dt> 
+								<dd>{{$ctrl.buyInfoContractC.salesNoPrintContractVo.roomCheckValue}}</dd>
+							</dl>
+						</div>
+						<div class="col-sm-4">
+							<dl class="dl-horizontal"> 
+								<dt>贷款：</dt>
+								<dd>{{$ctrl.buyInfoContractC.salesNoPrintContractVo.loanValue}}</dd>
+							</dl>
+						</div>
+
+						<div class="col-sm-4">
+							<dl class="dl-horizontal"> 
+								<dt>过户：</dt>
+								<dd>{{$ctrl.buyInfoContractC.salesNoPrintContractVo.changeNameValue}}</dd>
+							</dl>
+						</div>
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt>网签：</dt>
+								<dd>{{$ctrl.buyInfoContractC.salesNoPrintContractVo.netSignValue}}</dd>
+							</dl>
+						</div>
+
+					<!-- <div class="row">
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt>大区助理：</dt>
+								<dd>{{$ctrl.buyInfoContractC.salesNoPrintContractVo.areaContractorName}}</dd>
+							</dl>
+						</div>
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt>店经理：</dt>
+								<dd>{{$ctrl.buyInfoContractC.salesNoPrintContractVo.storeManagerName}}</dd>
+							</dl>
+						</div>
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt>店面助理：</dt>
+								<dd>{{$ctrl.buyInfoContractC.salesNoPrintContractVo.storeContractorName}}</dd>
+							</dl>
+						</div>
+					</div> -->
+
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt>是否连环单：</dt>
+								<dd class="J_detail_areaName" ng-if="$ctrl.buyInfoContractC.salesNoPrintContractVo.continuousOrder==1">是</dd>
+								<dd class="J_detail_areaName" ng-if="$ctrl.buyInfoContractC.salesNoPrintContractVo.continuousOrder==0">否</dd>
+							</dl>
+						</div>
+						<div class="col-sm-4" ng-if="$ctrl.buyInfoContractC.salesNoPrintContractVo.continuousOrder==1">
+							<dl class="dl-horizontal">
+								<dt>连环单合同号：</dt>
+								<dd>{{$ctrl.buyInfoContractC.salesNoPrintContractVo.continuousOrderNum}}</dd>
+							</dl>
+						</div>
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt>是否转按揭：</dt>
+								<dd class="J_detail_areaName" ng-if="$ctrl.buyInfoContractC.salesNoPrintContractVo.mortgage==1">是</dd>
+								<dd class="J_detail_areaName" ng-if="$ctrl.buyInfoContractC.salesNoPrintContractVo.mortgage==0">否</dd>
+							</dl>
+						</div>
+
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt>抵押还款人：</dt>
+								<dd>{{$ctrl.buyInfoContractC.salesNoPrintContractVo.mortgagePaymentsValue}}</dd>
+							</dl>
+						</div>
+						<div class="col-sm-4" ng-if="$ctrl.buyInfoContractC.salesNoPrintContractVo.mortgagePayments==4">
+							<dl class="dl-horizontal">
+								<dt>抵押还款人描述：</dt>
+								<dd>{{$ctrl.buyInfoContractC.salesNoPrintContractVo.mortgagePaymentsMemo}}</dd>
+							</dl>
+						</div>
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt>综合地价款：</dt>
+								<dd>{{$ctrl.buyInfoContractC.salesNoPrintContractVo.integratedPaymentValue}}</dd>
+							</dl>
+						</div>
+
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt>增值税：</dt>
+								<dd class="J_detail_areaName" ng-if="$ctrl.buyInfoContractC.salesNoPrintContractVo.valueAddedTax==1">是</dd>
+								<dd class="J_detail_areaName" ng-if="$ctrl.buyInfoContractC.salesNoPrintContractVo.valueAddedTax==0">否</dd>
+							</dl>
+						</div>
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt>个税：</dt>
+								<dd class="J_detail_areaName" ng-if="$ctrl.buyInfoContractC.salesNoPrintContractVo.incomeTax==1">是</dd>
+								<dd class="J_detail_areaName" ng-if="$ctrl.buyInfoContractC.salesNoPrintContractVo.incomeTax==0">否</dd>
+							</dl>
+						</div>
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt>购房资质：</dt>
+								<dd>{{$ctrl.buyInfoContractC.salesNoPrintContractVo.buyHouseQualifValue}}</dd>
+							</dl>
+						</div>
+
+						<div class="col-sm-4" ng-if="$ctrl.buyInfoContractC.salesNoPrintContractVo.buyHouseQualification==7">
+							<dl class="dl-horizontal">
+								<dt>购房资质描述：</dt>
+								<dd>{{$ctrl.buyInfoContractC.salesNoPrintContractVo.qualificationMemo}}</dd>
+							</dl>
+						</div>
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt>售房原因：</dt> 
+								<dd>{{$ctrl.buyInfoContractC.salesNoPrintContractVo.sellersHouseReasonValue}}</dd>
+							</dl>
+						</div>
+						<div class="col-sm-4">
+							<dl class="dl-horizontal"> 
+								<dt>买房原因：</dt>
+								<dd>{{$ctrl.buyInfoContractC.salesNoPrintContractVo.buyHouseReasonValue}}</dd>
+							</dl>
+						</div>
+
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt>签约日期：</dt>
+								<dd>{{$ctrl.buyInfoContractC.salesNoPrintContractVo.signingDateToString}}</dd>
+							</dl>
+						</div>
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt>金融风险师：</dt>
+								<dd>{{$ctrl.buyInfoContractC.salesNoPrintContractVo.financialRiskName}}</dd>
+							</dl>
+						</div>
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt>跟单人：</dt>
+								<dd>{{$ctrl.buyInfoContractC.salesNoPrintContractVo.trackingPeopleName}}</dd>
+							</dl>
+						</div>
+
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt>跟单人所属大区：</dt>
+								<dd>{{$ctrl.buyInfoContractC.salesNoPrintContractVo.spoorerAreaName}}</dd>
+							</dl>
+						</div>
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt>跟单人所属组团：</dt> 
+								<dd>{{$ctrl.buyInfoContractC.salesNoPrintContractVo.spoorerGroupName}}</dd>
+							</dl>
+						</div>
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt>跟单人所属店：</dt>
+								<dd>{{$ctrl.buyInfoContractC.salesNoPrintContractVo.spoorerName}}</dd>
+							</dl>
+						</div>
+
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt>原合同编号：</dt>
+								<dd>{{$ctrl.buyInfoContractC.salesNoPrintContractVo.originalContractCode}}</dd>
+							</dl>
+						</div>
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt>业主代理人代收定金及房款：</dt> 
+								<dd>{{$ctrl.buyInfoContractC.salesNoPrintContractVo.collectingDepositValue }}</dd>
+							</dl>
+						</div>
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt>委托公证书：</dt>
+								<dd>{{$ctrl.buyInfoContractC.salesNoPrintContractVo.entrustNotarialDeedValue }}</dd>
+							</dl>
+						</div>
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt>委托公证书是否注明委托人代收定金或房款：</dt>
+								<dd>{{$ctrl.buyInfoContractC.salesNoPrintContractVo.principalCollectiongDepositValue }}</dd>
+							</dl>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+			<div class="ibox-content" ng-if="$ctrl.btnStates">
+               <div class="text-center">
+                   <button class="btn btn-success btn_size" type="button"
+                           ng-repeat="item in $ctrl.workFlowButtons"
+                           ng-click="$ctrl.workFlowAction(item)">
+                       {{ item.labelName }}
+                   </button>
+               </div>
+           </div>
+		</div>
+		</div>
+	</div>
+	<div style="width: 200px; border-left:5px solid #e3e3e3; background:#fff; border-right:#fff;">
+         <div my-spy-affix offset-top="1"
+              style="width: 200px;"
+              offset-bottom="30" id="navbar-fixed">
+             <div class="list-group" my-spy-scroll>
+                 <a href="#both-sides-info" class="list-group-item" style="text-align:center">交易双方基本信息</a>
+                 <a href="#houses-basic-info" class="list-group-item" style="text-align:center">房屋基本情况</a>
+                 <a href="#houses-ownership-info" class="list-group-item" style="text-align:center">房屋权属情况</a>
+                 <a href="#between-broker" class="list-group-item" style="text-align:center">居间经纪人</a>
+                 <a href="#money-transfer" class="list-group-item" style="text-align:center">客户业主资金交接</a>
+                 <a href="#company-service" class="list-group-item" style="text-align:center">公司服务费</a>
+                 <a href="#contract-print" class="list-group-item" style="text-align:center">合同非打印项</a>
+             </div>
+         </div>
+     </div>
+</div>

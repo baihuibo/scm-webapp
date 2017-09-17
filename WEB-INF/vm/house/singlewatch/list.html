@@ -1,0 +1,331 @@
+#set($plugins = ["table","chosen","laydate","ztree","autoSearch"])
+<!-- 查询条件 begin -->
+<div class="ibox">
+	<div class="ibox-title">
+		<h5>空看管理</h5>
+		<div class="ibox-tools">
+			<a class="collapse-link ui-sortable"><i class="fa fa-chevron-up"></i>
+			</a>
+		</div>
+	</div>
+	<div class="ibox-content">
+		#if($shiro.hasPermission("SCM:HOUSE:SINGLE:VIEW"))
+			<input type="hidden" value="1" id="temp_view"></input>
+		#end
+		#if($shiro.hasPermission("SCM:HOUSE:SINGLE:FEEDBACK"))
+			<input type="hidden" value="1" id="temp_feedback"></input>
+		#end
+		<form class="form-horizontal" role="form" id="J_lease_form">
+			<div class="row">
+			
+			
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">所属部门：</label>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <input id="J_deptLevel" type="hidden">
+                                <input id="J_deptName" type="text" class="form-control radius-3" autocomplete="off">
+                                <div class="input-group-btn">
+                                    <button id="J_deptSelect" data-toggle="dropdown" class="btn dropdown-toggle btn-dept" type="button"><span class="caret"></span></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">空看人：</label>
+						<div class="col-sm-8">	
+							<div class="input-group">
+								<input type="text" name="createby" class="form-control" class="lendusername" id="J_sendee">
+								<div class="input-group-btn">
+									<button type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown">
+										<span class="glyphicon glyphicon-search search-caret"></span>
+									</button>
+									<ul class="dropdown-menu dropdown-menu-right" role="menu">
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">房源编号：</label>
+					<div class="col-sm-8">
+						<input id="J_singlehouseid" name="houseid" class="form-control" placeholder="">
+					</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">外出时间：</label>
+						<div class="col-sm-8" layout="row">
+							<div flex><input id="J_singlestarttime" name="begindate" class="form-control"></div>
+							<div class="split">-</div>
+							<div flex><input id="J_singleendtime" name="enddate" class="form-control"></div>
+						</div>                        
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">状态：</label>
+						<div class="col-sm-8">
+							<select id="J_sstatus" name="sstatus" class="J_chosen form-control" data-placeholder="请选择">
+								<option value="">全部</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label" style="white-space: nowrap">是否集中看房：</label>
+						<div class="col-sm-8">
+							<select id="J_isvalid" name="isvalid" class="J_chosen form-control" data-placeholder="请选择">
+								<option value="">全部</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">									
+				<div class="col-md-12">
+                       <div class="form-group">
+                           <div class="col-sm-5  col-sm-offset-5">
+                               <button id="J_search" type="button" class="btn btn-success btn_size">查 询</button>
+                               <button id="J_reset_lease" type="button" class="btn btn-white btn_size">重 置</button>
+                           </div>
+                       </div>
+                   </div>
+			</div>
+		</form>
+	</div>
+</div>
+<!-- 查询条件end -->
+
+<!-- 列表  begin -->
+<div class="ibox float-e-margins">
+	<div class="ibox-title"><h5>空看列表</h5></div>
+	<div class="ibox-content">
+		<div class="row row-lg">
+			<div class="col-sm-12">
+				<!-- Example Pagination -->
+				<div class="example-wrap ptb10">
+					<p></p>
+					<table id="J_dataTable" class="table table-hover table-striped table-bordered"
+						data-query-params="queryParams" data-mobile-responsive="true"
+						data-pagination="true" data-icon-size="outline"
+						data-striped="true" data-search="false">
+						<thead>
+							<tr>
+								<th data-field="emptyid">空看编号</th>
+								<th data-field="houseid">房源编号</th>
+								<th data-field="status">状态</th>
+								<th data-field="feedbacknum">反馈套数/空看套数</th>
+								<th data-field="createbyname">空看人</th>
+								<th data-field="shopgroupname">空看部门</th>
+								<th data-field="goouttime">外出时间</th>
+								<th data-field="backtime">返回时间</th>
+								<th data-field="opt">操作</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+				<!-- End Example Pagination -->
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 列表  end -->
+
+<!-- 空看 start -->
+<!-- <div class="row">
+	<div class="col-md-12 text-cen">
+		<div class="form-group">需要传参 houseid
+			<a id="J_singlewatch" class="btn btn-default" onclick="singlewatchadd('36820540','1')">空看</a>
+		</div>
+	</div>
+</div> -->
+<!-- 空看 end -->
+<!-- 空看列表 start -->
+<!-- 空看列表 end -->
+#parse("/house/singlewatch/add_singlewatch_dialog.html")
+
+<!-- 添加空看-系统房源 start -->
+<div id="J_singlewatch_add_system" class="ibox-content" style="margin:0 10px 0 10px; display:none;">
+	<div class="ibox">
+		<div class="ibox-title">
+			<h5>添加空看-系统房源</h5>
+			<div class="ibox-tools">
+				<a class="collapse-link ui-sortable"><i class="fa fa-chevron-up"></i>
+				</a>
+			</div>
+		</div>
+		<div class="ibox-content">
+			<form class="form-horizontal" role="form" id="J_singleadd_form">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">房源编号：</label>
+							<div class="col-sm-6">
+								<input id="J_singlehouseid" name="J_singleaddhouseid" class="form-control w230" placeholder="">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">价格：</label>
+							<div class="col-sm-3">
+								<input id="J_singleadd_minprice" name="J_singleadd_minprice" class="form-control w80">
+							</div>
+							<div style="float:left; padding:7px 0px;">-</div>
+							<div class="col-sm-3">
+								<input id="J_singleadd_maxprice" name="J_singleadd_maxprice" class="form-control w80">
+							</div>
+							<div style="float:left; padding:7px 0px;">万元</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">建筑面积：</label>
+							<div class="col-sm-3">
+								<input id="J_singleadd_minarea" name="J_singleadd_minarea" class="form-control w80">
+							</div>
+							<div style="float:left; padding:7px 0px;">-</div>
+							<div class="col-sm-3">
+								<input id="J_singleadd_maxarea" name="J_singleadd_maxarea" class="form-control w80">
+							</div>
+							<div style="float:left; padding:7px 0px;">米²</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">户型：</label>
+							<div class="col-sm-3">
+								<select id="J_singlestatus" name="J_singlestatus" class=" form-control w160" data-placeholder="请选择">
+									<option value="0">均可</option>
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+									<option value="5">5</option>
+									<option value="6">6</option>
+								</select>
+							</div>
+							<div style="float:left; padding:7px 0px;">-</div>
+							<div class="col-sm-3">
+								<select id="J_singlestatus" name="J_singlestatus" class=" form-control w160" data-placeholder="请选择">
+									<option value="0">均可</option>
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+									<option value="5">5</option>
+									<option value="6">6</option>
+								</select>
+							</div>
+							<div style="float:left; padding:7px 0px;">室</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">楼层：</label>
+							<div class="col-sm-3">
+								<input id="J_singleadd_minarea" name="J_singleadd_minarea" class="form-control w80">
+							</div>
+							<div style="float:left; padding:7px 0px;">-</div>
+							<div class="col-sm-3">
+								<input id="J_singleadd_maxarea" name="J_singleadd_maxarea" class="form-control w80">
+							</div>
+							<div style="float:left; padding:7px 0px;">层</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">门牌号：</label>
+							<div class="col-sm-6">
+								<input id="J_singlehousenum" name="J_singlehousenum" class="form-control w230" placeholder="">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">楼盘：</label>
+							<div class="col-sm-8">
+								<input id="J_multi_building" name="J_multi_building" class="form-control" placeholder="">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">商圈：</label>
+							<div class="col-sm-8">
+								<input id="J_mulit_tradearea" name="J_singlehouseid" class="form-control" placeholder="">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12 text-cen">
+						<div class="form-group">
+							<button id="J_add_search" type="button" class="btn btn-success pr5">查 询</button>
+							<button id="J_add_reset_lease" type="reset" class="btn btn-default">清 空</button>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<!-- 查询条件end -->	
+	<!-- 列表  begin -->
+	<div class="ibox float-e-margins">
+		<div class="ibox-content">
+			<div class="row row-lg">
+				<div class="col-sm-12">
+					<!-- Example Pagination -->
+					<div class="example-wrap ptb10">
+						<p></p>
+						<table id="J_house_dataTable" class="table table-hover  table-striped"
+							data-query-params="queryParams" data-mobile-responsive="true"
+							data-pagination="true" data-icon-size="outline"
+							data-striped="true" data-search="false">
+							<thead>
+								<tr>
+									<th data-field="h_hid">checkbox</th>
+									<th data-field="h_houseid">房源编号</th>
+									<th data-field="h_buildname">楼盘</th>
+									<th data-field="h_housenum">门牌号</th>
+									<th data-field="h_price">价格</th>
+									<th data-field="h_builtarea">建筑面积</th>
+									<th data-field="h_layout">户型</th>
+									<th data-field="h_floor">楼层</th>
+									<th data-field="h_orientation">朝向</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+					<!-- End Example Pagination -->
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 添加空看-系统房源 end -->
+
+<!-- 看房反馈 -->
+#parse("/house/singlewatch/feedback.html")
+
+<script type="text/javascript" src="$link.contextPath/resources/js/department.js"></script>
+<script type='text/javascript' src="$link.contextPath/resources/script/house/singlewatch/list.js"></script>
+<script type='text/javascript' src="$link.contextPath/resources/script/house/public/check_address.js"></script>

@@ -1,0 +1,629 @@
+#set($plugins = ["table","chosen","laydate","autoSearch","validator","ztree"])
+<style type="text/css">
+.btn-edit {
+	color: #1A7BB9;
+	background: white;
+	font-size: 24px;
+	border-radius: 3px;
+	padding-right: 8px;
+}
+.help-display{
+	    display: table-caption;
+}
+</style>
+<div id="controller" ng-controller="draftDetailCtrl as $ctrl" ng-cloak>
+<div class="ibox">
+	<div class="bs-callout bs-callout-warning">
+		<h4>买卖草签合同详情</h4>
+	</div>
+	<!--
+	#if($shiro.hasPermission("SCM:SALES:DEAL_SIGN_CONTRACT_ENCLOSURE_UPLOAD"))
+		<div id="upload" style="display:none"></div>
+	#end -->
+	<div class="ibox-content">
+		<div class="customer_info_content">
+			<!-- <div class="row" ng-if="$ctrl.editStates&&$ctrl.noservicebtn&&$ctrl.currentUser">
+				<button type="button" class="btn btn-success btn-xs pull-right"
+                    ng-if="$ctrl.edit==1"
+                    ng-click="$ctrl.startEdit('detail')">
+                编辑
+            </button>
+            <button type="button" class="btn btn-success btn-xs pull-right"
+                    ng-if="$ctrl.edit==2"
+                    ng-click="$ctrl.cancelEdit('detail')">
+                取消
+            </button>
+            <button type="button" class="btn btn-success btn-xs pull-right btn_size"
+                    ng-if="$ctrl.edit==2"
+                    ng-click="$ctrl.saveEdit('detail')" ng-disabled="!$ctrl.detailbtn">
+                保存
+            </button>
+			</div> -->
+			<div id="detail" class="edit" ng-if="$ctrl.edit==1">
+				<div class="row">
+					<div class="col-md-4">
+						<dl class="dl-horizontal">
+							<dt>存量房合同编号：</dt>
+							<dd class="J_detail_contractCode">{{$ctrl.detailC.contractCode}}</dd>
+						</dl>
+					</div>
+					<div class="col-md-4">
+						<dl class="dl-horizontal">
+							<dt>居间合同编号：</dt>
+							<dd class="J_detail_brokContractNum" ng-if="$ctrl.detail.brokContractNum==null">提交折扣审核后生成居间合同编号</dd>
+							<dd class="J_detail_brokContractNum" ng-if="$ctrl.detail.brokContractNum!=null">{{$ctrl.detail.brokContractNum}}</dd>
+						</dl>
+					</div>
+					<div class="col-md-4">
+						<dl class="dl-horizontal">
+							<dt>履约合同编号：</dt>
+							<dd class="J_detail_perfContractNum" ng-if="$ctrl.detail.perfContractNum==null">提交折扣审核后生成履约合同编号</dd>
+							<dd class="J_detail_perfContractNum" ng-if="$ctrl.detail.perfContractNum!=null">{{$ctrl.detail.perfContractNum}}</dd>
+						</dl>
+					</div>
+				<!-- </div>
+				<div class="row"> -->
+					<div class="col-md-4">
+						<dl class="dl-horizontal">
+							<dt>合同日期：</dt>
+							<dd class="J_detail_contCreateTime">{{$ctrl.detailC.contCreateTime}}</dd>
+						</dl>
+					</div>
+					<div class="col-md-4">
+						<dl class="dl-horizontal">
+							<dt>合同成交人：</dt>
+							<person-show
+                                person-name="$ctrl.detailC.inputUserName"
+                                person-id="$ctrl.detailC.inputUserId"></person-show>
+						</dl>
+					</div>
+					<!-- <div class="col-md-4">
+						<dl class="dl-horizontal">
+							<dt>合同所属人：</dt>
+							<dd class="J_detail_belonguserName">{{$ctrl.detailC.belonguserName}}</dd>
+						</dl>
+					</div> -->
+				<!-- </div>
+				<div class="row"> -->
+					<div class="col-md-4">
+						<dl class="dl-horizontal">
+							<dt>房源编号：</dt>
+							<dd class="J_detail_housesCode"> <a ng-href="{{::$ctrl.houseLink}}" target="_blank">{{::$ctrl.detailC.housesCode}}</a></dd>
+						</dl>
+					</div>
+					<div class="col-md-4">
+						<dl class="dl-horizontal">
+							<dt>客源编号：</dt>
+							<dd class="J_detail_customerCode"><a ng-href="{{::$ctrl.customerLink}}" target="_blank">{{::$ctrl.detailC.clientId}}</a></dd>
+						</dl>
+					</div>
+					<div class="col-md-4">
+						<dl class="dl-horizontal">
+							<dt>合同状态：</dt>
+							<dd class="J_detail_contractStatus">{{$ctrl.detailC.contractStatusValue}}</dd>
+						</dl>
+					</div>
+				<!-- </div>
+				<div class="row"> -->
+					<div class="col-md-4">
+						<dl class="dl-horizontal">
+							<dt>合同审核状态：</dt>
+							<dd class="J_detail_auditStatus">{{$ctrl.detailC.auditStatusValue}}</dd>
+						</dl>
+					</div>
+					<div class="col-md-4" ng-if="$ctrl.detailC.rejectReason&&$ctrl.detailC.rejectReason!=''">
+						<dl class="dl-horizontal">
+							<dt class="text-danger">驳回原因：</dt>
+							<dd class="J_detail_rejectReason">{{$ctrl.detailC.rejectReason}}</dd>
+						</dl>
+					</div>
+				</div>
+			</div>
+			<div id="detail_layer" class=""  ng-if="$ctrl.edit==2">
+				<form id="detail_form" name="detail_form" class="form-horizontal">
+					<div class="row">
+						<div class="col-md-4">
+							<dl class="dl-horizontal">
+								<dt>存量房合同编号：</dt>
+								<dd class="J_detail_layer_contractCode">{{$ctrl.detail.contractCode}}</dd>
+							</dl>
+						</div>
+						<div class="col-md-4">
+							<dl class="dl-horizontal">
+								<dt>居间合同编号：</dt>
+								<dd class="J_detail_layer_brokContractNum">{{$ctrl.detail.brokContractNum}}</dd>
+							</dl>
+						</div>
+						<div class="col-md-4">
+							<dl class="dl-horizontal">
+								<dt>履约合同编号：</dt>
+								<dd class="J_detail_layer_perfContractNum">{{$ctrl.detail.perfContractNum}}</dd>
+							</dl>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">
+							<dl class="dl-horizontal">
+								<dt>合同日期：</dt>
+								<dd class="J_detail_layer_contCreateTime">{{$ctrl.detail.contCreateTime}}</dd>
+							</dl>
+						</div>
+						<div class="col-md-4">
+							<dl class="dl-horizontal">
+								<dt>合同成交人：</dt>
+								<!-- <dd class="J_detail_layer_inputUserName">{{$ctrl.detail.inputUserName}}</dd> -->
+								<person-show
+                                person-name="$ctrl.detail.inputUserName"
+                                person-id="$ctrl.detail.inputUserId"></person-show>
+							</dl>
+						</div>
+						<!-- <div class="col-md-4">
+							<div class="form-group">
+								<dt class="fl control-label" style="padding-left:0px !important">合同所属人:</dt>
+								<div class="col-sm-5">
+									<div class="input-group">
+										<input type="text" class="input form-control J_detail_layer_belonguserid" id="belonguserid" name="belonguserid"
+											autocomplete="off" ng-attr-data-id="$ctrl.detail.belonguserid" ng-value="$ctrl.detail.belonguserName">
+										<div class="input-group-btn">
+											<button type="button" class="btn btn-white dropdown-toggle"
+												data-toggle="">
+												<span class="glyphicon glyphicon-search search-caret"></span>
+											</button>
+											<ul class="dropdown-menu dropdown-menu-right" role="menu">
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+			
+						</div> -->
+					</div>
+					<div class="row">
+						<div class="col-md-4">
+							<dl class="dl-horizontal">
+								<dt>房源编号：</dt>
+								<dd class="J_detail_layer_housesCode"><a ng-href="{{::$ctrl.houseLink}}" target="_blank">{{::$ctrl.detail.housesCode}}</a></dd>
+							</dl>
+						</div>
+						<div class="col-md-4">
+							<dl class="dl-horizontal">
+								<dt>客源编号：</dt>
+								<dd class="J_detail_layer_customerCode"><a ng-href="{{::$ctrl.customerLink}}" target="_blank">{{::$ctrl.detail.customerCode}}</a></dd>
+							</dl>
+						</div>
+						<div class="col-md-4">
+							<dl class="dl-horizontal">
+								<dt>合同状态：</dt>
+								<dd class="J_detail_layer_contractStatus">{{$ctrl.detail.contractStatusValue}}</dd>
+							</dl>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">
+							<dl class="dl-horizontal">
+								<dt>折扣审核状态：</dt>
+								<dd class="J_detail_layer_auditStatus">{{$ctrl.detail.auditStatusValue}}</dd>
+							</dl>
+						</div>
+						<div class="col-md-4" ng-if="$ctrl.detail.rejectReason&&$ctrl.detail.rejectReason!=''">
+							<dl class="dl-horizontal">
+								<dt class="text-danger">驳回原因：</dt>
+								<dd class="J_detail_layer_rejectReason">{{$ctrl.detail.rejectReason}}</dd>
+							</dl>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="row mt10">
+		<div class="tabs-container">
+			<ul class="nav nav-tabs nav_tab_ath">
+				#if($shiro.hasPermission("SCM:SALES:DEAL_SIGN_CONTRACT_INFORMATION_VIEW"))
+				<li class="active"><a data-toggle="tab" href="#tab-11">合同信息</a></li>
+				#end
+				#if($shiro.hasPermission("SCM:SALES:DEAL_SIGN_CONTRACT_ENCLOSURE_SEE"))
+				<li class=""><a data-toggle="tab" href="#tab-12">附件管理</a></li>
+				#end
+				#if($shiro.hasPermission("SCM:SALES:DEAL_SIGN_CONTRACT_SUBSIDARY_QUERY"))
+				<li class=""><a data-toggle="tab" href="#tab-13">附属合同</a></li>
+				#end
+				#if($shiro.hasPermission("SCM:SALES:DEAL_SIGN_CONTRACT_AGREEMENT_QUERY"))
+				<li class=""><a data-toggle="tab" href="#tab-14">补充协议</a></li>
+				#end
+				#if($shiro.hasPermission("SCM:SALES:DEAL_SIGN_CONTRACT_PROCESS_QUERY"))
+				<li class=""><a data-toggle="tab" href="#tab-15">审批流程</a></li>
+				#end
+				#if($shiro.hasPermission("SCM:SALES:DEAL_SIGN_CONTRACT_PRINT_HISTORY_SEE"))
+				<li class="" ng-if="!$ctrl.docbizkey"><a data-toggle="tab" href="#tab-16">打印历史</a></li>
+				#end
+				#if($shiro.hasPermission("SCM:SALES:DEAL_SIGN_CONTRACT_OPERATION_QUERY"))
+				<li class="" ng-if="!$ctrl.docbizkey"><a data-toggle="tab" href="#tab-17">操作日志</a></li>
+				#end
+			</ul>
+			<div class="tab-content" id="tab-content1">
+				#if($shiro.hasPermission("SCM:SALES:DEAL_SIGN_CONTRACT_INFORMATION_VIEW"))
+				<div id="tab-11" class="tab-pane active">
+					<div class="panel-body">
+						#parse("/sign/main/draft_details/contract-info.html")</div>
+				</div>
+				#end
+				#if($shiro.hasPermission("SCM:SALES:DEAL_SIGN_CONTRACT_ENCLOSURE_SEE"))
+				<div id="tab-12" class="tab-pane">
+					<div class="panel-body">
+						#parse("/sign/main/draft_details/annex.html")</div>
+				</div>
+				#end
+				#if($shiro.hasPermission("SCM:SALES:DEAL_SIGN_CONTRACT_SUBSIDARY_QUERY"))
+				<div id="tab-13" class="tab-pane">
+					<div class="panel-body">
+						#parse("/sign/main/draft_details/subsidiary.html")</div>
+				</div>
+				#end
+				#if($shiro.hasPermission("SCM:SALES:DEAL_SIGN_CONTRACT_AGREEMENT_QUERY"))
+				<div id="tab-14" class="tab-pane">
+					<div class="panel-body">
+						#parse("/sign/main/draft_details/supplementary.html")</div>
+				</div>
+				#end
+				#if($shiro.hasPermission("SCM:SALES:DEAL_SIGN_CONTRACT_PROCESS_QUERY"))
+				<div id="tab-15" class="tab-pane">
+					<div class="panel-body">
+						#parse("/sign/main/draft_details/approval.html")</div>
+				</div>
+				#end
+				#if($shiro.hasPermission("SCM:SALES:DEAL_SIGN_CONTRACT_PRINT_HISTORY_SEE"))
+				<div id="tab-16" class="tab-pane">
+					<div class="panel-body">
+						#parse("/sign/main/draft_details/print-history.html")</div>
+				</div>
+				#end
+				#if($shiro.hasPermission("SCM:SALES:DEAL_SIGN_CONTRACT_OPERATION_QUERY"))
+				<div id="tab-17" class="tab-pane">
+					<div class="panel-body">
+						#parse("/sign/main/draft_details/operation-log.html")</div>
+				</div>
+				#end
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- 添加电话 begin -->
+<div id="addphone_layer" class="ibox-content" style="display: none;height: 100%;">
+	<form id="addphone_form" name="addphone_form" class="form-horizontal"style="height: 100%;">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<div class="col-sm-3">
+						<select id="phoneType" name="infoType"
+							class="J_chosen form-control" data-placeholder="请选择">
+							<option value="1">国内手机</option>
+							<option value="2">国内座机</option>
+							<option value="3">国外电话</option>
+						</select>
+					</div>
+					<div class="col-sm-7 m-l-sm">
+						<input id="phone" name="phones" class="form-control" placeholder="">
+						<div class="remark" style="margin-top: 3px;display: none;color:#ed5565;">
+						注:座机格式区号（3或4位）-固话（7或8位）</div>
+					</div>
+					<div class="col-sm-1 m-l-sm">
+						<button id="J_addphone" type="button" class="btn btn-success pr5">添加</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="tab-pane pt6 m-b-sm" style="height:76%;">
+			<div class="bootstrap-table" style="height:100%;overflow-y:auto;">
+				<table id="J_phone_dataTable" class="table table-hover table-striped singlewatch_ath table-bordered">
+					<thead>
+						<tr style="height: 30px;">
+							<th data-field="phone">电话</th>
+							<th data-field="opt">操作</th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+			</div>
+		</div>	
+		<div class="col-md-12 m-b-sm">
+			<div class="bootstrap-table">
+				<div id="prompt" style="color:#ff0000;">备注：至少添加一个手机号码</div>
+			</div>
+		</div>
+	</form>
+</div> 
+<!-- 添加电话的修改 end -->
+<!-- 业主代理人信息begin -->
+<div id="owner_agent_layer" class="ibox-content" style="display: none">
+	<form id="owner_agent_form" name="owner_agent_form" class="form-horizontal">
+		<div class="row">
+			<div class="col-md-12 ptb10">
+				<table id="J_owner_agent_dataTable"
+					class="table table-hover table-striped">
+					<thead>
+						<!-- <tr>
+							<th><span class="text-danger">*</span>业主代理人姓名</th>
+							<th><span class="text-danger">*</span>证件类型</th>
+							<th><span class="text-danger">*</span>证件号码</th>
+							<th><span class="text-danger">*</span>联系电话</th>
+						</tr> -->
+					</thead>
+					<tbody>
+						<tr>
+							<td class="col-md-3">						
+								<div class="col-sm-10 col-sm-offset-1">
+								<div class="form-group">
+									<input name="J_owner_agent_name" id="J_owner_agent_name" class="form-control" placeholder="请输入姓名">
+								</div>
+								</div>							
+							</td>
+							<td class="col-md-3">
+							<div class="col-sm-10 col-sm-offset-1">
+							<div class="form-group">
+							<select id="J_cardType" name="J_cardType"
+								class="J_chosen form-control" data-placeholder="请选择">
+							</select>
+							</div>
+							</div>
+							</td>
+							<td><div class="form-group"><input name="J_cardType_num"  id="J_cardType_num" class="form-control" placeholder="请输入证件号码"></div></td>
+							<td class="col-md-3">
+							<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-1">								
+									<input id="J_owner_agent_phone" name="J_owner_agent_phone" readonly='readonly' class="J_phone form-control" placeholder="请添加电话">								
+								</div>
+								<div class="col-sm-1">
+									<a class="btn btn-white btn-bitbucket J_add_phone">  
+										<i class="glyphicon glyphicon-plus"></i>
+									</a>
+								</div>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</form>
+</div>
+<!-- 业主代理人信息 end -->
+<!-- 添加抵押信息begin -->
+<div id="mortgage_layer" class="ibox-content" style="display: none">
+	<form id="mortgage_form" name="mortgage_form" class="form-horizontal">
+		<div class="row">
+			<div class="col-md-12 ptb10">
+				<table id="J_mortgage_dataTable"
+					class="table table-hover table-striped">
+					<thead>
+						<tr>
+							<th><span class="text-danger">*</span>抵押权人姓名</th>
+							<th><span class="text-danger">*</span>抵押金额（元）</th>
+							<th>抵押注销条件</th>
+							<th>办理注销手续日期</th>
+							<th>备注</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="valign-top">
+							<td class="col-md-2">
+								<div class="form-group">
+									<div class="col-sm-10 col-sm-offset-1">
+										<input name="J_mortgage_name" id="J_mortgage_name" class="form-control" placeholder="请输入姓名">
+										<label><span></span></label>
+									</div>
+								</div>
+							</td>
+							<td class="col-md-2">
+								<div class="form-group">
+									<div class="col-sm-10 col-sm-offset-1">
+										<input name="J_mortgage_money" id="J_mortgage_money" class="form-control" placeholder="请输入金额">
+										<label class="color_red"><span id="J_mortgage_bigmoney"></span></label>
+									</div>
+								</div>
+							</td>
+							<td class="col-md-2">
+								<div class="col-sm-10 col-sm-offset-1">
+									<input name="J_mortgage_condition" id="J_mortgage_condition" class="form-control" placeholder="请输入条件">
+									<label><span></span></label>
+								</div>
+							</td>
+							<td class="col-md-2">
+								<div class="col-sm-10 col-sm-offset-1">
+									<input name="J_mortgage_date" id="J_mortgage_date" class="form-control" placeholder="请选择日期">
+									<label><span></span></label>
+								</div>
+							</td>
+							<td class="col-md-2">
+								<div class="col-sm-10 col-sm-offset-1">
+									<input name="J_mortgage_remark" id="J_mortgage_remark" class="form-control" placeholder="请输入备注">
+									<label><span></span></label>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</form>
+</div>
+<!-- 添加抵押信息 end -->
+
+
+<!--star选择合同-->
+<div class="ibox" id="choiceHetong" style="display:none;">
+	<div class="ibox-title">
+		<div class="row" style="font-size:14px;color: #ed5565;">提示：查询结果列示出的都为未过户的合同</div>
+	</div>
+	<div class="ibox-content">	
+		<form id="J_contractQuery" class="form-horizontal" role="form">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">合同编号：</label>
+						<div class="col-sm-8">
+							<input name="contract_code" type="text" class="form-control">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">录入日期：</label>
+							<div class="col-sm-4"><input name="crt_dttm_begin" id="createstarttime" type="text" class="form-control" readonly="readonly" style="width:97%;background-color:#fff;"></div>
+							<div style="float:left; padding:7px 0px;">-</div>
+							<div class="col-sm-4"><input name="crt_dttm_end" id="createendtime" type="text" class="form-control" readonly="readonly" style="width:96%;margin-left:2%;background-color:#fff;"></div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">房源编号：</label>
+						<div class="col-sm-8">
+							<input type="text" name="houses_code" class="form-control">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">业主姓名：</label>
+						<div class="col-sm-8">
+							<input type="text" name="owner_name" class="form-control">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">成交价：</label>
+							<div class="col-sm-4"><input name="transaction_price_min" id="createstarttime" type="text" class="form-control" style="width:97%;background-color:#fff;"></div>
+							<div style="float:left; padding:7px 0px;">-</div>
+							<div class="col-sm-3"><input name="transaction_price_max" id="createendtime" type="text" class="form-control" style="width:96%;margin-left:2%;background-color:#fff;"></div>
+							<label class="col-sm-1" style="padding:9px 0 0 2px;">元</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<label class="col-sm-3 control-label">客户编号：</label>
+					<div class="col-sm-8">
+						<input type="text" name="customer_code" class="form-control">
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<label class="col-sm-3 control-label">客户姓名：</label>
+					<div class="col-sm-8">
+						<input type="text" name="customer_name" class="form-control">
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">所属部门：</label>
+						<div class="col-sm-8"  id="J_deptSelect">
+							<input id="J_deptLevel" type="hidden" class="form-control" value="">
+							<div class="input-group">
+								<input id="J_deptName" type="text" data-id="" class="form-control radius-3 float-l" readonly="readonly" autocomplete="off" style="background-color:#fff;">
+								<div class="input-group-btn">
+									<button data-toggle="dropdown" class="btn dropdown-toggle btn-dept float-l" type="button"><span class="caret"></span>
+	                            	</button>
+	                            </div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- <div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">业务类型：</label>
+						<div class="col-sm-8">
+							<select name="contract_type" id="businesstype" class="J_chosen form-control">
+								<option value="">全部</option>
+							</select>
+						</div>
+					</div>
+				</div> -->
+			</div>
+			<div class="row ptbottom10">
+				<div class="col-md-12">
+					<div class="form-group">
+						<div class="col-sm-5  col-sm-offset-5">
+	                        <button id="J_search" type="button" class="btn btn-success btn_size">查 询</button>
+	                        <button id="J_reset" type="reset" class="btn btn-white btn_size">重 置</button>
+	                    </div>
+					</div>
+				</div>
+			</div>
+		</form>
+		<div id="hetConten"></div>
+	</div>
+</div>
+<!--end选择合同-->
+</div>
+<!-- 驳回原因 -->
+<div id="con_reasons_rejection_layer" class="ibox-content" style="display: none;height:100%">
+	<form class="form-horizontal" id="con_reasons_rejection_form">
+		<!-- <div class="row">
+			<div class="col-md-12">
+				<dl class="dl-horizontal">
+					<dt>操作人：</dt>
+					<dd id="opername"></dd>
+				</dl>
+			</div>
+			<div class="col-md-12">
+				<dl class="dl-horizontal">
+					<dt>操作时间：</dt>
+					<dd id="operdate"></dd>
+				</dl>
+			</div>
+		</div> -->
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-1 control-label"><span
+						class="text-danger">*</span>驳回原因：</label>
+					<div class="col-sm-3">
+						<select name="creasonsRrejection" id='creasonsRrejection'
+							class="form-control " data-placeholder="请选择">
+							<option value="">请选择</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-1 control-label">备注：</label>
+					<div class="col-sm-6">
+						<textarea rows="3" name="rejectReason" id="cmemo" cols="100%"
+							class="form-control" maxlength="500"></textarea>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+<script type="text/javascript" src="$link.contextPath/resources/js/department.js"></script>
+<script src="$link.contextPath/resources/js/pdfobject.js"></script>
+<script src="$link.contextPath/resources/js/moment.js"></script>
+<script src="$link.contextPath/resources/script/sign/sign-common.module.js"></script>
+
+<script src="$link.contextPath/resources/script/sign/component/my-spy.directive.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/sign-work-flow-user-layer.component.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/sign-checkbox.component.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/sign-choose-person.component.js"></script>	
+<script src="$link.contextPath/resources/script/sign/component/sign-buy-preview.component.js"></script>
+
+
+<script src="$link.contextPath/resources/script/sign/main/draft_detail.module.js"></script>
+<script src="$link.contextPath/resources/script/sign/main/draft_detail.js"></script>
+<script src="$link.contextPath/resources/script/sign/main/details/operation-log.js"></script>
+<script src="$link.contextPath/resources/script/sign/main/details/annex.js"></script>
+<script src="$link.contextPath/resources/script/sign/main/details/subsidiary.js"></script>
+<script src="$link.contextPath/resources/script/sign/main/details/print-history.js"></script>
+<script type="text/javascript" src="$link.contextPath/resources/script/sign/main/draft_detail_validate.js?v=1"></script>
+<script src="$link.contextPath/resources/script/sign/main/linkage.js"></script>

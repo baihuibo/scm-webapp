@@ -1,0 +1,124 @@
+<style>
+.step_box{
+	position:relative;
+	height:100px;
+	margin: 0 5px 0 15px;
+	top:10px;
+}
+.step_inner_sign{
+	width: 40px; 
+	height: 40px;
+	background-color: #666666;	
+	border-radius: 50%;
+	/* border-radius:4px; */
+	display:block;
+	margin-top:3px;
+	margin-left:4px;
+}
+.step_outer_sign{
+	width: 50px;
+	height: 50px;
+	background-color: #efefef; 
+	border: solid 2px #9a9a9a;
+	border-radius: 50%;	
+	margin-left:5px;
+	margin-bottom:3px;
+}
+.step_01,.step_02,.step_03{
+	width:66px;
+}
+.step_inner_sign,.step_01,.step_02,.step_03,.arrow,.arrow hr,.arrow_01,.arrow_01 hr{position:absolute;}
+.step_01{
+	margin-left:0;
+	margin-top:0;
+}
+.step_02{
+	margin-left:20%;
+	margin-top:0;
+}
+.step_03{
+	margin-left:40%;
+	margin-top:0;
+}
+.step_inner_active{background-color: #0000ff;}
+
+/* 向右的箭头 */
+.dot-right {
+    font-size:0;
+    line-height:0;
+    border-width:9px;
+    border-color: #0000ff;
+    border-right-width:0;
+    border-style:dashed;
+    border-left-style:solid;
+    border-top-color:transparent;
+    border-bottom-color:transparent;
+}  
+.arrow{
+	margin-left:17%;
+    margin-top:18px;
+}
+.arrow hr{
+	height:3px;
+	width:38px;
+	border:none;
+	border-top:3px double #0000ff;
+	margin-left:-38px;
+	margin-top:7px;
+}
+.arrow_01{
+	margin-left:37%;
+    margin-top:18px;
+}
+.arrow_01 hr{
+	height:3px;
+	width:38px;
+	border:none;
+	border-top:3px double #333333;
+	margin-left:-38px;
+	margin-top:7px;
+}
+.arrow_01 .dot-right{
+    border-color: #333333;
+    border-top-color:transparent;
+    border-bottom-color:transparent;
+}
+.item {  
+    float:left;
+    clear:both;
+}
+
+</style>
+		<div class="row">
+			<div class="col-md-8">
+				<div class="step_box">
+					<div class="step_01">
+						<div class="step_outer_sign">
+							<a class="step_inner_sign step_inner_active "></a>
+						</div>
+						<span>处理人：张三</span>
+					</div>
+					<div class="arrow">
+						<hr/>
+						<span class="item dot-right"></span>
+					</div>
+					  
+					<div class="step_02">
+						<div class="step_outer_sign">
+							<a class="step_inner_sign"></a>
+						</div>
+						<span>待处理人：李四</span>
+					</div>
+					<div class="arrow_01">
+						<hr/>
+						<span class="item dot-right"></span>
+					</div>
+					<div class="step_03">
+						<div class="step_outer_sign">
+							<a class="step_inner_sign"></a>
+						</div>
+						<span></span>
+					</div>
+				</div>
+			</div>
+		</div>

@@ -1,0 +1,411 @@
+#set($plugins = ["table","chosen","laydate","autoSearch","ztree"])
+<script>
+    var buy_view_permission = $shiro.hasPermission("SCM:CUSTOM:BUY_VIEW"); // 买卖客户详情查看
+    var lease_view_permission = $shiro.hasPermission("SCM:CUSTOM:LEASE_VIEW"); // 租赁客户详情查看
+</script>
+<div class="ibox">
+    <div class="row">
+        <div id="tabs-container">
+            <div class="ibox-title">
+                <h5>客源调配</h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link ui-sortable"> <i
+                            class="fa fa-chevron-up"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="ibox-content">
+                <form id="J_query" class="form-horizontal" role="form">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">客户编号:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="houseid" name="clientid" placeholder="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">客户姓名:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="houseid" name="customername"
+                                           placeholder="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">销售阶段:</label>
+                                <div class="col-sm-8">
+                                    <select id="J_finalstatusid" name="finalstatusid" class="J_chosen form-control"
+                                            data-placeholder="请选择">
+                                        <option value="">全部</option>
+                                        <!-- <option value="1">录入</option>
+                                        <option value="12">带看中</option>
+                                        <option value="30">已带看</option>
+                                        <option value="20">成交</option> -->
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4" id="J_deptFrom">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">所属部门：</label>
+                                <div class="col-sm-8">
+                                    <div class="input-group">
+                                        <input type="hidden" class="form-control" id="J_level_id" name="level">
+                                        <input id="J_deptName" type="text" class="form-control radius-3"
+                                               autocomplete="off">
+                                        <div class="input-group-btn">
+                                            <button id="J_deptSelect" data-toggle="dropdown"
+                                                    class="btn dropdown-toggle btn-dept" type="button">
+                                                <span class="caret"></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-4" id="J_userForm">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">所属人：</label>
+                                <div class="col-sm-8">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="J_user"
+                                               autocomplete="off" name="belonguserid">
+                                        <div class="input-group-btn">
+                                            <button type="button" class="btn btn-white dropdown-toggle"
+                                                    data-toggle="">
+                                                <span class="glyphicon glyphicon-search search-caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu dropdown-menu-right" role="menu"
+                                                style="padding-top: 0px; max-height: 375px; max-width: 800px; overflow: auto; width: auto; transition: 0.3s; left: -110px; right: auto; min-width: 145px;">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">未跟进时间:</label>
+                                <div class="col-sm-4">
+                                    <select id="J_querydate" name="querydate" class="J_chosen form-control"
+                                            data-placeholder="全部">
+                                        <option value="">全部</option>
+                                        <!-- <option value="1">今天</option>
+                                        <option value="2">近俩天</option>
+                                        <option value="3">近三天</option>
+                                        <option value="4">近一周</option>
+                                        <option value="5">近俩周</option>
+                                        <option value="6">近一月</option>
+                                        <option value="7">近六周</option>
+                                        <option value="8">近俩月</option>
+                                        <option value="9">近三月</option>
+                                        <option value="10">近半年</option>
+                                        <option value="11">近一年</option>
+                                        <option value="12">本月</option> -->
+                                    </select>
+                                </div>
+                                <div class="col-sm-4">
+                                    <select id="J_querytype" name="querytype" class="J_chosen form-control"
+                                            data-placeholder="全部">
+                                        <option value="">全部</option>
+                                        <!-- <option value="1">未沟通(未跟进)</option>
+                                        <option value="2">未看房(未带看)</option> -->
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">客户评价:</label>
+                                <div class="col-sm-8">
+                                    <select id="J_finalassessmentid" name="finalassessmentid"
+                                            class="J_chosen form-control" data-placeholder="全部">
+                                        <option value="">全部</option>
+                                        <!-- <option value="1">A</option>
+                                        <option value="2">B</option>
+                                        <option value="3">C</option> -->
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">客户类型:</label>
+                                <div class="col-sm-8">
+                                    <select id="J_clienttype" name="clienttype" class="J_chosen form-control"
+                                            data-placeholder="">
+                                        <option value="">所有</option>
+                                        <!-- <option value="1">私客</option>
+                                        <option value="2">组店公客</option>
+                                        <option value="3">组团公客</option>
+                                        <option value="4">大区公客</option> -->
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">业务类型:</label>
+                                <div class="col-sm-8" id="J_businessType"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row btns">
+                        <div class="col-md-4">
+
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="col-sm-8  col-sm-offset-4">
+                                    <button id="J_search" type="button" class="btn btn-success pr5">查 询</button>
+                                    <button id="J_reset" type="reset" class="btn btn-white">重置</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+
+            <div class="ibox-title"><h5>调配列表</h5></div>
+
+            <div class="ibox-content">
+                <div class="row all">
+                    <div>
+                        #if($shiro.hasPermission("SCM:CUSTOM_DEPLOY"))
+                        <button id="J_deploy" type="button" class="btn btn-success pr5">调配</button>
+                        #end
+                        #if($shiro.hasPermission("SCM:CUSTOM_ALL_DEPLOY"))
+                        <button id="J_deploy_all" type="button" class="btn btn-success pr5">全部调配</button>
+                        #end
+                    </div>
+                    <div class="col-sm-12">
+
+                        <!-- Example Pagination -->
+                        <div class="col-sm-12 ptb10">
+                            <table id="J_dataTable_list"
+                                   class="table table-hover table-striped table table-bordered tables table-bordered">
+                                <thead>
+                                <tr>
+                                    <th data-field="Choose">
+                                        <input id="J_checkall" class="checkbox checkbox-primary" name='lists'
+                                               type='checkbox'/>
+                                    </th>
+                                    <th data-field="assessment">评价</th>
+                                    <th data-field="name">客户姓名<br>客户编号</th>
+                                    <th data-field="strcustomertype">业务类型</th>
+                                    <th data-field="salestatus">销售阶段</th>
+                                    <th data-field="leadresult">带看状态</th>
+                                    <th data-field="lastfollowdate">最后跟进时间</th>
+                                    <th data-field="Belongs">所属部门<br>所属人</th>
+                                    <th data-field="clienttype">客户类型</th>
+                                </tr>
+
+                                </thead>
+                            </table>
+                        </div>
+                        <!-- End Example Pagination -->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<!-- Bootstrap table  全部调配-->
+<div id="demo_layer" class="ibox-content" style="display: none">
+    <form id="retreatkey_form" name="retreatkey_form" class="form-horizontal">
+        <div class="titles2" style="width:100%;height:40px;border-bottom:1px solid black;">
+            <label class="radio-inline">
+                <input type="radio" name="lists" checked="checked" id="inlineRadio1" value="2">
+                转私客
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="lists" id="inlineRadio2" value="1">
+                转公客
+            </label>
+        </div>
+        <div class="col-sm-12 allot_all" id="Private1">
+            <div class="col-sm-4 allot">分配到</div>
+            <div class="col-sm-8">
+                <div class="col-md-push-4">
+                    <div class="form-group" style="margin-top:20px;">
+                        <label class="col-sm-3 control-label">所属部门：</label>
+                        <div class="col-sm-7">
+                            <div class="input-group">
+                                <input type="hidden" class="form-control" id="J_level_id3" name="level">
+                                <input id="J_deptName3" type="text" name="shopgroupid" class="form-control radius-3"
+                                       autocomplete="off">
+                                <div class="input-group-btn">
+                                    <button id="J_deptSelect3" data-toggle="dropdown"
+                                            class="btn dropdown-toggle btn-dept" type="button">
+                                        <span class="caret"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <br>
+                <div class="col-md-push-4">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">所属人：</label>
+                        <div class="col-sm-7">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="J_user3"
+                                       autocomplete="off" name="belonguserid">
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-white dropdown-toggle"
+                                            data-toggle="">
+                                        <span class="glyphicon glyphicon-search search-caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-right" role="menu"></ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 allot_all2" id="male" style="display:none;">
+            <div class="col-sm-4 allot">调配到</div>
+            <div class="col-sm-8">
+                <div class="col-md-push-4">
+                    <div class="form-group" style="margin-top:20px;">
+                        <label class="col-sm-3 control-label">所属部门：</label>
+                        <div class="col-sm-7">
+                            <div class="input-group">
+                                <input type="hidden" onchange="all()" class="form-control" id="J_level_id4"
+                                       name="level">
+                                <input id="J_deptName4" type="text" name="shopgroupid" class="form-control radius-3"
+                                       autocomplete="off">
+                                <div class="input-group-btn">
+                                    <button id="J_deptSelect4" data-toggle="dropdown"
+                                            class="btn dropdown-toggle btn-dept" type="button">
+                                        <span class="caret"></span>
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                <br>
+                <div class="col-md-push-4">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">公客类型：</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" id="J_user4"
+                                   autocomplete="off" name="belonguserid" disabled="disabled">
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </form>
+</div>
+</div>
+<!-- Bootstrap table 调配 -->
+<div id="demo_layer1" class="ibox-content" style="display: none">
+    <form id="retreatkey_form" name="retreatkey_form" class="form-horizontal">
+        <div class="titles2" style="width:100%;height:40px;border-bottom:1px solid black;">
+            <label class="radio-inline">
+                <input type="radio" name="lists1" checked="checked" id="inlineRadio1" value="2">
+                转私客
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="lists1" id="inlineRadio2" value="1">
+                转公客
+            </label>
+        </div>
+        <div class="col-sm-12 allot_all" id="Private11">
+            <div class="col-sm-4 allot">分配到</div>
+            <div class="col-sm-8">
+                <div class="col-md-push-4">
+                    <div class="form-group" style="margin-top:20px;">
+                        <label class="col-sm-3 control-label">所属部门：</label>
+                        <div class="col-sm-7">
+                            <div class="input-group">
+                                <input type="hidden" class="form-control" id="J_level_id1" name="level">
+                                <input id="J_deptName1" type="text" name="shopgroupid" class="form-control radius-3">
+                                <div class="input-group-btn">
+                                    <button id="J_deptSelect1" data-toggle="dropdown"
+                                            class="btn dropdown-toggle btn-dept" type="button">
+                                        <span class="caret"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="col-md-push-4">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">所属人：</label>
+                        <div class="col-sm-7">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="J_user1"
+                                       autocomplete="off" name="belonguserid">
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-white dropdown-toggle"
+                                            data-toggle="">
+                                        <span class="glyphicon glyphicon-search search-caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-right" role="menu"></ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 allot_all2" id="male11" style="display:none;">
+            <div class="col-sm-4 allot">调配到</div>
+            <div class="col-sm-8">
+                <div class="col-md-push-4">
+                    <div class="form-group" style="margin-top:20px;">
+                        <label class="col-sm-3 control-label">所属部门：</label>
+                        <div class="col-sm-7">
+                            <div class="input-group">
+                                <input type="hidden" onchange="all()" class="form-control" id="J_level_id2"
+                                       name="level">
+                                <input id="J_deptName2" type="text" name="shopgroupid" class="form-control radius-3"
+                                       autocomplete="off">
+                                <div class="input-group-btn">
+                                    <button id="J_deptSelect2" data-toggle="dropdown"
+                                            class="btn dropdown-toggle btn-dept" type="button">
+                                        <span class="caret"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <br>
+                <div class="col-md-push-4">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">公客类型：</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" id="J_user2"
+                                   autocomplete="off" name="belonguserid" disabled="disabled">
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </form>
+</div>
+<script src="/sales/resources/script/customer/move/list.js"></script>
+<script type="text/javascript" src="$link.contextPath/resources/js/department.js"></script>
+

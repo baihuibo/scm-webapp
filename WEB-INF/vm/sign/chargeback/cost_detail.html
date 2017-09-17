@@ -1,0 +1,213 @@
+#set($plugins = ["table","chosen"])
+<style>
+.table>thead>tr>th{vertical-align: middle !important;}
+</style>
+<div class="ibox">
+	<div class="ibox-title">
+		<div class="row pt6">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-12 control-label" id="signnumber"></label>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-12 control-label" id="strauditstatus"></label>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="ibox-content">
+		<div class="ibox float-e-margins">
+			<div class="row">
+				<div class="tabs-container">
+					<ul class="nav nav-tabs block-tabs-nav">
+						<li><i>|</i></li>	
+						#if($shiro.hasPermission("SCM:SALES:RETREAT_INFORMATION_VIEW"))	
+						<li class="" id="goTuidanInfor"><a data-toggle="tab">退单信息</a></li>
+						<li><i>|</i></li>
+						#end
+						#if($shiro.hasPermission("SCM:SALES:RETREAT_COST_VIEW"))
+						<li class="" id="gofeiYongcl"><a href="javascript:;">费用处理</a></li>
+						<li><i>|</i></li>
+						#end
+						#if($shiro.hasPermission("SCM:SALES:RETREAT_COST_ENCLOSURE_SEE"))
+						<li class="" id="goAttachment"><a href="javascript:;">附件管理</a></li>
+						<li><i>|</i></li>
+						#end
+						#if($shiro.hasPermission("SCM:SALES:RETREAT_COST_AGREEMENT_QUERY"))
+						<li class="" id="goAgreement"><a href="javascript:;">补充协议</a></li>
+						<li><i>|</i></li>
+						#end
+						#if($shiro.hasPermission("SCM:SALES:RETREAT_COST_AGREEMENT_PROCESS_QUERY"))
+						<li class="" id="goShenPlc"><a href="javascript:;">审批流程</a></li>
+						<li><i>|</i></li>
+						#end
+						<!-- #if($shiro.hasPermission("SCM:SALES:RETREAT_COST_DETAILED_VIEW")).....添加权限 -->
+						<li id="performance" ><a href="javascript:;" >业绩信息</a></li>
+						<li><i>|</i></li>
+						<!-- #end -->
+						#if($shiro.hasPermission("SCM:SALES:RETREAT_COST_DETAILED_VIEW"))
+						<li class="active" id="goFeiyzhixmx"><a href="javascript:;">费用执行明细</a></li>
+						#end
+					</ul>
+				</div>
+			</div>
+			<!-- 收款信息  str  -->
+			#if($shiro.hasPermission("SCM:SALES:RETREAT_COST_DETAILED_VIEW"))
+			<div class="row ptb10">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>收款信息</div>
+			</div>
+			<form id="J_query"  class="form-horizontal" role="form">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group" style="padding-left:6px">
+							<label class="col-sm-3 control-label">应收总额(元)：</label>
+							<div class="col-sm-8">
+								<input class="form-control" name="" id="J_yingshou" value="" readonly="" type="text">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">实收总额(元)：</label>
+							<div class="col-sm-8">
+								<input class="form-control" name="" id="J_shishou" value="" readonly="" type="text">
+							</div>
+						</div>
+					</div>	
+				</div>
+			</form>
+			#if($shiro.hasPermission("SCM:SALES:RETREAT_COST_DETAILED_RECEIVABLES_ADD"))
+			<div class="col-md-12 text-right mb20">
+				<a id="J_altogether" class="btn btn-success btn-altogether">录入收款申请</a>
+			</div>
+			#end
+			<div class="ibox float-e-margins mb20">
+		  		<div class="row row-lg">
+					<div class="col-sm-12">
+						<table id="J_Billingmessage_dataTable" class="table table-hover table-striped table table-bordered tables table-condensed">
+							<thead>
+								<tr>
+									<th data-field="a">序号</th>
+									<th data-field="b">费用类型</th>
+									<th data-field="c">收据编号</th>
+									<th data-field="d">收款批次单号</th>
+									<th data-field="e">收据打印次数</th>
+									<th data-field="f">款项名称</th>
+									<th data-field="g">收款单位</th>
+									<th data-field="h">付款方</th>
+									<th data-field="j">付款单位/个人</th>
+									<th data-field="k">应收金额/元</th>
+									<th data-field="l">收款日期</th>
+									<th data-field="m">在途金额/元</br>（审批中）</th>
+									<th data-field="n">实收日期</th>
+									<th data-field="p">实收金额/元</br>（已审批）</th>
+									<th data-field="q">状态</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+			<!-- 收款信息  end  -->
+			<!-- 发票信息  str  -->
+			<div class="row ptb10">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>发票信息</div>
+			</div>
+			<form id="J_query"  class="form-horizontal" role="form">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group" style="padding-left:6px">
+							<label class="col-sm-3 control-label">面值总计(元)：</label>
+							<div class="col-sm-8">
+								<input class="form-control" id="J_mianzhi" name="" id="" value="" readonly="" type="text">
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+			<div class="ibox float-e-margins mb20">
+		  		<div class="row row-lg">
+					<div class="col-sm-12">
+						<table id="J_InvoiceInformation_dataTable" class="table table-hover table-striped table table-bordered tables table-condensed">
+							<thead>
+								<tr>
+									<th data-field="a">序号</th>
+									<th data-field="b">发票编号</th>
+									<th data-field="c">发票名称</th>
+									<th data-field="d">面值/元</th>
+									<th data-field="e">录入人</th>
+									<th data-field="f">录入日期</th>
+									<th data-field="g">状态</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+			<!-- 发票信息  end  -->
+			<!-- 付款信息  str  -->
+			<div class="row ptb10">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>付款信息</div>
+			</div>
+			<form id="J_query"  class="form-horizontal" role="form">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group" style="padding-left:6px">
+							<label class="col-sm-3 control-label">应付总额(元)：</label>
+							<div class="col-sm-8">
+								<input class="form-control" id="J_yingfumoney" name="" value="" readonly="" type="text">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group" style="padding-left:6px">
+							<label class="col-sm-3 control-label">在途总额(元)：</label>
+							<div class="col-sm-8">
+								<input class="form-control" name="" id="J_zaitumoney" value="" readonly="" type="text">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group" style="padding-left:6px">
+							<label class="col-sm-3 control-label">实付总额(元)：</label>
+							<div class="col-sm-8">
+								<input class="form-control" name="" id="J_shifumoney" value="" readonly="" type="text">
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+			<div class="ibox float-e-margins mb20">
+		  		<div class="row row-lg">
+					<div class="col-sm-12">
+						<table id="J_paymentinfo_dataTable" class="table table-hover table-striped table table-bordered tables table-condensed">
+							<thead>
+								<tr>
+									<th data-field="a">序号</th>
+									<th data-field="b">费用类型</th>
+									<th data-field="c">付款单号</th>
+									<th data-field="d">付款申请单号</th>
+									<th data-field="e">款项名称</th>
+									<th data-field="f">付款单位</th>
+									<th data-field="g">收款方</th>
+									<th data-field="h">收款人</th>
+									<th data-field="j">应付金额/元</th>
+									<th data-field="k">付款日期</th>
+									<th data-field="l">在途金额/元</br>（审批中）</th>
+									<th data-field="m">实付日期</th>
+									<th data-field="n">实付金额/元</br>（已审批）</th>
+									<th data-field="o">付款单状态</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+			#end
+			<!-- 付款信息  end  -->
+		</div>
+	</div>
+</div>
+<script src="$link.contextPath/resources/script/sign/chargeback/costdetail.js"></script>

@@ -1,0 +1,127 @@
+/**
+    租赁合同打印样式！！！！勿动
+ */
+
+* {
+    font-family: SimSun, "Times New Roman";
+    line-height: 200%;
+}
+
+.underline_ath {
+    border-bottom: solid 1px #000;
+}
+
+.plr_ath {
+    padding-left: 5px;
+    padding-right: 25px;
+}
+
+.cover_ath h3.fr, .main_ath h3.fr {
+    text-align: right;
+}
+
+h1 span.notes_ath {
+    font-size: 26px;
+}
+
+h4 span.notes_ath {
+    font-size: 18px;
+}
+
+.main_ath, .enclosure_ath {
+    font-size: 16px;
+}
+
+h3 {
+    font-size: 22px;
+}
+
+h4 {
+    font-size: 20px;
+}
+
+ul li {
+    list-style: none;
+    text-align: left;
+}
+
+ul.both_info li.info_01 {
+    text-align: center;
+}
+
+ul.both_info li {
+    list-style: none;
+}
+
+ul.content li {
+    text-indent: 32px;
+}
+
+.str_ath {
+    font-weight: bold;
+}
+
+.f14_ath {
+    font-size: 18px;
+}
+
+.center_ath {
+    text-align: center;
+}
+
+.seal_ath {
+    width: 45%;
+    display: inline-block;
+}
+
+table {
+    width: 100%;
+}
+
+.tableborder {
+    border: 1px solid black;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableborder td, .tableborder th {
+    text-align: center;
+    border: 1px solid black;
+}
+
+.w200 {
+    width: 200px;
+    display: inline-block;
+}
+
+.w500 {
+    width: 40%;
+    display: inline-block;
+}
+
+.clearfloat:after {
+    display: block;
+    clear: both;
+    content: "";
+    visibility: hidden;
+    height: 0
+}
+
+.checkbox-mini {
+    width: 12px;
+    height: 12px;
+    vertical-align: middle;
+    display: inline-block;
+    border: 1px solid #333;
+    position: relative;
+}
+
+.checkbox-mini[checked-value="true"]:after,
+.checkbox-mini[checked-value="1"]:after {
+    content: "√";
+    display: block;
+    font-weight: bold;
+    position: absolute;
+    left: -32px;
+    top: -10px;
+}

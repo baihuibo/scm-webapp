@@ -1,0 +1,203 @@
+#set($plugins = ["table","chosen","laydate","linkage","autoSearch","ztree"])
+<div class="ibox">
+	<div class="ibox-title">
+		<h5>退单 \ 退佣 \ 赔款管理</h5>
+		<div class="ibox-tools">
+			<a class="collapse-link ui-sortable"> <i class="fa fa-chevron-up"></i>
+			</a>
+		</div>
+	</div>
+	<div class="ibox-content">	
+		<form id="J_seeQuery" class="form-horizontal" role="form">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">合同编号：</label>
+						<div class="col-sm-8">
+							<input name="contractcode" type="text" class="form-control" placeholder="请输入合同编号">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">录入日期：</label>
+							<div class="col-sm-4"><input name="begindate" id="createstarttime" type="text" class="form-control" readonly="readonly" style="width:97%;background-color:#fff;"placeholder="请选择开始时间"></div>
+							<div style="float:left; padding:7px 0px;">-</div>
+							<div class="col-sm-4"><input name="enddate" id="createendtime" type="text" class="form-control" readonly="readonly" style="width:96%;margin-left:2%;background-color:#fff;"placeholder="请选择结束时间"></div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">单据编号：</label>
+						<div class="col-sm-8">
+							<input type="text" name="signnumber" class="form-control" placeholder="请输入单据编号">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">业主姓名：</label>
+						<div class="col-sm-8">
+							<input type="text" name="ownname" class="form-control" placeholder="请输入业主姓名">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<label class="col-sm-3 control-label">客源编号：</label>
+					<div class="col-sm-8">
+						<input type="text" name="customerid" class="form-control" placeholder="请输入客源编号">
+					</div>
+				</div>
+				<div class="col-md-4">
+					<label class="col-sm-3 control-label">客户姓名：</label>
+					<div class="col-sm-8">
+						<input type="text" name="customername" class="form-control" placeholder="请输入客户姓名">
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">所属部门：</label>
+						<div class="col-sm-8"  id="J_deptSelect">
+							<input id="J_deptLevel" type="hidden" class="form-control" value="">
+							<div class="input-group">
+								<input id="J_deptName" type="text" data-id="" class="form-control radius-3 float-l" readonly="readonly" autocomplete="off" style="background-color:#fff;" placeholder="请选择所属部门">
+								<div class="input-group-btn">
+									<button data-toggle="dropdown" class="btn dropdown-toggle btn-dept float-l" type="button"><span class="caret"></span>
+	                            	</button>
+	                            </div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">业务类型：</label>
+						<div class="col-sm-8">
+							<select name="businesstypes" id="businesstype" class="J_chosen form-control">
+								<option value="">全部</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">房源编号：</label>
+						<div class="col-sm-8">
+							<input type="text" name="houseid" class="form-control" placeholder="请输入房源编号">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">是否退单：</label>
+						<div class="col-sm-8">
+							<select name="isbacksign" class="J_chosen form-control">
+								<option value="">全部</option>
+								<option value="1">是</option>
+								<option value="0">否</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">审核状态：</label>
+						<div class="col-sm-8">
+							<select name="auditstatus" id="auditStatus" class="J_chosen form-control">
+								<option value="">全部</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">是否退佣：</label>
+						<div class="col-sm-8">
+							<select name="isbackcommison" class="J_chosen form-control">
+								<option value="">全部</option>
+								<option value="1">是</option>
+								<option value="0">否</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<div class="col-sm-5  col-sm-offset-5">
+	                        <button id="J_search" type="button" class="btn btn-success btn_size">查 询</button>
+	                        <button id="J_reset" type="reset" class="btn btn-white btn_size">重 置</button>
+	                    </div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<div class="ibox">
+	<div class="ibox-title">
+		<h5>退单 \ 退佣 \ 赔款列表</h5>
+	</div>
+	<div class="ibox-content">
+		<div class="tab-pane">
+			#if($shiro.hasPermission("SCM:SALES:RETREAT_INFORMATION_ADD"))
+			<div style="padding-bottom:8px;">
+				<a href="$link.contextPath/sign/chargeback/add.htm" target="_blank" class="btn btn-success J_add_device">
+					<i class="glyphicon glyphicon-plus"></i>&nbsp;新增
+				</a>
+			</div>
+			#end
+			<table id="retreatList" class="table table-hover table-striped table-bordered">
+				<thead>
+					<tr>
+						<th data-field="">
+							<div class="th-inner">业务类型</div>
+						</th>
+						<th data-field="">
+							<div class="th-inner">单据编号</div>
+						</th>
+						<th data-field="">
+							<div class="th-inner">合同编号</div>
+						</th>
+						<th data-field="">
+							<div class="th-inner">房源编号</div>
+						</th>
+						<th data-field="">
+							<div class="th-inner">客源编号</div>
+						</th>
+						<th data-field="">
+							<div class="th-inner">业主姓名<br />客户姓名</div>
+						</th>
+						<th data-field="">
+							<div class="th-inner">所属部门</div>
+						</div>
+						</th>
+						<th data-field="">
+							<div class="th-inner">录入人</div>
+						</th>
+						<th data-field="">
+							<div class="th-inner">录入日期</div>
+						</th>
+						<th data-field="">
+							<div class="th-inner">审核状态</div>
+						</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="$basePath/resources/js/plugins/ztree/jquery.ztree.core.js"></script>
+<script type="text/javascript" src="$basePath/resources/js/plugins/ztree/jquery.ztree.excheck.js"></script>
+<script type="text/javascript" src="$link.contextPath/resources/js/department.js"></script>
+<script src="$link.contextPath/resources/script/sign/chargeback/list.js"></script>

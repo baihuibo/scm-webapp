@@ -1,0 +1,262 @@
+<div id="F_single_feedback">
+    <!-- 空看返回 start -->
+    <div id="F_editsingleback_layer" class="ibox-content"
+         style="margin:0 10px 0 10px; display:none;"
+         ng-controller="singleBackCtrl as $ctrl">
+        <!-- 房源信息 begin -->
+        <table class="table table-hover table-striped">
+            <thead>
+            <tr>
+                <th>房源编号</th>
+                <th>楼盘</th>
+                <th>详细地址</th>
+                <th>反馈时间</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <a ng-href="{{$ctrl.getHouseLink($ctrl.focusWatch)}}" target="_blank">
+                        {{$ctrl.focusWatch.houseid}}
+                    </a>
+                </td>
+                <td>{{$ctrl.focusWatch.conmmunityname}}</td>
+                <td>
+                    <a href="javascript:" ng-click="$ctrl.showAddr($ctrl.focusWatch)">查看</a>
+                </td>
+                <td>{{$ctrl.data.resulttime}}</td>
+                <td>
+                <span ng-if="$ctrl.isBack">
+                    <!-- 已经空看返回 -->
+                    <a href="javascript:"
+                       ng-click="$ctrl.goFeedback()" ng-if="!$ctrl.isFeedBack">
+                        反馈
+                    </a>
+                    <a href="javascript:"
+                       ng-click="$ctrl.goFeedBackDetail()" ng-if="$ctrl.isFeedBack">
+                        查看
+                    </a>
+                </span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <!-- 基本信息 begin -->
+        <form class="form-horizontal">
+
+            <div class="form-group">
+                <div class="col-sm-6">
+                    <label class="col-sm-4 control-label">状态：</label>
+                    <div class="col-sm-7">
+                        <div class="form-control-static">{{$ctrl.data.status}}</div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label class="col-sm-4 control-label">空看部门：</label>
+                    <div class="col-sm-7">
+                        <div class="form-control-static">{{$ctrl.data.deptname}}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hr-line-dashed"></div>
+
+            <div class="form-group">
+                <div class="col-sm-6">
+                    <label class="col-sm-4 control-label">外出时间：</label>
+                    <div class="col-sm-7">
+                        <div class="form-control-static" id="begintime-static">{{$ctrl.focusWatch.begintime}}</div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label class="col-sm-4 control-label">预计返回时间：</label>
+                    <div class="col-sm-7">
+                        <div class="form-control-static">{{$ctrl.focusWatch.endtime}}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hr-line-dashed"></div>
+
+            <div class="form-group">
+                <div class="col-sm-6">
+                    <label class="col-sm-4 control-label">空看人：</label>
+                    <div class="col-sm-7">
+                        <div class="form-control-static">
+                            <a href="javascript:" ng-click="$ctrl.showUserInfo($ctrl.data.singleid)">{{$ctrl.data.singlename}}</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6" ng-if="$ctrl.isBack">
+                    <label class="col-sm-4 control-label">返回时间：</label>
+                    <div class="col-sm-7">
+                        <div class="form-control-static">{{$ctrl.data.backtime}}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hr-line-dashed"></div>
+
+            <div class="form-group">
+                <div class="col-sm-6" ng-if="$ctrl.isBack">
+                    <label class="col-sm-4 control-label">耗时：</label>
+                    <div class="col-sm-7">
+                        <div class="form-control-static">{{$ctrl.data.taketime}}</div>
+                    </div>
+                </div>
+                <div class="col-sm-6" ng-if="!$ctrl.isBack">
+                    <label class="col-sm-4 control-label">
+                        <span class="text-danger">*</span>
+                        返回时间：
+                    </label>
+                    <div class="col-sm-7">
+                        <input type="text" id="J_backtime" name="backtime" class="form-control"
+                              />
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!-- 基本信息 end -->
+    </div>
+    <!-- 空看返回 end -->
+
+    <!-- 反馈结果 新增 start -->
+    <div id="F_feedback_add_layer" class="ibox-content" style="display:none;"
+         ng-controller="singleFeedBackCtrl as $ctrl">
+        <form id="J_form_add_feedback" class="form-horizontal">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">
+                            <span class="text-danger">*</span>
+                            是否看房：
+                        </label>
+                        <div class="radio radio-primary radio-inline">
+                            <input type="radio" ng-model="$ctrl.isWatch" id="yeswatch" value="1" name="iswatch"/>
+                            <label for="yeswatch">是</label>
+                        </div>
+                        <div class="radio radio-primary radio-inline">
+                            <input type="radio" ng-model="$ctrl.isWatch" id="nowatch" value="0" name="iswatch"/>
+                            <label for="nowatch">否</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 已看 -->
+            <div class="row" ng-if="$ctrl.isWatch == 1">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="col-sm-6 control-label">
+                            <span class="text-danger">*</span>
+                            优点：
+                        </label>
+                        <div class="col-sm-6">
+                            <textarea name="backtime" ng-model="$ctrl.merits"
+                                      maxlength="500"
+                                      class="form-control"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">
+                            <span class="text-danger">*</span>
+                            缺点：
+                        </label>
+                        <div class="col-sm-6">
+                            <textarea name="backtime" ng-model="$ctrl.weak"
+                                      maxlength="500"
+                                      class="form-control"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 未看 -->
+            <div class="row" ng-if="$ctrl.isWatch == 0">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">
+                            <span class="text-danger">*</span>
+                            未看原因：
+                        </label>
+                        <div class="col-sm-6">
+                            <textarea name="reason" ng-model="$ctrl.reason"
+                                      maxlength="500"
+                                      class="form-control"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- 反馈结果 新增 end -->
+
+    <!-- 反馈结果 查看 start -->
+    <div id="F_feedback_desc_layer" class="ibox-content" style="display:none;"
+         ng-controller="singleFeedBackDetailCtrl as $ctrl">
+        <form id="J_form_desc_feedback" class="form-horizontal">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label"><span class="text-danger">*</span>是否看房：</label>
+                        <div class="radio radio-primary radio-inline">
+                            <input type="radio" ng-model="$ctrl.data.iswatch" disabled
+                                   id="yeswatch2" value="1" name="iswatch"/>
+                            <label for="yeswatch2">是</label>
+                        </div>
+                        <div class="radio radio-primary radio-inline">
+                            <input type="radio" ng-model="$ctrl.data.iswatch" disabled
+                                   id="nowatch2" value="0" name="iswatch"/>
+                            <label for="nowatch2">否</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" ng-if="$ctrl.data.iswatch == 1">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="col-sm-6 control-label"><span class="text-danger">*</span>优点：</label>
+                        <div class="col-sm-6">
+                            <textarea name="backtime"
+                                      ng-model="$ctrl.data.merits"
+                                      class="form-control" readonly></textarea>
+                            <span class="help-block text-right">字数限制500</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label"><span class="text-danger">*</span>缺点：</label>
+                        <div class="col-sm-6">
+                            <textarea name="backtime"
+                                      ng-model="$ctrl.data.weak"
+                                      class="form-control" readonly></textarea>
+                            <span class="help-block text-right">字数限制500</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" ng-if="$ctrl.data.iswatch == 0">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label"><span class="text-danger">*</span>未看原因：</label>
+                        <div class="col-sm-6">
+                            <textarea name="reason"
+                                      ng-model="$ctrl.data.reason"
+                                      class="form-control" readonly></textarea>
+                            <span class="help-block text-right">字数限制500</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- 反馈结果 查看 end -->
+
+</div>
+
+
+<script type='text/javascript' src="$link.contextPath/resources/script/house/focuswatch/singleback.js"></script>

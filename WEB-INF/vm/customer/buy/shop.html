@@ -1,0 +1,343 @@
+<div class="ibox-title">
+	<h5>商铺需求</h5>
+</div>
+<div class="ibox-content">
+#if ($!VO.customer.hasShop==1)
+<!-- 商铺详情 -->
+<div class="row">
+	<div class="customer_info_content">
+		<div class="row ptb10">
+			<div class="font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>房源需求</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt id="J_pricerange_5" data-columns="minprice,maxprice|intervalInput||$!VO.customer.shop.minPrice,$!VO.customer.shop.maxPrice" class="J_edit_area">
+						<span class="text-danger">*</span>价格区间：
+					</dt>
+					<dd>#if ($!VO.customer.shop.minPrice) $number.format("#0.00", $!VO.customer.shop.minPrice) #end - #if ($!VO.customer.shop.maxPrice) $number.format("#0.00", $!VO.customer.shop.maxPrice) #end 万元</dd>
+				</dl>
+			</div>
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt id="J_coveredarea_5" data-columns="minarea,maxarea|intervalInput||$!VO.customer.shop.minArea,$!VO.customer.shop.maxArea" class="J_edit_area">需求面积：</dt>
+					<dd>#if ($!VO.customer.shop.minArea) $number.format("#0.00", $!VO.customer.shop.minArea) #end - #if ($!VO.customer.shop.maxArea) $number.format("#0.00", $!VO.customer.shop.maxArea) #end <span>平方米</span></dd>
+				</dl>
+			</div>
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt id="J_fitmentTypeId_5" data-columns="fitmentTypeId|select|decorationStatus|$!VO.customer.shop.fitmentTypeId" class="J_edit_area">装修：</dt>
+					<dd>$!VO.customer.shop.fitmentTypeName</dd>
+				</dl>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt id="J_doorwidth_5" data-columns="mindoorwidth,maxdoorwidth|intervalInput||$!VO.customer.shop.minDoorWidth,$!VO.customer.shop.maxDoorWidth" class="J_edit_area">门宽：</dt>
+					<dd>#if ($!VO.customer.shop.minDoorWidth) $number.format("#0.00", $!VO.customer.shop.minDoorWidth) #end - #if ($!VO.customer.shop.maxDoorWidth) $number.format("#0.00", $!VO.customer.shop.maxDoorWidth) #end <span>米</span></dd>
+				</dl>
+			</div>
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt id="J_floorheight_5" data-columns="minfloorheight,maxfloorheight|intervalInput||$!VO.customer.shop.minFloorHeight,$!VO.customer.shop.maxFloorHeight" class="J_edit_area">层高：</dt>
+					<dd>#if ($!VO.customer.shop.minFloorHeight) $number.format("#0.00", $!VO.customer.shop.minFloorHeight) #end - #if ($!VO.customer.shop.maxFloorHeight) $number.format("#0.00", $!VO.customer.shop.maxFloorHeight) #end <span>米</span></dd>
+				</dl>
+			</div>
+			<div class="col-sm-4"> 
+				<dl class="dl-horizontal">
+					<dt id="J_propertyfee_5" data-columns="minpropertyfee,maxpropertyfee|intervalInput||$!VO.customer.shop.minPropertyFee,$!VO.customer.shop.maxPropertyFee" class="J_edit_area">物管费：</dt>
+					<dd>#if ($!VO.customer.shop.minPropertyFee) $number.format("#0.00", $!VO.customer.shop.minPropertyFee) #end - #if ($!VO.customer.shop.maxPropertyFee) $number.format("#0.00", $!VO.customer.shop.maxPropertyFee) #end <span>元/平方米/月</span></dd>
+				</dl>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt id="J_specialdemand" data-columns="specialdemand|checkbox|specialNeeds|$!VO.customer.shop.specialDemandIds.replace('%23%23', ',')" class="J_edit_area">特殊需求：</dt>
+					<dd>$!VO.customer.shop.specialDemandNames.replace('%23%23', '、')</dd>
+				</dl>
+			</div>
+			<div class="col-sm-8">
+				<dl class="dl-horizontal">
+					<dt id="J_location" data-columns="location|checkbox|locationType|$!VO.customer.shop.locationIds.replace('%23%23', ',')" class="J_edit_area">位置类型：</dt>
+					<dd>$!VO.customer.shop.locationNames.replace('%23%23', '、')</dd>
+				</dl>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="customer_info_content">
+		<div class="row ptb10">
+			<div class="font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>区域需求</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt id="J_editBuild" data-columns="$!VO.customer.shop.buildingIds|$!VO.customer.shop.buildingAllNames">需求楼盘：</dt>
+					<dd>$!VO.customer.shop.buildingNames</dd>
+				</dl>
+			</div>
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt id="J_editBusiness" data-columns="$!VO.customer.shop.businessIds|$!VO.customer.shop.businessAllNames"><span class="text-danger">*</span>商圈：</dt>
+					<dd>$!VO.customer.shop.businessNames</dd>
+				</dl>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="customer_info_content">
+		<div class="row ptb10">
+			<div class="font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>其他需求</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt id="J_loanType_5" data-columns="loanType|select|loanType|$!VO.customer.shop.loanTypeId" class="J_edit_area">
+						<span class="text-danger">*</span>贷款：
+					</dt>
+					<dd>$!VO.customer.shop.loanTypeName</dd>
+				</dl>
+			</div>
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt id="J_payments_5" data-columns="payments|input||$!VO.customer.shop.downPayment" class="J_edit_area">首付：</dt>
+					<dd>$!VO.customer.shop.downPayment 万元</dd> 
+				</dl>
+			</div>
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt id="J_urgency_5" data-columns="urgencyType|select|urgency|$!VO.customer.shop.urgencyTypeId" class="J_edit_area">紧急度：</dt>
+					<dd>$!VO.customer.shop.urgencyTypeName</dd>
+				</dl>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt id="J_houseQuantity_5" data-columns="houseQuantity|radio|houseQuantity|$!VO.customer.shop.ownerHouseNumberTypeId" class="J_edit_area">几套房：</dt>
+					<dd>$!VO.customer.shop.ownerHouseNumberTypeName</dd>
+				</dl>
+			</div>
+		</div>
+	</div>
+</div>
+#else
+<!-- 商铺需求 新增 by lilac start -->
+<div id="shops" class="form2 form">
+<form id="form2" name=""  class="form-horizontal" role="form">
+	<div class="row ptb10">
+		<div class="font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>房源需求</div>
+	</div>
+	<div class="row">
+		<div class="col-md-4">
+			<div class="form-group">
+				<label class="col-sm-3 control-label"><span class="text-danger">*</span>价格区间：</label>
+				<div class="col-sm-3">
+					<input type="text" class="form-control J_minPrice" name="minPrice" id="" required>
+				</div>
+				<div class="control-spacing">-</div>
+				<div class="col-sm-3">
+					<input type="text" class="form-control J_maxPrice" name="maxPrice" id="" required>
+				</div>
+				<label class="control-label">万元</label>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="form-group">
+				<label class="col-sm-3 control-label">需求面积：</label>
+				<div class="col-sm-3">
+					<input type="number" class="form-control J_minArea" name="minArea" id="" autocomplete="off">
+				</div>
+				<div class="control-spacing">-</div>
+				<div class="col-sm-3">
+					<input type="number" class="form-control J_maxArea" name="maxArea" id="" autocomplete="off">
+				</div>
+				<label class="control-label">平方米</label>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="form-group">
+				<label class="col-sm-3 control-label">物管费：</label>
+				<div class="col-sm-3">	
+					<input type="text" class="form-control J_minPropertyFee" name="minPropertyFee"/>				
+				</div>
+				<div class="control-spacing">-</div>
+				<div class="col-sm-3">	
+					<input type="text" class="form-control J_maxPropertyFee" name="maxPropertyFee"/>				
+				</div>
+				<label class="control-label">元/平方米/月</label>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-4">
+			<div class="form-group">
+				<label class="col-sm-3 control-label">门宽：</label>
+				<div class="col-sm-3">	
+					<input type="text" class="form-control J_minDoorWidth" name="minDoorWidth" id="" autocomplete="off">					
+				</div>
+				<div class="control-spacing">-</div>
+				<div class="col-sm-3">	
+					<input type="text" class="form-control J_maxDoorWidth" nane="maxDoorWidth" id="" autocomplete="off">					
+				</div>
+				<label class="control-label">米</label>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="form-group">
+				<label class="col-sm-3 control-label">层高：</label>
+				<div class="col-sm-3">	
+					<input type="text" class="form-control J_minFloorHeight" name="minFloorHeight" id="" autocomplete="off">					
+				</div>
+				<div class="control-spacing">-</div>
+				<div class="col-sm-3">	
+					<input type="text" class="form-control J_maxFloorHeight" name="maxFloorHeight" id="" autocomplete="off">					
+				</div>
+				<label class="control-label">米</label>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="form-group">
+				<label class="col-sm-3 control-label">装修：</label>
+				<div class="col-sm-7">
+					<select id="J_fitmentTypeId" name="fitmentTypeId" class="J_chosen form-control J_fitmentTypeId" data-placeholder="请选择">
+						<option value="">请选择</option>
+					</select>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-3">
+			<div class="form-group">
+				<label class="col-sm-4 control-label">特殊需求：</label>
+				<div id="J_specialNeeds" class="col-sm-8"></div>
+			</div>
+		</div>
+		<div class="col-md-8">
+			<div class="form-group">
+				<label class="col-sm-2 control-label">位置类型：</label>
+				<div id="J_locationType" class="col-sm-10"></div>
+			</div>
+		</div>
+	</div>
+	<div class="row ptb10">
+		<div class="font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>房源需求</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="form-group">
+				<label class="col-md-1 control-label">需求楼盘:</label>
+				<div class="col-md-10">
+					<a onclick="addfloor('shops')" class="btn-green btn-bitbucket m-t-sm float-right"><i class="glyphicon glyphicon-plus"></i></a>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-12 m-b-sm ">
+			<label class="col-md-1 control-label"></label>
+			<div class="col-md-10">
+				<div class="bootstrap-table table-list">
+					<div class="fixed-table-container">
+						<table id="dataTableFloor" class="table table-hover  table-striped bor_b_none">
+							<thead>
+								<tr>
+									<th data-field="id">楼盘</th>
+									<th data-field="opt">操作</th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="form-group">
+				<label class="col-md-1 control-label">
+					<span class="text-danger">*</span>商圈:
+				</label>
+				<div class="col-md-10">
+					<a onclick="addarea('shops')" class="btn-green btn-bitbucket m-t-sm float-right"><i class="glyphicon glyphicon-plus"></i></a>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-12 m-b-sm">
+			<label class="col-md-1 control-label"></label>
+			<div class="col-md-10">
+				<div class="bootstrap-table table-list">
+					<div class="fixed-table-container">
+						<table id="dataTableArea" class="table table-hover  table-striped bor_b_none">
+							<thead>
+								<tr>
+									<th data-field="id">商圈</th>
+									<th data-field="price">所属行政区</th>
+									<th data-field="opt">操作</th>
+								</tr>
+							</thead>
+							<tbody></tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row ptb10">
+		<div class="font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>其他需求</div>
+	</div>
+	<div class="row">
+		<div class="col-md-3">
+			<div class="form-group">
+				<label class="col-sm-4 control-label"><span class="text-danger">*</span>贷款：</label>
+				<div class="col-sm-7">
+					<select name="loanTypeId" class="form-control m-b J_loanTypeId" data-placeholder="请选择" required>
+						<option value=''>请选择</option>
+					</select>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="form-group">
+				<label class="col-sm-4 control-label">首付：</label>
+				<div class="col-sm-5">
+					<input type="text" name="downPayment" class="form-control" id="downPayment" autocomplete="off">
+				</div>
+				<label class="control-label">万元</label>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="form-group">
+				<label class="col-sm-4 control-label">紧急度：</label>
+				<div class="col-sm-7">
+					<select id="J_urgencyTypeId" name="urgencyTypeId"class="form-control m-b J_urgencyTypeId" data-placeholder="请选择">
+						<option value="">请选择</option>
+					</select>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-4">
+			<div class="form-group">
+				<label class="col-sm-4 control-label">几套房：</label>
+				<div class="col-sm-8 J_houseQuantity" id="J_houseQuantity">
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-12 text-cen">
+		<div class="form-group">
+			<button id="J_shops_btn" type="button" class="btn btn-success pr5">保 存</button>
+		</div>
+	</div>
+</form>
+</div>
+<!-- 商铺需求 新增 by lilac end -->
+#end
+</div>

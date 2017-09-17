@@ -1,0 +1,151 @@
+#set($plugins = ["table","chosen","laydate","autoSearch"])
+<style>
+.table>thead>tr>th{vertical-align: middle !important;}
+</style>	
+<div class="ibox float-e-margins">
+	<div class="section">
+		<div class="row">
+			<div class="tabs-container" id="tabs-container">
+				<div class="tab-container">
+					<ul class="nav nav-tabs">
+						<li>
+							<a href="$link.contextPath/house/keyadmin/pend_list.htm">待处理<span id="J_waitkeycount"></span></a>
+						</li>
+						<li class="active">
+							<a href="#">钥匙在管</a>
+						</li>
+						<li>
+							<a href="$link.contextPath/house/keyadmin/back_list.htm">退钥匙记录</a>
+						</li>
+						<li>
+							<a href="$link.contextPath/house/keyadmin/check_list.htm"> 日盘点管理</a>
+						</li>
+					</ul>
+				</div>
+				<div class="tab-content tab-content-min">
+					<div class="ibox">
+						<div class="ibox-title">
+							<h5>查询条件</h5>
+							<div class="ibox-tools">
+								<a class="collapse-link ui-sortable"> <i
+									class="fa fa-chevron-up"></i>
+								</a>
+							</div>
+						</div>
+						<div class="ibox-content">
+						#if($shiro.hasPermission("SCM:HOUSE:KEY:VIEW"))
+							<input type="hidden" value="1" id="temp_view"></input>
+						#end
+						#if($shiro.hasPermission("SCM:HOUSE:KEY:MODIFY:NUM"))
+							<input type="hidden" value="1" id="temp_modify"></input>
+						#end
+						#if($shiro.hasPermission("SCM:HOUSE:KEY:LEND"))
+							<input type="hidden" value="1" id="temp_lend"></input>
+						#end
+						#if($shiro.hasPermission("SCM:HOUSE:KEY:RETURN"))
+							<input type="hidden" value="1" id="temp_return"></input>
+						#end
+						#if($shiro.hasPermission("SCM:HOUSE:KEY:TRANSFER"))
+							<input type="hidden" value="1" id="temp_transfer"></input>
+						#end
+						#if($shiro.hasPermission("SCM:HOUSE:KEY:GIVEBACK"))
+							<input type="hidden" value="1" id="temp_giveback"></input>
+						#end
+						#if($shiro.hasPermission("SCM:HOUSE:KEY:CANCEL"))
+							<input type="hidden" value="1" id="temp_cancel"></input>
+						#end
+							<form id="J_query"  class="form-horizontal" role="form">
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group">
+											<label class="col-sm-3 control-label">业务类型:</label>
+											<div class="col-sm-8">
+												<select id="operationtype" name="operationtype" class="J_chosen form-control" data-placeholder="全部">
+													<option value="">全部</option>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<label class="col-sm-3 control-label">房源编号:</label>
+											<div class="col-sm-8">
+												<input type="text" class="form-control" id="houseid" name="houseid" placeholder="请输入房源编号">
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<label class="col-sm-3 control-label">钥匙编号:</label>
+											<div class="col-sm-8">
+												<input type="text" class="form-control" id="keycode" name="keycode" placeholder="请输入钥匙编号">
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group">
+											<label class="col-sm-3 control-label">钥匙状态:</label>
+											<div class="col-sm-8">
+												<select id="status" name="status" class="J_chosen form-control" data-placeholder="全部">
+														<option value="">全部</option>
+														<option value="6">本店存放</option>
+														<option value="3">已借出</option>
+														<option value="5">待转店确认</option>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-12 text-cen">
+										<div class="form-group">
+											<button id="J_search" type="button" class="btn btn-success btn_size">查 询</button>
+											<button id="J_reset" type="reset" class="btn btn-white btn_size">重 置</button>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+
+					<div class="ibox float-e-margins">
+						<div class="ibox-title">
+					        <h5>钥匙在管列表</h5>
+					    </div>
+						<div class="ibox-content">
+							<div class="row row-lg">
+								<div class="col-sm-12">
+									<!-- Example Pagination -->
+									<div class="col-sm-12 ptb10">
+										<table id="J_dataTable" class="table table-hover table-striped  table-condensed">
+											<thead>
+													<tr>
+														<th data-field="operationtype">业务类型</th>
+														<th data-field="houseid">房源编号<br>钥匙编号
+														</th>
+														<th data-field="phshopname">钥匙存放店</th>
+														<th data-field="status">钥匙状态</th>
+														<th data-field="lendusername">借用人</th>
+														<th data-field="lenddate">借用时间<br>预计还钥匙时间
+														</th>
+														<th data-field="stroperationtype">操作</th>
+													</tr>
+												</thead>
+										</table>
+									</div>
+									<!-- End Example Pagination -->
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+#parse("/key/operation.html")
+
+<script type="text/javascript" src="$link.contextPath/resources/script/key/waitkeycount.js"></script>
+<script type="text/javascript" src="$link.contextPath/resources/script/key/list.js?v=6"></script>

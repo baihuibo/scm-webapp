@@ -1,0 +1,451 @@
+#set($plugins = ["chosen" , "laydate"])
+<!--
+    新增草签合同 - step2 (房源及租赁信息)
+-->
+<div ng-controller="signHouseLeaseCtrl as $ctrl" ng-cloak>
+    <div class="ibox">
+        <div class="tabs-container">
+            <ul class="nav nav-tabs">
+                <li>
+                    <a>交易双方信息</a>
+                </li>
+                <li class="active">
+                    <a>房源及租赁信息</a>
+                </li>
+                <li>
+                    <a>居间服务及解约</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-panel active" id="tab-2">
+                    <div class="panel-body">
+
+                        <form novalidate name="validForm" ng-submit="$ctrl.submit(validForm , $event.target)">
+                            <div class="ibox">
+                                <div class="ibox-title">
+                                    房源信息
+                                </div>
+                                <div class="ibox-content">
+                                    <div class="form-horizontal" layout="row" layout-wrap>
+                                        <label flex="15" class="control-label required">
+                                            所属区域：
+                                        </label>
+                                        <div flex="15" style="margin-bottom: 20px;">
+                                            <area-chosen
+                                                    ng-model="$ctrl.data.housing_districtid"
+                                                    area-name="$ctrl.data.housing_district"></area-chosen>
+                                        </div>
+                                        <label flex="15" class="control-label required">
+                                            房产证地址：
+                                        </label>
+                                        <div flex="15">
+                                            <input type="text" class="form-control" placeholder="请输入房产证地址"
+                                                   ng-model="$ctrl.data.housing_addr" required>
+                                        </div>
+
+                                        <label flex="15" class="control-label required">
+                                            建筑面积：
+                                        </label>
+                                        <div flex="15" layout="row">
+                                            <input type="number" class="form-control hide-spin" ng-change="$ctrl.setMaxLive($ctrl.data.build_area)"
+                                                   placeholder="请输入建筑面积"
+                                                   ng-model="$ctrl.data.build_area" required disabled-negative>
+                                            <div layout-padding class="text-nowrap" style="padding:8px 3px">平方米</div>
+                                        </div>
+
+                                        <label flex="15" class="control-label required">
+                                            房屋权属证明：
+                                        </label>
+                                        <div flex="45" style="margin-bottom: 20px;">
+                                            <sign-checkbox-group
+                                                    ng-model="$ctrl.data.house_ownership" required>
+                                                <sign-checkbox ng-repeat="item in $ctrl.leaseHouseOwnership"
+                                                               value="item.valueCode">
+                                                    {{::item.valueName}}
+                                                </sign-checkbox>
+                                            </sign-checkbox-group>
+                                        </div>
+
+                                        <div flex="30" layout="row" style="margin-bottom: 20px;"
+                                             ng-if="$ctrl.data.house_ownership.indexOf(1) > -1">
+                                            <label flex="50" class="control-label required">房屋所有产权证书编号：</label>
+                                            <div flex="50">
+                                                <input type="text" class="form-control"
+                                                       placeholder="请输入证书编号"
+                                                       ng-model="$ctrl.data.certificate_num" required>
+                                            </div>
+                                        </div>
+
+                                        <div flex="30" layout="row" style="margin-bottom: 20px;"
+                                             ng-if="$ctrl.data.house_ownership.indexOf(4) > -1">
+                                            <label flex="50" class="control-label required">房屋来源证明名称：</label>
+                                            <div flex="50">
+                                                <input type="text" class="form-control"
+                                                       placeholder="请输入名称"
+                                                       ng-model="$ctrl.data.house_from_prove_name" required>
+                                            </div>
+                                        </div>
+                                        <div flex="30" layout="row" style="margin-bottom: 20px;"
+                                             ng-if="$ctrl.data.house_ownership.indexOf(2) > -1 || $ctrl.data.house_ownership.indexOf(3) > -1">
+                                            <label flex="50" class="control-label required">房屋所有权人姓名：</label>
+                                            <div flex="50">
+                                                <input type="text" class="form-control"
+                                                       placeholder="请输入姓名"
+                                                       ng-model="$ctrl.data.owner_name" required>
+                                            </div>
+                                        </div>
+
+                                        <label flex="15" class="control-label required">
+                                            租赁用途：
+                                        </label>
+                                        <div flex="15">
+                                            <select class="form-control"  placeholder="请选择"
+                                                    ng-model="$ctrl.data.lease_use" chosen required
+                                                    ng-options="item.valueCode as item.valueName for item in $ctrl.leaseleasePurpose">
+                                                <option value="">请选择</option>
+                                            </select>
+                                        </div>
+
+                                        <div ng-if="$ctrl.data.lease_use == 1" flex="30" layout="row">
+                                            <label flex="50" class="control-label required">
+                                                居住人数：
+                                            </label>
+                                            <div flex="50">
+                                                <input type="number" class="form-control hide-spin"
+                                                       not-greater-to="liveMaxCount" name="liveCount"
+                                                       placeholder="请输入居住人数"
+                                                       ng-model="$ctrl.data.live_count" required focus-integer>
+                                                <span class="help-block text-danger"
+                                                      ng-if="$ctrl.data.live_count > $ctrl.data.live_max_count">
+                                                    居住人数不能大于最大居住人数
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div ng-if="$ctrl.data.lease_use == 1" flex="30" layout="row">
+                                            <label flex="50" class="control-label required">
+                                                最大居住人数：
+                                            </label>
+                                            <div flex="50" style="margin-bottom: 20px;">
+                                                <input type="number" class="form-control hide-spin"
+                                                       not-less-to="liveCount" name="liveMaxCount" readonly
+                                                       ng-model="$ctrl.data.live_max_count" required focus-integer>
+                                            </div>
+                                        </div>
+
+                                        <label flex="15" class="control-label col-sm-6">
+                                            房屋抵押：
+                                        </label>
+                                        <div flex="15">
+                                            <div class="radio radio-primary radio-inline">
+                                                <input type="radio" id="d1" name="housemortgage"
+                                                       ng-model="$ctrl.data.mortgage" required ng-value="1">
+                                                <label for="d1">是</label>
+                                            </div>
+                                            <div class="radio radio-primary radio-inline">
+                                                <input type="radio" id="d2" name="housemortgage"
+                                                       ng-model="$ctrl.data.mortgage" required ng-value="0">
+                                                <label for="d2">否</label>
+                                            </div>
+                                        </div>
+
+                                        <label flex="15" class="control-label">
+                                            住宿登记：
+                                        </label>
+                                        <div flex="15">
+                                            <sign-checkbox-group
+                                                    ng-model="$ctrl.data.accommodation_registration">
+                                                <sign-checkbox ng-repeat="item in $ctrl.leaseAccommodationRegistration"
+                                                               value="item.valueCode">
+                                                    {{item.valueName}}
+                                                </sign-checkbox>
+                                            </sign-checkbox-group>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="ibox">
+                                <div class="ibox-title">
+                                    租赁期限
+                                </div>
+                                <div class="ibox-content">
+                                    <div class="form-horizontal" novalidate layout="row" layout-wrap="">
+                                        <label flex="15" class="control-label required">
+                                            承租期限：
+                                        </label>
+                                        <div flex="45" layout="row">
+                                            <input type="text" flex="35" class="form-control input-sm"
+                                                   sign-laydate max="$ctrl.data.lessee_end_date"
+                                                   placeholder="请选择日期" 
+                                                   ng-model="$ctrl.data.lessee_start_date" required>
+                                            <div layout-padding>至</div>
+                                            <input type="text" flex="35" class="form-control input-sm"
+                                                   placeholder="请选择日期"
+                                                   sign-laydate min="$ctrl.data.lessee_start_date"
+                                                   ng-model="$ctrl.data.lessee_end_date" required>
+                                            <div layout-padding>共计：
+                                                <span class="text-danger">
+                                                    {{ $ctrl.data.lessee_start_date | monthLength : $ctrl.data.lessee_end_date | monthLength2str}}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <label flex="15" class="control-label required">
+                                            交付日期：
+                                        </label>
+                                        <div flex="15" style="margin-bottom: 20px;">
+                                            <input type="text" class="form-control input-sm"
+                                                   sign-laydate placeholder="请选择交付日期"
+                                                   ng-model="$ctrl.data.delivery_date" required>
+                                        </div>
+
+                                        <label flex="15" class="control-label">
+                                            交付内容：
+                                        </label>
+                                        <div flex="50" layout="row">
+                                            <div layout-padding="">房门钥匙及</div>
+                                            <input flex="80" type="text" class="form-control input-sm"
+                                                   placeholder="请输入交付内容"
+                                                   ng-model="$ctrl.data.deliver_ables">
+                                        </div>
+                                        <label flex="10" class="control-label required">
+                                            交接方式：
+                                        </label>
+                                        <div flex="15" style="margin-bottom: 20px;">
+                                            <select class="form-control input-sm" chosen
+                                                    ng-model="$ctrl.data.delivery_mode" required
+                                                    ng-options="item.valueCode as item.valueName for item in $ctrl.leaseDeliveryWay">
+                                                <option value="">请选择</option>
+                                            </select>
+                                        </div>
+                                        <div flex="100" layout="row" layout-align="center" layout-wrap="">
+                                            <div layout-padding>
+                                                乙方继续承租的，应提前
+                                            </div>
+                                            <input flex="10" type="text" class="form-control input-sm"
+                                                   ng-model="$ctrl.data.advance_day"
+                                                   placeholder="三十">
+                                            <div layout-padding="">
+                                                日向甲方提出（
+                                            </div>
+                                            <div>
+                                                <sign-checkbox-group
+                                                        ng-model="$ctrl.data.filed_mode">
+                                                    <sign-checkbox ng-repeat="item in $ctrl.leaseReletWay"
+                                                                   value="item.valueCode">
+                                                        {{item.valueName}}
+                                                    </sign-checkbox>
+                                                </sign-checkbox-group>
+                                            </div>
+
+                                            <div layout-padding="">
+                                                ）续租要求，协商一致后双方重新签订房屋租赁合同。
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="ibox">
+                                <div class="ibox-title">
+                                    租金及押金信息
+                                </div>
+                                <div class="ibox-content">
+                                    <div class="form-horizontal" layout-wrap layout="row">
+                                        <label flex="15" class="control-label required">租金标准：</label>
+                                        <div flex="15" layout="row">
+                                            <input type="number" class="form-control input-sm hide-spin"
+                                                   placeholder="请输入金额"
+                                                   ng-model="$ctrl.data.rent_standard" required disabled-negative>
+                                            <div class="text-nowrap" layout-padding>元/月</div>
+                                        </div>
+                                        <label flex="15" class="control-label required">支付方式(日期)：</label>
+                                        <div flex="15">
+                                            <select class="form-control" chosen
+                                                    placeholder="请选择"
+                                                    ng-model="$ctrl.data.payment_mode" required
+                                                    ng-options="item.valueCode as item.valueName for item in $ctrl.paymentModeWay">
+                                                <option value="">请选择</option>
+                                            </select>
+                                        </div>
+                                        <label flex="15" class="control-label required">租金总计：</label>
+                                        <div flex="20" layout="column" style="margin-bottom: 20px;">
+                                           	<div layout="row" >
+                                           		 <input type="number" class="form-control input-sm hide-spin"
+                                                   style="width: 100px;"
+                                                   ng-model="$ctrl.data.rent_total" required disabled-negative>
+                                          		  <div class="text-nowrap" layout-padding>元</div>
+                                           	</div>
+                                            <div class="text-nowrap text-danger" layout-padding ng-if="$ctrl.data.rent_total">
+                                                ￥：{{$ctrl.data.rent_total | signCurrency}}
+                                            </div>
+                                        </div>
+
+                                        <label flex="15" class="control-label required">租金付款方式：</label>
+                                        <div flex="20">
+                                            <sign-checkbox-group
+                                                    ng-model="$ctrl.data.rent_payment_mode" required>
+                                                <sign-checkbox ng-repeat="item in $ctrl.leaseRentPayWay"
+                                                               value="item.valueCode">
+                                                    {{item.valueName}}
+                                                </sign-checkbox>
+                                            </sign-checkbox-group>
+                                        </div>
+                                        <label flex="10" class="control-label required">支付方式：</label>
+                                        <div flex="20" layout="row" style="height: 30px;">
+                                            <div layout-padding>押</div>
+                                            <div flex>
+                                                <select class="form-control" chosen
+                                                        ng-model="$ctrl.data.deposit"  placeholder="请选择" required>
+                                                    <option value="">请选择</option>
+                                                    <option ng-value="0">0</option>
+                                                    <option ng-value="1">1</option>
+                                                    <option ng-value="2">2</option>
+                                                    <option ng-value="3">3</option>
+                                                    <option ng-value="4">4</option>
+                                                    <option ng-value="5">5</option>
+                                                    <option ng-value="6">6</option>
+                                                    <option ng-value="7">7</option>
+                                                    <option ng-value="8">8</option>
+                                                    <option ng-value="9">9</option>
+                                                </select>
+                                            </div>
+                                            <div layout-padding>付</div>
+                                            <div flex>
+                                                <select class="form-control" chosen
+                                                        ng-model="$ctrl.data.payment"  placeholder="请选择"required>
+                                                    <option value="">请选择</option>
+                                                    <option ng-value="0">0</option>
+                                                    <option ng-value="1">1</option>
+                                                    <option ng-value="2">2</option>
+                                                    <option ng-value="3">3</option>
+                                                    <option ng-value="4">4</option>
+                                                    <option ng-value="5">5</option>
+                                                    <option ng-value="6">6</option>
+                                                    <option ng-value="7">7</option>
+                                                    <option ng-value="8">8</option>
+                                                    <option ng-value="9">9</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <label flex="10" class="control-label required">押金金额：</label>
+                                        <div flex="20" layout="column" style="margin-bottom: 20px;">
+                                            <div layout="row" >
+                                            		<input type="number" class="form-control input-sm hide-spin"
+                                                   style="width: 100px;"
+                                                   placeholder="请输入金额"
+                                                   ng-model="$ctrl.data.deposit_amount" required disabled-negative>
+                                           		 <div class="text-nowrap" layout-padding>元</div>
+                                            </div>
+                                            <div class="text-nowrap text-danger" layout-padding ng-if="$ctrl.data.deposit_amount">
+                                                ￥：{{$ctrl.data.deposit_amount | signCurrency}}
+                                            </div>
+                                        </div>
+
+                                        <label flex="15" class="control-label">普租分期：</label>
+                                        <div flex="15">
+                                            <div class="radio radio-primary radio-inline">
+                                                <input type="radio" id="h1" name="h" ng-value="1"
+                                                       ng-model="$ctrl.data.lessee_installment">
+                                                <label for="h1">是</label>
+                                            </div>
+                                            <div class="radio radio-primary radio-inline" style="margin-right: 0;">
+                                                <input type="radio" id="h2" name="h" ng-value="0"
+                                                       ng-model="$ctrl.data.lessee_installment">
+                                                <label for="h2">否</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h4 class="page-header font-size-12 text-success required">
+                                        租金支付日期
+                                        <div class="pull-right">
+                                            <button type="button" class="btn btn-primary btn-xs"
+                                                    ng-click="$ctrl.addPayDate()">
+                                                <span class="fa fa-plus"></span>
+                                                添加日期
+                                            </button>
+                                        </div>
+                                    </h4>
+                                    <table class="table table-striped table-bordered table-hover dataTables-example table-condensed">
+                                        <thead>
+                                        <tr>
+                                            <th style="width: 20%;">序号</th>
+                                            <th style="width: 20%;" class="required">支付日期</th>
+                                            <th style="width: 20%;" class="required">支付金额/元</th>
+                                            <th style="width: 20%;">备注</th>
+                                            <th style="width: 20%;">操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="item in $ctrl.data.sign_pay_rent_vo"
+                                            class="valign-top">
+                                            <td>{{$index + 1}}</td>
+                                            <td>
+                                                <input type="text" class="form-control input-sm"
+                                                       placeholder="请选择日期"
+                                                       sign-laydate ng-model="item.payment_date" required>
+                                            </td>
+                                            <td>
+                                                <input type="number" class="form-control input-sm hide-spin text-right"
+                                                       placeholder="请输入金额"
+                                                       ng-model="item.payment_amount" required disabled-negative>
+                                                <span class="text-danger" ng-if="item.payment_amount">￥:{{item.payment_amount | signCurrency}}</span>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control input-sm" ng-model="item.memo">
+                                            </td>
+                                            <td>
+                                                <a href="javascript:" class="btn btn-danger btn-outline btn-xs"
+                                                   ng-if="!$first"
+                                                   ng-click="$ctrl.removePayDate($index)">删除</a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="hr-line-dashed"></div>
+                                    <div class="form-horizontal" layout="row" layout-wrap>
+                                        <label flex="15" class="control-label">业主承担费用：</label>
+                                        <div flex="75" style="margin-bottom: 20px;">
+                                            <sign-checkbox-group
+                                                    ng-model="$ctrl.data.owner_expense">
+                                                <sign-checkbox ng-repeat="item in $ctrl.leaseOwnerCost"
+                                                               value="item.valueCode">
+                                                    {{item.valueName}}
+                                                </sign-checkbox>
+                                            </sign-checkbox-group>
+                                        </div>
+                                        <label flex="15" class="control-label">客户承担费用：</label>
+                                        <div flex="75" style="margin-bottom: 20px;">
+                                            <sign-checkbox-group
+                                                    ng-model="$ctrl.data.customer_expense">
+                                                <sign-checkbox ng-repeat="item in $ctrl.leaseCustomerCost"
+                                                               value="item.valueCode">
+                                                    {{item.valueName}}
+                                                </sign-checkbox>
+                                            </sign-checkbox-group>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary btn_size"
+                                                style="float: none !important;">
+                                            下一步
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="$link.contextPath/resources/script/sign/sign-common.module.js"></script>
+
+<script src="$link.contextPath/resources/script/sign/component/sign-checkbox.component.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/sign-laydate.directive.js"></script>
+
+<script src="$link.contextPath/resources/script/sign/create-sign-house-lease.module.js"></script>

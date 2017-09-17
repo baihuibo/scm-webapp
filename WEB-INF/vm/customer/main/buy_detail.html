@@ -1,0 +1,741 @@
+#set($plugins = ["table","laydate","autoSearch","chosen","ztree","validator"])
+<script type="text/javascript" src="$basePath/resources/js/plugins/validate/jquery.validate.min.js"></script>
+<script type="text/javascript" src="$basePath/resources/js/plugins/validate/messages_zh.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/sales/resources/css/customerdetail.css" />
+<script type="text/javascript" src="$basePath/resources/js/plugins/layer2.1/laydate/laydate.js"></script>
+
+<script>
+    var isNotCooperation = location.search.toLowerCase().indexOf('cooperation') === -1;
+    var referalUserFlag = '$!VO.referalUserFlag' === 'true';
+    var buy_edit_permission = referalUserFlag && $shiro.hasPermission("SCM:CUSTOM:BUY_EDIT") && isNotCooperation; // 客户修改
+    var buy_referral_permission = referalUserFlag && $shiro.hasPermission("SCM:CUSTOM:BUY_REFERRAL") && isNotCooperation; // 客户转介
+    var buy_black_permission = referalUserFlag && $shiro.hasPermission("SCM:CUSTOM:BUY_BLACK") && isNotCooperation; // 黑名单设置
+    var buy_tel_view_permission = referalUserFlag && $shiro.hasPermission("SCM:CUSTOM:BUY_TEL_VIEW") && isNotCooperation; // 电话查看
+    var buy_tel_edit_permission = referalUserFlag && $shiro.hasPermission("SCM:CUSTOM:BUY_TEL_EDIT") && isNotCooperation; // 电话修改
+    var buy_follow_add_permission = referalUserFlag && $shiro.hasPermission("SCM:CUSTOM:BUY_FOLLOW_ADD") && isNotCooperation; // 跟进录入
+</script>
+
+<!--买卖客源详情  -->
+<!-- box区 start -->
+<div id="autowidth_box">
+	#if($shiro.hasPermission("SCM:CUSTOM:BUY_EDIT"))
+	<input type="hidden" name="haspermission" id="J_haspermission" value="haspermission"/>
+	#end
+		
+	<input type="hidden" name="iscurrent_ath" id="J_iscurrent_ath" value="$!VO.customer.isCurrent"/>
+	<!-- 操作栏区 start--><!-- 0过往需求 1当前需求 -->
+	<div id="fixedwidth_right" data-iscurrent="$!VO.customer.isCurrent">
+		#if ($!VO.customer.isCurrent == 1)
+		<!-- 右侧操作栏 start -->
+		<div class="right_operbar" id="right_operbar" >
+			#if ($!VO.customer.clientTypeId == 1)
+				#if ($shiro.hasPermission("SCM:CUSTOM:BUY_FOLLOW_ADD"))
+				<span class="oper_followup" id="oper_followup">跟进</span>
+				#end
+				#if ($shiro.hasPermission("SCM:CUSTOM:BUY_REFERRAL"))
+					#if ($!VO.referalFlag == true && $!VO.referalUserFlag == true)
+					<span class="oper_referral" id="oper_referral">转介</span>
+					#end
+				#end
+			#end
+
+			#if ($!VO.customer.blacklistStatusId == 0)
+				#if ($shiro.hasPermission("SCM:CUSTOM:BUY_BLACK"))
+				<span class="oper_blacklist" id="oper_blacklist">设为黑名单</span>
+				#end
+			#end
+			#if ($!VO.customer.finalStatusId!=20)
+				#if ($shiro.hasPermission("SCM:CUSTOM:BUY_SENIORITY"))
+				<a href="/tms/tmsPurchaseQualifiChLog/toNosignApplyOrder.htm?clientId=$!VO.customer.clientId" target="_blank">购房资格核验</a>
+				#end
+			#end
+			#if ($shiro.hasPermission("SCM:CUSTOM:BUY_TEL_VIEW"))
+			<span class="oper_telshow" id="J_checkPhone">查看</span>
+			#end
+		</div>	
+		<!-- 右侧操作栏 end -->
+		#end
+	</div>
+	<!-- 操作栏区 end-->
+	<!-- 自适应区start -->
+	<div id="autowidth_left">
+		<div class="bs-callout bs-callout-warning">
+			<h4>买卖客源详情</h4>
+		</div>
+		<div class="ibox">
+			<div class="ibox-title">
+				<h5>客户信息</h5>
+				<div class="ibox-tools">
+					<a class="collapse-link ui-sortable"> <i class="fa fa-chevron-up"></i></a>
+				</div>
+			</div>
+			<div class="ibox-content">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="customer_sign">
+							<h3 class="business-title sign_ath">
+								<span>$!VO.customer.customerName</span>
+								<span id="J_customerId" data-clientId="$!VO.customer.clientId" data-customerId="$!VO.customer.customerId" class="sign_color_gray">（$!VO.customer.clientId）</span>
+								<span class="sign_color_blue ml10 mr10">$!VO.customer.genderName</span>
+								#if ($!VO.customer.limitedCustomerStatusId == 1) 
+								<span class="limit_show ml10"></span>
+								#end
+								#if ($!VO.customer.blacklistStatusId == 1) 
+								<span id="blacklist_show" class="blacklist_show ml10"></span>
+								#end						
+								<input id="J_blackvalue" type="hidden" class="form-control" value=$!VO.customer.blacklistStatusId />
+								<!-- <span>$!VO.customer.blacklistStatusId</span> -->
+							</h3>
+						</div>
+					</div>
+					<div class="col-md-8">
+						<div class="step_box">
+							<hr/>
+							<div class="step_inner_sign h_sign"></div>
+							<div class="step_01">
+								<div class="step_outer_sign">
+									<a class="step_inner_sign #if ($!VO.customer.finalStatusId==1) step_inner_active #end"></a>
+								</div>
+								<span>录入</span>
+							</div>
+							<div class="step_02">
+								<div class="step_outer_sign">
+									<a class="step_inner_sign #if ($!VO.customer.finalStatusId==12) step_inner_active #end"></a>
+								</div>
+								<span>带看中</span>
+							</div>
+							<div class="step_03">
+								<div class="step_outer_sign">
+									<a class="step_inner_sign #if ($!VO.customer.finalStatusId==30) step_inner_active #end"></a>
+								</div>
+								<span>已带看</span>
+							</div>
+							<div class="step_04">
+								<div class="step_outer_sign">
+									<a class="step_inner_sign #if ($!VO.customer.finalStatusId==20) step_inner_active #end"></a>
+								</div>
+								<span>成交</span>
+							</div>
+							<div class="step_inner_sign t_sign"></div>
+						</div>
+					</div>
+				</div>
+				<div class="row mt10">
+					<div class="customer_info_box">
+						<div class="col-md-12">
+							<h4 class="business-title">客户信息</h4>
+						</div>
+						<div class="customer_info_content">
+							<div class="row ptb10">
+								<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>基本信息</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-4">
+									<dl class="dl-horizontal">
+										<dt id="J_customername" data-columns="customername|input||$!VO.customer.customerName" class="J_edit_area"><span class="text-danger">*</span>客户姓名：</dt>
+										<dd>$!VO.customer.customerName</dd>
+									</dl>
+								</div>
+								<div class="col-sm-4">
+									<dl class="dl-horizontal">
+										<dt id="J_gender" data-columns="gender|radio|gender|$!VO.customer.genderId" class="J_edit_area">性别：</dt>
+										<dd>$!VO.customer.genderName</dd>
+									</dl>
+								</div>
+								<div class="col-sm-4">
+									<dl class="dl-horizontal">
+										<dt id="J_editNationality" data-columns="nationalitycode|nationality||$!VO.customer.nationalityCode" class="J_edit_area">国籍：</dt>
+										<dd>$!VO.customer.nationalityName</dd>
+									</dl>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-4">
+									<dl id="J_editPhone" class="dl-horizontal">
+										<dt><span class="text-danger">*</span>联系电话：</dt>
+										<dd class=>修改</dd>
+									</dl>
+								</div>
+								<div class="col-sm-4">
+									<dl class="dl-horizontal">
+										<dt id="J_hometown" data-columns="hometown|radio|hometown|$!VO.customer.householdTypeId" class="J_edit_area">户籍：</dt>
+										<dd>$!VO.customer.householdTypeName</dd>
+									</dl>
+								</div>
+								<div class="col-sm-4">
+									<dl class="dl-horizontal">
+										<dt id="J_watchHouseTime" data-columns="freetime|checkbox|watchHouseTime|$!VO.customer.freeTimeIds.replace('%23%23', ',')" class="J_edit_area">方便看房时间：</dt>
+										<dd>$!VO.customer.freeTimeNames.replace('%23%23', '、')</dd>
+									</dl>
+								</div>
+							</div>
+						</div>
+						<div class="customer_info_content">							
+							<div class="row basic-info">
+								<div class="font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>购房信息</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-4">
+									<dl class="dl-horizontal">
+										<dt id="J_loan" data-columns="loan|radio|yesOrNo|$!VO.customer.hasLoanedId" class="J_edit_area">贷款记录：</dt>
+										<dd>$!VO.customer.hasLoanedName</dd>
+									</dl>
+								</div>
+								<div class="col-sm-4">
+									<dl class="dl-horizontal">
+										<dt id="J_fund" data-columns="fund|input||$!VO.customer.monthAccumulationFund" class="J_edit_area">公积金月缴额：</dt>
+										<dd>#if ($!VO.customer.monthAccumulationFund) $number.format("#0.00", $!VO.customer.monthAccumulationFund) #end <span>元/月</span></dd>
+									</dl>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row mt10">
+			<div class="tabs-container" style="overflow: inherit;">
+				<ul class="nav nav-tabs nav_tab_ath">
+					#set($hasActive=0)
+					#if ($VO.customer.hasHouse == 1)
+					<li class="#if ($hasActive == 0) active #end"><a data-toggle="tab" href="#tab-11">住宅</a></li>
+						#set($hasActive=1)
+					#else
+						<!-- <li class=""><a data-toggle="tab" class="color_gray" #if ($!VO.customer.isCurrent == 1) href="#tab-11" #end>住宅</a></li> -->
+						<li class=""><a class="color_gray" 
+							#if ($shiro.hasPermission("SCM:CUSTOM:BUY_EDIT")) 
+								data-toggle="tab" #if ($!VO.customer.isCurrent == 1) href="#tab-11" #end 
+							#end>住宅</a></li>
+					#end
+					
+					#if ($VO.customer.hasBungalow == 1)
+					<li class="#if ($hasActive == 0) active #end"><a data-toggle="tab" href="#tab-12">平房</a></li>
+						#set($hasActive=1)
+					#else
+						<!-- <li class=""><a data-toggle="tab" class="color_gray" #if ($!VO.customer.isCurrent == 1) href="#tab-12" #end>平房</a></li> -->
+						<li class=""><a class="color_gray" 
+							#if ($shiro.hasPermission("SCM:CUSTOM:BUY_EDIT")) 
+								data-toggle="tab" #if ($!VO.customer.isCurrent == 1) href="#tab-12" #end 
+							#end>平房</a></li>
+					#end
+					
+					#if  ($VO.customer.hasVilla == 1)
+					<li class="#if ($hasActive == 0) active #end"><a data-toggle="tab" href="#tab-13">别墅</a></li>
+						#set($hasActive=1)
+					#else
+						<!-- <li class=""><a data-toggle="tab" class="color_gray" #if ($!VO.customer.isCurrent == 1) href="#tab-13" #end>别墅</a></li> -->					
+						<li class=""><a class="color_gray" 
+							#if ($shiro.hasPermission("SCM:CUSTOM:BUY_EDIT")) 
+								data-toggle="tab" #if ($!VO.customer.isCurrent == 1) href="#tab-13" #end
+							#end>别墅</a></li>
+					#end
+					
+					#if  ($VO.customer.hasParkingGarage == 1)
+					<li class="#if ($hasActive == 0) active #end"><a data-toggle="tab" href="#tab-14">车位/车库</a></li>
+						#set($hasActive=1)
+					#else
+						<!-- <li class=""><a data-toggle="tab" class="color_gray" #if ($!VO.customer.isCurrent == 1) href="#tab-14" #end>车位/车库</a></li> -->						
+						<li class=""><a class="color_gray" 
+							#if ($shiro.hasPermission("SCM:CUSTOM:BUY_EDIT")) 
+								data-toggle="tab" #if ($!VO.customer.isCurrent == 1) href="#tab-14" #end
+							#end>车位/车库</a></li>
+					#end
+					
+					#if  ($VO.customer.hasShop == 1)
+					<li class="#if ($hasActive == 0) active #end"><a data-toggle="tab" href="#tab-15">商铺</a></li>
+						#set($hasActive=1)
+					#else
+						<!-- <li class=""><a data-toggle="tab" class="color_gray" #if ($!VO.customer.isCurrent == 1) href="#tab-15" #end>商铺</a></li> -->
+						<li class=""><a class="color_gray" 
+							#if ($shiro.hasPermission("SCM:CUSTOM:BUY_EDIT")) 
+								data-toggle="tab" #if ($!VO.customer.isCurrent == 1) href="#tab-15" #end
+							#end>商铺</a></li>
+					#end
+					
+					#if  ($VO.customer.hasOfficeBuilding == 1)
+					<li class="#if ($hasActive == 0) active #end"><a data-toggle="tab" href="#tab-16">写字楼</a></li>
+						#set($hasActive=1)
+					#else
+						<!-- <li class=""><a data-toggle="tab" class="color_gray" #if ($!VO.customer.isCurrent == 1) href="#tab-16" #end>写字楼</a></li> -->
+						<li class=""><a class="color_gray" 
+							#if ($shiro.hasPermission("SCM:CUSTOM:BUY_EDIT")) 
+								data-toggle="tab" #if ($!VO.customer.isCurrent == 1) href="#tab-16" #end
+							#end>写字楼</a></li>
+					#end
+					
+					#if  ($VO.customer.hasWorkshopWarehouse == 1)
+					<li class="#if ($hasActive == 0) active #end"><a data-toggle="tab" href="#tab-17">厂房/仓库</a></li>
+					<!-- <li class="#if ($hasActive == 0) active #end"><a data-toggle="tab" href="#tab-17">厂房/仓库</a></li> -->
+						#set($hasActive=1)
+					#else
+						<!-- <li class=""><a data-toggle="tab" class="color_gray" #if ($!VO.customer.isCurrent == 1) href="#tab-17" #end>厂房/仓库</a></li> -->						
+						<li class=""><a class="color_gray" 
+							#if ($shiro.hasPermission("SCM:CUSTOM:BUY_EDIT")) 
+								data-toggle="tab" #if ($!VO.customer.isCurrent == 1) href="#tab-17" #end
+							#end>厂房/仓库</a></li>
+					#end
+				</ul>
+				
+				<div class="tab-content" id="tab-content1">
+					
+					#set($hasTabActive = 0)
+					<div id="tab-11" class="tab-pane #if ($!VO.customer.hasHouse==1 && $hasTabActive == 0) active #end" data-propertytype='1'>
+						<div class="panel-body">
+							<div class="ibox">
+							<!-- 住宅需求 -->
+							#parse("/customer/buy/house.html")
+							</div>
+						</div>
+					</div>
+					#if ($!VO.customer.hasHouse==1 && $hasTabActive == 0) #set($hasTabActive = 1) #end
+					
+					<div id="tab-12" class="tab-pane #if ($!VO.customer.hasBungalow==1 && $hasTabActive == 0) active #end" data-propertytype='6'>
+						<div class="panel-body">
+							<div class="ibox">
+							<!-- 平房需求 -->
+							#parse("/customer/buy/bungalow.html")
+							</div>
+						</div>
+					</div>					
+					#if ($!VO.customer.hasBungalow==1 && $hasTabActive == 0) #set($hasTabActive = 1) #end
+					
+					<div id="tab-13" class="tab-pane #if ($!VO.customer.hasVilla==1 && $hasTabActive == 0) active #end" data-propertytype='7'>
+						<div class="panel-body">
+							<div class="ibox">
+							<!-- 别墅需求 -->
+							#parse("/customer/buy/villa.html")
+							</div>
+						</div>
+					</div>					
+					#if ($!VO.customer.hasVilla==1 && $hasTabActive == 0) #set($hasTabActive = 1) #end
+							 
+					<div id="tab-14" class="tab-pane #if ($!VO.customer.hasParkingGarage==1 && $hasTabActive == 0) active #end" data-propertytype='5'>
+						<div class="panel-body">
+							<div class="ibox">
+							<!-- 车位/车库需求 -->
+							#parse("/customer/buy/parking_garage.html")
+							</div>
+						</div>
+					</div>								
+					#if ($!VO.customer.hasParkingGarage==1 && $hasTabActive == 0) #set($hasTabActive = 1) #end
+					
+					<div id="tab-15" class="tab-pane #if ($!VO.customer.hasShop==1 && $hasTabActive == 0) active #end" data-propertytype='2'>
+						<div class="panel-body">
+							<div class="ibox">
+							<!-- 商铺需求 -->
+							#parse("/customer/buy/shop.html")
+							</div>
+						</div>
+					</div>					
+					#if ($!VO.customer.hasShop==1 && $hasTabActive == 0) #set($hasTabActive = 1) #end
+					
+					<div id="tab-16" class="tab-pane #if ($!VO.customer.hasOfficeBuilding==1 && $hasTabActive == 0) active #end" data-propertytype='3'>
+						<div class="panel-body">
+							<div class="ibox">
+							<!-- 写字楼需求 -->
+							#parse("/customer/buy/office_building.html")
+							</div>
+						</div>
+					</div>					
+					#if ($!VO.customer.hasOfficeBuilding==1 && $hasTabActive == 0) #set($hasTabActive = 1) #end
+					
+					<div id="tab-17" class="tab-pane #if ($!VO.customer.hasWorkshopWarehouse==1 && $hasTabActive == 0) active #end" data-propertytype='4'>
+						<div class="panel-body">
+							<div class="ibox">
+							<!-- 厂房/仓库需求 -->
+							#parse("/customer/buy/workshop_warehouse.html")
+							</div>
+						</div>
+					</div>
+					#if ($!VO.customer.hasWorkshopWarehouse==1 && $hasTabActive == 0) #set($hasTabActive = 1) #end					
+				</div>
+			</div>
+		</div>
+			
+		<div class="ibox">
+			<div class="ibox-title">
+				<div class="col-md-12">
+					<h5 class="business-title">我家需求</h5>
+				</div>
+			</div>
+			<div class="ibox-content">
+				<div class="row">
+					<div class="customer_info_box">
+						<div class="customer_info_content">
+							<div class="row basic-info">
+								<div class="font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>我家知道</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-4">
+									<dl class="dl-horizontal">
+										<dt id="J_purchaseMotivation" data-columns="purchaseMotivation|checkbox|purchaseMotivation|$!VO.customer.purchaseMotivationIds" class="J_edit_area">购房动机：</dt>
+										<dd>$!VO.customer.purchaseMotivationNames</dd>
+									</dl>
+								</div>
+								<div class="col-sm-4">
+									<!-- <dl id="J_customerSource" data-columns="customerSource|select|customerSource|$!VO.customer.sourceId" class="dl-horizontal J_edit_area">
+										<dt>客户来源：</dt>
+										<dd>$!VO.customer.sourceName</dd>
+									</dl> -->
+									<dl class="dl-horizontal">
+										<dt id="J_editCustomerSource" data-columns="$!VO.customer.sourceId|$!VO.customer.infoSourceId"><span class="text-danger">*</span>客户来源：</dt>
+										<dd id="customerSourceDesc"></dd>
+										<script>
+											(function () {
+											    var sourceName = "$!VO.customer.sourceName";
+											    var infoSourceName = "$!VO.customer.infoSourceName";
+												var dd = document.querySelector('#customerSourceDesc');
+												var name = [];
+                                                    sourceName && name.push(sourceName);
+                                                infoSourceName && name.push(infoSourceName);
+                                                if (dd) {
+                                                	dd.innerText = name.join(' - ');
+                                                }
+                                            }());
+										</script>
+									</dl>
+								</div>
+								<div class="col-sm-2">
+									<dl class="dl-horizontal">
+										<dt id="J_finalAssessment" data-columns="finalAssessment|select|finalAssessment|$!VO.customer.customerFinalAssessmentId" class="J_edit_area"><span class="text-danger">*</span>客户评价：</dt>
+										<dd>$!VO.customer.customerFinalAssessmentName</dd> 
+									</dl>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-12">
+									<dl class="dl-horizontal">
+										<dt id="J_selloldbuynew" data-columns="selloldbuynew|radio|yesOrNo|$!VO.customer.isPurchaseAfterSalesId"
+											class="J_edit_area">
+											<span class="text-danger">*</span>是否是卖旧买新业务：
+										</dt>
+										<dd>$!VO.customer.isPurchaseAfterSalesName</dd> 
+									</dl>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-12">
+									<dl class="dl-horizontal">
+										<dt id="J_remark" data-columns="remark|textarea" maxlength="400" class="J_edit_area">备注：</dt>
+										<dd class="remark_all" id="remark_all_memo"></dd>
+										<textarea style="display: none" id="all_memo">$!VO.customer.memo</textarea>
+										<script>
+                                            document.querySelector('#remark_all_memo')
+                                                .innerText = document.querySelector('#all_memo').value;
+										</script>
+									</dl>
+								</div>
+							</div>
+						</div>
+						<div class="customer_info_content">
+							<div class="row basic-info">
+								<div class="font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>归属信息</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<dl class="dl-horizontal">
+										<dt>登记人：</dt>
+										<dd>$!VO.customer.registerUserName</dd>
+									</dl>
+								</div>
+								<div class="col-sm-6">
+									<dl class="dl-horizontal">
+										<dt>登记时间：</dt>
+										<dd>$!date.format('yyyy-MM-dd HH:mm:ss',$!VO.customer.registerTime)</dd>
+									</dl>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<dl class="dl-horizontal">
+										<dt>归属人：</dt>
+										<dd>$!VO.customer.belongsToUserName</dd>
+									</dl>
+								</div>
+								<div class="col-sm-6">
+									<dl class="dl-horizontal">
+										<dt>归属时间：</dt>
+										<dd>$!date.format('yyyy-MM-dd HH:mm:ss',$!VO.customer.belongsToTime)</dd>
+									</dl>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<dl class="dl-horizontal">
+										<dt>共享人：</dt>
+										<dd>$!VO.customer.shareUserName</dd>
+									</dl>
+								</div>
+								<div class="col-sm-6">
+									<dl class="dl-horizontal">
+										<dt>共享时间：</dt>
+										<dd>$!date.format('yyyy-MM-dd HH:mm:ss',$!VO.customer.shareTime)</dd>
+									</dl>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+			#parse("/customer/guide/operationRecord.html")
+	</div>
+
+<!-- 自适应区 end -->
+</div>
+<!-- box区 end -->
+<!-- 占位 start -->
+<div id="autowidth_footer"></div>
+<!-- 占位 end -->
+
+
+
+<!-- popup edit start -->
+
+<!-- 右侧操作栏 popup edit start -->
+<!-- 跟进 start -->
+<div id="editfollowup_layer" class="ibox-content" style="display: none">
+	<form id="editfollowup_form" name="editfollowup_form" class="form-horizontal">
+		<div class="form-group">
+			<label class="col-sm-3 control-label"><span class="text-danger">*</span>跟进内容：</label>
+			<div class="col-sm-8">
+				<textarea id="J_followup_content" class="form-control" placeholder="请输入备注信息" maxlength="200"></textarea>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">提醒时间：</label>
+			<div class="col-sm-8">
+				<input id="J_reminder_time" name="begindate" class="form-control w160" onclick="laydate({istime: true, min: laydate.now(0, 'YYYY-MM-DD hh:mm'), format: 'YYYY-MM-DD hh:mm'})" readonly="readonly">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">提醒内容：</label>
+			<div class="col-sm-8">
+				<textarea id="J_reminder_content" class="form-control" placeholder="请输入备注信息" maxlength="200"></textarea>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label" style="text-align:top">说明：</label>
+			<div class="col-sm-8">
+				<label>跟进内容根据提醒时间，提醒设置人；<br/>提醒方式默认为站内信。
+				</label>
+			</div>
+		</div>
+		<div class="form-group">
+		</div>
+	</form>
+</div>
+<!-- 跟进 end -->
+<!-- 转介 start -->
+<div id="editreferral_layer" class="ibox-content" style="display: none">
+	<form id="editreferral_form" name="editreferral_form" class="form-horizontal">
+		<div class="form-group">
+			<div class="col-sm-2"></div>
+			<!-- <div class="col-sm-10">
+				<input type="radio" value="1" name="guest" id="public_guest"><label for="public_guest">共享到店组公客</label>
+				<input type="radio" value="2" name="guest" id="private_guest" style="margin-left:8px;"><label for="private_guest">转介</label>
+			</div> -->
+			
+			<div id="J_guest" class="col-sm-10">
+				<!-- <div class="radio radio-primary radio-inline">
+					<input type="radio" value="1" name="guest" id="public_guest"><label for="public_guest">共享到店组公客</label>
+				</div>
+				<div class="radio radio-primary radio-inline">
+					<input type="radio" value="2" name="guest" id="private_guest" style="margin-left:8px;"><label for="private_guest">转介</label>
+				</div> -->
+			</div>
+		</div>
+		<div class="form-group" id="private_guest_box" style="display:none;">
+			<!-- <div class="form-group">
+				<label class="col-sm-2 control-label"><span class="text-danger">*</span>接收部门</label>
+				<div class="col-sm-6">
+					<input id="J_deptLevel" type="hidden" class="form-control" value="">
+					<div class="input-group">
+						<input id="J_deptName" type="text" class="form-control radius-3" autocomplete="off">
+						<div class="input-group-btn input-group-btn-dept">
+							<button type="button" class="btn btn-white dropdown-toggle" data-toggle="">
+								<span class=""></span>
+							</button>
+							<ul id="J_deptMenu" class="dropdown-menu dropdown-menu-right" role="menu">
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-2">
+							<button id="J_deptSelect" data-toggle="dropdown" class="btn dropdown-toggle btn-dept" type="button"><span class="caret"></span>
+                            </button>
+						</div>
+			</div> -->			
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><span class="text-danger">*</span>接收部门：</label>
+				<div class="col-sm-5">
+					<input id="J_deptLevel" type="hidden" class="form-control" value="">
+					<div class="input-group">
+						<input id="J_deptName" type="text" class="form-control radius-3 float-l" autocomplete="off">
+						<div class="input-group-btn">
+							<button id="J_deptSelect" data-toggle="dropdown" class="btn dropdown-toggle btn-dept float-l" type="button"><span class="caret"></span>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>			
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><span class="text-danger">*</span>接收人：</label>
+				<div class="col-sm-5">	
+					<div class="input-group">
+						<input type="text" class="form-control" class="lendusername" id="J_sendee">
+						<div class="input-group-btn">
+							<button type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown">
+								<span class="glyphicon glyphicon-search search-caret"></span>
+							</button>
+							<ul class="dropdown-menu dropdown-menu-right" role="menu">
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+		
+		<div class="form-group">
+		</div>
+	</form>
+</div>
+<!-- 转介 end -->
+
+<!-- 右侧操作栏 popup edit end -->
+
+<!-- 编辑其它需求 begin -->
+<div id="J_editBillLayer" class="ibox-content" style="display: none">
+	<form id="J_editForm" name="editForm" class="form-horizontal">
+		<div class="form-group">
+			<label class="col-sm-3 control-label">原其它需求：</label>
+			<div id="J_oldBill" class="col-sm-7 ptb7">
+				
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-3 control-label">其它需求：</label>
+			<div class="col-sm-4">
+				<select id="J_isBill" name="isbill" class="form-control" data-placeholder="请选择">
+					<option value="">请选择</option>
+				</select>
+			</div>
+			<div id="J_bill" class="col-sm-5 pl10" style="display:none;">
+			</div>
+		</div>
+	</form>
+</div>
+<!-- 编辑其它需求 end -->
+
+<!-- 需求楼盘 begin -->
+<div id="J_addfloor_layer" class="ibox-content" style="display: none">
+	<form id="lease_form" name="lease_form" class="form-horizontal">
+		<div class="form-group">
+			<label class="col-sm-3 control-label">需求楼盘：</label>
+			<div class="col-sm-8">
+				<div class="input-group">
+					<input type="text" name="" class="form-control" id="J_build_add" autocomplete="off">
+					<div class="input-group-btn">
+						<button type="button" class="btn btn-white dropdown-toggle" data-toggle="">
+							<span class="glyphicon glyphicon-search search-caret"></span>
+						</button>
+						<ul class="dropdown-menu dropdown-menu-right" role="menu"></ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+<!-- 添加楼盘end -->
+
+<!-- 添加商圈begin -->
+<div id="J_addarea_layer" class="ibox-content" style="display: none">
+	<form id="lease_form" name="lease_form" class="form-horizontal">
+		<div class="form-group">
+			<div class="col-md-12 m-b-sm">
+				<label class="col-sm-3 control-label"><span class="text-danger">*</span>商圈：</label>
+				<div class="col-sm-8">
+					<div class="input-group">
+						<input type="text" name="" class="form-control" id="J_business_add" autocomplete="off">
+						<div class="input-group-btn">
+							<button type="button" class="btn btn-white dropdown-toggle" data-toggle="">
+								<span class="glyphicon glyphicon-search search-caret"></span>
+							</button>
+							<ul class="dropdown-menu dropdown-menu-right" role="menu"></ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<label class="col-sm-3 control-label">所属行政区：</label>
+				<div class="col-sm-8">
+					<select id="J_region" name="" class="J_chosen form-control" data-placeholder="请选择">
+					</select>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+<!-- 添加商圈end -->
+
+<!-- 解决当前tab刷新问题 -->
+<script type="text/javascript">
+$(document).ready(function() {
+	if(location.hash) {
+		$('a[href=' + location.hash + ']').tab('show');
+	}
+
+	$(document.body).on("click", "a[data-toggle]", function(event) {
+		location.hash = this.getAttribute("href");
+	});
+});
+
+$(window).on('popstate', function() {
+	var anchor = location.hash || $("a[data-toggle=tab]").first().attr("href");
+	$('a[href=' + anchor + ']').tab('show');
+});
+</script>
+
+
+<script type="text/javascript">
+setBlackStatus();
+function setBlackStatus(){//设置黑名单状态 0否 1是
+	var blackstatus=$("#J_blackvalue").attr("value");
+	//alert(blackstatus);
+	if(blackstatus==1){
+		$("#oper_blacklist").hide();//右侧操作栏
+		$("#blacklist_show").show();//左上显示栏
+	}else if(blackstatus==0){
+		$("#oper_blacklist").show();
+		$("#blacklist_show").hide();
+	}
+}
+
+</script>
+
+<!-- 客户信息修改 -->
+#parse("/public/edit_column_layer.html")
+
+<!-- 编辑电话 -->
+#parse("/public/edit_phone_layer.html")
+
+<!-- 编辑需求楼盘 -->
+#parse("/public/edit_build_layer.html")
+
+<!-- 编辑商圈&行政区 -->
+#parse("/public/edit_business_layer.html")
+
+<!-- 编辑客户来源 -->
+#parse("/public/edit_customer_source_layer.html")
+<!-- popup edit end -->
+
+
+<script type="text/javascript" src="http://10.2.1.23:1111/static/resources/js/plugins/suggest/bootstrap-suggest.min.js"></script>
+<script type="text/javascript" src="http://10.2.1.23:1111/static/resources/js/plugins/ztree/jquery.ztree.core.js"></script>
+<script type="text/javascript" src="http://10.2.1.23:1111/static/resources/js/plugins/ztree/jquery.ztree.excheck.js"></script>
+<script type="text/javascript" src="$link.contextPath/resources/js/department.js"></script>
+<script type='text/javascript' src="$link.contextPath/resources/script/customer/main/buy_detail.js"></script>
+<script type='text/javascript' src="$link.contextPath/resources/script/customer/main/buy_detailvalidate.js"></script>
+<script type='text/javascript' src="$link.contextPath/resources/js/check_phone.js"></script> <!-- 查看电话 -->

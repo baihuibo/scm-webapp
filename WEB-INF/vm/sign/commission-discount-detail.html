@@ -1,0 +1,538 @@
+#set($plugins = ["table","chosen","laydate","linkage","autoSearch","ztree"])
+<div class="ibox">
+	<div class="ibox-title">
+		<div class="row pt6">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">折扣申请</label>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="ibox-content">
+		<form id="J_seeQuery" class="form-horizontal" role="form">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">单据编号：</label>
+						<div class="col-sm-8">
+							<input name="" type="text" id="J_docnum_edit" readonly="readonly" class="form-control">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">审核状态：</label>
+						<div class="col-sm-8">
+							<input name="" type="text" id="J_auditstatus_edit" readonly="readonly" class="form-control">
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="ibox-content">
+		<div class="tabs-container ptbottom10">
+			<ul class="nav nav-tabs">
+				<li class="active"><a data-toggle="tab">折扣信息</a></li>
+			</ul>
+		</div>
+		<form id="J_seeQuery" class="form-horizontal" role="form">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label"><span class="text-danger">*</span>合同名称：</label>
+						<div class="col-sm-8" id="J_contractnum">
+							<div class="input-group">
+								<!-- <input type="text" id="addContractNum" class="form-control" readonly="readonly" style="background-color:#fff;" autocomplete="off"> -->
+								<input type="text" id="J_contractnum_edit" class="form-control" readonly="readonly" style="background-color:#fff;" autocomplete="off">
+								<div class="input-group-btn">
+									<button type="button" class="btn btn-white dropdown-toggle"
+										data-toggle="">
+										<span class="glyphicon glyphicon-search search-caret"></span>
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">房源编号：</label>
+						<div class="col-sm-8">
+							<input name="" type="text" id="J_housenum_edit" readonly="readonly" class="form-control">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">客源编号：</label>
+						<div class="col-sm-8">
+							<input name="" type="text" id="J_customernum_edit" readonly="readonly" class="form-control">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">业务类型：</label>
+						<div class="col-sm-8">
+							<input type="text" readonly="readonly" name="" class="form-control" id="J_servicetype_edit">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">客户姓名：</label>
+						<div class="col-sm-8">
+							<input type="text" readonly="readonly" name="" class="form-control" id="J_customername_edit">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">业主姓名：</label>
+						<div class="col-sm-8">
+							<input type="text" readonly="readonly" name="" class="form-control" id="J_ownername_edit">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">折前佣金(元)：</label>
+						<div class="col-sm-8">
+							<input type="text" readonly="readonly" name="" class="form-control" id="J_commission_before_edit">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">折后佣金(元)：</label>
+						<div class="col-sm-8">
+							<input type="text" readonly="readonly" name="" class="form-control" id="J_commission_after_edit">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">总折扣(折)：</label>
+						<div class="col-sm-8">
+							<input type="text" readonly="readonly" name="" class="form-control" id="J_discount_edit">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">所属部门：</label>
+						<div class="col-sm-8">
+							<input type="text" name="" readonly="readonly" class="form-control" id="addEpartment">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row pt6">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">折扣信息</label>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label style="padding:7px 15px 0 0;" class="col-sm-4 control-label"><span class="text-danger">*</span>服务费收取对象：</label>
+						<div class="checkbox checkbox-primary checkbox-inline">
+							<input type="checkbox" id="J_serviceobj_customer" name="serviceobj" value="1">
+							<label for="J_serviceobj_customer">客户</label>
+						</div>
+						<div class="checkbox checkbox-primary checkbox-inline">
+							<input type="checkbox" id="J_serviceobj_owner" name="serviceobj" value="0">
+							<label for="J_serviceobj_owner">业主</label>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label"><span class="text-danger">*</span>业主居间佣金<br/>（公司规定）：</label>
+						<div class="col-sm-8">
+							<input type="text" name="" readonly="readonly" class="form-control" id="J_ownerbrokerage_company">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label"><span class="text-danger">*</span>业主居间佣金<br/>（合同约定）：</label>
+						<div class="col-sm-8">
+							<input type="text" name="" class="form-control" id="J_ownerbrokerage_contract">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">居间折扣（折）：</label>
+						<div class="col-sm-8">
+							<input type="text" name="" readonly="readonly" class="form-control" id="J_ownerbrokerage_discount">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label"><span class="text-danger">*</span>业主履约佣金<br/>（公司规定）：</label>
+						<div class="col-sm-8">
+							<input type="text" name="" readonly="readonly" class="form-control" id="J_ownerperformance_company">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label"><span class="text-danger">*</span>业主履约佣金<br/>（合同约定）：</label>
+						<div class="col-sm-8">
+							<input type="text" name="" class="form-control" id="J_ownerperformance_contract">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">履约折扣（折）：</label>
+						<div class="col-sm-8">
+							<input type="text" name="" readonly="readonly" class="form-control" id="J_ownerperformance_discount">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label"><span class="text-danger">*</span>业主佣金合计<br/>（公司规定）：</label>
+						<div class="col-sm-8">
+							<input type="text" name="" readonly="readonly" class="form-control" id="J_ownercommission_company">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label"><span class="text-danger">*</span>业主佣金合计<br/>（合同约定）：</label>
+						<div class="col-sm-8">
+							<input type="text" name="" readonly="readonly" class="form-control" id="J_ownercommission_contract">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">业主总折扣(折)：</label>
+						<div class="col-sm-8">
+							<input type="text" name="" readonly="readonly" class="form-control" id="J_owner_totaldiscount">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label"><span class="text-danger">*</span>客户居间佣金<br/>（公司规定）：</label>
+						<div class="col-sm-8">
+							<input type="text" name="" readonly="readonly" class="form-control" id="J_customerbrokerage_company">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label"><span class="text-danger">*</span>客户居间佣金<br/>（合同约定）：</label>
+						<div class="col-sm-8">
+							<input type="text" name="" class="form-control" id="J_customerbrokerage_contract">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">居间折扣（折）：</label>
+						<div class="col-sm-8">
+							<input type="text" name="" readonly="readonly" class="form-control" id="J_customerbrokerage_discount">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label"><span class="text-danger">*</span>客户履约佣金<br/>（公司规定）：</label>
+						<div class="col-sm-8">
+							<input type="text" name="" readonly="readonly" class="form-control" id="J_customerperformance_company">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label"><span class="text-danger">*</span>客户履约佣金<br/>（合同约定）：</label>
+						<div class="col-sm-8">
+							<input type="text" name="" class="form-control" id="J_customerperformance_contract">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">履约折扣（折）：</label>
+						<div class="col-sm-8">
+							<input type="text" name="" readonly="readonly" class="form-control" id="J_customerperformance_discount">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label"><span class="text-danger">*</span>客户佣金合计<br/>（公司规定）：</label>
+						<div class="col-sm-8">
+							<input type="text" name="" readonly="readonly" class="form-control" id="J_customercommission_company">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label"><span class="text-danger">*</span>客户佣金合计<br/>（合同约定）：</label>
+						<div class="col-sm-8">
+							<input type="text" name="" readonly="readonly" class="form-control" id="J_customercommission_contract">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">客户总折扣(折)：</label>
+						<div class="col-sm-8">
+							<input type="text" name="" readonly="readonly" class="form-control" id="J_customer_totaldiscount">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row pt6">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">折扣原因</label>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">打折原因：</label>
+						<div class="col-sm-8">
+							<select name="chargebacktype" id="chargebackType" class="J_chosen form-control">
+								<option value="">请选择</option>
+								<option value="1">客户业主要求打折</option>
+								<option value="2">中介合作</option>
+								<option value="3">二次或多次成交</option>
+								<option value="4">公司员工</option>
+								<option value="5">其他公司抢单</option>
+								<option value="6">其他原因(在情况说明中描述)</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label"><span class="text-danger">*</span>员工姓名：</label>
+						<div class="col-sm-8">
+							<input type="text" name="" readonly="readonly" class="form-control" id="J_employeename">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label"><span class="text-danger">*</span>合同编号</label>
+						<div class="col-sm-8">
+							<input type="text" name="" readonly="readonly" class="form-control" id="J_contractid">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<label class="col-sm-1 control-label"><span class="text-danger">*</span>情况说明：</label>
+						<div class="col-sm-11">
+							<textarea class="form-control" maxlength="" id=""></textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row pt6">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">审计信息</label>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">创建人：</label>
+						<div class="col-sm-8">
+							<input type="text" name="" readonly="readonly" class="form-control" id="J_createperson">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">创建时间：</label>
+						<div class="col-sm-8">
+							<input type="text" name="" readonly="readonly" class="form-control" id="J_createtime">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">最后修改人：</label>
+						<div class="col-sm-8">
+							<input type="text" name="" readonly="readonly" class="form-control" id="J_lasereviseperson">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">最后创建时间：</label>
+						<div class="col-sm-8">
+							<input type="text" name="" readonly="readonly" class="form-control" id="J_lasecreatetime">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<div class="col-sm-5  col-sm-offset-5">
+	                        <button id="saveBtn" type="button" class="btn btn-success btn_size">保存</button>
+	                        <button id="cancelBtn" type="button" class="btn btn-white btn_size">取消</button>
+	                    </div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<!--star选择合同-->
+<div class="ibox" id="choiceHetong" style="display:block;">
+	<div class="ibox-title">
+		<h5>查询条件</h5><span style="font-size:14px;color: #ed5565;padding-left:20px;">提示：查询结果列示出的都为未过户的合同</span>
+		<div class="ibox-tools">
+			<a class="collapse-link ui-sortable"><i class="fa fa-chevron-up"></i>
+			</a>
+		</div>
+	</div>
+	<div class="ibox-content">	
+		<form id="J_contractQuery" class="form-horizontal" role="form">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">合同编号：</label>
+						<div class="col-sm-8">
+							<input name="contract_code" type="text" class="form-control">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">录入日期：</label>
+							<div class="col-sm-4"><input name="crt_dttm_begin" id="createstarttime" type="text" class="form-control" readonly="readonly" style="width:97%;background-color:#fff;"></div>
+							<div style="float:left; padding:7px 0px;">-</div>
+							<div class="col-sm-4"><input name="crt_dttm_end" id="createendtime" type="text" class="form-control" readonly="readonly" style="width:96%;margin-left:2%;background-color:#fff;"></div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">房源编号：</label>
+						<div class="col-sm-8">
+							<input type="text" name="houses_code" class="form-control">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">业主姓名：</label>
+						<div class="col-sm-8">
+							<input type="text" name="owner_name" class="form-control">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">成交价：</label>
+							<div class="col-sm-4"><input name="transaction_price_min" id="createstarttime" type="text" class="form-control" style="width:97%;background-color:#fff;"></div>
+							<div style="float:left; padding:7px 0px;">-</div>
+							<div class="col-sm-3"><input name="transaction_price_max" id="createendtime" type="text" class="form-control" style="width:96%;margin-left:2%;background-color:#fff;"></div>
+							<label class="col-sm-1" style="padding:9px 0 0 2px;">元</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<label class="col-sm-3 control-label">客户编号：</label>
+					<div class="col-sm-8">
+						<input type="text" name="customer_code" class="form-control">
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<label class="col-sm-3 control-label">客户姓名：</label>
+					<div class="col-sm-8">
+						<input type="text" name="customer_name" class="form-control">
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">所属部门：</label>
+						<div class="col-sm-8"  id="J_deptSelect">
+							<input id="J_deptLevel" type="hidden" class="form-control" value="">
+							<div class="input-group">
+								<input id="J_deptName" type="text" data-id="" class="form-control radius-3 float-l" readonly="readonly" autocomplete="off" style="background-color:#fff;">
+								<div class="input-group-btn">
+									<button data-toggle="dropdown" class="btn dropdown-toggle btn-dept float-l" type="button"><span class="caret"></span>
+	                            	</button>
+	                            </div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">业务类型：</label>
+						<div class="col-sm-8">
+							<select name="contract_type" id="businesstype" class="J_chosen form-control">
+								<option value="">全部</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row ptbottom10">
+				<div class="col-md-12">
+					<div class="form-group">
+						<div class="col-sm-5  col-sm-offset-5">
+	                        <button id="J_search" type="button" class="btn btn-success btn_size">查 询</button>
+	                        <button id="J_reset" type="reset" class="btn btn-white btn_size">重 置</button>
+	                    </div>
+					</div>
+				</div>
+			</div>
+		</form>
+		<div id="hetConten"></div>
+	</div>
+</div>
+<!--end选择合同-->
+<script type="text/javascript" src="$basePath/resources/js/plugins/ztree/jquery.ztree.core.js"></script>
+<script type="text/javascript" src="$basePath/resources/js/plugins/ztree/jquery.ztree.excheck.js"></script>
+<script type="text/javascript" src="$link.contextPath/resources/js/department.js"></script>
+<script src="$link.contextPath/resources/script/sign/chargeback/addChargeback.js"></script>

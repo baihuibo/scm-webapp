@@ -1,0 +1,1517 @@
+#set($plugins = ["table","chosen","laydate","autoSearch","ztree"])
+<div class="ibox">
+	<div class="ibox-title"><h5 id="J_titledetail"></h5></div>
+	<div class="ibox-content" id="fukuan">
+		<div class="tabs-container">
+			<ul class="nav nav-tabs block-tabs-nav" id="operationLog">
+				<li class="active"><a data-toggle="tab" href="#yangyongTab-1">基本信息</a></li>
+				<li><i>|</i></li>
+				<li class=""><a data-toggle="tab" href="#yangyongTab-2">审批历史</a></li>
+				<li><i>|</i></li>
+				<li class=""><a data-toggle="tab" href="#yangyongTab-3">操作日志</a></li>
+				<li><i>|</i></li>
+				<li class=""><a data-toggle="tab" href="#" style="color:#ff0000">业绩信息</a></li>
+			</ul>
+		</div>
+		<div id="J_fukuan" style="display:block;">
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>基本信息</div>
+			</div>
+			<div class="ibox-pay" style="border:1px solid #CBD5DD; border-top:none;">
+			    <table class="table table-border table-striped table-bgcolor">
+					<tr>
+						<td class="col-md-1 bgcolor"><span>付款申请单编号</span></td>
+						<td id="J_applynum" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor"><span>合同号</span></td>
+						<td id="J_hetongnum" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor"><span>房源号</span></td>
+						<td id="J_houseId" class="col-md-2"></td>
+					</tr>
+					<tr>
+						<td class="col-md-1 bgcolor"><span>业主名称</span></td>
+						<td id="J_yezhuname" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor"><span>客户编号</span></td>
+						<td id="J_clientId"style="border-right:none;" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor">客户名称</td>
+						<td id="J_clientName" class="col-md-2"></td>
+					</tr>
+					<tr>
+						<td class="col-md-1 bgcolor"><span>款项名称</span></td>
+						<td id="J_fundName" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor"><span>应付款总金额</span></td>
+						<td id="J_paidTotalAmount "style="border-right:none;" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor">应付日期</td>
+						<td id="J_paidTotaltime" class="col-md-2"></td>
+					</tr>
+					<tr>
+						<td class="col-md-1 bgcolor"><span>审核状态</span></td>
+						<td id="J_strAuditStatus" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor"><span>付款状态</span></td>
+						<td id="J_strPaidStatus"style="border-right:none;" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor">最后完成日期</td>
+						<td id="J_paidFinishTime" class="col-md-2"></td>
+					</tr>
+				</table>
+			</div>
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>付款信息</div>
+			</div>
+			<div class="ibox float-e-margins">
+				<div class="row">
+					<div class="tab-content">
+						<div class="row row-lg">
+							<div class="col-sm-12">
+								<table id="J_dataTable" class="table table-hover table-striped table-bordered table-condensed">
+									<thead>
+										<tr>
+											<th data-field="a">付款方式</th>
+											<th data-field="b">付款款项</th>
+											<th data-field="c">付款金额</th>
+											<th data-field="d">账号</th>
+											<th data-field="e">开户人/收款人<br>/收款单位</th>
+											<th data-field="f">付款单编号</th>
+											<th data-field="g">付款状态</th>
+											<th data-field="h">实付日期</th>
+											<th data-field="i">实付金额</th>
+											<th data-field="j">操作</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>代收收据信息</div>
+			</div>
+			<div class="ibox float-e-margins">
+				<div class="row">
+					<div class="tab-content">
+						<div class="row row-lg">
+							<div class="col-sm-12">
+								<table id="J_receiptdataTable" class="table table-hover table-striped table-bordered table-condensed">
+									<thead>
+										<tr>
+											<th data-field="a">收款批次号</th>
+											<th data-field="b">收据编号</th>
+											<th data-field="c">付款方</th>
+											<th data-field="d">收款单位</th>
+											<th data-field="e">款项</th>
+											<th data-field="f">收据金额</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>发票信息</div>
+			</div>
+			<div class="ibox float-e-margins">
+				<div class="row">
+					<div class="tab-content">
+						<div class="row row-lg">
+							<div class="col-sm-12">
+								<table id="J_invoicedataTable" class="table table-hover table-striped table-bordered table-condensed">
+									<thead>
+										<tr>
+											<th data-field="a">发票张数</th>
+											<th data-field="b">发票摘要</th>
+											<th data-field="c">发票金额</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>附件列表</div>
+			</div>
+			<div class="ibox float-e-margins">
+				<div class="row">
+					<div class="tab-content">
+						<div class="row row-lg">
+							<div class="col-sm-12">
+								<table id="attachmentList" class="table table-hover table-striped table table-bordered tables table-condensed">
+									<thead>
+										<tr>
+											<th data-field="a">序号</th>
+											<th data-field="b">附件大类</th>
+											<th data-field="c">附件小类</th>
+											<th data-field="d">上传日期</th>
+											<th data-field="e">操作</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>备注</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<div class="col-sm-12">
+							<textarea type="text" id="J_remarks" name="remarks" class="form-control" style="min-height:150px !important;max-height:150px !important;" maxlength="500"></textarea>
+						</div>
+					</div>
+				</div>
+			</div>	
+		</div>
+		<div id="J_tuikuan" style="display:none;">
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>基本信息</div>
+			</div>
+			<div class="ibox-pay" style="border:1px solid #CBD5DD; border-top:none;">
+			    <table class="table table-border table-striped table-bgcolor">
+					<tr>
+						<td class="col-md-1 bgcolor"><span>付款申请单编号</span></td>
+						<td id="J_applynum1" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor"><span>合同号</span></td>
+						<td id="J_hetongnum1" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor"><span>房源号</span></td>
+						<td id="J_houseId1" class="col-md-2"></td>
+					</tr>
+					<tr>
+						<td class="col-md-1 bgcolor"><span>业主名称</span></td>
+						<td id="J_yezhuname1" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor"><span>客户编号</span></td>
+						<td id="J_clientId1"style="border-right:none;" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor">客户名称</td>
+						<td id="J_clientName1" class="col-md-2"></td>
+					</tr>
+					<tr>
+						<td class="col-md-1 bgcolor"><span>款项名称</span></td>
+						<td id="J_fundName1" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor"><span>应付款总金额</span></td>
+						<td id="J_paidTotalAmount1" style="border-right:none;" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor">应付日期</td>
+						<td id="J_paidTotaltime1" class="col-md-2"></td>
+					</tr>
+					<tr>
+						<td class="col-md-1 bgcolor"><span>审核状态</span></td>
+						<td id="J_strAuditStatus1" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor"><span>付款状态</span></td>
+						<td id="J_strPaidStatus1"style="border-right:none;" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor">最后完成日期</td>
+						<td id="J_paidFinishTime1" class="col-md-2"></td>
+					</tr>
+				</table>
+			</div>
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>收据信息</div>
+			</div>
+			<div class="ibox float-e-margins">
+				<div class="row">
+					<div class="tab-content">
+						<div class="row row-lg">
+							<div class="col-sm-12">
+								<table id="J_tuik_dataTable" class="table table-hover table-striped table-bordered table-condensed">
+									<thead>
+										<tr>
+											<th data-field="a">收款批次号</th>
+											<th data-field="b">收据编号</th>
+											<th data-field="c">付款方</th>
+											<th data-field="d">收款单位</th>
+											<th data-field="e">款项</th>
+											<th data-field="f">收据金额</th>
+											<th data-field="g">退款金额</th>
+											<th data-field="h">发票编号</th>
+											<th data-field="i">收据打印张数</th>
+											<th data-field="j">收据回收张数</th>
+											<th data-field="k">回收差异原因</th>
+											<th data-field="l">收据回收状态</th>
+											<th data-field="m">发票状态</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>付款信息</div>
+			</div>
+			<div class="ibox float-e-margins">
+				<div class="row">
+					<div class="tab-content">
+						<div class="row row-lg">
+							<div class="col-sm-12">
+								<table id="J_tuikdataTable" class="table table-hover table-striped table-bordered table-condensed">
+									<thead>
+										<tr>
+											<th data-field="a">收款批次号</th>
+											<th data-field="b">付款方式</th>
+											<th data-field="c">付款款项</th>
+											<th data-field="d">付款金额</th>
+											<th data-field="e">账号</th>
+											<th data-field="f">开户人/收款人<br>/收款单位</th>
+											<th data-field="g">付款单编号</th>
+											<th data-field="h">付款状态</th>
+											<th data-field="i">实付日期</th>
+											<th data-field="j">实付金额</th>
+											<th data-field="j">操作</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>差额新收据信息</div>
+			</div>
+			<div class="ibox float-e-margins">
+				<div class="row">
+					<div class="tab-content">
+						<div class="row row-lg">
+							<div class="col-sm-12">
+								<table id="J_tuik_chae_dataTable" class="table table-hover table-striped table-bordered table-condensed">
+									<thead>
+										<tr>
+											<th data-field="a">新收据编号</th>
+											<th data-field="b">生成时间</th>
+											<th data-field="c">收款批次号</th>
+											<th data-field="d">原收据编号</th>
+											<th data-field="e">发票编号</th>
+											<th data-field="f">付款方</th>
+											<th data-field="g">收款单位</th>
+											<th data-field="h">款项</th>
+											<th data-field="i">收据金额</th>
+											<th data-field="j">开票状态</th>
+											<th data-field="i">打印状态</th>
+											<th data-field="j">操作</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>附件列表</div>
+			</div>
+			<div class="ibox float-e-margins">
+				<div class="row">
+					<div class="tab-content">
+						<div class="row row-lg">
+							<div class="col-sm-12">
+								<table id="tuikuanattachmentList" class="table table-hover table-striped table table-bordered tables table-condensed">
+									<thead>
+										<tr>
+											<th data-field="a">序号</th>
+											<th data-field="b">附件大类</th>
+											<th data-field="c">附件小类</th>
+											<th data-field="d">上传日期</th>
+											<th data-field="e">操作</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>备注</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<div class="col-sm-12">
+							<textarea type="text" id="J_tuikuanremarks" name="remarks" class="form-control" style="min-height:150px !important;max-height:150px !important;" maxlength="500"></textarea>
+						</div>
+					</div>
+				</div>
+			</div>	
+		</div>
+		<div id="J_zhuankuan" style="display:none;">
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>基本信息</div>
+			</div>
+			<div class="ibox-pay" style="border:1px solid #CBD5DD; border-top:none;">
+			    <table class="table table-border table-striped table-bgcolor">
+					<tr>
+						<td class="col-md-1 bgcolor"><span>付款申请单编号</span></td>
+						<td id="J_applynum2" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor"><span>合同号</span></td>
+						<td id="J_hetongnum2" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor"><span>房源号</span></td>
+						<td id="J_houseId2" class="col-md-2"></td>
+					</tr>
+					<tr>
+						<td class="col-md-1 bgcolor"><span>业主名称</span></td>
+						<td id="J_yezhuname2" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor"><span>客户编号</span></td>
+						<td id="J_clientId2"style="border-right:none;" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor">客户名称</td>
+						<td id="J_clientName2" class="col-md-2"></td>
+					</tr>
+					<tr>
+						<td class="col-md-1 bgcolor"><span>款项名称</span></td>
+						<td id="J_fundName2" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor"><span>应付款总金额</span></td>
+						<td id="J_paidTotalAmount2" style="border-right:none;" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor">应付日期</td>
+						<td id="J_paidTotaltime2" class="col-md-2"></td>
+					</tr>
+					<tr>
+						<td class="col-md-1 bgcolor"><span>审核状态</span></td>
+						<td id="J_strAuditStatus2" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor"><span>付款状态</span></td>
+						<td id="J_strPaidStatus2"style="border-right:none;" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor">最后完成日期</td>
+						<td id="J_paidFinishTime2" class="col-md-2"></td>
+					</tr>
+				</table>
+			</div>
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>收据信息</div>
+			</div>
+			<div class="ibox float-e-margins">
+				<div class="row">
+					<div class="tab-content">
+						<div class="row row-lg">
+							<div class="col-sm-12">
+								<table id="J_zhuankuan_dataTable" class="table table-hover table-striped table-bordered table-condensed">
+									<thead>
+										<tr>
+											<th data-field="a">收款批次号</th>
+											<th data-field="b">收据编号</th>
+											<th data-field="c">付款方</th>
+											<th data-field="d">收款单位</th>
+											<th data-field="e">款项</th>
+											<th data-field="f">收据金额</th>
+											<th data-field="g">退款金额</th>
+											<th data-field="h">发票编号</th>
+											<th data-field="i">收据打印张数</th>
+											<th data-field="j">收据回收张数</th>
+											<th data-field="k">回收差异原因</th>
+											<th data-field="l">收据回收状态</th>
+											<th data-field="m">发票状态</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>转款信息</div>
+			</div>
+			<div class="ibox float-e-margins">
+				<div class="row">
+					<div class="tab-content">
+						<div class="row row-lg">
+							<div class="col-sm-12">
+								<table id="J_zhuankuanmessage_dataTable" class="table table-hover table-striped table-bordered table-condensed">
+									<thead>
+										<tr>
+											<th data-field="a">收款批次号</th>
+											<th data-field="b">付款方式</th>
+											<th data-field="c">付款款项</th>
+											<th data-field="d">转款金额</th>
+											<th data-field="e">付款单编号</th>
+											<th data-field="f">转入新合同编号</th>
+											<th data-field="g">转入收款批次</th>
+											<th data-field="h">实转日期</th>
+											<th data-field="i">操作</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>差额新收据</div>
+			</div>
+			<div class="ibox float-e-margins">
+				<div class="row">
+					<div class="tab-content">
+						<div class="row row-lg">
+							<div class="col-sm-12">
+								<table id="J_zhuankuanchae_dataTable" class="table table-hover table-striped table-bordered table-condensed">
+									<thead>
+										<tr>
+											<th data-field="a">新收据编号</th>
+											<th data-field="b">生成时间</th>
+											<th data-field="c">收款批次号</th>
+											<th data-field="d">原收据编号</th>
+											<th data-field="e">发票编号</th>
+											<th data-field="f">付款方</th>
+											<th data-field="g">收款单位</th>
+											<th data-field="h">款项</th>
+											<th data-field="i">收据金额</th>
+											<th data-field="j">开票状态</th>
+											<th data-field="k">打印状态</th>
+											<th data-field="l">操作</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>附件列表</div>
+			</div>
+			<div class="ibox float-e-margins">
+				<div class="row">
+					<div class="tab-content">
+						<div class="row row-lg">
+							<div class="col-sm-12">
+								<table id="zhuankuanattachmentList" class="table table-hover table-striped table table-bordered tables table-condensed">
+									<thead>
+										<tr>
+											<th data-field="a">序号</th>
+											<th data-field="b">附件大类</th>
+											<th data-field="c">附件小类</th>
+											<th data-field="d">上传日期</th>
+											<th data-field="e">操作</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>备注</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<div class="col-sm-12">
+							<textarea type="text" id="J_zhuankuanremarks" name="remarks" class="form-control" style="min-height:150px !important;max-height:150px !important;" maxlength="500"></textarea>
+						</div>
+					</div>
+				</div>
+			</div>	
+		</div>
+	</div>
+	<div class="ibox-content" id="tuikuan">
+		<div class="tabs-container">
+			<ul class="nav nav-tabs block-tabs-nav" id="operationLog">
+				<li class="active"><a data-toggle="tab" href="#yangyongTab-1">基本信息</a></li>
+				<li><i>|</i></li>
+				<li class=""><a data-toggle="tab" href="#yangyongTab-2">审批历史</a></li>
+				<li><i>|</i></li>
+				<li class=""><a data-toggle="tab" href="#yangyongTab-3">操作日志</a></li>
+				<li><i>|</i></li>
+				<li class=""><a data-toggle="tab" href="#" style="color:#ff0000">业绩信息</a></li>
+			</ul>
+		</div>
+		<div id="J_fukuan" style="display:block;">
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>基本信息</div>
+			</div>
+			<div class="ibox-pay" style="border:1px solid #CBD5DD; border-top:none;">
+			    <table class="table table-border table-striped table-bgcolor">
+					<tr>
+						<td class="col-md-1 bgcolor"><span>付款申请单编号</span></td>
+						<td id="J_applynum" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor"><span>合同号</span></td>
+						<td id="J_hetongnum" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor"><span>房源号</span></td>
+						<td id="J_houseId" class="col-md-2"></td>
+					</tr>
+					<tr>
+						<td class="col-md-1 bgcolor"><span>业主名称</span></td>
+						<td id="J_yezhuname" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor"><span>客户编号</span></td>
+						<td id="J_clientId"style="border-right:none;" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor">客户名称</td>
+						<td id="J_clientName" class="col-md-2"></td>
+					</tr>
+					<tr>
+						<td class="col-md-1 bgcolor"><span>款项名称</span></td>
+						<td id="J_fundName" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor"><span>应付款总金额</span></td>
+						<td id="J_paidTotalAmount "style="border-right:none;" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor">应付日期</td>
+						<td id="J_paidTotaltime" class="col-md-2"></td>
+					</tr>
+					<tr>
+						<td class="col-md-1 bgcolor"><span>审核状态</span></td>
+						<td id="J_strAuditStatus" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor"><span>付款状态</span></td>
+						<td id="J_strPaidStatus"style="border-right:none;" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor">最后完成日期</td>
+						<td id="J_paidFinishTime" class="col-md-2"></td>
+					</tr>
+				</table>
+			</div>
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>付款信息</div>
+			</div>
+			<div class="ibox float-e-margins">
+				<div class="row">
+					<div class="tab-content">
+						<div class="row row-lg">
+							<div class="col-sm-12">
+								<table id="J_dataTable" class="table table-hover table-striped table-bordered table-condensed">
+									<thead>
+										<tr>
+											<th data-field="a">付款方式</th>
+											<th data-field="b">付款款项</th>
+											<th data-field="c">付款金额</th>
+											<th data-field="d">账号</th>
+											<th data-field="e">开户人/收款人<br>/收款单位</th>
+											<th data-field="f">付款单编号</th>
+											<th data-field="g">付款状态</th>
+											<th data-field="h">实付日期</th>
+											<th data-field="i">实付金额</th>
+											<th data-field="j">操作</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>代收收据信息</div>
+			</div>
+			<div class="ibox float-e-margins">
+				<div class="row">
+					<div class="tab-content">
+						<div class="row row-lg">
+							<div class="col-sm-12">
+								<table id="J_receiptdataTable" class="table table-hover table-striped table-bordered table-condensed">
+									<thead>
+										<tr>
+											<th data-field="a">收款批次号</th>
+											<th data-field="b">收据编号</th>
+											<th data-field="c">付款方</th>
+											<th data-field="d">收款单位</th>
+											<th data-field="e">款项</th>
+											<th data-field="f">收据金额</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>发票信息</div>
+			</div>
+			<div class="ibox float-e-margins">
+				<div class="row">
+					<div class="tab-content">
+						<div class="row row-lg">
+							<div class="col-sm-12">
+								<table id="J_invoicedataTable" class="table table-hover table-striped table-bordered table-condensed">
+									<thead>
+										<tr>
+											<th data-field="a">发票张数</th>
+											<th data-field="b">发票摘要</th>
+											<th data-field="c">发票金额</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>附件列表</div>
+			</div>
+			<div class="ibox float-e-margins">
+				<div class="row">
+					<div class="tab-content">
+						<div class="row row-lg">
+							<div class="col-sm-12">
+								<table id="attachmentList" class="table table-hover table-striped table table-bordered tables table-condensed">
+									<thead>
+										<tr>
+											<th data-field="a">序号</th>
+											<th data-field="b">附件大类</th>
+											<th data-field="c">附件小类</th>
+											<th data-field="d">上传日期</th>
+											<th data-field="e">操作</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>备注</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<div class="col-sm-12">
+							<textarea type="text" id="J_remarks" name="remarks" class="form-control" style="min-height:150px !important;max-height:150px !important;" maxlength="500"></textarea>
+						</div>
+					</div>
+				</div>
+			</div>	
+		</div>
+		<div id="J_tuikuan" style="display:none;">
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>基本信息</div>
+			</div>
+			<div class="ibox-pay" style="border:1px solid #CBD5DD; border-top:none;">
+			    <table class="table table-border table-striped table-bgcolor">
+					<tr>
+						<td class="col-md-1 bgcolor"><span>付款申请单编号</span></td>
+						<td id="J_applynum1" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor"><span>合同号</span></td>
+						<td id="J_hetongnum1" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor"><span>房源号</span></td>
+						<td id="J_houseId1" class="col-md-2"></td>
+					</tr>
+					<tr>
+						<td class="col-md-1 bgcolor"><span>业主名称</span></td>
+						<td id="J_yezhuname1" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor"><span>客户编号</span></td>
+						<td id="J_clientId1"style="border-right:none;" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor">客户名称</td>
+						<td id="J_clientName1" class="col-md-2"></td>
+					</tr>
+					<tr>
+						<td class="col-md-1 bgcolor"><span>款项名称</span></td>
+						<td id="J_fundName1" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor"><span>应付款总金额</span></td>
+						<td id="J_paidTotalAmount1" style="border-right:none;" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor">应付日期</td>
+						<td id="J_paidTotaltime1" class="col-md-2"></td>
+					</tr>
+					<tr>
+						<td class="col-md-1 bgcolor"><span>审核状态</span></td>
+						<td id="J_strAuditStatus1" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor"><span>付款状态</span></td>
+						<td id="J_strPaidStatus1"style="border-right:none;" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor">最后完成日期</td>
+						<td id="J_paidFinishTime1" class="col-md-2"></td>
+					</tr>
+				</table>
+			</div>
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>收据信息</div>
+			</div>
+			<div class="ibox float-e-margins">
+				<div class="row">
+					<div class="tab-content">
+						<div class="row row-lg">
+							<div class="col-sm-12">
+								<table id="J_tuik_dataTable" class="table table-hover table-striped table-bordered table-condensed">
+									<thead>
+										<tr>
+											<th data-field="a">收款批次号</th>
+											<th data-field="b">收据编号</th>
+											<th data-field="c">付款方</th>
+											<th data-field="d">收款单位</th>
+											<th data-field="e">款项</th>
+											<th data-field="f">收据金额</th>
+											<th data-field="g">退款金额</th>
+											<th data-field="h">发票编号</th>
+											<th data-field="i">收据打印张数</th>
+											<th data-field="j">收据回收张数</th>
+											<th data-field="k">回收差异原因</th>
+											<th data-field="l">收据回收状态</th>
+											<th data-field="m">发票状态</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>付款信息</div>
+			</div>
+			<div class="ibox float-e-margins">
+				<div class="row">
+					<div class="tab-content">
+						<div class="row row-lg">
+							<div class="col-sm-12">
+								<table id="J_tuikdataTable" class="table table-hover table-striped table-bordered table-condensed">
+									<thead>
+										<tr>
+											<th data-field="a">收款批次号</th>
+											<th data-field="b">付款方式</th>
+											<th data-field="c">付款款项</th>
+											<th data-field="d">付款金额</th>
+											<th data-field="e">账号</th>
+											<th data-field="f">开户人/收款人<br>/收款单位</th>
+											<th data-field="g">付款单编号</th>
+											<th data-field="h">付款状态</th>
+											<th data-field="i">实付日期</th>
+											<th data-field="j">实付金额</th>
+											<th data-field="j">操作</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>差额新收据信息</div>
+			</div>
+			<div class="ibox float-e-margins">
+				<div class="row">
+					<div class="tab-content">
+						<div class="row row-lg">
+							<div class="col-sm-12">
+								<table id="J_tuik_chae_dataTable" class="table table-hover table-striped table-bordered table-condensed">
+									<thead>
+										<tr>
+											<th data-field="a">新收据编号</th>
+											<th data-field="b">生成时间</th>
+											<th data-field="c">收款批次号</th>
+											<th data-field="d">原收据编号</th>
+											<th data-field="e">发票编号</th>
+											<th data-field="f">付款方</th>
+											<th data-field="g">收款单位</th>
+											<th data-field="h">款项</th>
+											<th data-field="i">收据金额</th>
+											<th data-field="j">开票状态</th>
+											<th data-field="i">打印状态</th>
+											<th data-field="j">操作</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>附件列表</div>
+			</div>
+			<div class="ibox float-e-margins">
+				<div class="row">
+					<div class="tab-content">
+						<div class="row row-lg">
+							<div class="col-sm-12">
+								<table id="tuikuanattachmentList" class="table table-hover table-striped table table-bordered tables table-condensed">
+									<thead>
+										<tr>
+											<th data-field="a">序号</th>
+											<th data-field="b">附件大类</th>
+											<th data-field="c">附件小类</th>
+											<th data-field="d">上传日期</th>
+											<th data-field="e">操作</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>备注</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<div class="col-sm-12">
+							<textarea type="text" id="J_tuikuanremarks" name="remarks" class="form-control" style="min-height:150px !important;max-height:150px !important;" maxlength="500"></textarea>
+						</div>
+					</div>
+				</div>
+			</div>	
+		</div>
+		<div id="J_zhuankuan" style="display:none;">
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>基本信息</div>
+			</div>
+			<div class="ibox-pay" style="border:1px solid #CBD5DD; border-top:none;">
+			    <table class="table table-border table-striped table-bgcolor">
+					<tr>
+						<td class="col-md-1 bgcolor"><span>付款申请单编号</span></td>
+						<td id="J_applynum2" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor"><span>合同号</span></td>
+						<td id="J_hetongnum2" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor"><span>房源号</span></td>
+						<td id="J_houseId2" class="col-md-2"></td>
+					</tr>
+					<tr>
+						<td class="col-md-1 bgcolor"><span>业主名称</span></td>
+						<td id="J_yezhuname2" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor"><span>客户编号</span></td>
+						<td id="J_clientId2"style="border-right:none;" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor">客户名称</td>
+						<td id="J_clientName2" class="col-md-2"></td>
+					</tr>
+					<tr>
+						<td class="col-md-1 bgcolor"><span>款项名称</span></td>
+						<td id="J_fundName2" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor"><span>应付款总金额</span></td>
+						<td id="J_paidTotalAmount2" style="border-right:none;" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor">应付日期</td>
+						<td id="J_paidTotaltime2" class="col-md-2"></td>
+					</tr>
+					<tr>
+						<td class="col-md-1 bgcolor"><span>审核状态</span></td>
+						<td id="J_strAuditStatus2" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor"><span>付款状态</span></td>
+						<td id="J_strPaidStatus2"style="border-right:none;" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor">最后完成日期</td>
+						<td id="J_paidFinishTime2" class="col-md-2"></td>
+					</tr>
+				</table>
+			</div>
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>收据信息</div>
+			</div>
+			<div class="ibox float-e-margins">
+				<div class="row">
+					<div class="tab-content">
+						<div class="row row-lg">
+							<div class="col-sm-12">
+								<table id="J_zhuankuan_dataTable" class="table table-hover table-striped table-bordered table-condensed">
+									<thead>
+										<tr>
+											<th data-field="a">收款批次号</th>
+											<th data-field="b">收据编号</th>
+											<th data-field="c">付款方</th>
+											<th data-field="d">收款单位</th>
+											<th data-field="e">款项</th>
+											<th data-field="f">收据金额</th>
+											<th data-field="g">退款金额</th>
+											<th data-field="h">发票编号</th>
+											<th data-field="i">收据打印张数</th>
+											<th data-field="j">收据回收张数</th>
+											<th data-field="k">回收差异原因</th>
+											<th data-field="l">收据回收状态</th>
+											<th data-field="m">发票状态</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>转款信息</div>
+			</div>
+			<div class="ibox float-e-margins">
+				<div class="row">
+					<div class="tab-content">
+						<div class="row row-lg">
+							<div class="col-sm-12">
+								<table id="J_zhuankuanmessage_dataTable" class="table table-hover table-striped table-bordered table-condensed">
+									<thead>
+										<tr>
+											<th data-field="a">收款批次号</th>
+											<th data-field="b">付款方式</th>
+											<th data-field="c">付款款项</th>
+											<th data-field="d">转款金额</th>
+											<th data-field="e">付款单编号</th>
+											<th data-field="f">转入新合同编号</th>
+											<th data-field="g">转入收款批次</th>
+											<th data-field="h">实转日期</th>
+											<th data-field="i">操作</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>差额新收据</div>
+			</div>
+			<div class="ibox float-e-margins">
+				<div class="row">
+					<div class="tab-content">
+						<div class="row row-lg">
+							<div class="col-sm-12">
+								<table id="J_zhuankuanchae_dataTable" class="table table-hover table-striped table-bordered table-condensed">
+									<thead>
+										<tr>
+											<th data-field="a">新收据编号</th>
+											<th data-field="b">生成时间</th>
+											<th data-field="c">收款批次号</th>
+											<th data-field="d">原收据编号</th>
+											<th data-field="e">发票编号</th>
+											<th data-field="f">付款方</th>
+											<th data-field="g">收款单位</th>
+											<th data-field="h">款项</th>
+											<th data-field="i">收据金额</th>
+											<th data-field="j">开票状态</th>
+											<th data-field="k">打印状态</th>
+											<th data-field="l">操作</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>附件列表</div>
+			</div>
+			<div class="ibox float-e-margins">
+				<div class="row">
+					<div class="tab-content">
+						<div class="row row-lg">
+							<div class="col-sm-12">
+								<table id="zhuankuanattachmentList" class="table table-hover table-striped table table-bordered tables table-condensed">
+									<thead>
+										<tr>
+											<th data-field="a">序号</th>
+											<th data-field="b">附件大类</th>
+											<th data-field="c">附件小类</th>
+											<th data-field="d">上传日期</th>
+											<th data-field="e">操作</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>备注</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<div class="col-sm-12">
+							<textarea type="text" id="J_zhuankuanremarks" name="remarks" class="form-control" style="min-height:150px !important;max-height:150px !important;" maxlength="500"></textarea>
+						</div>
+					</div>
+				</div>
+			</div>	
+		</div>
+	</div>
+	<div class="ibox-content" id="zhuankuan">
+		<div class="tabs-container">
+			<ul class="nav nav-tabs block-tabs-nav" id="operationLog">
+				<li class="active"><a data-toggle="tab" href="#yangyongTab-1">基本信息</a></li>
+				<li><i>|</i></li>
+				<li class=""><a data-toggle="tab" href="#yangyongTab-2">审批历史</a></li>
+				<li><i>|</i></li>
+				<li class=""><a data-toggle="tab" href="#yangyongTab-3">操作日志</a></li>
+				<li><i>|</i></li>
+				<li class=""><a data-toggle="tab" href="#" style="color:#ff0000">业绩信息</a></li>
+			</ul>
+		</div>
+		<div id="J_fukuan" style="display:block;">
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>基本信息</div>
+			</div>
+			<div class="ibox-pay" style="border:1px solid #CBD5DD; border-top:none;">
+			    <table class="table table-border table-striped table-bgcolor">
+					<tr>
+						<td class="col-md-1 bgcolor"><span>付款申请单编号</span></td>
+						<td id="J_applynum" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor"><span>合同号</span></td>
+						<td id="J_hetongnum" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor"><span>房源号</span></td>
+						<td id="J_houseId" class="col-md-2"></td>
+					</tr>
+					<tr>
+						<td class="col-md-1 bgcolor"><span>业主名称</span></td>
+						<td id="J_yezhuname" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor"><span>客户编号</span></td>
+						<td id="J_clientId"style="border-right:none;" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor">客户名称</td>
+						<td id="J_clientName" class="col-md-2"></td>
+					</tr>
+					<tr>
+						<td class="col-md-1 bgcolor"><span>款项名称</span></td>
+						<td id="J_fundName" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor"><span>应付款总金额</span></td>
+						<td id="J_paidTotalAmount "style="border-right:none;" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor">应付日期</td>
+						<td id="J_paidTotaltime" class="col-md-2"></td>
+					</tr>
+					<tr>
+						<td class="col-md-1 bgcolor"><span>审核状态</span></td>
+						<td id="J_strAuditStatus" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor"><span>付款状态</span></td>
+						<td id="J_strPaidStatus"style="border-right:none;" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor">最后完成日期</td>
+						<td id="J_paidFinishTime" class="col-md-2"></td>
+					</tr>
+				</table>
+			</div>
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>付款信息</div>
+			</div>
+			<div class="ibox float-e-margins">
+				<div class="row">
+					<div class="tab-content">
+						<div class="row row-lg">
+							<div class="col-sm-12">
+								<table id="J_dataTable" class="table table-hover table-striped table-bordered table-condensed">
+									<thead>
+										<tr>
+											<th data-field="a">付款方式</th>
+											<th data-field="b">付款款项</th>
+											<th data-field="c">付款金额</th>
+											<th data-field="d">账号</th>
+											<th data-field="e">开户人/收款人<br>/收款单位</th>
+											<th data-field="f">付款单编号</th>
+											<th data-field="g">付款状态</th>
+											<th data-field="h">实付日期</th>
+											<th data-field="i">实付金额</th>
+											<th data-field="j">操作</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>代收收据信息</div>
+			</div>
+			<div class="ibox float-e-margins">
+				<div class="row">
+					<div class="tab-content">
+						<div class="row row-lg">
+							<div class="col-sm-12">
+								<table id="J_receiptdataTable" class="table table-hover table-striped table-bordered table-condensed">
+									<thead>
+										<tr>
+											<th data-field="a">收款批次号</th>
+											<th data-field="b">收据编号</th>
+											<th data-field="c">付款方</th>
+											<th data-field="d">收款单位</th>
+											<th data-field="e">款项</th>
+											<th data-field="f">收据金额</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>发票信息</div>
+			</div>
+			<div class="ibox float-e-margins">
+				<div class="row">
+					<div class="tab-content">
+						<div class="row row-lg">
+							<div class="col-sm-12">
+								<table id="J_invoicedataTable" class="table table-hover table-striped table-bordered table-condensed">
+									<thead>
+										<tr>
+											<th data-field="a">发票张数</th>
+											<th data-field="b">发票摘要</th>
+											<th data-field="c">发票金额</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>附件列表</div>
+			</div>
+			<div class="ibox float-e-margins">
+				<div class="row">
+					<div class="tab-content">
+						<div class="row row-lg">
+							<div class="col-sm-12">
+								<table id="attachmentList" class="table table-hover table-striped table table-bordered tables table-condensed">
+									<thead>
+										<tr>
+											<th data-field="a">序号</th>
+											<th data-field="b">附件大类</th>
+											<th data-field="c">附件小类</th>
+											<th data-field="d">上传日期</th>
+											<th data-field="e">操作</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>备注</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<div class="col-sm-12">
+							<textarea type="text" id="J_remarks" name="remarks" class="form-control" style="min-height:150px !important;max-height:150px !important;" maxlength="500"></textarea>
+						</div>
+					</div>
+				</div>
+			</div>	
+		</div>
+		<div id="J_tuikuan" style="display:none;">
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>基本信息</div>
+			</div>
+			<div class="ibox-pay" style="border:1px solid #CBD5DD; border-top:none;">
+			    <table class="table table-border table-striped table-bgcolor">
+					<tr>
+						<td class="col-md-1 bgcolor"><span>付款申请单编号</span></td>
+						<td id="J_applynum1" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor"><span>合同号</span></td>
+						<td id="J_hetongnum1" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor"><span>房源号</span></td>
+						<td id="J_houseId1" class="col-md-2"></td>
+					</tr>
+					<tr>
+						<td class="col-md-1 bgcolor"><span>业主名称</span></td>
+						<td id="J_yezhuname1" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor"><span>客户编号</span></td>
+						<td id="J_clientId1"style="border-right:none;" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor">客户名称</td>
+						<td id="J_clientName1" class="col-md-2"></td>
+					</tr>
+					<tr>
+						<td class="col-md-1 bgcolor"><span>款项名称</span></td>
+						<td id="J_fundName1" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor"><span>应付款总金额</span></td>
+						<td id="J_paidTotalAmount1" style="border-right:none;" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor">应付日期</td>
+						<td id="J_paidTotaltime1" class="col-md-2"></td>
+					</tr>
+					<tr>
+						<td class="col-md-1 bgcolor"><span>审核状态</span></td>
+						<td id="J_strAuditStatus1" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor"><span>付款状态</span></td>
+						<td id="J_strPaidStatus1"style="border-right:none;" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor">最后完成日期</td>
+						<td id="J_paidFinishTime1" class="col-md-2"></td>
+					</tr>
+				</table>
+			</div>
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>收据信息</div>
+			</div>
+			<div class="ibox float-e-margins">
+				<div class="row">
+					<div class="tab-content">
+						<div class="row row-lg">
+							<div class="col-sm-12">
+								<table id="J_tuik_dataTable" class="table table-hover table-striped table-bordered table-condensed">
+									<thead>
+										<tr>
+											<th data-field="a">收款批次号</th>
+											<th data-field="b">收据编号</th>
+											<th data-field="c">付款方</th>
+											<th data-field="d">收款单位</th>
+											<th data-field="e">款项</th>
+											<th data-field="f">收据金额</th>
+											<th data-field="g">退款金额</th>
+											<th data-field="h">发票编号</th>
+											<th data-field="i">收据打印张数</th>
+											<th data-field="j">收据回收张数</th>
+											<th data-field="k">回收差异原因</th>
+											<th data-field="l">收据回收状态</th>
+											<th data-field="m">发票状态</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>付款信息</div>
+			</div>
+			<div class="ibox float-e-margins">
+				<div class="row">
+					<div class="tab-content">
+						<div class="row row-lg">
+							<div class="col-sm-12">
+								<table id="J_tuikdataTable" class="table table-hover table-striped table-bordered table-condensed">
+									<thead>
+										<tr>
+											<th data-field="a">收款批次号</th>
+											<th data-field="b">付款方式</th>
+											<th data-field="c">付款款项</th>
+											<th data-field="d">付款金额</th>
+											<th data-field="e">账号</th>
+											<th data-field="f">开户人/收款人<br>/收款单位</th>
+											<th data-field="g">付款单编号</th>
+											<th data-field="h">付款状态</th>
+											<th data-field="i">实付日期</th>
+											<th data-field="j">实付金额</th>
+											<th data-field="j">操作</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>差额新收据信息</div>
+			</div>
+			<div class="ibox float-e-margins">
+				<div class="row">
+					<div class="tab-content">
+						<div class="row row-lg">
+							<div class="col-sm-12">
+								<table id="J_tuik_chae_dataTable" class="table table-hover table-striped table-bordered table-condensed">
+									<thead>
+										<tr>
+											<th data-field="a">新收据编号</th>
+											<th data-field="b">生成时间</th>
+											<th data-field="c">收款批次号</th>
+											<th data-field="d">原收据编号</th>
+											<th data-field="e">发票编号</th>
+											<th data-field="f">付款方</th>
+											<th data-field="g">收款单位</th>
+											<th data-field="h">款项</th>
+											<th data-field="i">收据金额</th>
+											<th data-field="j">开票状态</th>
+											<th data-field="i">打印状态</th>
+											<th data-field="j">操作</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>附件列表</div>
+			</div>
+			<div class="ibox float-e-margins">
+				<div class="row">
+					<div class="tab-content">
+						<div class="row row-lg">
+							<div class="col-sm-12">
+								<table id="tuikuanattachmentList" class="table table-hover table-striped table table-bordered tables table-condensed">
+									<thead>
+										<tr>
+											<th data-field="a">序号</th>
+											<th data-field="b">附件大类</th>
+											<th data-field="c">附件小类</th>
+											<th data-field="d">上传日期</th>
+											<th data-field="e">操作</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>备注</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<div class="col-sm-12">
+							<textarea type="text" id="J_tuikuanremarks" name="remarks" class="form-control" style="min-height:150px !important;max-height:150px !important;" maxlength="500"></textarea>
+						</div>
+					</div>
+				</div>
+			</div>	
+		</div>
+		<div id="J_zhuankuan" style="display:none;">
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>基本信息</div>
+			</div>
+			<div class="ibox-pay" style="border:1px solid #CBD5DD; border-top:none;">
+			    <table class="table table-border table-striped table-bgcolor">
+					<tr>
+						<td class="col-md-1 bgcolor"><span>付款申请单编号</span></td>
+						<td id="J_applynum2" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor"><span>合同号</span></td>
+						<td id="J_hetongnum2" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor"><span>房源号</span></td>
+						<td id="J_houseId2" class="col-md-2"></td>
+					</tr>
+					<tr>
+						<td class="col-md-1 bgcolor"><span>业主名称</span></td>
+						<td id="J_yezhuname2" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor"><span>客户编号</span></td>
+						<td id="J_clientId2"style="border-right:none;" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor">客户名称</td>
+						<td id="J_clientName2" class="col-md-2"></td>
+					</tr>
+					<tr>
+						<td class="col-md-1 bgcolor"><span>款项名称</span></td>
+						<td id="J_fundName2" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor"><span>应付款总金额</span></td>
+						<td id="J_paidTotalAmount2" style="border-right:none;" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor">应付日期</td>
+						<td id="J_paidTotaltime2" class="col-md-2"></td>
+					</tr>
+					<tr>
+						<td class="col-md-1 bgcolor"><span>审核状态</span></td>
+						<td id="J_strAuditStatus2" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor"><span>付款状态</span></td>
+						<td id="J_strPaidStatus2"style="border-right:none;" class="col-md-2"></td>
+						<td class="col-md-1 bgcolor">最后完成日期</td>
+						<td id="J_paidFinishTime2" class="col-md-2"></td>
+					</tr>
+				</table>
+			</div>
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>收据信息</div>
+			</div>
+			<div class="ibox float-e-margins">
+				<div class="row">
+					<div class="tab-content">
+						<div class="row row-lg">
+							<div class="col-sm-12">
+								<table id="J_zhuankuan_dataTable" class="table table-hover table-striped table-bordered table-condensed">
+									<thead>
+										<tr>
+											<th data-field="a">收款批次号</th>
+											<th data-field="b">收据编号</th>
+											<th data-field="c">付款方</th>
+											<th data-field="d">收款单位</th>
+											<th data-field="e">款项</th>
+											<th data-field="f">收据金额</th>
+											<th data-field="g">退款金额</th>
+											<th data-field="h">发票编号</th>
+											<th data-field="i">收据打印张数</th>
+											<th data-field="j">收据回收张数</th>
+											<th data-field="k">回收差异原因</th>
+											<th data-field="l">收据回收状态</th>
+											<th data-field="m">发票状态</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>转款信息</div>
+			</div>
+			<div class="ibox float-e-margins">
+				<div class="row">
+					<div class="tab-content">
+						<div class="row row-lg">
+							<div class="col-sm-12">
+								<table id="J_zhuankuanmessage_dataTable" class="table table-hover table-striped table-bordered table-condensed">
+									<thead>
+										<tr>
+											<th data-field="a">收款批次号</th>
+											<th data-field="b">付款方式</th>
+											<th data-field="c">付款款项</th>
+											<th data-field="d">转款金额</th>
+											<th data-field="e">付款单编号</th>
+											<th data-field="f">转入新合同编号</th>
+											<th data-field="g">转入收款批次</th>
+											<th data-field="h">实转日期</th>
+											<th data-field="i">操作</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>差额新收据</div>
+			</div>
+			<div class="ibox float-e-margins">
+				<div class="row">
+					<div class="tab-content">
+						<div class="row row-lg">
+							<div class="col-sm-12">
+								<table id="J_zhuankuanchae_dataTable" class="table table-hover table-striped table-bordered table-condensed">
+									<thead>
+										<tr>
+											<th data-field="a">新收据编号</th>
+											<th data-field="b">生成时间</th>
+											<th data-field="c">收款批次号</th>
+											<th data-field="d">原收据编号</th>
+											<th data-field="e">发票编号</th>
+											<th data-field="f">付款方</th>
+											<th data-field="g">收款单位</th>
+											<th data-field="h">款项</th>
+											<th data-field="i">收据金额</th>
+											<th data-field="j">开票状态</th>
+											<th data-field="k">打印状态</th>
+											<th data-field="l">操作</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>附件列表</div>
+			</div>
+			<div class="ibox float-e-margins">
+				<div class="row">
+					<div class="tab-content">
+						<div class="row row-lg">
+							<div class="col-sm-12">
+								<table id="zhuankuanattachmentList" class="table table-hover table-striped table table-bordered tables table-condensed">
+									<thead>
+										<tr>
+											<th data-field="a">序号</th>
+											<th data-field="b">附件大类</th>
+											<th data-field="c">附件小类</th>
+											<th data-field="d">上传日期</th>
+											<th data-field="e">操作</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row mb20">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>备注</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<div class="col-sm-12">
+							<textarea type="text" id="J_zhuankuanremarks" name="remarks" class="form-control" style="min-height:150px !important;max-height:150px !important;" maxlength="500"></textarea>
+						</div>
+					</div>
+				</div>
+			</div>	
+		</div>
+	</div>
+</div>
+<script src="$link.contextPath/resources/script/finance/payment/apply/detail.js"></script>

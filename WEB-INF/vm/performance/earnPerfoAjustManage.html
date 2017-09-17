@@ -1,0 +1,216 @@
+#set($plugins = ["table","chosen","autoSearch"])
+<div class="ibox">
+	<div class="ibox-title">
+		<h5>收益业绩调整管理</h5>
+		<div class="ibox-tools">
+			<a class="collapse-link ui-sortable"> <i class="fa fa-chevron-up"></i></a>
+		</div>
+	</div>
+</div>
+<!-- �б�begin -->
+<div class="ibox float-e-margins">
+	<div class="section" style="padding: 0">
+		<div class="row">
+			<div class="tabs-container" id="tabs-container">
+				<div class="tab-content tab-content-min" id="tab-content"
+					style="margin: 0">
+					<div class="ibox">
+						<div class="ibox-content pd10">
+							<div class="row">
+								<div class="tabs-container">
+									<ul class="nav nav-tabs">
+										<li class="active"><a data-toggle="tab" href="#tab-11">调整历史</a></li>
+										<li class=""><a data-toggle="tab" href="#tab-12">收益业绩调整</a></li>
+									</ul>
+									<div class="ibox-content">
+										<form class="form-horizontal" id="J_restrictiveform">
+											<div class="row">
+												<div class="col-md-4">
+													<div class="form-group">
+														<label class="col-sm-3 control-label">业务类型：</label>
+														<div class="col-sm-7">
+															<select id="J_business" name="businessTypeId"
+																class="J_chosen form-control" data-placeholder="请选择">
+																<option value="">请选择</option>
+																<option value="1">普租合同</option>
+																<option value="2">存量房合同</option>
+															</select>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-4">
+													<div class="form-group">
+														<label class="col-sm-3 control-label">合同编号：</label>
+														<div class="col-sm-7">
+															<input type="text" class="form-control"
+																name="customerName" id="" autocomplete="off">
+														</div>
+													</div>
+												</div>
+												<div class="col-md-4">
+													<div class="form-group">
+														<label class="col-sm-3 control-label">业绩类型：</label>
+														<div class="col-sm-7">
+															<select id="J_business" name="businessTypeId"
+																class="J_chosen form-control" data-placeholder="请选择">
+																<option value="">请选择</option>
+															</select>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-4">
+													<div class="form-group">
+														<label class="col-sm-3 control-label">调整时间：</label>
+														<div class="col-sm-4">
+															<input id="J_begindate" name="beginDate"
+																class="J_chosen form-control" readonly
+																style="background-color: #FFFFFF;">
+														</div>
+														<div style="float: left; padding: 7px 0px;">-</div>
+														<div class="col-sm-4">
+															<input id="J_enddate" name="endDate"
+																class="J_chosen form-control" readonly
+																style="background-color: #FFFFFF;">
+														</div>
+													</div>
+												</div>
+												<div class="col-md-4">
+													<div class="form-group">
+														<label class="col-sm-3 control-label">分单金额：</label>
+														<div class="col-sm-4">
+															<input id="J_begindate" name="beginDate"
+																class=" form-control" style="background-color: #FFFFFF;">
+														</div>
+														<div style="float: left; padding: 7px 0px;">-</div>
+														<div class="col-sm-4">
+															<input id="J_enddate" name="endDate"
+																class=" form-control" style="background-color: #FFFFFF;">
+														</div>
+													</div>
+												</div>
+												<div class="col-md-4">
+													<div class="form-group">
+														<label class="col-sm-3 control-label"><span
+															class="text-danger">*</span>上级审批人：</label>
+														<div class="col-sm-7">
+															<div class="input-group">
+																<input type="text" class="form-control"
+																	id="J_revamp_nextAppvalUserId" name=nextAppvalUserId
+																	autocomplete="off">
+																<div class="input-group-btn">
+																	<button type="button"
+																		class="btn btn-white dropdown-toggle" data-toggle="">
+																		<span class="glyphicon glyphicon-search search-caret"></span>
+																	</button>
+																	<ul class="dropdown-menu dropdown-menu-right"
+																		role="menu"
+																		style="padding-top: 0px; max-height: 375px; max-width: 800px; overflow: auto; width: auto; transition: 0.3s; left: -110px; right: auto; min-width: 145px;">
+																	</ul>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-4">
+													<div class="form-group">
+														<label class="col-sm-3 control-label"><span
+															class="text-danger">*</span>上级审批人：</label>
+														<div class="col-sm-7">
+															<div class="input-group">
+																<input type="text" class="form-control"
+																	id="J_revamp_nextAppvalUserId" name=nextAppvalUserId
+																	autocomplete="off">
+																<div class="input-group-btn">
+																	<button type="button"
+																		class="btn btn-white dropdown-toggle" data-toggle="">
+																		<span class="glyphicon glyphicon-search search-caret"></span>
+																	</button>
+																	<ul class="dropdown-menu dropdown-menu-right"
+																		role="menu"
+																		style="padding-top: 0px; max-height: 375px; max-width: 800px; overflow: auto; width: auto; transition: 0.3s; left: -110px; right: auto; min-width: 145px;">
+																	</ul>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-4">
+													<div class="form-group">
+														<label class="col-sm-3 control-label">业绩归属月：</label>
+														<div class="col-sm-4">
+															<input id="J_begindate" name="beginDate"
+																class=" form-control" style="background-color: #FFFFFF;">
+														</div>
+														<div style="float: left; padding: 7px 0px;">-</div>
+														<div class="col-sm-4">
+															<input id="J_enddate" name="endDate"
+																class=" form-control" style="background-color: #FFFFFF;">
+														</div>
+													</div>
+												</div>												
+											</div>										
+											<div class="row">
+												<div class="col-md-12 text-cen">
+													<div class="form-group">
+														<button id="J_search" type="button"
+															class="btn btn-success btn_size">查 询</button>
+														<button id="J_reset" type="reset"
+															class="btn btn-white btn_size">重 置</button>
+													</div>
+												</div>
+											</div>
+										</form>
+									</div>
+									<div class="tab-content pd5" id="tab-content1">
+										<div id="tab-11" class="tab-pane active">
+											<table id="dataTable"
+												class="table table-hover table-striped table-condensed">
+												<thead>
+													<tr>
+														<th data-field="id">业务类型</th>
+														<th data-field="customerName">合同编号</th>
+														<th data-field="customerTypeName">业绩类型</th>
+														<th data-field="businessTypeName">收款编号</th>
+														<th data-field="reasonDisplay">付款编号</th>
+														<th data-field="nodeStateName">收款/付款金额</th>
+														<th data-field="nodeStateName">分单比例</th>
+														<th data-field="nodeStateName">分单金额</th>
+														<th data-field="nodeStateName">业绩所属人</th>
+														<th data-field="nodeStateName">业绩所属部门</th>
+														<th data-field="nodeStateName">业绩归属月</th>
+														<th data-field="nodeStateName">调整时间</th>
+													</tr>
+												</thead>
+											</table>
+										</div>
+										<div id="tab-12" class="tab-pane">
+											<table id="dataTable2"
+												class="table table-hover table-striped table-condensed">
+												<thead>
+													<tr>
+														<th data-field="id">��Ϣ���</th>
+														<th data-field="customerName">����</th>
+														<th data-field="customerTypeName">�ͻ�����</th>
+														<th data-field="businessTypeName">ҵ������</th>
+														<th data-field="reasonDisplay">�ϰ�ԭ��</th>
+														<th data-field="nodeStateName">״̬</th>
+														<th data-field="approvalTime">����ʱ��</th>
+													</tr>
+												</thead>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="$link.contextPath/resources/script/performance/earnPerfoAjustManage.js"></script>

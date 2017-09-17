@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+#set($plugins = ["table","chosen","laydate","linkage","ztree","autoSearch"])
+<div class="row tabs-border pd5">
+				<div class="col-md-3">
+					<div class="form-group">
+						<div class="col-md-12">
+							<input type="checkbox">
+							<label class="control-label" >私客转组店公客</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-7">
+					<div class="form-group">
+						<p style="margin-top:8px;font-weight:bold;">评价等级包含  A、B、C &nbsp;&nbsp;&nbsp;20天未沟通&nbsp;&nbsp;&nbsp;提前2天站内信提醒</p>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="form-group">
+						<button class="btn btn-sm btn-success sh" onclick="privatesettings(this)">设置</button>	
+					</div>
+				</div>
+			</div>
+			<div class="row tabs-border pd5">
+				<div class="col-md-3">
+					<div class="form-group">
+						<div class="col-md-12">
+							<input type="checkbox">
+							<label class="control-label" >保护客源数量设置</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-7">
+					<div class="form-group">
+						<p style="margin-top:8px;font-weight:bold;">店组允许保护10个客源</p>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="form-group">
+						<button class="btn btn-sm btn-success sh" onclick="groupshop(this)">设置</button>	
+					</div>
+				</div>
+			</div>
+			<div class="row tabs-border pd5">
+				<div class="col-md-3">
+					<div class="form-group">
+						<div class="col-md-12">
+							<input type="checkbox">
+							<label class="control-label" >组店公客转组团公客/无效</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-7">
+					<div class="form-group">
+						<p style="margin-top:8px;font-weight:bold;">评价等级包含  A、B、C &nbsp;&nbsp;&nbsp;20天未沟通</p>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="form-group">
+						<button class="btn btn-sm btn-success sh" onclick="turngroup(this)">设置</button>	
+					</div>
+				</div>
+			</div>
+			<div class="row tabs-border pd5">
+				<div class="col-md-3">
+					<div class="form-group">
+						<div class="col-md-12">
+							<input type="checkbox">
+							<label class="control-label" >组团公客转大区公客/无效</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-7">
+					<div class="form-group">
+						<p style="margin-top:8px;font-weight:bold;">评价等级包含  A、B、C &nbsp;&nbsp;&nbsp;20天未沟通</p>
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="form-group">
+						<button class="btn btn-sm btn-success sh" onclick="region(this)">设置</button>	
+					</div>
+				</div>
+			</div>
+			<div class="row tabs-border pd5">
+				<div class="col-md-10">
+					<div class="form-group">
+						<div class="col-md-12">
+							<input type="checkbox">
+							<label class="control-label" >查看电话数量限制</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2" style="padding-bottom:5px">
+					<div class="form-group">
+						<button class="btn btn-sm btn-success sh" onclick="telephone(this)">设置</button>	
+					</div>
+				</div>
+			</div>
+			
+			<!-- 私转公客设置 -->
+<div id="demo_layer2" class="ibox-content" style="display: none">
+	<form id="retreatkey_form" name="retreatkey_form" class="form-horizontal">
+		<div class="form-group">
+			<span class='col-sm-2 lefts'>条件</span>
+			
+			<div class="col-sm-10 lines">
+				<div class="col-sm-5 rank" style="margin-top: 10px;">
+					<span>评价等级：&nbsp;</span>
+					<input type="checkbox">A&nbsp;&nbsp;
+					<input type="checkbox">B&nbsp;&nbsp;
+					<input type="checkbox">C&nbsp;&nbsp;
+				</div>
+				<div class="col-sm-6 tim">
+					<span style="float:left;margin-top:8px">到期时间：</span>
+					<span style="float:left;margin-top:8px">大于&nbsp;&nbsp;</span>
+					
+						<div class="col-sm-2" style="float:left;">
+							<input type="text" class="form-control" id="houseid" name="houseid" >
+						</div>
+					<span style="float:left;margin-top:8px">&nbsp;&nbsp;天</span>
+					
+					<div class="col-sm-3" style="float:right;">
+						<select id="status" name="status" class="J_chosen form-control" data-placeholder="全部" >
+							<option value="">未沟通</option>
+							<option value="">未看房</option>
+						</select>
+					</div>
+				</div>	
+			</div>
+		</div>
+		<div class="form-group">
+			<span class='col-sm-2 lefts'>处理</span>
+			
+			<div class="col-sm-10 lines">
+				<span class="col-sm-4 control-label">公客类型:</span>
+				<div class="col-sm-5">
+					<select id="status" name="status" class="J_chosen form-control" data-placeholder="全部">
+						<option value="">组店公客</option>
+					</select>
+				</div>
+					
+			</div>
+		</div>
+		<div class="form-group">
+			<span class='col-sm-2 lefts'>提醒</span>
+			<div class="col-sm-10 lines">
+				<span class="col-sm-4 control-label" style="padding:10px 10px">提醒时间：</span>
+				<div class="col-sm-6">
+					<span style="float:left;margin-top:4%;">提前&nbsp;&nbsp;</span>
+					<div class="col-sm-2" style="float:left;">
+						<input type="text" class="form-control" id="houseid" name="houseid" >
+					</div>
+					<span style="float:left;margin-top:4%;">&nbsp;&nbsp;天</span>
+				</div>	
+			</div>
+		</div>
+		<div class="form-group">
+			<span class='col-sm-2 lefts'>组织</span>
+			<div class="col-sm-10 lines">
+				<p class="col-sm-12 form-control-static">添加不参与约配置的组织：</p>
+					
+			</div>
+		</div>
+		<div class="form-group">
+			<p style="margin-left:2%;margin-right:2%;margin-top:30px; line-height:24px;"><span style="font-weight:bold;">说明：</span>允许组店对客源进行保护，被保护的客源只允许保护人操作，系统根据设置对
+组店保护客源的数量进行限制。</p>
+		</div>
+		<div class="form-group" >
+			<label class="col-sm-3 control-label"></label>
+			<p class="col-sm-9 form-control-static"></p>
+		</div>
+	</form>
+</div>
+
+<!-- 组店转组团公客/无效设置 -->
+<div id="demo_layer3" class="ibox-content" style="display: none">
+	<form id="retreatkey_form" name="retreatkey_form" class="form-horizontal">
+		<div class="form-group" >
+			<p class="col-sm-4 form-control-static">允许组店保护的客源数量：</p>
+			<input class="col-sm-4 form-control" style="width:33%;" type="text" class="" id="houseid" name="houseid" placeholder="请输入客源编号">
+			<label class="control-label">个</label>
+		</div>
+		<div class="form-group">
+			<p style="margin-top:15px; line-height:24px;"><span style="font-weight:bold;">说明：</span>允许组店对客源进行保护，被保护的客源只允许保护人操作，系统根据设置对组店保护客源的数量进行限制。</p>
+		</div>
+	</form>
+</div>		
+
+<!-- 组店转组团公客/无效设置 -->
+<div id="demo_layer4" class="ibox-content" style="display: none">
+	<form id="retreatkey_form" name="retreatkey_form" class="form-horizontal">
+		<div class="form-group">
+			<span class='col-sm-2 lefts'>条件</span>
+			
+			<div class="col-sm-10 lines">
+				<div class="col-sm-5 rank">
+					<span>评价等级：&nbsp;</span>
+					<input type="checkbox">A&nbsp;&nbsp;
+					<input type="checkbox">B&nbsp;&nbsp;
+					<input type="checkbox">C&nbsp;&nbsp;
+				</div>
+	
+			</div>
+		</div>
+		<div class="form-group">
+			<span class='col-sm-2 lefts'>处理</span>			
+			<div class="col-sm-10 lines">
+				<span class="col-sm-4 control-label">公客类型:</span>
+				<div class="col-sm-5">
+					<select id="status" name="status" class="J_chosen form-control" data-placeholder="全部">
+						<option value="">组店公客</option>
+					</select>
+				</div>					
+			</div>
+		</div>
+
+		<div class="form-group">
+			<p style="margin-left:2%;margin-right:2%;margin-top:30px; line-height:24px;"><span style="font-weight:bold;">说明</span>允许组店对客源进行保护，被保护的客源只允许保护人操作，系统根据设置对
+组店保护客源的数量进行限制。</p>
+		</div>
+		<div class="form-group" >
+			<label class="col-sm-3 control-label"></label>
+			<p class="col-sm-9 form-control-static"></p>
+		</div>
+	</form>
+</div>	
+
+<!-- 组团转大区/无效重置 -->
+<div id="demo_layer5" class="ibox-content" style="display: none">
+	<form id="retreatkey_form" name="retreatkey_form" class="form-horizontal">
+		<div class="form-group">
+			<span class='col-sm-2 lefts'>条件</span>		
+			<div class="col-sm-10 lines">
+				<div class="col-sm-5 rank">
+					<span>评价等级：&nbsp;</span>
+					<input type="checkbox">A&nbsp;&nbsp;
+					<input type="checkbox">B&nbsp;&nbsp;
+					<input type="checkbox">C&nbsp;&nbsp;
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<span class='col-sm-2 lefts'>处理</span>			
+			<div class="col-sm-10 lines">
+				<span class="col-sm-4 control-label">公客类型:</span>
+				<div class="col-sm-5">
+					<select id="status" name="status" class="J_chosen form-control" data-placeholder="全部">
+						<option value="">组店公客</option>
+					</select>
+				</div>					
+			</div>
+		</div>
+		<div class="form-group">
+			<p style="margin-left:2%;margin-top:30px; line-height:24px;"><span style="font-weight:bold;">说明：</span>允许组店对客源进行保护，被保护的客源只允许保护人操作，系统根据设置对
+组店保护客源的数量进行限制。</p>
+		</div>
+		<div class="form-group" >
+			<label class="col-sm-3 control-label"></label>
+			<p class="col-sm-9 form-control-static"></p>
+		</div>
+	</form>
+</div>
+
+<!-- 查看电话数量限制 -->
+<div id="demo_layer6" class="ibox-content" style="display: none">
+	<form id="retreatkey_form" name="retreatkey_form" class="form-horizontal">
+		<div class="row">
+			<div class="col-md-5">
+				<div class="form-group">
+					<label class="col-sm-4 control-label">所属部门：</label>
+					<div class="col-sm-5">
+						<select id="J_dept" name="dept" class="form-control m-b" multiple data-placeholder="请选择" style="display: none;">
+						</select>
+						
+						<input type="hidden" class="form-control" id="J_deptValues">
+						<input type="hidden" class="form-control" id="J_deptIds">
+					</div>
+					<div class="col-sm-3">
+						<label class="control-label"><a id="J_deptSelect" href="#">选择</a></label>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-5">
+				<div class="form-group">
+					<label class="col-sm-4 control-label">职级:</label>
+					<div class="col-sm-8">
+						<select id="status" name="status" class="J_chosen form-control" data-placeholder="全部">
+							<option value="">全部</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-2">
+				<div class="form-group">
+					<div class="col-sm-8  col-sm-offset-4">
+						<button id="J_search" type="button" class="btn btn-success pr5">查 询</button>
+					</div>
+				</div>
+			</div>
+		</div>	
+	</form>
+	<div class="ibox float-e-margins pd5">
+  		<div class="row row-lg">
+			<div class="col-sm-12" style="border-top: 1px solid #E9E7E7;">
+				<div class="ibox-tools">
+		           <a class="collapse-link"><i class="fa fa-plus-square fa-bgcolor"></i></a>
+		       </div>
+				<!-- Example Pagination -->
+				<div class="col-sm-12">
+					<table id="J_dataTable_lease" class="table table-hover table-striped">
+						<thead>
+							<tr>
+								<th data-field="a">部门</th>
+								<th data-field="b">职级</th>
+								<th data-field="c">允许查看电话数量</th>
+								<th data-field="d">操作</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+			</div>
+			<!-- End Example Pagination -->
+		</div>
+	</div>
+</div>
+</body>
+<script src="$link.contextPath/resources/js/department.js"></script>			
+<script type="text/javascript">
+	$(function() {
+		
+		var databtn = '<a type="editkey" class="btn btn-outline btn-xs">'+
+			'<div class="ibox-tools">'+
+		        	'<i class="fa fa-times-circle fa-bgcolor" style="font-size:22px; color:#1c84c6;">'+
+		        	'</i>'+
+	    	'</div>'+
+		'</a>';
+		
+		var dataTable_leaselist = [{
+			"a" : "西北大区-亚北区-天通苑西区店3组",
+			"b" : "全部",
+			"c" : "5次/天",
+			"d" : databtn,
+			"column2" : "c5",
+			"column3" : "c10",
+			"column4" : "c15"
+			
+		},{
+			"a" : "西北大区-亚北区-天通苑西区店3组",
+			"b" : "全部",
+			"c" : "5次/天",
+			"d" : databtn,
+			"column2" : "c5",
+			"column3" : "c10",
+			"column4" : "c15"
+			
+		},{
+			"a" : "西北大区-亚北区-天通苑西区店3组",
+			"b" : "全部",
+			"c" : "5次/天",
+			"d" : databtn,
+			"column2" : "c5",
+			"column3" : "c10",
+			"column4" : "c15"
+			
+		},{
+			"a" : "西北大区-亚北区-天通苑西区店3组",
+			"b" : "全部",
+			"c" : "5次/天",
+			"d" : databtn,
+			"column2" : "c5",
+			"column3" : "c10",
+			"column4" : "c15"
+			
+		},{
+			"a" : "西北大区-亚北区-天通苑西区店3组",
+			"b" : "全部",
+			"c" : "5次/天",
+			"d" : databtn,
+			"column2" : "c5",
+			"column3" : "c10",
+			"column4" : "c15"
+			
+		},{
+			"a" : "西北大区-亚北区-天通苑西区店3组",
+			"b" : "全部",
+			"c" : "5次/天",
+			"d" : databtn,
+			"column2" : "c5",
+			"column3" : "c10",
+			"column4" : "c15"
+			
+		},{
+			"a" : "西北大区-亚北区-天通苑西区店3组",
+			"b" : "全部",
+			"c" : "5次/天",
+			"d" : databtn,
+			"column2" : "c5",
+			"column3" : "c10",
+			"column4" : "c15"
+			
+		},{
+			"a" : "西北大区-亚北区-天通苑西区店3组",
+			"b" : "全部",
+			"c" : "5次/天",
+			"d" : databtn,
+			"column2" : "c5",
+			"column3" : "c10",
+			"column4" : "c15"
+			
+		},{
+			"a" : "西北大区-亚北区-天通苑西区店3组",
+			"b" : "全部",
+			"c" : "5次/天",
+			"d" : databtn,
+			"column2" : "c5",
+			"column3" : "c10",
+			"column4" : "c15"
+			
+		},{
+			"a" : "西北大区-亚北区-天通苑西区店3组",
+			"b" : "全部",
+			"c" : "5次/天",
+			"d" : databtn,
+			"column2" : "c5",
+			"column3" : "c10",
+			"column4" : "c15"
+			
+		},{
+			"a" : "西北大区-亚北区-天通苑西区店3组",
+			"b" : "全部",
+			"c" : "5次/天",
+			"d" : databtn,
+			"column2" : "c5",
+			"column3" : "c10",
+			"column4" : "c15"
+			
+		}]
+		
+		//初始化表格
+		//详细使用说明参见http://bootstrap-table.wenzhixin.net.cn/zh-cn/documentation/
+		$('#J_dataTable_lease').bootstrapTable({
+			data : dataTable_leaselist,
+			pagination: true
+		});
+		
+		// 显示部门树状结构
+		$('#J_deptSelect').on('click', function() {
+			showDeptTree($('#J_dept'));
+		});
+	});
+</script>
+</html>

@@ -1,0 +1,529 @@
+#set($plugins = ["table","chosen","laydate","autoSearch","validator"])
+<div class="opt_bar">
+	<!-- 右侧操作栏 start -->
+	<div class="right_operbar">
+		#if ($!vo.isFavorate == 0)
+		#end
+		<span class="oper" id="" onclick="addFollow($!vo.housesid,1,1,2)">跟进</span>
+		<!--<span class="oper" id="" onclick="singlewatchadd($!vo.housesid,2)">空看</span>-->
+		<!-- <span class="oper" id="" onclick="focusWatchAdd($!vo.housesid)">集中看房</span> -->
+		<!-- <span class="oper" id="">房源纸</span> -->
+		#if ($!vo.isprotect == 0)
+		#end
+		#if ($!vo.isRegister == 0) #end
+	</div>
+	<!-- 右侧操作栏 end -->
+</div>
+<div class="content_house">
+	<div class="ibox">
+		<div class="ibox-content">
+			<div class="ibox-chouse">
+				<div class="row mt10">
+					<div class="col-md-12">
+						<div class="col-sm-8">
+							<div class="surround">
+								<div class="name">
+									$!vo.conmmunityname
+									-
+									$!vo.plannedUsesStr
+								</div>
+								<div class="infor-num">
+									<div class="floor-num">房源编号：$!vo.housesid</div>
+								</div>
+							</div>
+						</div>
+						<!-- <div class="col-sm-2 col-sm-offset-6">
+                            <div class="remarks">房源校验状态：已核验</div>
+                        </div> -->
+					</div>
+				</div>
+				<div class="row mt10">
+					<div class="col-md-6">
+						<div class="section">
+							<div class="col-sm-3">
+								<div class="con">
+									<div class="house-val">
+										#if ($!vo.bedroom == 'undefined')
+										0
+										#else
+										$!vo.bedroom
+										#end
+										-
+										#if ($!vo.livingroom == 'undefined')
+										0
+										#else
+										$!vo.livingroom
+										#end
+										-
+										#if ($!vo.kitchen == 'undefined')
+										0
+										#else
+										$!vo.kitchen
+										#end
+										-
+										#if ($!vo.toilet == 'undefined')
+										0
+										#else
+										$!vo.toilet
+										#end
+										-
+										#if ($!vo.balcony == 'undefined')
+										0
+										#else
+										$!vo.balcony
+										#end
+									</div>
+									<div class="house-type">户型</div>
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<div class="con">
+									<div class="house-val">$!vo.buildarea 平方米</div>
+									<div class="house-type">建筑面积</div>
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<div class="con">
+									<div class="house-val">$!vo.heading</div>
+									<div class="house-type">朝向</div>
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<div class="con none">
+									<div class="house-val">$!vo.floor /$!vo.houseallfloor </div>
+									<div class="house-type">楼层</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="section">
+							<div class="col-sm-4">
+								<div class="con">
+									#if ($!vo.pricederection == -1)
+								<div class="house-val" onclick="checkPrice($!vo.housesid)"
+									style="color: #57CC00; cursor: pointer;">
+									<span id="entrustprice">$!vo.entrustprice</span> 万<i
+										class="fa fa-long-arrow-down"></i>
+								</div>
+								#elseif($!vo.pricederection == 1)
+								<div class="house-val" onclick="checkPrice($!vo.housesid)"
+									style="color: #FC2C00; cursor: pointer;">
+									<span id="entrustprice">$!vo.entrustprice</span> 万<i
+										class="fa fa-long-arrow-up"></i>
+								</div>
+								#elseif($!vo.pricederection == 0)
+								<div class="house-val">
+									<span id="entrustprice">$!vo.entrustprice</span> 万
+								</div>
+								#end
+									<!-- <div class="house-val" onclick="checkPrice($!vo.housesid)">$!vo.entrustprice 万</div> -->
+									<div class="house-type">委托价</div>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="con">
+									<div class="house-val">$!vo.unitprice 元/平米</div>
+									<div class="house-type">单价</div>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="con none">
+									<div class="house-val">$!vo.houseremark</div>
+									<div class="house-type">房源评价</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row mt10">
+					<div class="col-md-6">
+						<div class="section">
+							<div class="col-sm-12">
+								<div class="con none">
+									<div class="record">
+										<div class="col-sm-3">
+											<span class="label-name">录入时间：</span>
+										</div>
+										<div class="col-sm-9">
+											<span class="date">$!vo.bookintime</span>
+										</div>
+									</div>
+									<div class="last">
+										<div class="col-sm-3">
+											<span class="label-name house-type">最后跟进时间：</span>
+										</div>
+										<div class="col-sm-9">
+											<span class="date house-type">$!vo.lastcontacttime</span>
+										</div>
+									</div>
+									<!-- <div class="house-val">3-2-1-2-3</div>
+                                <div class="house-type">户型</div> -->
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="section">
+							<div class="col-sm-4">
+								<div class="con">
+									<div class="house-val">$!vo.taxtype </div>
+									<div class="house-type">
+										税种<span class="re">（仅供参考）</span>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="con">
+									<div class="house-val">$!vo.buyyears</div>
+									<div class="house-type">购房年限</div>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="con none">
+									<div class="house-val">$!vo.schoolname</div>
+									<div class="house-type">教育配套</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row mt10">
+					<div class="col-md-6">
+						<div class="section">
+							<div class="col-sm-4 con">
+								<div class="record label-pt">
+									<div class="col-sm-4">
+										<span class="label-name">所属：</span>
+									</div>
+									<div class="col-sm-8">
+										<span class="name-sma">$!vo.belonguser</span>
+									</div>
+								</div>
+								<div class="last">
+									<div class="col-sm-4">
+										<span class="label-name house-type">录入：</span>
+									</div>
+									<div class="col-sm-8">
+										<span class="name-sma house-type">$!vo.inputuser</span>
+									</div>
+								</div>
+								<!-- <div class="last">
+									<div class="col-sm-8 col-sm-offset-4">
+										<span class="label-name house-type">经纪人</span>
+									</div>
+								</div> -->
+							</div>
+							<div class="col-sm-8 pl-20">
+								<div class="con none">
+									<div class="record label-pt">
+										<div class="col-sm-12">
+											<span class="date">$!vo.belonggroup</span>
+										</div>
+									</div>
+									<div class="last">
+										<div class="col-sm-12">
+											<span class="date house-type">$!vo.inputgroup</span>
+										</div>
+									</div>
+									<!-- <div class="last">
+										<div class="col-sm-12">
+											<span class="house-type ml-40">部门</span>
+										</div>
+									</div> -->
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="section">
+							<div class="col-sm-12">
+								<div class="con none">
+									<div class="record">
+										<div class="col-sm-2">
+											<span class="label-name label-pt">业绩标签：</span>
+										</div>
+										<div class="col-sm-10">
+											<!--#if($shiro.hasPermission("SCM:HOUSE:KEY:VIEW"))
+                                                <input type="hidden" value="1" id="temp_key_view"></input>
+                                            #end
+                                            #if($shiro.hasPermission("SCM:HOUSE:KEY:COLLECT"))
+                                                <input type="hidden" value="1" id="temp_key_collect"></input>
+                                            #end
+                                                #if ($!vo.iskey != 0)
+                                                <button type="button"
+                                                        class="btn btn-warning btn-sm" onclick="urlkey($!vo.keyid)">钥匙</button>
+
+                                                #else
+                                                <button type="button"
+                                                        class="btn btn-default btn-sm" onclick="checkedkeyshow($!vo.housesid,2)">钥匙</button>
+                                                #end #if ($!vo.iswtinfo != 0)
+
+                                                #else
+                                                #end
+                                                 #if ($!vo.iscard!= 0)
+                                                <button type="button" class="btn btn-info btn-sm">证件</button>
+                                                #else
+                                                <button type="button"
+                                                        class="btn btn-default btn-sm"
+                                                        onclick="proxyNewlyObj.documentEntry($!vo.housesid)">证件
+                                                </button>
+                                                #end -->
+										</div>
+									</div>
+									<div class="last">
+										<div class="col-sm-2">
+											<!--<span class="label-name house-type">管理标签：</span>-->
+										</div>
+										<div class="col-sm-10 house-type">
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row mt10">
+					<div class="form-group mr-20">
+						<label class="col-sm-1 control-label text-right">备注：</label>
+						<div class="col-sm-11 break-word">
+							$!vo.memo
+						</div>
+					</div>
+				</div>
+				#if ($!vo.isFocuswatch != 0)
+				<div class="row mt10">
+					<div class="col-md-3">集中看房历史：发起次数 3</div>
+				</div>
+				<div class="row mt10">
+					<div class="col-md-6 col-md-offset-1">可反馈 起始日期：2016-09-18
+						09：00 过期日期：2017-03-20 08:00 发起人：张三</div>
+					<div class="col-md-1">
+						<a>空看反馈</a>
+					</div>
+					<div class="col-md-1">
+						<a>带看反馈</a>
+					</div>
+
+				</div>
+				#end
+				<div class="row mt10">
+					<div class="tabs-container">
+						<ul class="nav nav-tabs nav_tab_ath">
+							<li class="active"><a data-toggle="tab" href="#tab-11">房源信息</a></li>
+							<!-- <li class=""><a data-toggle="tab" href="#tab-12">预计业绩归属</a></li> -->
+							<li class=""><a data-toggle="tab" href="#tab-13">跟进记录</a></li>
+							<li class=""><a data-toggle="tab" href="#tab-16">操作日志</a></li>
+							<!-- <li class=""><a data-toggle="tab" href="#tab-17">免打扰修改日志</a></li> -->
+						</ul>
+
+						<div class="tab-content" id="tab-content1">
+							<div id="tab-11" class="tab-pane active">
+								#parse("/house/virtual/virtual_buy_housing_details.html")
+							</div>
+							<!-- <div id="tab-12" class="tab-pane">
+                                <div class="customer_info_content">
+                                    <div class="row ptb10">
+                                        <div class="pl10 font-bold font-blue info-tit">预计业绩归属</div>
+                                    </div>
+                                    <div class="bootstrap-table table-list">
+                                        <div class="fixed-table-container">
+                                            <table id="dataTableFloor"
+                                                class="table table-hover  table-striped"
+                                                style="border-bottom: none">
+                                                <thead>
+                                                    <tr>
+                                                        <th>业绩类型</th>
+                                                        <th>所属人</th>
+                                                        <th>所属部门</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>房源录入人业绩</td>
+                                                        <td>张三</td>
+                                                        <td>朝北大区-丽景花园组团-丽景花园A店</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>房源录入人业绩</td>
+                                                        <td>张三</td>
+                                                        <td>朝北大区-丽景花园组团-丽景花园A店</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>房源录入人业绩</td>
+                                                        <td>张三</td>
+                                                        <td>朝北大区-丽景花园组团-丽景花园A店</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+							<div id="tab-13" class="tab-pane">
+								#parse("/house/follow/house_list.html")</div>
+							<div id="tab-14" class="tab-pane">
+								#parse("/house/audit/house_trace_list.html")
+							</div>
+							<div id="tab-15" class="tab-pane">
+								#parse("/house/main/history_list.html")</div>
+							<div id="tab-16" class="tab-pane">
+								#parse("/house/main/operation_logs.html")</div>
+							<!-- <div id="tab-17" class="tab-pane">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                <h4 class="business-title">房源信息</h4>
+                            </div>
+                                    <div class="customer_info_content">
+                                        <div class="row ptb10">
+                                            <div class="pl10 font-bold font-blue info-tit">免打扰修改日志</div>
+                                        </div>
+                                        <table class="table table-hover table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th data-field="id">序号</th>
+                                                    <th data-field="name">限制类型</th>
+                                                    <th data-field="type">限制人</th>
+                                                    <th data-field="beforeowner">限制对象</th>
+                                                    <th data-field="afterowner">被限制一级原因</th>
+                                                    <th data-field="afterowner">被限制二级原因</th>
+                                                    <th data-field="afterowner">限制/取消限制时间</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr data-index="0">
+                                                    <td style="text-align: center;">张三</td>
+                                                    <td style="text-align: center;">2016-09-18 09:18:00</td>
+                                                    <td style="text-align: center;">一审</td>
+                                                    <td style="text-align: center;">非可售</td>
+                                                    <td style="text-align: center;">地址不真实</td>
+                                                </tr>
+                                                <tr data-index="0">
+                                                    <td style="text-align: center;">张三</td>
+                                                    <td style="text-align: center;">2016-09-18 09:18:00</td>
+                                                    <td style="text-align: center;">一审</td>
+                                                    <td style="text-align: center;">非可售</td>
+                                                    <td style="text-align: center;">地址不真实</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div> -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 查看电话 begin -->
+<div id="addphone_layer" class="ibox-content" style="display: none">
+	<form id="addphone_form" name="addphone_form" class="form-horizontal">
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+							class="text-danger">*</span>联系方式类别:</label>
+					<div class="col-sm-8">
+						<select id="operationtype" name="operationtype"
+								class="J_chosen form-control" data-placeholder="请选择">
+							<option value="">请选择</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+							class="text-danger">*</span>电话：</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" id="customerName"
+							   name="customerName">
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</form>
+</div>
+<!-- 查看电话 end -->
+<!--修改房源评价 begin -->
+<div id="editevaluate_layer" class="ibox-content" style="display: none">
+	<form id="editevaluate_form" name="editevaluate_form"
+		  class="form-horizontal">
+		<div class="row">
+			<div id="remarkid" class="col-sm-12"></div>
+		</div>
+	</form>
+</div>
+<!-- 修改房源评价 end -->
+<!-- 房源价格修改 begin -->
+<div id="J_editpriceLayer" class="ibox-content" style="display: none">
+	<form id="J_editpriceForm1" name="editpriceForm"
+		class="form-horizontal">
+		<div class="form-group">
+			<!-- <label class="col-sm-3 control-label">修改前：</label>
+			<div class="col-sm-8"> -->
+			<label id="J_oldLabel2" class="col-sm-4 control-label"></label>
+			<div id="J_oldValue2" class="col-sm-7 remark_all ptb7"></div>
+			<!-- </div> -->
+		</div>
+		<div class="form-group">
+			<!-- <label class="col-sm-3 control-label">修改后：</label>
+			<div class="col-sm-8"> -->
+			<label id="J_newLabel2" class="col-sm-4 control-label"></label>
+			<div class="col-sm-4">
+				<input id="J_newValue2" name="newPrice" type="text"
+					class="form-control"></input>
+			</div>
+			<div class="col-sm-2">
+				<label class="control-label" id="new_company"></label>
+			</div>
+			<!-- </div> -->
+		</div>
+	</form>
+</div>
+<!-- 房源房源价格修改修改 end -->
+<!-- 备注修改 begin -->
+<div id="J_editremarkLayer" class="ibox-content" style="display: none">
+	<form id="J_editForm2" name="editremarkForm" class="form-horizontal">
+		<div class="form-group">
+			<!-- <label class="col-sm-3 control-label">修改前：</label>
+			<div class="col-sm-8"> -->
+			<label id="J_oldLabel1" class="col-sm-1 control-label"></label>
+			<div id="J_oldValue1" class="col-sm-11 remark_all ptb7"></div>
+			<!-- </div> -->
+		</div>
+		<div class="form-group">
+			<!-- <label class="col-sm-3 control-label">修改后：</label>
+			<div class="col-sm-8"> -->
+			<label id="J_newLabel1" class="col-sm-1 control-label"></label>
+			<div class="col-sm-11">
+				<textarea id="J_newValue1" rows="3" name="memo" cols="100%"
+						  class="form-control" maxlength="500"></textarea>
+			</div>
+			<!-- </div> -->
+		</div>
+	</form>
+</div>
+<!-- 备注修改 end -->
+<!-- 编辑弹框 begin -->
+#parse("/house/key/entry.html")
+#parse("/house/singlewatch/add_singlewatch_dialog.html")
+#parse("/house/protect/add.html")
+#parse("/house/focuswatch/add.html")
+#parse("/house/proxy/entering.html")
+<!-- js插件 -->
+<script type="text/javascript"
+		src="$link.contextPath/resources/script/house/virtual/buy_detail.js?v=1"></script>
+<script type="text/javascript"
+		src="$link.contextPath/resources/script/house/public/check_phone.js"></script>
+<script type="text/javascript"
+		src="$link.contextPath/resources/script/house/public/check_address.js"></script>
+<script type="text/javascript"
+		src="$link.contextPath/resources/script/house/public/check_price.js"></script>
+<script type="text/javascript"
+		src="$link.contextPath/resources/script/house/follow/follow_add.js"></script>
+<script src="$link.contextPath/resources/script/house/main/validate.js"></script>

@@ -1,0 +1,36 @@
+<!-- 查账详情信息 -->
+#set($plugins = ["table","chosen","autoSearch","laydate"])
+<div class="ibox" id="ibox" ng-controller="detailCtrl as $ctrl" ng-cloak>
+	<div class="bs-callout bs-callout-warning">
+		<h4>查账详情</h4>
+	</div>
+		<div class="row mt10">
+			<div class="tabs-container">
+				<ul class="nav nav-tabs nav_tab_ath m-b-sm">
+					<li class="active"><a data-toggle="tab" href="#tab-11">收款信息</a></li>
+					<li class=""><a data-toggle="tab" href="#tab-12">操作日志</a></li>
+				</ul>
+				<div class="ibox-content">
+				<div class="tab-content" id="tab-content1">
+					<div id="tab-11" class="tab-pane active">
+						<div class="panel-body">
+							#parse("/finance/audit/detail/gather_info.html")
+						</div>
+					</div>
+					<div id="tab-12" class="tab-pane">
+						<div class="panel-body">
+							#parse("/finance/audit/detail/operation_log.html")
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="$link.contextPath/resources/js/pdfobject.js"></script>
+<script src="$link.contextPath/resources/js/moment.js"></script>
+<script src="$link.contextPath/resources/script/sign/sign-common.module.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/sign-laydate.directive.js"></script>
+
+<script src="$link.contextPath/resources/script/finance/audit/detail.js"></script>
+<script src="$link.contextPath/resources/script/finance/audit/detail.module.js"></script>

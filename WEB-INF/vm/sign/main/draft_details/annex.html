@@ -1,0 +1,261 @@
+<style>
+ .mock{
+    	position:fixed;
+    	z-index:29891014;
+		rgba(0,0,0,0.3)
+    	pointer-events:auto;
+    	top:0;
+    	left:0;
+    	width:100%;
+    	height:100%;
+    }
+    #bigPic{
+    	width:50vw;
+    	height:60vh;
+      position: absolute;
+      margin: auto;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;  	
+    }
+    .btn-prev{
+    	 position: absolute;
+    	 left:20px;
+    	 top:49vh;
+    	 width:30px;
+    	 height:30px;
+    	 background:rgba(0,0,0,.8);
+    	 line-height:29px;
+    	 text-align:center;
+    	 color:#fff;
+    	 border-radius:15px;
+    	 cursor:pointer;
+    }
+    .btn-next{
+    	 position: absolute;
+    	 right:20px;
+    	 top:49vh;
+    	 width:30px;
+    	 height:30px;
+    	 background:rgba(0,0,0,.8);
+    	 line-height:29px;
+    	 text-align:center;
+    	 color:#fff;
+    	 border-radius:15px;
+    	 cursor:pointer;
+    }
+     .btn-close{
+     	 position: absolute;
+    	 right:50px;
+    	 top:40px;
+    	 width:30px;
+    	 height:30px;
+    	 background:rgba(0,0,0,.8);
+    	 line-height:29px;
+    	 text-align:center;
+    	 color:#fff;
+    	 border-radius:15px;
+    	 cursor:pointer;
+     }
+</style>
+<!--买卖草签合同附件修改 -->
+#if($shiro.hasPermission("SCM:SALES:DEAL_SIGN_CONTRACT_ENCLOSURE_MODIFY"))
+<div id="enclosuremodify"></div>
+#end
+<div class="ibox-content">
+	<div class="cssFlex" style='justify-content:space-between;'>
+		<div>
+			<a id="dynamicLabel" class="btn btn-success btn-sm ml10"></a>
+		</div>
+		<div id="oper_annex_btn" style="display:none">
+			<a ng-if="$ctrl.currentUser && !$ctrl.other"  ng-click="$ctrl.setYibiaoyishu()" id="print" class="btn btn-success btn-sm ml10">
+				<i class="fa fa-save"></i>&nbsp;打印一表一书
+			</a>
+			#if($shiro.hasPermission("SCM:SALES:DEAL_SIGN_CONTRACT_ENCLOSURE_UPLOAD"))
+			<span ng-if="$ctrl.currentUser && !$ctrl.other" id="upload" class="btn btn-success btn-sm ml10">
+			<i class="fa fa-plus"></i>上传附件</span>
+			#end
+		</div>
+	</div>
+	<div class="row row-lg">
+		<div class="col-sm-12">
+			 <div class="example-wrap ptb10">
+				<table id="J_annexdataTable" class="table table-hover  table-striped table-condensed" 
+					data-query-params="queryParams" data-mobile-responsive="true" 
+					data-pagination="true" data-icon-size="outline"
+					data-striped="true" data-search="false">
+					 <thead>
+						<tr>
+							<th ng-if="$ctrl.dealt"><input name="btSelectAll" type="checkbox"></th>
+							<th data-field="">附件类型</th>
+							<th data-field="">上传日期</th>
+							<th data-field="">上传人</th>
+							<th data-field="">状态</th>
+							<th data-field="">备注</th>
+							<th data-field="">操作</th>
+						</tr>
+					</thead>
+				</table>
+			</div> 
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12 text-cen">
+			<div class="form-group"  ng-if="!$ctrl.other">
+				#if($shiro.hasPermission("SCM:SALES:DEAL_SIGN_CONTRACT_ENCLOSURE_EXAMINE"))
+				<button ng-if="$ctrl.currentUser" id="J_audit" type="button" class="btn btn-success btn_size" ng-click="$ctrl.audit()" style="dispaly:none">提交审核</button>
+				<button class="btn btn-success btn_size" type="button"
+                           ng-repeat="item in $ctrl.workFlowTypeButtons"
+                           ng-click="$ctrl.workFlowAction(item)">
+                       {{ item.labelName }}
+                </button>
+                #end
+			</div>
+		</div>
+	</div>	
+</div>
+
+<!-- 上传附件 -->
+<div id="adjunct_layer" class="ibox-content" style="display: none;height:100%">
+	<form class="form-horizontal" id="adjunct_form">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span class="text-danger">*</span>附件类型：</label>
+					<div class="col-sm-7">
+						<select id="J_AdjunctType" name="enclosureType" class="J_chosen form-control" data-placeholder="请选择">
+							<!-- <option value="">请选择</option> -->
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-2 control-label">备注：</label>
+					<div class="col-sm-9">
+						<textarea maxlength="100" placeholder="请输入备注信息" class="form-control" id="J_memo" name="memo" style="height: 80px;" oninput="strLenCalc();"></textarea>
+						<div class="text-right help-block" id="checklen" style="color:#1d3872;">还可以输入 ：<strong>100</strong> 字</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group center-block" id="upLoadLile">
+					<label class="col-sm-2 control-label"><span class="text-danger">*</span>附件：</label>
+					<div class="col-sm-9">					
+						<div id="selectFile" type="button" class="btn btn-primary btn-file">
+							<i class="glyphicon glyphicon-folder-open"></i>&nbsp;&nbsp;选择文件
+						</div>
+						<span style="font-size: 12px;display: inline-block; position:relative; left:10px; top:6px;" id="fileNum">
+                                未选择任何文件
+                            </span>
+						<div id="fileHidden" style="position:absolute;visibility:hidden;">
+							<input type="file"  id="upFile" multiple="" />
+						</div>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		<div class="row" style="padding: 8px;">
+			<div class="form-group">
+				<h5 class="page-header text-success">已选择的附件</h5>
+			</div>
+			<div class="row upFileName" id="upFileName"></div>
+		</div>
+	</form>
+</div>
+<!-- 查看附件 -->
+<div id="examine_layer" class="ibox-content" style="display: none;height:100%">
+	<form class="form-horizontal" id="examine_form">
+	<div class="row">
+			<div class="form-group">
+				<span class="control-label" id="type"></span>
+			</div>
+			<div class="row upFileName" id="upFileName_examine"></div>
+		</div>
+	</form>
+</div>
+<!-- 驳回原因 -->
+<div id="reasons_rejection_layer" class="ibox-content" style="display: none;height:100%">
+	<form class="form-horizontal" id="reasons_rejection_form">
+		<!-- <div class="row">
+			<div class="col-md-12">
+				<dl class="dl-horizontal">
+					<dt>操作人：</dt>
+					<dd id="opername"></dd>
+				</dl>
+			</div>
+			<div class="col-md-12">
+				<dl class="dl-horizontal">
+					<dt>操作时间：</dt>
+					<dd id="operdate"></dd>
+				</dl>
+			</div>
+		</div> -->
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-1 control-label"><span
+						class="text-danger">*</span>驳回原因：</label>
+					<div class="col-sm-3">
+						<select name="reasonsRrejection" id='reasonsRrejection'
+							class="form-control " data-placeholder="请选择">
+							<option value="">请选择</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-1 control-label">备注：</label>
+					<div class="col-sm-6">
+						<textarea rows="3" name="rejectReason" id="memo" cols="100%"
+							class="form-control" maxlength="100"></textarea>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+<!-- 查看驳回原因 -->
+<div class="look_reject_layer ibox-content" style="display: none;height:100%">
+	<form class="form-horizontal">
+	<div class="row">
+		<div class="col-md-12">
+			<dl class="dl-horizontal">
+				<dt>操作人：</dt>
+				<dd id="reject_opername"></dd>
+			</dl>
+		</div>
+		<div class="col-md-12">
+			<dl class="dl-horizontal">
+				<dt>操作时间：</dt>
+				<dd id="reject_operdate"></dd>
+			</dl>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<dl class="dl-horizontal">
+				<dt>驳回原因：</dt>
+				<dd id="reject_reasons"></dd>
+				
+			</dl>
+		</div>
+		<div class="col-md-12">
+			<dl class="dl-horizontal">
+				<dt>备注：</dt>
+				<dd id="reject_reason"></dd>
+			</dl>
+		</div>
+	</div>
+	</form>
+</div>

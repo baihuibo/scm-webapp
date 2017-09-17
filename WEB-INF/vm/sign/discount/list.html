@@ -1,0 +1,192 @@
+#set($plugins = ["table","chosen","laydate","ztree","autoSearch"])
+<!-- 查询条件 begin -->
+<div class="ibox">
+	<div class="ibox-title">
+		<h5>佣金折扣管理</h5>
+		<div class="ibox-tools">
+			<a class="collapse-link ui-sortable"><i class="fa fa-chevron-up"></i>
+			</a>
+		</div>
+	</div>
+	<div class="ibox-content">
+		<form class="form-horizontal" role="form" id="J_contract_form">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">单据编号：</label>
+						<div class="col-sm-8">
+							<input id="J_signnumber" name="signnumber" class="form-control" placeholder="请输入单据编号">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">合同编号：</label>
+						<div class="col-sm-8">
+							<input id="J_contractcode" name="contractcode" class="form-control" placeholder="请输入合同编号">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">业主姓名：</label>
+						<div class="col-sm-8">
+							<input id="J_ownername" name="ownername" class="form-control" placeholder="请输入业主姓名">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">客户姓名：</label>
+						<div class="col-sm-8">
+							<input id="J_customername" name="customername" class="form-control" placeholder="请输入客户姓名">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">录入日期：</label>
+						<div class="col-sm-8" layout="row">
+							<div flex><input id="J_startcreatetime" name="startcreatetime" class="form-control" placeholder="请输入开始时间"></div>
+							<div class="split">-</div>
+							<div flex><input id="J_endcreatetime" name="endcreatetime" class="form-control" placeholder="请输入结束时间"></div>
+						</div>                        
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">房源编号：</label>
+						<div class="col-sm-8">
+							<input id="J_housescode" name="housescode" class="form-control" placeholder="请输入房源编号">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">客源编号：</label>
+						<div class="col-sm-8">
+							<input id="J_customercode" name="customercode" class="form-control" placeholder="请输入客源编号">
+						</div>
+					</div>
+				</div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">所属部门：</label>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <input id="J_deptLevel" type="hidden">
+                                <input id="J_deptName" type="text" class="form-control radius-3" autocomplete="off">
+                                <div class="input-group-btn">
+                                    <button id="J_deptSelect" data-toggle="dropdown" class="btn dropdown-toggle btn-dept" type="button"><span class="caret"></span></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">业务类型：</label>
+						<!-- <div class="checkbox checkbox-primary checkbox-inline">
+							<input type="checkbox" id="J_contracttype_lease" name="contracttype" value="1">
+							<label for="J_contracttype_lease">租赁</label>
+						</div>
+						<div class="checkbox checkbox-primary checkbox-inline">
+							<input type="checkbox" id="J_contracttype_buy" name="contracttype" value="2">
+							<label for="J_contracttype_buy">买卖</label>
+						</div> -->
+						<div class="col-sm-8">
+							<select id="J_contracttype" name="contracttype" class="J_chosen form-control" data-placeholder="全部">
+								<option value="">全部</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">总折扣(折)：</label>
+						<div class="col-sm-8" layout="row">
+							<div flex><input id="J_lowerdiscount" name="lowerdiscount" class="form-control"></div>
+							<div class="split">-</div>
+							<div flex><input id="J_higherdiscount" name="higherdiscount" class="form-control"></div>
+						</div>                        
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">审核状态：</label>
+						<div class="col-sm-8">
+							<select id="J_status" name="auditstatus" class="J_chosen form-control" data-placeholder="全部">
+								<option value="">全部</option>
+							</select>
+						</div>
+					</div>
+				</div>
+
+			</div>
+						
+			<div class="row">
+
+			</div>
+			
+			<div class="row">									
+				<div class="col-md-12">
+                       <div class="form-group">
+                           <div class="col-sm-5  col-sm-offset-5">
+                               <button id="J_search" type="button" class="btn btn-success btn_size">查 询</button>
+                               <button id="J_reset" type="button" class="btn btn-white btn_size">重 置</button>
+                           </div>
+                       </div>
+                   </div>
+			</div>
+		</form>
+	</div>
+</div>
+<!-- 查询条件end -->
+<!-- 列表  begin -->
+<div class="ibox float-e-margins">
+	<div class="ibox-title"><h5>佣金折扣列表</h5></div>
+	<div class="ibox-content">
+		<div class="row">
+			<div class="col-sm-12">
+				#if($shiro.hasPermission("SCM:SALES:COMMISSION_INFORMATION_ADD"))
+				<div class="pull-left  m-r-sm">
+					<a class="btn btn-primary btn-sm" id="J_commission_add" target="_blank" href="$link.contextPath/contract/discount/edit">
+						<i class="glyphicon glyphicon-plus"></i>&nbsp;新增</a>
+				</div>
+				#end
+				<div class="pull-left">
+					<a class="btn btn-primary btn-sm" id="J_commission_refresh" target="_blank">
+						<i class="glyphicon glyphicon-repeat"></i>&nbsp;刷新</a>
+				</div>
+			</div>
+			<div class="col-sm-12  m-t">
+				<table id="J_dataTable_commission" class="table table-hover table-striped table-bordered" data-query-params="queryParams" data-mobile-responsive="true" data-pagination="true" data-icon-size="outline" data-striped="true" data-search="false">
+					<thead>
+						<tr>
+							<th>业务类型</th>
+							<th>单据编号</th>
+							<th>合同编号</th>
+							<th>业主姓名<br/>客户姓名</th>
+							<th>总折扣（折）</th>
+							<th>所属部门</th>
+							<th>录入人</th>
+							<th>录入日期</th>
+							<th>审核状态</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 列表  end -->
+
+<script type='text/javascript' src="$link.contextPath/resources/script/sign/discount/list.js"></script>
+<script type="text/javascript" src="$link.contextPath/resources/js/department.js"></script>

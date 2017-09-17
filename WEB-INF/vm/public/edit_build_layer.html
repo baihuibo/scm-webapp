@@ -1,0 +1,146 @@
+<!-- 编辑需求楼盘 begin -->
+<div id="J_editBuildLayer" class="ibox-content" style="display: none">
+	<form id="J_editForm" name="editForm" class="form-horizontal">
+		<div class="form-group">
+			<!-- <label class="col-sm-3 control-label">修改前：</label>
+			<div class="col-sm-8"> -->
+				<label class="col-sm-3 control-label">原需求楼盘：</label>
+				<div id="J_oldBuilds" class="col-sm-7 ptb7">
+					
+				</div>
+			<!-- </div> -->
+		</div>
+		<div class="form-group clear">
+			<!-- <label class="col-sm-3 control-label">修改后：</label>
+			<div class="col-sm-8"> -->
+				<label id="J_newLabel" class="col-sm-3 control-label">需求楼盘：</label>
+				<div id="J_newValue" class="col-sm-8 text-right ptb7">
+					<a id="J_addBuild" class="btn-green btn-bitbucket"><i class="glyphicon glyphicon-plus"></i></a>
+				</div>
+			<!-- </div> -->
+		</div>
+		<div class="form-group clear">
+			<label class="col-sm-3 control-label"></label>
+			<div class="col-sm-8">
+				<div class="bootstrap-table table-list">
+					<div class="fixed-table-container">
+						<table id="J_dataTableBuild" class="table table-hover table-striped" style="border-bottom: none">
+							<thead>
+								<tr>
+									<th data-field="id">楼盘</th>
+									<th data-field="opt">操作</th>
+								</tr>
+							</thead>
+							<tbody>
+								
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+<!-- 编辑需求楼盘 end -->
+
+<!-- 新增需求楼盘 begin -->
+<div id="J_addBuildLayer" class="ibox-content" style="display: none">
+	<form id="J_addForm" name="add_form" class="form-horizontal">
+		<div class="form-group">
+			<label class="col-sm-3 control-label">需求楼盘：</label>
+			<div class="col-sm-8">
+				<div class="input-group">
+					<input id="J_build" type="text" class="form-control" autocomplete="off">
+					<div class="input-group-btn">
+						<button type="button" class="btn btn-white dropdown-toggle" data-toggle="">
+							<span class="glyphicon glyphicon-search search-caret"></span>
+						</button>
+						<ul class="dropdown-menu dropdown-menu-right" role="menu">
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+<!-- 新增需求楼盘 end -->
+<script type='text/javascript' >
+// 初始化原楼盘信息
+function initBuild($this_) {
+	$('#J_dataTableBuild tbody').html('');
+	
+	// 初始化原需求楼盘
+	$('#J_oldBuilds').html($this_.parent().find('dd').text());
+	
+	// 初始化原需求楼盘列表
+	var oldBuildsStr = $this_.attr('data-columns');
+	oldBuildsStr = formatToComma(oldBuildsStr); // 转义字符
+	var oldBuildsArr = oldBuildsStr.split('|');
+	if (oldBuildsArr[0] != '' && oldBuildsArr[1] != '') {
+		oldBuildsArr[0] = oldBuildsArr[0].substring(1, oldBuildsArr[0].length-1);
+		oldBuildsArr[1] = oldBuildsArr[1].substring(1, oldBuildsArr[1].length-1);
+		
+		var oldBuildsIdArr = oldBuildsArr[0].split(',');
+		var oldBuildsNameArr = oldBuildsArr[1].split(',');
+		$.each(oldBuildsIdArr, function(n, value) {
+			if (value != '' || value != null) {
+				var item = '<tr id="' + value + '">' +
+								'<td>'+oldBuildsNameArr[n]+'</td>' +
+								'<td><a id="J_removeBuild" class="btn-bitbucket"><i class="glyphicon glyphicon-remove"></i></a></td>' +
+							'</tr>';
+				$('#J_dataTableBuild tbody').append(item);
+			}
+			
+	    })
+	}
+}
+
+// 删除需求楼盘
+$(document).delegate('#J_removeBuild', 'click', function(event){
+	$(this).closest('tr').remove();
+})
+
+// 新增需求楼盘
+$(document).delegate('#J_addBuild', 'click', function(event){
+	addBuild($('#J_dataTableBuild tbody', $(this).closest('form')));
+})
+
+function addBuild($container){
+    var build = $("#J_build");
+    build.val('').attr('data-id' , '');
+	commonContainer.modal(
+		'添加楼盘',
+		$('#J_addBuildLayer'),
+		function(index, layero) {
+            var buildId = build.attr('data-id');
+            if(!buildId){
+				commonContainer.alert("请选择需求楼盘");
+				return;
+			}
+
+			var tr = $('#' + buildId , $container);
+
+            if (tr.length) {
+                commonContainer.alert("该需求楼盘已经添加过");
+                return;
+            }
+
+			var item = '<tr id="' + buildId + '">' +
+						'<td>'+build.val()+'</td>' +
+						'<td><a id="J_removeBuild" class="btn-bitbucket"><i class="glyphicon glyphicon-remove"></i></a></td>' +
+					'</tr>';
+			$container.append(item);
+
+			layer.close(index);
+		}, 
+		{
+			overflow :false,
+			area : ['400px','260px'],
+			btns : [ '保存'],
+			success:function(){
+				searchBuild(build, true, 'right');
+			}
+		}
+	);
+}
+</script>

@@ -1,0 +1,285 @@
+#set($plugins = ["table"])
+<div class="ibox">
+	<div class="ibox-title">
+		<!--<div class="row" style="font-size:14px;color: #ed5565;">提示：合同已办理过户，不可提交审核。评估费未结清，单据不可审批通过。</div>-->
+		<div class="row pt6">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-12 control-label" id="signnumber"></label>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-12 control-label" id="strauditstatus"></label>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="ibox-content">
+		<div class="tabs-container">
+			<ul class="nav nav-tabs block-tabs-nav">
+				<li><i>|</i></li>
+				#if($shiro.hasPermission("SCM:SALES:RETREAT_INFORMATION_VIEW"))
+				<li class="active"><a data-toggle="tab">退单信息</a></li>
+				<li><i>|</i></li>
+				#end
+				#if($shiro.hasPermission("SCM:SALES:RETREAT_COST_VIEW"))
+				<li id="gofeiYongcl"><a href="javascript:;">费用处理</a></li>
+				<li><i>|</i></li>
+				#end
+				#if($shiro.hasPermission("SCM:SALES:RETREAT_COST_ENCLOSURE_SEE"))
+				<li id="goAttachment"><a href="javascript:;">附件管理</a></li>
+				<li><i>|</i></li>
+				#end
+				#if($shiro.hasPermission("SCM:SALES:RETREAT_COST_AGREEMENT_QUERY"))
+				<li id="goAgreement"><a href="javascript:;">补充协议</a></li>
+				<li><i>|</i></li>
+				#end
+				#if($shiro.hasPermission("SCM:SALES:RETREAT_COST_AGREEMENT_PROCESS_QUERY"))
+				<li id="goShenPlc"><a href="javascript:;">审批流程</a></li>
+				<li><i>|</i></li>
+				#end
+				<!-- #if($shiro.hasPermission("SCM:SALES:RETREAT_COST_DETAILED_VIEW")).....添加权限 -->
+				<li id="performance" ><a href="javascript:;" >业绩信息</a></li>
+				<li><i>|</i></li>
+				<!-- #end -->
+				#if($shiro.hasPermission("SCM:SALES:RETREAT_COST_DETAILED_VIEW"))
+				<li id="goFeiyzhixmx" style="display:none"><a href="javascript:;" >费用执行明细</a></li>
+				#end
+			</ul>
+		</div>
+		#if($shiro.hasPermission("SCM:SALES:RETREAT_INFORMATION_VIEW"))
+		<form id="addContractForm" class="form-horizontal ptb10 normal" role="form">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label"><span style="color:#ff0000">*</span>合同编号：</label>
+						<div class="col-sm-8 control-label text-left" id="addContractNumber"></div>
+						<!--<div class="col-sm-8" id="addContractNum">
+								<div class="input-group">
+									<input type="text" id="addContractNumber" class="form-control" readonly="readonly" style="background-color:#fff;" autocomplete="off">
+									<div class="input-group-btn">
+										<button type="button" class="btn btn-white dropdown-toggle"
+											data-toggle="">
+											<span class="glyphicon glyphicon-search search-caret"></span>
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>-->
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">业务类型：</label>
+						<div class="col-sm-8 control-label text-left" id="addBusinessType"></div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">所属部门：</label>
+						<div class="col-sm-8 control-label text-left" id="addEpartment"></div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">客户姓名：</label>
+						<div class="col-sm-8 control-label text-left" id="addCustomerName"></div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">业主姓名：</label>
+						<div class="col-sm-8 control-label text-left" id="addOwnerName"></div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">佣金总额（元）：</label>
+						<div class="col-sm-8 control-label text-left" id="addBackCommis"></div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">实收佣金（元）：</label>
+						<div class="col-sm-8 control-label text-left" id="addPaidCommission"></div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">房源编号：</label>
+						<div class="col-sm-8 control-label text-left" id="addHousing"></div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">客源编号：</label>
+						<div class="col-sm-8 control-label text-left" id="addTourists"></div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label style="padding:7px 15px 0 0;" class="col-sm-4 control-label"><span style="color:#ff0000">*</span>是否付款：</label>
+						<div class="col-sm-8 control-label text-left" id="proPeichang"></div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label style="padding:7px 15px 0 0;" class="col-sm-4 control-label"><span style="color:#ff0000">*</span>是否收款：</label>
+						<div class="col-sm-8 control-label text-left" id="proShouweiyj"></div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label style="padding:7px 15px 0 0;" class="col-sm-4 control-label"><span style="color:#ff0000">*</span>是否退单：</label>
+						<div class="col-sm-8 control-label text-left" id="proTuidan"></div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4 tuid">
+					<div class="form-group">
+						<label class="col-sm-4 control-label"><span style="color:#ff0000">*</span>退单类型：</label>
+						<div class="col-sm-8 control-label text-left" id="tuiDval"></div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label style="padding:7px 15px 0 0;" class="col-sm-4 control-label"><span style="color:#ff0000">*</span>是否转款：</label>
+						<div class="col-sm-8 control-label text-left" id="proZhuany"></div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label style="padding:7px 15px 0 0;" class="col-sm-4 control-label"><span style="color:#ff0000">*</span>是否退款：</label>
+						<div class="col-sm-8 control-label text-left" id="proTuiyong"></div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4 mon">
+					<div class="form-group">
+						<label class="col-sm-4 control-label"><span style="color:#ff0000">*</span>退佣金额（元）：</label>
+						<div class="col-sm-8 control-label text-left" id="shituiYj"></div>
+					</div>
+				</div>
+				<div class="col-md-4 per">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">退佣比例：</label>
+						<div class="col-sm-8 control-label text-left" id="addCommissionRate"></div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-8">
+					<div class="form-group" id="">
+						<label class="col-sm-2 control-label"><span style="color:#ff0000">*</span>申请说明：</label>
+						<div class="col-sm-10 control-label text-left break-word" id="explainConten">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row ptb10">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>审计信息</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">创建人：</label>
+						<div class="col-sm-8 control-label text-left" id="createByName"></div>
+					</div>	
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">创建时间：</label>
+						<div class="col-sm-8 control-label text-left" id="createTime"></div>
+					</div>	
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">最后修改人：</label>
+						<div class="col-sm-8 control-label text-left" id="updateByName"></div>
+					</div>	
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">最后修改时间：</label>
+						<div class="col-sm-8 control-label text-left" id="updateTime"></div>
+					</div>
+				</div>
+			</div>
+			<div id="jiaoYiInfor" style="display:none;">
+				<div class="row ptb10">
+					<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>交易状态信息<span style="color:#ff0000">（合同已办理过户，不可退单或转款。评估费未结清，单据不可审批通过）</span></div>
+				</div>
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="col-sm-4 control-label">评估费：</label>
+							<div class="col-sm-8 control-label text-left" id="valuationfee"></div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="col-sm-4 control-label">网签：</label>
+							<div class="col-sm-8 control-label text-left" id="netsign"></div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="col-sm-4 control-label">房源检验：</label>
+							<div class="col-sm-8 control-label text-left" id="roomcheck"></div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="col-sm-4 control-label">贷款：</label>
+							<div class="col-sm-8 control-label text-left" id="loan"></div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="col-sm-4 control-label">过户：</label>
+							<div class="col-sm-8 control-label text-left" id="changeName"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row pt6">
+				<div class="col-md-12">
+					<div class="form-group">
+						<div class="col-sm-5  col-sm-offset-5">
+							#if($shiro.hasPermission("SCM:SALES:RETREAT_INFORMATION_MODIFY"))
+	                        <button id="modifyBtn" type="button" class="btn btn-success btn_size" style="display:none;">修改</button>
+	                        #end
+	                        #if($shiro.hasPermission("SCM:SALES:RETREAT_INFORMATION_EXAMINE"))
+	                        <button id="submitBtn" type="button" class="btn btn-success btn_size" style="display:none;">提交</button>
+	                        #end
+	                        #if($shiro.hasPermission("SCM:SALES:RETREAT_INFORMATION_TO_VOID"))
+	                        <button id="cancelBtn" type="button" class="btn btn-success btn_size" style="display:none;">作废</button>
+	                        #end
+	                        #if($shiro.hasPermission("SCM:SALES:RETREAT_INFORMATION_CANCEL"))
+	                        <button id="blankoutBtn" type="button" class="btn btn-success btn_size" style="display:none;">取消作废</button>
+	                        #end
+	                    </div>
+					</div>
+				</div>
+			</div>
+		</form>
+		#end
+	</div>
+</div>
+<script type="text/javascript" src="$basePath/resources/js/plugins/ztree/jquery.ztree.core.js"></script>
+<script type="text/javascript" src="$basePath/resources/js/plugins/ztree/jquery.ztree.excheck.js"></script>
+<script type="text/javascript" src="$link.contextPath/resources/js/department.js"></script>
+<script src="$link.contextPath/resources/script/sign/chargeback/detail.js"></script>

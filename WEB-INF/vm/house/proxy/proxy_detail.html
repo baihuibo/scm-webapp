@@ -1,0 +1,446 @@
+#set($plugins = ["table","chosen"])
+<style>
+.bx-prev{ 
+    width: 50px;
+    height: 50px;
+    text-indent: -999999px;
+    z-index: 999;
+    position: absolute;
+    float: left;
+    left: 10PX;
+    top: 70px;
+}
+.bx-next{ 
+    width: 50px;
+    height: 50px;
+    text-indent: -999999px;
+    z-index: 999;
+    position: absolute;
+    float: right;
+    top: 70px;
+    right: 10px;
+    }
+
+</style>
+<div ng-controller="proxyDetailCtrl as $ctrl" ng-cloak>
+<div class="ibox">
+	<div class="bs-callout bs-callout-warning" ng-if="$ctrl.proxyStatus">
+		<h4>委托信息审核</h4>
+	</div>
+	<div class="bs-callout bs-callout-warning" ng-if="!$ctrl.proxyStatus">
+		<h4>委托信息查看</h4>
+	</div>
+	#if($shiro.hasPermission("SCM:HOUSE:PROXY:DOWNLOAD:PICTURE"))
+		<input type="hidden" value="1" id="temp_picture"></input>
+	#end
+	<div class="ibox-content">		
+		<div class="row ptb10">
+			
+			<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>委托书信息</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt class="J_edit_area">委托书编号：</dt>
+					<dd id="J_detail_areaName">{{$ctrl.detaildata.proxyCode}}</dd>
+				</dl>
+			</div>
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt class="J_edit_area">备案编号：</dt>
+					<dd id="J_$ctrl.detaildata_areaType">{{$ctrl.detaildata.recordCode}}</dd>
+				</dl>
+			</div>
+			<div class="col-sm-4" ng-if="$ctrl.type==2">
+				<dl class="dl-horizontal">
+					<dt class="J_edit_area">意向出售价格：</dt>
+					<dd id="J_detail_busiName">{{$ctrl.detaildata.price}}万元</dd>
+				</dl>
+			</div>
+			<div class="col-sm-4" ng-if="$ctrl.type==1">
+				<dl class="dl-horizontal">
+					<dt class="J_edit_area">意向出租价格：</dt>
+					<dd id="J_detail_busiName">{{$ctrl.detaildata.price}}元/月</dd>
+				</dl>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt class="J_edit_area">户型：</dt>
+					<dd id="J_detail_areaName">{{$ctrl.detaildata.houseType}}</dd>
+				</dl>
+			</div>
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt class="J_edit_area">共有情况：</dt>
+					<dd id="J_detail_areaType">{{$ctrl.detaildata.shareTypeStr}}</dd>
+				</dl>
+			</div>
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt class="J_edit_area">共有人数：</dt>
+					<dd id="J_detail_busiName">{{$ctrl.detaildata.shareNum}}</dd>
+				</dl>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt class="J_edit_area">签委托人：</dt>
+					<dd id="J_detail_areaName"><a ng-click="$ctrl.user($ctrl.detaildata.createBy)">{{$ctrl.detaildata.createByName}}</a></dd>
+				</dl>
+			</div>
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt class="J_edit_area">签委托部门：</dt>
+					<dd id="J_detail_areaType">{{$ctrl.detaildata.proxyDeptName}}</dd>
+				</dl>
+			</div>
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt class="J_edit_area">委托时间：</dt>
+					<dd id="J_detail_busiName">{{$ctrl.detaildata.createTime}}</dd>
+				</dl>
+			</div>
+		</div>
+		<div class="row">
+			<div class="bootstrap-table table-list">
+				<div class="fixed-table-container">
+					<table id="dataTablePeople"
+						class="table table-hover  table-striped"
+						style="border-bottom: none">
+						<thead>
+							<tr>
+								<th class="col-md-2">序号</th>
+								<th class="col-md-2">委托人姓名</th>
+								<th class="col-md-2">是否有代理人</th>
+								<th class="col-md-2">代理人姓名</th>														
+								<th class="col-md-2">附件</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="item in $ctrl.detail.houseProxyMandatorList">
+								<td>{{$index+1}}</td>
+								<td>{{item.mandatorName}}</td>
+								<td>{{item.hasProxyStr}}</td>
+								<td>
+								<div ng-if="item.hasProxy==1">
+								{{item.proxyName}}
+								</div>
+								</td>
+								<td>
+								<div ng-if="item.hasProxy==1">
+									<!-- <a ng-click="$ctrl.addPicter(item ,$index, 1)" ng-if="item.proxyOwnerList.length==0">上传</a> -->
+									<a ng-click="$ctrl.lookPicter(item ,$index, 1)" ng-if="item.proxyOwnerList.length!=0">代理人身份证{{item.proxyOwnerList.length}}</a>
+									<a ng-click="$ctrl.lookPicter(item ,$index, 3)" ng-if="item.proxyOwnerBookList.length!=0">代理人授权委托书{{item.proxyOwnerBookList.length}}</a>
+								</div>
+								</td>
+							</tr>																							
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="pl10 font-bold font-blue info-tit">委托书图片信息共{{$ctrl.detail.proxyBookList.length}}张</div>
+		</div>
+		<div class="panel-body proxy_con">
+			<sign-slider ifuplpad={{$ctrl.ifuplpad}} type="download" type="download" list="$ctrl.detail.proxyBookList" ></sign-slider>
+		</div>
+		<div class="row ptb10">
+			<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>产权信息</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12">
+				<dl class="dl-horizontal">
+					<dt class="J_edit_area">房屋证载地址：</dt>
+					<dd id="J_detail_areaName">{{$ctrl.detaildata.houseAddress}}</dd>
+				</dl>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt class="J_edit_area">层数：</dt>
+					<dd id="J_detail_areaType">第{{$ctrl.detaildata.floor}}层,共{{$ctrl.detaildata.allFloor}}层</dd>
+				</dl>
+			</div>
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt class="J_edit_area">房屋间数：</dt>
+					<dd id="J_detail_busiName">{{$ctrl.detaildata.roomNum}}</dd>
+				</dl>
+			</div>
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt class="J_edit_area">房屋面积：</dt>
+					<dd id="J_detail_areaName">{{$ctrl.detaildata.houseArea}}平方米</dd>
+				</dl>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="bootstrap-table table-list">
+				<div class="fixed-table-container">
+					<table id="dataTablePeople"
+						class="table table-hover  table-striped"
+						style="border-bottom: none">
+						<thead>
+							<tr>
+								<th class="col-md-2">序号</th>
+								<th class="col-md-2">产权人姓名</th>
+								<th class="col-md-2">房产证件号</th>
+																						
+								<th class="col-md-2">附件</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="item in $ctrl.detail.houseProxyMandatorList">
+								<td>{{$index+1}}</td>
+								<td>{{item.mandatorName}}</td>
+								<td>{{item.certNum}}</td>
+								
+								<td>
+									<!-- <a ng-click="$ctrl.addPicter(item ,$index, 1)" ng-if="item.propertyOwnerList.length==0">上传</a> -->
+									<a ng-click="$ctrl.lookPicter(item ,$index, 2)" ng-if="item.propertyOwnerList.length!=0">查看产权人身份证{{item.propertyOwnerList.length}}</a>
+								</td>
+							</tr>																							
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="pl10 font-bold font-blue info-tit">产权证书图片信息共{{$ctrl.detail.propertyBookList.length}}张</div>
+		</div>
+		<div class="panel-body proxy_con">
+			<sign-slider ifuplpad={{$ctrl.ifuplpad}} type="download" list="$ctrl.detail.propertyBookList"></sign-slider>			
+		</div>
+		<div class="row ptb10">
+			<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>其他信息</div>
+		</div>
+		<div class="row">
+			<div class="pl10 font-bold font-blue info-tit">书面告知书图片信息共{{$ctrl.detail.bookNoticeList.length}}张</div>
+		</div>
+		<div class="panel-body proxy_con">
+			<sign-slider ifuplpad={{$ctrl.ifuplpad}} type="download" list="$ctrl.detail.bookNoticeList"></sign-slider>
+			
+		</div>
+		<div class="row">
+			<div class="pl10 font-bold font-blue info-tit">房屋状况说明书图片信息共{{$ctrl.detail.houseStatusList.length}}张</div>
+		</div>
+		<div class="panel-body proxy_con">
+			<sign-slider ifuplpad={{$ctrl.ifuplpad}} type="download" list="$ctrl.detail.houseStatusList"></sign-slider>
+		</div>
+		<div ng-if="$ctrl.detail.otherList.length!=0">
+			<div class="row">
+				<div class="pl10 font-bold font-blue info-tit">其他资料图片信息共{{$ctrl.detail.otherList.length}}张</div>
+			</div>
+			<div class="panel-body proxy_con">
+				<sign-slider ifuplpad={{$ctrl.ifuplpad}} type="download" list="$ctrl.detail.otherList"></sign-slider>
+			</div>
+		</div>
+		<div ng-if="$ctrl.proxyStatus">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label"><span
+							class="text-danger">*</span>审核结果: </label>
+						<div class="col-sm-7">
+							 <div class="radio radio-primary radio-inline">
+                                  <input type="radio" id="d1" name="auditResult"
+                                         ng-model="$ctrl.auditResult" required ng-value="1">
+                                  <label for="d1">合格</label>
+                              </div>
+                              <div class="radio radio-primary radio-inline">
+                                  <input type="radio" id="d2" name="auditResult" ng-click="$ctrl.auditResultfn()"
+                                         ng-model="$ctrl.auditResult" required ng-value="2">
+                                  <label for="d2">不合格</label>
+                              </div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12 text-cen">
+					<div class="form-group">
+						<button type="button" class="btn btn-success pr5 J_next" ng-click="$ctrl.audit()">提交</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row ptb10">
+			<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>修改记录</div>
+		</div>
+		<div class="row">
+			<div class="bootstrap-table table-list">
+				<div class="fixed-table-container">
+					<table id="dataTablePeople"
+						class="table table-hover  table-striped"
+						style="border-bottom: none">
+						<thead>
+							<tr>
+								<th class="col-md-2">修改类型</th>
+								<th class="col-md-2">修改人</th>
+								<th class="col-md-2">修改项</th>
+								<th class="col-md-2">修改时间</th>	
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="item in $ctrl.detaildata.houseProxyLogList">
+								<td>{{item.logTypeStr}}</td>
+								<td >
+								<person-show person-id="item.updateBy"
+                                                                 person-name="item.updateByName"></person-show>
+								</td>
+								<td>{{item.content}}</td>
+								<td>{{item.updateTime}}</td>
+								
+							</tr>																							
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="row ptb10">
+			<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>审核记录</div>
+		</div>
+		<div class="row">
+			<div class="bootstrap-table table-list">
+				<div class="fixed-table-container">
+					<table id="dataTablePeople"
+						class="table table-hover  table-striped"
+						style="border-bottom: none">
+						<thead>
+							<tr>
+								<th class="col-md-1">审核类型</th>
+								<th class="col-md-2">审核结果</th>
+								<th class="col-md-1">审核人</th>
+								<th class="col-md-2">审核人所在部门</th>														
+								<th class="col-md-2">审核时间</th>
+								<th class="col-md-2">备注</th>
+								<th class="col-md-2">委托状态</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="item in $ctrl.detaildata.houseProxyAuditList">
+								<td>{{item.auditTypeStr}}</td>
+								<td>{{item.auditResultStr}}</td>
+								<td>
+								<person-show person-id="item.auditBy"
+                                                                 person-name="item.auditByName"></person-show>
+								</td>
+								<td>{{item.auditDeptName}}</td>
+								<td>{{item.auditTime}}</td>
+								<td>{{item.memo}}</td>
+								<td>{{item.proxyStatusStr}}</td>
+							</tr>																							
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+	<form class="form-horizontal" role="form" id="J_result" style="display:none">
+	<div class="ibox-content">
+		<div class="row">
+			<div class="bootstrap-table table-list">
+				<div class="fixed-table-container">
+					<table class="table table-hover table-striped table-bordered dataTables-example table-condensed">
+						<thead>
+							<tr>
+								<th class="col-md-2">分类</th>
+								<th class="col-md-6">原因</th>
+								<th class="col-md-4">具体原因</th>
+								
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>模糊不清晰</td>
+								<td style="text-align: left;">
+								<sign-checkbox-group
+                                         ng-model="$ctrl.data.blurring">
+                                     <sign-checkbox ng-repeat="item in $ctrl.blurring"
+                                                    value="item.valueCode">
+                                         {{item.valueName}}
+                                     </sign-checkbox>
+                                 </sign-checkbox-group>
+								</td>
+								<td><div class=" col-sm-offset-1 col-sm-10"><textarea maxlength="500" placeholder="" class="form-control" ng-model="$ctrl.data.blurringRe"></textarea></div></td>								
+							</tr>	
+							<tr>
+								<td>填写信息不完整</td>
+								<td style="text-align: left;">
+								<sign-checkbox-group
+                                         ng-model="$ctrl.data.incomplete">
+                                     <sign-checkbox ng-repeat="item in $ctrl.incomplete"
+                                                    value="item.valueCode">
+                                         {{item.valueName}}
+                                     </sign-checkbox>
+                                 </sign-checkbox-group>
+								</td>
+								<td><div class=" col-sm-offset-1 col-sm-10"><textarea maxlength="500" placeholder="" class="form-control" ng-model="$ctrl.data.incompleteRe"></textarea></div></td>								
+							</tr>
+							<tr>
+								<td>非本房委托证件</td>
+								<td style="text-align: left;">
+								<sign-checkbox-group
+                                         ng-model="$ctrl.data.notsame">
+                                     <sign-checkbox ng-repeat="item in $ctrl.notsame"
+                                                    value="item.valueCode">
+                                         {{item.valueName}}
+                                     </sign-checkbox>
+                                 </sign-checkbox-group>
+								</td>
+								<td><div class=" col-sm-offset-1 col-sm-10"><textarea maxlength="500" placeholder="" class="form-control" ng-model="$ctrl.data.notsameRe"></textarea></div></td>								
+							</tr>
+							<tr>
+								<td>委托录入与上传五证图片信息不一致</td>
+								<td style="text-align: left;">
+								<sign-checkbox-group
+                                         ng-model="$ctrl.data.picnotsame">
+                                     <sign-checkbox ng-repeat="item in $ctrl.picnotsame"
+                                                    value="item.valueCode">
+                                         {{item.valueName}}
+                                     </sign-checkbox>
+                                 </sign-checkbox-group>
+								</td>
+								<td><div class=" col-sm-offset-1 col-sm-10"><textarea maxlength="500" placeholder="" class="form-control" ng-model="$ctrl.data.picnotsameRe"></textarea></div></td>									
+							</tr>
+							<tr>
+								<td>缺证件/缺证件内页</td>
+								<td style="text-align: left;">
+								<sign-checkbox-group
+                                         ng-model="$ctrl.data.lackcertificates">
+                                     <sign-checkbox ng-repeat="item in $ctrl.lackcertificates"
+                                                    value="item.valueCode">
+                                         {{item.valueName}}
+                                     </sign-checkbox>
+                                 </sign-checkbox-group>
+								</td>
+								<td><div class=" col-sm-offset-1 col-sm-10"><textarea maxlength="500" placeholder="" class="form-control" ng-model="$ctrl.data.lackcertificatesRe"></textarea></div></td>									
+							</tr>																						
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		</div>
+	</form>
+
+</div>
+
+<script src="/sales/resources/script/house/inquisition/pic-enlarge/script.js"></script>
+<script src="$link.contextPath/resources/script/sign/sign-common.module.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/slider.component.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/sign-checkbox.component.js"></script>
+<script src="$link.contextPath/resources/js/viewer.js"></script>
+<script src="$link.contextPath/resources/js/jquery.bxslider.js"></script>
+<link rel="stylesheet" type="text/css" href="$link.contextPath/resources/css/viewer.css">
+<!-- <link rel="stylesheet" type="text/css" href="$link.contextPath/resources/css/jquery.bxslider.css"> -->
+<script src="$link.contextPath/resources/script/house/proxy/proxy_detail.module.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/sign-add-person-layer.component.js"></script>

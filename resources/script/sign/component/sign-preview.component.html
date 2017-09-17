@@ -1,0 +1,307 @@
+<div style="overflow: hidden" class="preview">
+    <div class="cover_ath" id="page1">
+        <h3 class="fr">合同编号：<span class="underline_ath w200">{{::$ctrl.data.contractCode}}</span></h3>
+        <h1 class="center_ath">北京市房屋租赁合同<br/><span class="notes_ath">（经纪机构居间成交版）</span></h1>
+        <h3 class="center_ath">出租人：
+            <span class="underline_ath w500">
+                {{$ctrl.data.ownerList | arrayPluck : 'full_name'}}
+            </span>
+        </h3>
+        <h3 class="center_ath">承租人：
+            <span class="underline_ath w500">
+                {{$ctrl.data.customerList | arrayPluck : 'full_name'}}
+            </span>
+        </h3>
+        <h3 class="center_ath">居间人：<span class="underline_ath w500">北京我爱我家房地产经纪有限公司</span></h3>
+    </div>
+
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <div class="main_ath" id="page2">
+        <h3 class="fr">合同编号：<span class="underline_ath w200">{{::$ctrl.data.contractCode}}</span></h3>
+        <h4 class="center_ath">北京市房屋租赁合同<br/><span class="notes_ath">（经纪机构居间成交版）</span></h4>
+        <ul class="both_info">
+            <li class="info_01">出租人（甲方）：
+                <span class="underline_ath w200">
+                    {{$ctrl.data.ownerList | arrayPluck : 'full_name'}}
+                </span>
+                证件类型及编号：
+                <span class="underline_ath w200">
+                    <span ng-repeat="item in $ctrl.data.ownerList">
+                        {{::item.idcard_type_name}} : {{::item.idcard_no}}
+                    </span>
+                </span>
+            </li>
+            <li class="info_01">承租人（乙方）：
+                <span class="underline_ath w200">
+                    {{$ctrl.data.customerList | arrayPluck : 'full_name'}}
+                </span>
+                证件类型及编号：
+                <span class="underline_ath w200">
+                    <span ng-repeat="item in $ctrl.data.customerList">
+                        {{::item.idcard_type_name}} : {{::item.idcard_no}}
+                    </span>
+                </span>
+            </li>
+            <li class="info_01">居间人（丙方）：
+                <span class="underline_ath w200">北京我爱我家房地产经纪有限公司</span>
+                备案证明编号：
+                <span class="underline_ath w200">京经纪（2002）第1339号</span>
+            </li>
+        </ul>
+        <ul class="content">
+            <li>依据《中华人民共和国合同法》及有关法律、法规的规定，甲方与乙方在丙方的居间撮合下，在平等、自愿的基础上，就房屋租赁的有关事宜达成协议如下：</li>
+            <li class="str_ath">第一条 房屋基本情况</li>
+            <li>
+                （一）房屋坐落于北京市
+                <span class="underline_ath plr_ath">{{$ctrl.data.housingDistrictName}}</span>区（县）
+                <span class="underline_ath plr_ath">{{$ctrl.data.housingStreetName}}</span>街道办事处（乡镇）
+                <span class="underline_ath plr_ath">{{$ctrl.data.housingAddr}}</span>，
+                建筑面积<span class="underline_ath plr_ath">{{$ctrl.data.buildArea}}</span>平方米。
+            </li>
+            <li>（二）房屋权属状况：甲方持有（ {{$ctrl.data.houseOwnership}} ），
+                房屋所有权证书编号：<span class="underline_ath plr_ath">{{$ctrl.data.certificateNum}}</span>
+                或房屋来源证明名称：<span class="underline_ath plr_ath">{{$ctrl.data.certificateName}}</span>，
+                房屋所有权人（公有住房承租人、购房人）姓名或名称：<span class="underline_ath plr_ath">{{$ctrl.data.ownerName}}</span>，
+                房屋<span class="str_ath">( {{$ctrl.data.mortgage}} )</span>已设定了抵押。
+            </li>
+            <li class="str_ath">第二条 房屋租赁情况及登记备案</li>
+            <li>（一）租赁用途：<span class="underline_ath plr_ath">{{$ctrl.data.leaseUse}} </span>；如租赁用途为居住的，居住人数为：<span
+                    class="underline_ath plr_ath">{{$ctrl.data.liveCount}}</span>，
+                最多不超过<span class="underline_ath plr_ath">{{$ctrl.data.liveMaxCount}}</span>人。
+            </li>
+            <li>
+                （二）如租赁用途为居住的，甲方应自与乙方订立本合同之日起7日内，到房屋所在地的社区来京人员和出租房屋服务站办理房屋出租登记手续。对多人居住的出租房屋，乙方应将居住人员情况告知甲方，甲方应当建立居住人员登记簿，并按规定报送服务站。本合同变更或者终止的，甲方应自合同变更或者终止之日起<span
+                    class="str_ath">5日内</span>，到房屋所在地的<span class="str_ath">社区来京人员和出租房屋服务站</span>办理登记变更、注销手续。在本合同有效期内，居住人员发生变更的，乙方应当自变更之日起<span
+                    class="str_ath">2日内</span>告知服务站，办理变更登记手续。
+            </li>
+            <li>居住人员中有外地来京人员的，甲方应提供相关证明，督促和协助乙方到当地公安派出所办理暂住证；居住人员中有境外人员的，
+                <span class="underline_ath plr_ath">{{$ctrl.data.accommodationRegistration}}</span>
+                应自订立本合同之时起24小时内到当地公安派出所办理住宿登记手续。
+            </li>
+            <li>租赁用途为非居住的，甲方应自订立房屋租赁合同之日起30日内，到房屋所在地的房屋行政管理部门办理房屋租赁合同备案手续。</li>
+            <li class="str_ath">第三条 租赁期限</li>
+            <li>（一）房屋租赁期自 承租期限 {{$ctrl.data.lesseeStartDate}} 至 {{$ctrl.data.lesseeEndDate}}，
+                共计${lessee_date_between}。甲方应于 {{$ctrl.data.deliveryDate}}
+                前将房屋按约定条件交付给乙方。《房屋交割清单》（见附件一）经甲乙双方交验签字盖章并移交房门钥匙及
+                后视为交付完成。
+            </li>
+            <li>（二）租赁期满或合同解除后，甲方有权收回房屋，乙方应按照原状返还房屋及其附属物品、设备设施。甲乙双方应对房屋和附属物品、设备设施及水电使用等情况进行验收，结清各自应当承担的费用。</li>
+            <li>乙方继续承租的，应提前 <span class="underline_ath plr_ath">{{$ctrl.data.advanceDay}}</span> 日向甲方提出
+                <span class="underline_ath plr_ath">{{$ctrl.data.filedMode}}</span>
+                续租要求,协商一致后双方重新签订房屋租赁合同。
+            </li>
+            <li class="str_ath">第四条 租金及押金</li>
+            <li>（一）租金标准及支付方式： {{$ctrl.data.rentStandard}} 元/ {{$ctrl.data.paymentMode}}，租金总计：{{$ctrl.data.rentTotal}}
+                元整（¥：{{$ctrl.data.rentTotal | signCurrency}}）。
+            </li>
+            <li>
+                支付方式：<span class="underline_ath plr_ath">{{$ctrl.data.rentPaymentMode}} </span>，
+                押 {{$ctrl.data.deposit}} 付 {{$ctrl.data.payment}}，
+                各期租金支付日期:
+                <span ng-repeat="item in $ctrl.data.rentPayDateListList" class="underline_ath plr_ath">
+                    {{::item.payment_date}} 支付 {{::item.payment_amount}}
+                </span>
+                。
+            </li>
+            <li>（二）押金：{{$ctrl.data.depositAmount}} 元整 （¥：{{$ctrl.data.depositAmount | signCurrency}} ）
+                租赁期满或合同解除后，房屋租赁押金除抵扣应由乙方承担的费用、租金，以及乙方应当承担的违约赔偿责任外，剩余部分应如数返还给乙方。
+            </li>
+            <li class="str_ath">第五条 其他相关费用的承担方式</li>
+            <li>租赁期内的下列费用中，
+                由甲方承担：{{$ctrl.data.ownerExpense}}，
+                由乙方承担：{{$ctrl.data.customerExpense}}费用。
+            </li>
+            <li>本合同中未列明的与房屋有关的其他费用均由甲方承担。如乙方垫付了应由甲方支付的费用，甲方应根据乙方出示的相关缴费凭据向乙方返还相应费用。</li>
+            <li class="str_ath">第六条　居间服务</li>
+            <li>（一）丙方应当认真负责地为甲乙双方订立房屋租赁合同提供机会或媒介服务，如实报告有关订立房屋租赁合同的事项，并最终促成房屋租赁合同的签订。</li>
+            <li>（二）本合同签订后
+                （{{$ctrl.data.serviceFeePaymentWay}} <span ng-if="$ctrl.data.serviceFeePaymentWay === '非即时'">{{$ctrl.data.serviceFeePaymentDate}}日内</span>），
+                甲方应向丙方支付月租金的 {{$ctrl.data.ownerPaymentProportion}} %即人民币 {{$ctrl.data.ownerCommissionConvention}}
+                元整（¥：{{$ctrl.data.ownerCommissionConvention | signCurrency}} ）作为佣金，
+                支付方式：{{$ctrl.data.ownerPaymentMode}}；
+                乙方应向丙方支付月租金的
+                {{$ctrl.data.customerPaymentProportion}} %
+                即人民币 {{$ctrl.data.customerCommissionConvention}} 元整
+                （¥：{{$ctrl.data.customerCommissionConvention | signCurrency}} ）作为佣金，
+                支付方式：{{$ctrl.data.customerPaymentMode}}。
+                甲乙双方支付的佣金总合应不超过月租金标准。
+            </li>
+            <li>（三）本合同签订后，如租赁双方解除、中止或变更租赁关系的，租赁双方仍应向丙方支付所约定的佣金。</li>
+            <li class="str_ath">第七条 房屋维护及维修</li>
+            <li>（一）甲方应保证出租房屋的建筑结构和设备设施符合建筑、消防、治安、卫生等方面的安全条件，不得危及人身安全；乙方保证遵守国家、北京市的法律法规规定以及房屋所在小区的物业管理规约。</li>
+            <li>（二）租赁期内，甲乙双方应共同保障该房屋及其附属物品、设备设施处于适用和安全的状态：</li>
+            <li>1、对于该房屋及其附属物品、设备设施因自然属性或合理使用而导致的损耗，乙方应及时通知甲方修复。甲方应在接到乙方通知后的 七
+                日内进行维修。逾期不维修的，乙方可代为维修，费用由甲方承担。因维修房屋影响乙方使用的，应相应减少租金或延长租赁期限。
+            </li>
+            <li>2、因乙方保管不当或不合理使用，致使该房屋及其附属物品、设备设施发生损坏或故障的，乙方应负责维修或承担赔偿责任。</li>
+            <li>
+                3、根据北京市规定，甲方不得出租不带熄火装置的燃气灶具和直排式燃气热水器的房屋，若甲方提供的燃气灶具和热水器不符合政府相关规定的情况下，乙方有权要求甲方三日内更换符合国家规定的热水器和燃气灶。逾期不解决的，乙方可自行更换，费用由甲方承担。
+            </li>
+            <li class="str_ath">第八条 转租</li>
+            <li>除甲乙双方另有约定以外，乙方需事先征得甲方书面同意，方可在租赁期内将房屋部分或全部转租给他人，并就受转租人的行为向甲方承担责任。</li>
+            <li class="str_ath">第九条 合同解除</li>
+            <li>（一）经甲乙双方协商一致，可以解除本合同。</li>
+            <li>（二）因不可抗力导致本合同无法继续履行的，本合同自行解除。</li>
+            <li>（三）甲方有下列情形之一的，乙方有权单方解除合同：</li>
+            <li>1、迟延交付房屋达 <span class="underline_ath"> {{$ctrl.data.delayDelivery}} </span> 日的。</li>
+            <li>2、交付的房屋严重不符合合同约定或影响乙方安全、健康的。</li>
+            <zli>3、不承担约定的维修义务，致使乙方无法正常使用房屋的。</zli>
+            <li>4、<span class="underline_ath">{{$ctrl.data.otherConventions}}</span> 。</li>
+            <li>（四）乙方有下列情形之一的，甲方有权单方解除合同，收回房屋：</li>
+            <li>1、不按照约定支付租金达 <span class="underline_ath">{{$ctrl.data.dueDay}}</span> 日的。</li>
+            <li>2、欠缴各项费用达 <span class="underline_ath">{{$ctrl.data.oweAmount}}</span> 元的。</li>
+            <li>3、擅自改变房屋用途的。</li>
+            <li>4、擅自拆改变动或损坏房屋主体结构的。</li>
+            <li>5、保管不当或不合理使用导致附属物品、设备设施损坏并拒不赔偿的。</li>
+            <li>6、利用房屋从事违法活动、损害公共利益或者妨碍他人正常工作、生活的。</li>
+            <li>7、擅自将房屋转租给第三人的。</li>
+            <li>8、<span class="underline_ath">{{$ctrl.data.otherOtherConventions}}</span> 。</li>
+            <li>（五）其他法定的合同解除情形。</li>
+            <li class="str_ath">第十条 违约责任</li>
+            <li>（一）甲方有第九条第三款约定的情形之一的，应按月租金的 <span class="underline_ath">{{$ctrl.data.breakNineThree}}</span> %向乙方支付违约金；
+                乙方有第九条第四款约定的情形之一的，应按月租金的 <span class="underline_ath">{{$ctrl.data.breakNineFour}}</span>%向甲方支付违约金，甲方并可要求乙方将房屋恢复原状或赔偿相应损失。
+            </li>
+            <li>（二）租赁期内，甲方需提前收回该房屋的，或乙方需提前退租的，应提前 <span class="underline_ath">{{$ctrl.data.breakBackDay}}</span>
+                日通知对方，并按月租金的 <span
+                        class="underline_ath">{{$ctrl.data.breakBackPercent}}</span> %支付违约金，甲方还应退还相应的租金。
+            </li>
+            <li>（三）因甲方未按约定履行维修义务造成乙方人身、财产损失的，甲方应承担赔偿责任。</li>
+            <li>（四）甲方未按约定时间交付该房屋或者乙方不按约定支付租金但未达到解除合同条件的，以及乙方未按约定时间返还房屋的，应按每逾期一日，
+                按日租金的<span class="underline_ath">{{$ctrl.data.breakAmountDiscription}}</span>
+                % 标准支付违约金。
+            </li>
+            <li>（五）丙方提供虚假信息、隐瞒重要事实或有恶意串通行为的，除退还已收取的佣金外，还应赔偿由此给甲方或乙方造成的损失。</li>
+            <li>（六） <span class="underline_ath">{{$ctrl.data.breakOtherDiscription}}</span> 。</li>
+            <li class="str_ath">第十一条 合同争议的解决办法</li>
+            <li>本合同项下发生的争议，由三方当事人协商解决；协商不成的，依法向有管辖权的人民法院起诉，或按照另行达成的仲裁条款或仲裁协议申请仲裁。</li>
+            <li class="str_ath">第十二条 其他约定事项</li>
+            <li></li>
+            <li>本合同经三方签字盖章后生效。
+                本合同（及附件）一式 <span class="underline_ath">{{$ctrl.data.contractAmount}}</span> 份，
+                其中甲方执 <span class="underline_ath">{{$ctrl.data.contractAmountJia}}</span> 份，
+                乙方执 <span class="underline_ath">{{$ctrl.data.contractAmountYi}}</span> 份，
+                丙方执 <span class="underline_ath">{{$ctrl.data.contractAmountBing}}</span> 份，
+                <span class="underline_ath">{{$ctrl.data.contractAmountOtherName}}</span> 执
+                <span class="underline_ath">{{$ctrl.data.contractAmountOtherNum}}</span>
+                份。
+            </li>
+            <li>本合同生效后，各方对合同内容的变更或补充应采取书面形式，作为本合同的附件。附件与本合同具有同等的法律效力。</li>
+        </ul>
+        <ul class="seal_ath">
+            <li>出租人（甲方）签章：</li>
+            <li>委托代理人 ：</li>
+            <li>联系方式：</li>
+            <li>年 月 日</li>
+            <li></li>
+        </ul>
+        <ul class="seal_ath">
+            <li>承租人（乙方）签章：　</li>
+            <li>国籍：</li>
+            <li>委托代理人：</li>
+            <li>联系方式：</li>
+            <li>年 月 日</li>
+        </ul>
+        <ul class="seal_ath">
+            <li>居间人（丙方）签章:</li>
+            <li>北京我爱我家房地产经纪有限公司</li>
+            <li>联系方式：</li>
+            <li>年 月 日</li>
+        </ul>
+        <ul class="seal_ath">
+            <li>经纪执业人员签字：</li>
+            <li></li>
+            <li>资格注册证书编号：</li>
+            <li></li>
+        </ul>
+    </div>
+
+    <br>
+    <br>
+
+    <div class="enclosure_ath" id="page3">
+        <ul>
+            <li>附件一</li>
+            <li class="center_ath str_ath f14_ath">房 屋 交 割 清 单</li>
+            <li class="center_ath str_ath">房屋附属家具、电器、装修及其他设备设施状况及损赔</li>
+            <li>
+                <table class="tableborder" cellpadding="0" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>名称</th>
+                        <th>品牌</th>
+                        <th>单位</th>
+                        <th>数量</th>
+                        <th>单价</th>
+                        <th>损赔额</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="item in $ctrl.data.householdList">
+                        <td>{{item.householdName}}</td>
+                        <td>{{item.householdBrand}}</td>
+                        <td>{{item.householdUnit}}</td>
+                        <td>{{item.householdAmount}}</td>
+                        <td>{{item.householdUnitPrice}}</td>
+                        <td>{{item.householdCompensate}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </li>
+            <li class="center_ath str_ath f14_ath">其他相关费用</li>
+            <li>
+                <table class="tableborder" cellpadding="0" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>项目</th>
+                        <th>单位</th>
+                        <th>单价</th>
+                        <th>起计时间</th>
+                        <th>起计底数</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="item in $ctrl.data.otherlist">
+                        <td>{{item.otherProject}}</td>
+                        <td>{{item.otherUnit}}</td>
+                        <td>{{item.ohterUnitPrice}}</td>
+                        <td>{{item.otherBeginTime}}</td>
+                        <td>{{item.otherBeginBase}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </li>
+            <li>
+                <table class="tableborder" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td rowspan="3" style="width:26px">交房确认</td>
+                        <td colspan="2">对上述情况，乙方经验收，认为符合房屋交验条件，并且双方已对水、电、燃气等费用结算完结，同意接收。</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">交房日期： 年 月 日</td>
+                    </tr>
+                    <tr>
+                        <td>甲方（出租人）签章:</td>
+                        <td>乙方（承租人）签章：</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="3">退房确认</td>
+                        <td colspan="2">甲乙双方已对房屋和附属物品、设备设施及水电使用等情况进行了验收，并办理了退房手续。有关费用的承担和房屋及其附属物品、设备设施的返还 □无纠纷 /
+                            □附以下说明：
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">退房日期： 年 月 日</td>
+                    </tr>
+                    <tr>
+                        <td>甲方（出租人）签章:</td>
+                        <td>乙方（承租人）签章：</td>
+                    </tr>
+                </table>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,213 @@
+<!-- 收款批次列表 -->
+#set($plugins = ["table","chosen","laydate","ztree","autoSearch"])
+<!-- 查询条件begin -->
+<div class='ibox'>
+	<div class="ibox-title">
+		<h5>收款批次查询</h5>
+		<div class="ibox-tools">
+			<a class="collapse-link ui-sortable"> <i class="fa fa-chevron-up"></i>
+			</a>
+		</div>
+	</div>
+	<div class="ibox-content">
+		<form class="form-horizontal" role="form" id="J_collectform">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">批次编码：</label>
+						<div class="col-sm-8">	
+							<input type="text" class="form-control" name="batchId" id="J_batchId">					
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">录入人：</label>
+						<div class="col-sm-8">
+							<div class="input-group">
+								<input type="text" class="form-control" id="J_createBy" name="createBy" autocomplete="off">
+								<div class="input-group-btn">
+									<button type="button" class="btn btn-white dropdown-toggle"
+										data-toggle="">
+										<span class="glyphicon glyphicon-search search-caret"></span>
+									</button>
+									<ul class="dropdown-menu dropdown-menu-right" role="menu"
+										style="padding-top: 0px; max-height: 375px; max-width: 800px; overflow: auto; width: auto; transition: 0.3s; left: -110px; right: auto; min-width: 145px;">
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">收款来源：</label>
+						<div class="col-sm-8">	
+							<select id="J_collectionSource" name="collectionSource" class="J_chosen form-control" data-placeholder="请选择">
+								<option value="">请选择</option>
+							</select>			
+						</div>
+					</div>
+				</div>
+				</div>
+				<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">合同编号：</label>
+						<div class="col-sm-8">	
+							<input type="text" class="form-control" name="contractNumber" id="J_contractNumber">					
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">查账编号：</label>
+						<div class="col-sm-8">	
+							<input type="text" class="form-control" name="auditNo" id="J_auditNo">					
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">支付方式：</label>
+						<div class="col-sm-8">	
+							<select id="J_paymentType" name="paymentType" class="J_chosen form-control" data-placeholder="请选择">
+								<option value="">请选择</option>
+							</select>			
+						</div>
+					</div>
+				</div>
+				</div>
+				<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">所属部门：</label>
+						<div class="col-sm-8">
+							<input id="J_deptLevel" name="grouplevel"  type="hidden" class="form-control" value="">
+							<div class="input-group">
+								<input id="J_deptName" name="groupid" type="text" class="form-control radius-3 float-l" autocomplete="off" readonly="readonly" style="background-color:#fff;">
+								<div class="input-group-btn">
+									<button id="J_deptSelect" data-toggle="dropdown" class="btn dropdown-toggle btn-dept float-l" type="button"><span class="caret"></span>
+	                            	</button>
+	                            </div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">客户姓名：</label>
+						<div class="col-sm-8">	
+							<input type="text" class="form-control" name="contractClientName" id="J_contractClientName">					
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">业主姓名：</label>
+						<div class="col-sm-8">	
+							<input type="text" class="form-control" name="contractOwnerName" id="J_contractOwnerName">					
+						</div>
+					</div>
+				</div>
+				</div>
+				<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<div class="col-sm-3">
+							<select id="J_payer" name="" class="J_chosen form-control" data-placeholder="请选择">
+								<option value="1">支票号</option>
+								<option value="2">支付宝账号</option>
+								<option value="3">付款人账号</option>
+							</select>
+						</div>	
+						<div class="col-sm-8">	
+							<input type="text" class="form-control" name="payerAccountNo" id="J_payerAccountNo">					
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">12位参考号：</label>
+						<div class="col-sm-8">	
+							<input type="text" class="form-control" name="transNumber" id="J_transNumber">					
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">结算卡号：</label>
+						<div class="col-sm-8">	
+							<input type="text" class="form-control" name="terminalNumber" id="J_terminalNumber">					
+						</div>
+					</div>
+				</div>
+				</div>
+				<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">金额：</label>
+						<div class="col-sm-8" layout="row">
+							<div flex=""><input id="J_minCollectAmount" name="minCollectAmount" class="form-control"></div>
+							<div class="split">-</div>
+							<div flex=""><input id="J_maxCollectAmount" name="maxCollectAmount" class="form-control"></div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">提交日期：</label>
+						<div class="col-sm-8" layout="row">
+							<div flex=""><input id="J_submitTimeBegin" name="submitTimeBegin" class="form-control"></div>
+							<div class="split">-</div>
+							<div flex=""><input id="J_submitTimeEnd" name="submitTimeEnd" class="form-control"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12 text-cen">
+					<div class="form-group">
+						<button id="J_search" type="button" class="btn btn-success btn_size">查 询</button>
+						<button id="J_reset" type="reset" class="btn btn-white btn_size">重 置</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<!-- 查询条件end -->
+<div class="ibox float-e-margins">
+	<div class="ibox-title"><h5>收款批次列表</h5></div>
+	<div class="ibox-content">
+		<div class="row row-lg">
+			<div class="col-sm-12">
+				<div class="example-wrap ptb10">
+					<table id="J_dataTable" class="table table-hover table-striped table-condensed" 
+						data-query-params="queryParams" data-mobile-responsive="true" 
+						data-pagination="true" data-icon-size="outline"
+						data-striped="true" data-search="false">
+						<thead>
+							<tr>
+								<th data-field="">批次编码</th>
+								<th data-field="">收款金额</th>
+								<th data-field="">录入人</th>
+								<th data-field="">岗位</th>
+								<th data-field="">所属部门</th>
+								<th data-field="">提交日期</th>
+								<th data-field="">需要财务审批</th>
+								<th data-field="">审批状态</th>
+								<th data-field="">最后审批人</th>
+								<th data-field="">最后审批时间</th>
+								<th data-field="">操作</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript" src="$link.contextPath/resources/js/department.js"></script>
+<script src="$link.contextPath/resources/script/finance/todo/batch_list.js"></script>

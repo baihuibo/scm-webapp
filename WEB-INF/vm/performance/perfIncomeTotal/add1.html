@@ -1,0 +1,210 @@
+#set($plugins = ["table","chosen","laydate","autoSearch"])
+<style>
+ #laydate_table{
+display:none !important;
+} 
+</style>
+<div class="ibox">
+	<div class="row">
+		<div class="ibox-title">
+			<h5>新增收益业绩总额调整</h5>
+			<div class="ibox-tools">
+				<a class="collapse-link ui-sortable"> <i
+					class="fa fa-chevron-up"></i>
+				</a>
+			</div>
+		</div>
+		<div class="ibox-content">
+			<div class="row row-lg">
+				<div class="col-sm-12">
+					<div class="example-wrap">
+						<!-- Example Pagination -->
+						<table id="J_dataTable_list"
+							class="table table-hover table-striped table table-bordered tables">
+							<thead>
+								<tr>
+									<th>合同编号(非必填)</th>
+									<th>被调整人</th>
+									<th class="col-sm-1">业务类型</th>
+									<th class="col-sm-2">业绩类型(非必填)</th>
+									<th>调整金额</th>
+									<th>所属店组</th>
+									<th >所属组团</th>
+									<th>所属大区</th>
+									<th>业绩归属月</th>
+									<th class="col-sm-2" >调整原因</th>
+								</tr>
+								<tr>
+									<td>
+										<div class="row">
+											<div class="col-sm-1"></div>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" autocomplete="off" id="contractNo">
+											</div>
+											<div class="col-sm-1"></div>
+										</div>
+									</td>
+									<td>
+										<div class="row">
+											<div class="col-sm-1"></div>
+											<div class="input-group col-sm-10">
+												<input type="text" class="form-control" id="J_user"
+													autocomplete="off">
+												<div class="input-group-btn">
+													<button type="button" class="btn btn-white dropdown-toggle"
+														data-toggle="">
+														<span class="glyphicon glyphicon-search search-caret"></span>
+													</button>
+													<ul class="dropdown-menu dropdown-menu-right" role="menu"
+														style="padding-top: 0px; max-height: 375px; max-width: 800px; overflow: auto; width: auto; transition: 0.3s; left: -110px; right: auto; min-width: 145px;">
+													</ul>
+												</div>
+											</div>
+											<div class="col-sm-1"></div>
+										</div>
+									</td>
+									<td>
+										<div class="row">
+											<div class="col-sm-1"></div>
+											<div class="form-group col-sm-10">
+												<div>
+													<select id="customertype" name="customertype"
+														class="J_chosen form-control" data-placeholder="全部">
+														<option value="">全部</option>
+														<option value="1">普租</option>
+														<option value="2">二手买卖</option>														
+														<option value="3">一手买卖</option>
+													</select>
+												</div>
+											</div>
+											<div class="col-sm-1"></div>
+										</div>
+									</td>
+									<td>
+										<div class="row">
+											<div class="col-sm-1"></div>
+											<div class="form-group col-sm-10">
+												<div>
+													<select id="J_perfType" name="perfType"
+														class="J_chosen form-control" data-placeholder="全部">
+														<option value="">全部</option>
+													</select>
+												</div>
+											</div>
+											<div class="col-sm-1"></div>
+										</div>
+									</td>
+									<td>
+										<div class="row">
+											<div class="col-sm-1"></div>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" autocomplete="off" id='adjustAmount' oninput="check(this)" onChange="allCheck(this)"><!-- onkeyup="this.value=this.value.replace(/\d/g,'') -->
+											</div>
+											<div class="col-sm-1"></div>
+										</div>
+									</td>
+									<td>
+										<div class="row">
+											<div class="col-sm-1"></div>
+											<div class="input-group col-sm-10">
+												<input type="text" class="form-control" id="shopadr"
+													name=shopadr autocomplete="off">
+												<div class="input-group-btn">
+													<button type="button" class="btn btn-white dropdown-toggle"
+														data-toggle="">
+														<span class="glyphicon glyphicon-search search-caret"></span>
+													</button>
+													<ul class="dropdown-menu dropdown-menu-right" role="menu"
+														style="padding-top: 0px; max-height: 375px; max-width: 800px; overflow: auto; width: auto; transition: 0.3s; left: -110px; right: auto; min-width: 145px;">
+													</ul>
+												</div>
+											</div>
+											<div class="col-sm-1"></div>
+										</div>
+									</td>
+									<td>
+										<div class="row">
+											<div class="col-sm-1"></div>
+											<div class="input-group col-sm-10">
+												<input type="text" class="form-control" id="groupadr"
+													name=groupadr autocomplete="off">
+												<div class="input-group-btn">
+													<button type="button" class="btn btn-white dropdown-toggle"
+														data-toggle="">
+														<span class="glyphicon glyphicon-search search-caret"></span>
+													</button>
+													<ul class="dropdown-menu dropdown-menu-right" role="menu"
+														style="padding-top: 0px; max-height: 375px; max-width: 800px; overflow: auto; width: auto; transition: 0.3s; left: -110px; right: auto; min-width: 145px;">
+													</ul>
+												</div>
+											</div>
+											<div class="col-sm-1"></div>
+										</div>
+									</td>
+									<td>
+										<div class="row">
+											<div class="col-sm-1"></div>
+											<div class="input-group col-sm-10">
+												<input type="text" class="form-control " id="areaadr"
+													name=areaadr autocomplete="off">
+												<div class="input-group-btn">
+													<button type="button" class="btn btn-white dropdown-toggle"
+														data-toggle="">
+														<span class="glyphicon glyphicon-search search-caret"></span>
+													</button>
+													<ul class="dropdown-menu dropdown-menu-right" role="menu"
+														style="padding-top: 0px; max-height: 375px; max-width: 800px; overflow: auto; width: auto; transition: 0.3s; left: -110px; right: auto; min-width: 145px;">
+													</ul>
+												</div>
+											</div>
+											<div class="col-sm-1"></div>
+										</div>
+									</td>
+									<td>
+										<div class="row">
+											<div class="col-sm-1"></div>
+											<div class="col-sm-10" flex>
+												<input id="J_begindate" name="beginTime" class="J_chosen form-control" readonly style="background-color: #FFFFFF;">
+											</div>
+											<div class="col-sm-1"></div>
+										</div>
+
+									</td>
+									<td>
+										<div class="row">
+											<div class="col-sm-1"></div>
+											<div class="col-sm-10">
+												<textarea class="form-control"  placeholder="请输入备注信息" id="J_revamp_remark" name="remark" maxlength="120"></textarea>
+											</textarea>
+											</div>
+											<div class="col-sm-1"></div>
+										</div>
+									</td>
+								</tr>
+
+							</thead>
+						</table>
+						<div class="row ">
+							<div class="col-md-5"></div>
+							<div class="col-md-4">
+								<div>
+									<div class="col-sm-8  col-sm-off set-4">
+										<a id="subimit" type="button" class="btn btn-success pr5">提交</a>
+										<a id="cancle" type="button" class="btn btn-success pr5">取消</a>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-2"></div>
+						</div>
+						<!-- End Example Pagination -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script	src="/sales/resources/script/performance/perfIncomeTotal/add1.js"></script>
+
+<script type="text/javascript" src="$link.contextPath/resources/js/department.js"></script>
+	

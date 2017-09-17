@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<data>
+<savepath>
+<img>
+<![CDATA[/5i5j/Common/WebDraw/SaveImageAction.5i5j]]>
+</img>
+<source>
+<![CDATA[/5i5j/Common/WebDraw/SaveNotImageAction.5i5j]]>
+</source>
+</savepath>
+<xmlpath>
+<![CDATA[/5i5j/servlet/OpenDirServlet]]>
+</xmlpath>
+<canshu>
+<name>CompId</name>
+<name>SectionId</name>
+<name>UserId</name>
+<name>HousesId</name>
+<name>FileName</name>
+</canshu>
+</data>

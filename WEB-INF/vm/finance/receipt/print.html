@@ -1,0 +1,120 @@
+<!-- 收据打印 -->
+<link rel="stylesheet" type="text/css" href="/sales/resources/css/receipt_print.css">
+<div class="iboxs">
+	<div class="ibox-contents" id="page1">
+		<div class="row">
+			<span class="mt25" style="text-align: center;font-size: 24px; display: block;">收款收据<br>
+			<span>RECEIPT</span></span>
+		</div>
+		<div class="row mt20">
+			<div class="col-md-6 mt20 fs14 wid fltl">
+				<dl class="dl-horizontals" style="width: auto;">
+					<dt>收款日期：<span>$!vo.receiptDate</span><br>RECEIPT DETE</dt>
+				</dl>
+			</div>
+			<div class="col-md-6 mt20 fs14 wid fltl">                          
+				<dl class="dl-horizontals">
+					<dt>店名：<span>$!vo.branchName</span><br>BRANCH NAME</dt>
+				</dl>
+			</div>
+			<div class="col-md-6 mt20 fs14 wid fltl">
+				<dl class="dl-horizontals">
+					<dt>收据编号：<span>$!vo.receiptCode</span><br>RECEIPT CODE</dt>
+				</dl>
+			</div>
+			<div class="col-md-6 mt20 fs14 wid fltl">
+				<dl class="dl-horizontals">
+					<dt style="text-align:left">收款批次：<span>$!vo.batchNumber</span><br>BATCH NUMBER</dt>
+				</dl>
+			</div>
+		</div>
+		<div class="bor mt20" style="clear: both;">
+			<div class="col-md-12 mt h60 fs14">
+				<dl class="dl-horizontals pt10">
+					<dt>付款单位（个人）：<span>$!vo.payer</span><br>PAYER</dt>
+				</dl>
+			</div>
+			<div class="col-md-12 mt h60  fs14">
+				<dl class="dl-horizontals pt10">
+					<dt>物业地址：<span>$!vo.address</span><br>PROPERTY ADDRESS</dt>
+				</dl>
+			</div>
+			<div class="col-md-12 mt">
+				<div class="col-sm-8 h60 fs14">
+					<dl class="dl-horizontals pt10">
+						<dt>收款金额（大写人民币）：<span>$!vo.capital</span><br>TOTAL IN CAPITAL</dt>
+					</dl>
+				</div>
+				<div class="col-sm-4 bor-l h60  fs14">
+					<dl class="dl-horizontals ptl10">
+						<dt class="lh">￥<span>$!vo.amount</span></dt>
+					</dl>
+				</div>
+			</div>
+			#if($!vo.contractNo)
+			<div class="col-md-12 mt">
+				<div class="col-sm-8 h60  fs14">
+					<dl class="dl-horizontals pt10">
+						<dt>收款项目：<span>$!vo.receipeCapital</span><br>RECEIPE CAPITAL</dt>
+					</dl>
+				</div>
+				<div class="col-sm-4 bor-l h60 fs14">
+					<dl class="dl-horizontals ptl10">
+						<dt>合同编号：<span>$!vo.contractNo</span><br>CONTRACT NO</dt>
+					</dl>
+				</div>
+			</div>
+			#else
+			<div class="col-md-12 mt">
+				<div class="col-sm-8 h60  fs14">
+					<dl class="dl-horizontals pt10">
+						<dt>收款项目：<span>$!vo.receipeCapital</span><br>RECEIPE CAPITAL</dt>
+					</dl>
+				</div>
+				<div class="col-sm-4 bor-l h60 fs14">
+					<dl class="dl-horizontals ptl10">
+						<dt>客户编号：<span>$!vo.clientId</span><br>CLIENT ID</dt>
+					</dl>
+				</div>
+
+			</div>
+			#end
+			<div class="col-md-12 mt bor-none">
+				<div class="col-sm-8 h60 fs14">
+					<dl class="dl-horizontals pt10">
+						<dt>备注：<span></span><br>REMARKS</dt>
+					</dl>
+				</div>
+				<div class="col-sm-4 bor-l h60 fs14">
+					<dl class="dl-horizontals ptl10">
+						<dt>收款单位（盖章有效）:<span>$!vo.payee</span><br>PAYEE</dt>
+					</dl>
+				</div>
+			</div>
+		</div>
+		<div class="row m-t-md">
+			<div class="col-md-12 mt20">
+				<div class="col-sm-6 fs14">
+					<dl class="dl-horizontals">
+						<dt>开票人：<span>$!vo.drawer</span><br>DRAWER</dt>	
+					</dl>
+				</div>	
+				<div class="col-sm-6 fs14">
+					<dl class="dl-horizontals">
+						<dt>收款人：<span>$!vo.issued</span><br>ISSUED BY</dt>
+					</dl>
+				</div>
+			</div>
+			<div class="col-md-12 mt20 fs14" style="overflow: hidden;">
+				<dl class="dl-horizontals">
+					<dt>付款人：<span>$!vo.payer</span><br>PAYER</dt>
+				</dl>
+			</div>
+			<div class="col-md-12 mt20 fs14">
+				<dl class="dl-horizontals">
+					<dt>本收据手写无效或涂写无效 钱款到账后此收据有效：<span></span><br>Hard-Writing Unacceptable</dt>
+				</dl>
+			</div>		
+		</div>
+	</div>
+</div>

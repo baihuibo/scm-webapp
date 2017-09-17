@@ -1,0 +1,86 @@
+#set($plugins = ["table","chosen","laydate","autoSearch","ztree"])
+<div class="ibox">
+		<div class="ibox-title">
+			<h5>批量调整历史记录</h5>
+		</div>
+		<div class="ibox-content">
+			<form id="J_query" class="form-horizontal" role="form">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">上传时间：</label>
+							<div class="col-sm-9" layout="row">
+									<div flex>
+										<input id="J_begindate" name="startDate"
+											class="J_chosen form-control" readonly 
+											style="background-color: #FFFFFF;">
+									</div>
+									 <div class="split">-</div>
+									<div flex>
+										<input id="J_enddate" name="endDate"
+										class="J_chosen form-control" readonly 
+										style="background-color: #FFFFFF;">
+									</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">上传人：</label>
+							<div class="col-sm-8">
+								<div class="input-group">
+									<input type="text" class="form-control" id="J_user" name="createBy"
+										autocomplete="off">
+									<div class="input-group-btn">
+										<button type="button" class="btn btn-white dropdown-toggle"
+											data-toggle="">
+											<span class="glyphicon glyphicon-search search-caret"></span>
+										</button>
+										<ul class="dropdown-menu dropdown-menu-right" role="menu"
+											style="padding-top: 0px; max-height: 375px; max-width: 800px; overflow: auto; width: auto; transition: 0.3s; left: -110px; right: auto; min-width: 145px;">
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row btns">
+					<div class="col-md-12">
+						<div class="form-group">
+							<div class="col-sm-6 col-sm-offset-6">
+								<button id="J_search" type="button"
+									class="btn btn-success btn_size">查 询</button>
+								<button id="J_reset_buy" type="reset" class="btn btn-white btn_size">重 置</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="ibox-content">
+			<div class="row row-lg">
+				<div class="col-sm-12">
+					<div class="example-wrap">					
+					<!-- Example Pagination -->
+						<table id="J_dataTable_list" class="table table-hover table-striped table table-bordered tables">
+							<thead>
+								<tr>
+									<th class="col-sm-1" data-field="index">序号</th>
+									<th class="col-sm-2" data-field="createTime">上传时间</th>
+									<th class="col-sm-2" data-field="createByName">上传人</th>
+									 <th data-field="">操作</th>
+								</tr>							
+							</thead>
+						</table>	
+						
+						<!-- End Example Pagination -->
+					</div>
+				</div>
+			</div>
+		</div>		
+</div>
+
+<script src="$link.contextPath/resources/script/performance/perfIncomeTotal/importDetail.js"></script>
+
+<script type="text/javascript" src="$link.contextPath/resources/js/department.js"></script>

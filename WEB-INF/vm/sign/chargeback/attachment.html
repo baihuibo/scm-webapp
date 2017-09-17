@@ -1,0 +1,129 @@
+#set($plugins = ["table","chosen"])
+<div class="ibox">
+	<div class="ibox-title">
+		<div class="row pt6">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-12 control-label" id="signnumber"></label>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-12 control-label" id="strauditstatus"></label>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="ibox-content">
+		<div class="tabs-container" style="margin-bottom:15px;">
+			<ul class="nav nav-tabs block-tabs-nav">
+				<li><i>|</i></li>	
+				#if($shiro.hasPermission("SCM:SALES:RETREAT_INFORMATION_VIEW"))			
+				<li id="goTuidanInfor"><a data-toggle="tab">退单信息</a></li>
+				<li><i>|</i></li>
+				#end
+				#if($shiro.hasPermission("SCM:SALES:RETREAT_COST_VIEW"))
+				<li id="gofeiYongcl"><a href="javascript:;">费用处理</a></li>
+				<li><i>|</i></li>
+				#end
+				#if($shiro.hasPermission("SCM:SALES:RETREAT_COST_ENCLOSURE_SEE"))
+				<li class="active"><a href="javascript:;">附件管理</a></li>
+				<li><i>|</i></li>
+				#end
+				#if($shiro.hasPermission("SCM:SALES:RETREAT_COST_AGREEMENT_QUERY"))
+				<li id="goAgreement"><a href="javascript:;">补充协议</a></li>
+				<li><i>|</i></li>
+				#end
+				#if($shiro.hasPermission("SCM:SALES:RETREAT_COST_AGREEMENT_PROCESS_QUERY"))
+				<li id="goShenPlc"><a href="javascript:;">审批流程</a></li>
+				<li><i>|</i></li>
+				#end
+				<!-- #if($shiro.hasPermission("SCM:SALES:RETREAT_COST_DETAILED_VIEW")).....添加权限 -->
+				<li id="performance" ><a href="javascript:;" >业绩信息</a></li>
+				<li><i>|</i></li>
+				<!-- #end -->
+				#if($shiro.hasPermission("SCM:SALES:RETREAT_COST_DETAILED_VIEW"))
+				<li id="goFeiyzhixmx" style="display:none"><a href="javascript:;" >费用执行明细</a></li>
+				#end
+			</ul>
+		</div>
+		#if($shiro.hasPermission("SCM:SALES:RETREAT_COST_ENCLOSURE_SEE"))
+		<div class="tab-pane">
+			#if($shiro.hasPermission("SCM:SALES:RETREAT_COST_ENCLOSURE_UPLOAD"))
+			<div style="padding-bottom:15px;text-align: right;">
+				<a href="javascript:;" style="display:none;" class="btn btn-success J_add_device" id="addAttachment">
+					<i class="glyphicon glyphicon-plus" aria-hidden="true"></i>&nbsp;上传附件
+				</a>
+			</div>
+			#end
+			<table id="attachmentList" class="table table-hover table-striped table-bordered">
+				<thead>
+					<tr>
+						<th data-field="">
+							<div class="th-inner">序号</div>
+						</th>
+						<th data-field="">
+							<div class="th-inner">附件类型</div>
+						</th>
+						<th data-field="">
+							<div class="th-inner">最新上传日期</div>
+						</th>
+						<th data-field="">
+							<div class="th-inner">最新上传人</div>
+						</th>
+						<th data-field="">
+							<div class="th-inner">备注</div>
+						</th>
+						<th data-field="">
+							<div class="th-inner">操作</div>
+						</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+		#end
+	</div>
+</div>
+<div class="ibox-content" id="attachmentCon" style="display:none;">	
+	<form id="" class="form-horizontal" role="form">
+		<div class="row">
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><span style="color:#ff0000">*</span>附件类型：</label>
+				<div class="col-sm-8">
+					<select name="" id="attachmentType" class="J_chosen form-control">
+						<option value="">请选择</option>
+					</select>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group">
+				<label style="padding-top:7px;" class="col-sm-2 control-label">备注：</label>
+				<div class="col-sm-8">
+					<textarea class="form-control" maxlength="500" id="remarks"></textarea>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group">
+				<div class="col-sm-2"></div>
+				<div class="col-sm-8" id="">
+					<button id="selectFile" type="button" class="btn btn-success btn_size">选择文件</button>
+				</div>
+				<div id="fileHidden" style="position:absolute;visibility:hidden;">
+					<input type="file" id="upFile" />
+				</div>
+			</div>
+			</div>
+			<div class="row"><span style="color:#ff0000">*</span>已上传的文件：</div>
+			<div class="row" style="height: 250px;margin:10px 0;border: 2px solid #eee;border-radius: 5px;overflow:auto;" id="upFileName"></div>
+		</div>
+	</form>
+</div>
+<div class="ibox-content" id="seeInfor" style="display:none;">
+	<div class="row ptb10">
+		<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i> <span id="fujianType"></span></div>
+	</div>
+	<div class="row" style="max-height:370px;overflow:auto;" id="fujianConten"></div>
+</div>
+<script src="$link.contextPath/resources/script/sign/chargeback/attachment.js"></script>

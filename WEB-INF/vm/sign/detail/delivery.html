@@ -1,0 +1,82 @@
+<div class="ibox float-e-margins">
+	<div class="ibox-title"><h5>房屋交割单</h5></div>
+	<div class="ibox-content">
+		<h4 class="page-header text-success font-size-12">
+			房屋附属家具、电器、装修及其他设备设施状况及损赔
+			#if($shiro.hasPermission("SCM:SALES:LEASE_SIGN_CONTRACT_ DELIVERY_DEVICE_ADD"))
+			<button type="button" class="btn btn-success btn-xs pull-right"
+                    ng-if="!$ctrl.docbizkey && $ctrl.isOwnerUser"
+                    ng-click="$ctrl.addLeadContractDelivery()">
+				<i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+				添加
+			</button>
+			#end
+		</h4>
+
+		<table class="table table-hover table-striped table-bordered">
+			<thead>
+			<tr>
+				<th>名称</th>
+				<th>品牌</th>
+				<th>单位</th>
+				<th>数量</th>
+				<th>单价</th>
+				<th>损赔额</th>
+                <th ng-if="!$ctrl.docbizkey && $ctrl.isOwnerUser">操作</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr ng-repeat="item in $ctrl.deliveryDetail.householdlist">
+				<td>{{item.householdName}}</td>
+				<td>{{item.householdBrand}}</td>
+				<td>{{item.householdUnit}}</td>
+				<td>{{item.householdAmount}}</td>
+				<td>{{item.householdUnitPrice}}</td>
+				<td>{{item.householdCompensate}}</td>
+                <td ng-if="!$ctrl.docbizkey && $ctrl.isOwnerUser">
+					<a href="javascript:" ng-click="$ctrl.modifyLeadContractDelivery(item)">修改</a>
+					<a href="javascript:" class="text-danger" ng-click="$ctrl.removeLeadContractDelivery(item)">删除</a>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+
+		<h4 class="page-header text-success font-size-12">
+			其他相关费用
+			#if($shiro.hasPermission("SCM:SALES:LEASE_SIGN_CONTRACT_ DELIVERY_COST_ADD"))
+			<button type="button" class="btn btn-success btn-xs pull-right"
+                    ng-if="!$ctrl.docbizkey && $ctrl.isOwnerUser"
+                    ng-click="$ctrl.addLeadContractOther()">
+				<i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+				添加
+			</button>
+			#end
+		</h4>
+		<table class="table table-hover table-striped table-bordered">
+			<thead>
+			<tr>
+				<th>项目</th>
+				<th>单位</th>
+				<th>单价</th>
+				<th>起计时间</th>
+				<th>起计底数</th>
+                <th ng-if="!$ctrl.docbizkey && $ctrl.isOwnerUser">操作</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr ng-repeat="item in $ctrl.deliveryDetail.otherlist">
+				<td>{{item.otherProject}}</td>
+				
+				<td>{{item.otherUnit}}</td>
+				<td>{{item.ohterUnitPrice}}</td>
+				<td>{{item.otherBeginTime}}</td>
+				<td>{{item.otherBeginBase}}</td>
+                <td ng-if="!$ctrl.docbizkey && $ctrl.isOwnerUser">
+					<a href="javascript:" ng-click="$ctrl.modifyLeadContractOther(item)">修改</a>
+					<a href="javascript:" class="text-danger" ng-click="$ctrl.removeLeadContractDelivery(item)">删除</a>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

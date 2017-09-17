@@ -1,0 +1,301 @@
+<!-- 空看返回 start -->
+	<div id="J_editsingleback_layer" class="ibox-content" style="margin:0 10px 0 10px; display:none;">
+		<!-- 房源信息 begin -->
+		<table id="J_singleback_dataTable" class="table table-hover table-striped table_noborder_ath">
+  			<thead>
+				<tr>
+					<th data-field="id">房源编号</th>
+					<th data-field="name">楼盘</th>
+					<th data-field="address">详细地址</th>
+					<th data-field="time">反馈时间</th>
+					<th data-field="opt">操作</th>
+				</tr>
+			</thead>
+  		</table>  		
+		<!-- 基本信息 begin -->
+		<div class="mt10">
+		    <form id="J_form_edit" class="form-horizontal">
+		    	<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">状态：</label>
+							<div class="col-sm-8" layout="row">
+								<div flex id="J_singlestrstatus" class="form-control-static"></div>
+								<div flex id="J_singlewatchnum_desc" class="form-control-static"></div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label class="col-sm-3 control-label" style="white-space: nowrap;">空看部门：</label>
+							<div id="J_singledepart" class="form-control-static"></div>
+						</div>
+					</div>
+				</div>
+				<div class="hr-line-dashed"></div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">外出时间：</label>
+							<div id="J_outtime" class="form-control-static"></div>
+							<!-- <input type="text" id="J_singlewatch_outtime" name="singlewatch_outtime" class="form-control"/> -->
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label class="col-sm-3 control-label" style="white-space: nowrap;">预计返回时间：</label>
+							<div id="J_estimatetime" class="form-control-static"></div>
+						</div>
+					</div>
+				</div>
+				<div class="hr-line-dashed"></div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">空看人：</label>
+							<div id="J_singleperson" class="form-control-static"></div>
+						</div>
+					</div>
+				</div>
+				<div class="hr-line-dashed"></div>
+				<div class="row" id="J_feedback_time_add">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">返回时间：</label>
+							<div class="col-sm-6">
+								<input type="text" id="J_singlewatch_backtime" name="singlewatch_backtime" class="form-control"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row" id="J_feedback_time_desc">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">返回时间：</label>
+							<div class="form-control-static" id="J_backtime_text"></div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">耗时：</label>
+							<div class="form-control-static" id="J_costime_text"></div>
+						</div>
+					</div>
+				</div>
+				<!-- <div class="row">
+					<div class="col-md-12 check_line">
+						<div class="form-group" style="text-align:center">
+							<button type="button" class="layui-layer-btn0">确 定</button>
+							<button type="button" class="layui-layer-btn1">取 消</button>
+						</div>
+					</div>
+				</div> -->
+			</form>
+		</div>
+		<!-- 基本信息 end -->		
+	</div>
+<!-- 空看返回 end -->
+
+
+<!-- 查看地址 start -->
+<div id="J_detail_address_layer" class="ibox-content" style="margin:0 10px 0 10px; display:none;">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="form-group">
+				<label class="col-sm-4 control-label">喷涂地址：</label>
+				<div id="J_address_01" class="col-sm-8 pt6">北京市朝阳区广顺北大街15号</div>
+			</div>
+		</div>
+		<div class="col-md-12">
+			<div class="form-group">
+				<label class="col-sm-4 control-label">证载地址：</label>
+				<div id="J_address_02" class="col-sm-8 pt6">万年花城小区1号楼1单元101室</div>
+				
+			</div>
+		</div>
+		<div class="col-md-12">
+			<div class="form-group">
+				<label class="col-sm-4 control-label">其他地址：</label>
+				<div id="J_address_03" class="col-sm-8 pt6">万年花城小区1号楼1单元101室</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 查看地址 end -->
+
+<!-- 强制跟进 start -->
+<div id="J_followup_layer" class="ibox-content" style="margin:0 10px 0 10px; display:none;">
+	<div class="row">
+		<div class="col-md-4">
+			<div class="form-group">
+				<label class="col-sm-5 control-label">房源编号：</label>
+				<div id="J_houseid" class="col-sm-6"><a href="">NMCA00123</a></div>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="form-group">
+				<label class="col-sm-5 control-label">楼盘：</label>
+				<div id="J_house" class="col-sm-6">南新仓商务大厦</div>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="form-group">
+				<label class="col-sm-5 control-label">栋座：</label>
+				<div id="J_building" class="col-sm-6">A栋</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-4">
+			<div class="form-group">
+				<label class="col-sm-5 control-label">户型：</label>
+				<div id="J_layout" class="col-sm-6">3-2-1-2-1</div>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="form-group">
+				<label class="col-sm-5 control-label">建筑面积：</label>
+				<div id="J_buildarea" class="col-sm-6">100.0 ㎡</div>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="form-group">
+				<label class="col-sm-5 control-label">所属人：</label>
+				<div id="J_belongscuotomer" class="col-sm-6"><a href="">张三</a></div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-8">
+			<div class="form-group">
+				<label class="col-sm-6 control-label">关键信息查看为跟进记录：</label>
+				<div id="J_showphone" class="col-sm-4">查看电话</div>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="form-group">
+				<div id="J_followup_time" class="col-sm-8" style="float:left;">2017-01-23 13:15:24</div>
+			</div>
+		</div>
+	</div>
+	<form id="J_form_followup" class="form-horizontal">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">房源评价跟进：</label>
+					<div class="col-sm-6">
+						<select>
+							<option>可租/可售</option>
+							<option>暂不售</option>
+							<option>他租/他售</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">返回时间：</label>
+					<div class="col-sm-6">
+						<textarea id="J_followup_content" name="backtime" class="form-control"></textarea>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+<!-- 强制跟进 end -->
+
+<!-- 反馈结果 新增 start -->
+<div id="J_feedback_add_layer" class="ibox-content" style="display:none;">
+	<form id="J_form_add_feedback" class="form-horizontal">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>是否看房：</label>
+					<div class="col-sm-6" id="J_feedback_status_add">
+						<input type="radio" value="1"/><label for="yesorno01">是</label>
+						<input type="radio" value="0"/><label for="yesorno02">否</label>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row" id="J_special_add">
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-6 control-label"><span class="text-danger">*</span>优点：</label>
+					<div class="col-sm-6">
+						<textarea id="J_advantage_content_add" name="backtime" class="form-control"></textarea>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>缺点：</label>
+					<div class="col-sm-6">
+						<textarea id="J_weakness_content_add" name="backtime" class="form-control"></textarea>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row" id="J_reason_add">
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>未看原因：</label>
+					<div class="col-sm-6">
+						<textarea id="J_reason_area_add" name="reason" class="form-control"></textarea>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+<!-- 反馈结果 新增 end -->
+
+<!-- 反馈结果 查看 start -->
+<div id="J_feedback_desc_layer" class="ibox-content" style="display:none;">
+	<form id="J_form_desc_feedback" class="form-horizontal">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>是否看房：</label>
+					<div id="J_feedback_status_desc" class="col-sm-6">
+						<input type="radio" value="1"/><label for="yesorno01">是</label>
+						<input type="radio" value="0"/><label for="yesorno02">否</label>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row" id="J_special_desc">
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-6 control-label"><span class="text-danger">*</span>优点：</label>
+					<div class="col-sm-6">
+						<textarea id="J_advantage_content_desc" name="backtime" class="form-control" readonly="readonly"></textarea>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>缺点：</label>
+					<div class="col-sm-6">
+						<textarea id="J_weakness_content_desc" name="backtime" class="form-control" readonly="readonly"></textarea>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row" id="J_reason_desc">
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span class="text-danger">*</span>未看原因：</label>
+					<div class="col-sm-6">
+						<textarea id="J_reason_desc_add" name="reason" class="form-control" readonly="readonly"></textarea>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+<!-- 反馈结果 查看 end -->
+<script type='text/javascript' src="$link.contextPath/resources/script/house/singlewatch/feedback.js"></script>

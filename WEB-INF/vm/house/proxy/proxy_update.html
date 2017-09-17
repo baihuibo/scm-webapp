@@ -1,0 +1,526 @@
+#set($plugins = ["table","chosen","laydate","validator"])
+<style>
+.bx-prev{ 
+    width: 50px;
+    height: 50px;
+    text-indent: -999999px;
+    z-index: 999;
+    position: absolute;
+    float: left;
+    left: 10PX;
+    top: 70px;
+}
+.bx-next{ 
+    width: 50px;
+    height: 50px;
+    text-indent: -999999px;
+    z-index: 999;
+    position: absolute;
+    float: right;
+    top: 70px;
+    right: 10px;
+    }
+
+</style>
+<div ng-controller="proxyDetailCtrl as $ctrl" ng-cloak>
+<div class="ibox">
+	<div class="bs-callout bs-callout-warning">
+		<h4>委托信息修改</h4>
+	</div>
+	<div class="ibox-content">	
+	<form id="form1" name="form1" class="form-horizontal" role="form">	
+		<div class="row ptb10">
+			<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>委托书信息</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<dl class="form-group table-bgcolor">
+					<label class="col-sm-4 control-label">委托书编号:</label>
+					<label class="col-sm-4 control-label text-left">{{$ctrl.resdata.proxyCode}}</label>
+				</dl>
+			</div>		
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label">备案编号:</label>
+					<div class="col-sm-7">
+						<input type="text" class="form-control" name="recordCode" id="recordCode"
+								ng-model="$ctrl.resdata.recordCode"  maxlength="50">
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4" ng-if="$ctrl.type==1">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>意向出租价格: </label>
+					<div class="col-sm-6">
+						<input type="text" class="form-control" name="price" id="price"
+								ng-model="$ctrl.resdata.price">
+					</div>
+					<div class="col-sm-2">
+						<label class="control-label">元/月</label>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4" ng-if="$ctrl.type==2">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>意向出售价格: </label>
+					<div class="col-sm-6">
+						<input type="text" class="form-control" name="price" id="price"
+								ng-model="$ctrl.resdata.price">
+					</div>
+					<div class="col-sm-2">
+						<label class="control-label">万元</label>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-8">
+				<div class="form-group">
+					<label class="col-sm-2 control-label"><span
+						class="text-danger">*</span>户型:</label>
+					<div class="col-sm-10">
+						<div class="col-sm-2">
+							<div class="col-xs-8">
+								<house id="bedroom" name="bedroom" ng-model="$ctrl.bedroom">
+									<!-- <option value="">请选择</option> -->
+								</house>
+							</div>
+							<div class="col-xs-4">
+								<label class="control-label">室</label>
+							</div>
+						</div>
+						<div class="col-sm-2">
+							<div class="col-xs-8">
+								<house id="livingroom" name="livingroom" data-placeholder="请选择" ng-model="$ctrl.livingroom">
+									<!-- <option value="">请选择</option> -->
+								</house>
+							</div>
+							<div class="col-xs-4">
+								<label class="control-label">厅</label>
+							</div>
+						</div>
+						<div class="col-sm-2">
+							<div class="col-xs-8">
+								<house id="kitchen" name="kitchen" data-placeholder="请选择" ng-model="$ctrl.kitchen">
+									<!-- <option value="">请选择</option> -->
+								</house>
+							</div>
+							<div class="col-xs-4">
+								<label class="control-label">厨</label>
+							</div>
+						</div>
+						
+						<div class="col-sm-2">
+							<div class="col-xs-8">
+								<house id="toilet" name="toilet" data-placeholder="请选择" ng-model="$ctrl.toilet">
+									<!-- <option value="">请选择</option> -->
+								</house>
+							</div>
+							<div class="col-xs-2">
+								<label class="control-label">卫</label>
+							</div>
+						</div>
+						
+						<div class="col-sm-2">
+							<div class="col-xs-8">
+								<house id="balcony" name="balcony" data-placeholder="请选择" ng-model="$ctrl.balcony">
+									<!-- <option value="">请选择</option> -->
+								</house>
+							</div>
+							<div class="col-xs-2">
+								<label class="control-label">阳</label>
+							</div>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+							class="text-danger">*</span>共有情况:</label>
+					<div class="col-sm-7">
+						<select class="form-control" chosen disabled
+                                      ng-model="$ctrl.resdata.shareType" required ng-change="$ctrl.houseSharefn()"
+                                      ng-options="item.valueCode as item.valueName for item in $ctrl.houseShare" name="houseShare" id="houseShare">
+		                	<option value="">请选择</option>
+		                </select>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+							class="text-danger">*</span>共有人数:</label>
+					<div class="col-sm-7">
+						<input type="text" class="form-control" name="shareNum" id="shareNum"
+								ng-model="$ctrl.resdata.shareNum" readonly>
+						<!-- <input type="text" class="form-control" name="shareNum" id="shareNum"
+						ng-model="$ctrl.res.shareNum" ng-if="$ctrl.res.shareType!=1" ng-change="$ctrl.shareNumfn()"> -->
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<dl class="form-group table-bgcolor">
+					<label class="col-sm-4 control-label">签委托人:</label>
+					<label class="col-sm-4 control-label text-left">{{$ctrl.resdata.createByName}}</label>
+				</dl>
+			</div>	
+			<div class="col-md-4">
+				<dl class="form-group table-bgcolor">
+					<label class="col-sm-4 control-label">签委托部门:</label>
+					<label class="col-sm-4 control-label text-left">{{$ctrl.resdata.proxyDeptName}}</label>
+				</dl>
+			</div>	
+			<div class="col-md-4">
+				<dl class="form-group table-bgcolor">
+					<label class="col-sm-4 control-label">委托时间:</label>
+					<label class="col-sm-4 control-label text-left">{{$ctrl.resdata.createTime}}</label>
+				</dl>
+			</div>
+		</div>
+		<div class="form-group">
+				<div class="input-group file-caption-main">
+                       <div class="input-group-btn">
+                           <div class="btn btn-primary" ng-click="$ctrl.addPeople()" style="margin-right:20px !important"> 
+                               <span class="hidden-xs">添加</span>
+                               
+                           </div>
+                           <div class="btn btn-primary" ng-click="$ctrl.delPeople()">
+                               <span class="hidden-xs">删除</span>
+                               
+                           </div>
+                       </div>
+                   </div>
+                  </div>
+		<div class="row">
+			<div class="bootstrap-table table-list">
+				<div class="fixed-table-container">
+					<table id="dataTablePeople"
+						class="table table-hover  table-striped"
+						style="border-bottom: none">
+						<thead>
+							<tr>
+								<th class="col-md-2">序号</th>
+								<th class="col-md-2">委托人姓名</th>
+								<th class="col-md-2">是否有代理人</th>
+								<th class="col-md-2">代理人姓名</th>														
+								<th class="col-md-2">附件</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="item in $ctrl.res.houseProxyMandatorList">
+								<td>
+								<div class="checkbox checkbox-primary checkbox-inline">
+									<input type="checkbox" id="people{{$index}}" name="people" value={{$index}}>
+									<label for="people{{$index}}">{{$index+1}}</label>
+								</div>
+								</td>
+								<td>
+									<div class="col-sm-10 col-sm-offset-1">
+										<div class="form-group">
+											<input type="text" class=" offset-md-1 form-control"  maxlength="50" name="mandatorName" id="mandatorName" ng-model="item.mandatorName">
+										</div>
+									</div>
+								</td>
+								<td>
+									<div class="col-sm-10 col-sm-offset-1">
+										<div class="form-group">
+											<select id="hasProxy" name="hasProxy" ng-model="item.hasProxy" ng-options="item.valueCode as item.valueName for item in $ctrl.yesOrNo" 
+												class="form-control"  chosen data-placeholder="请选择">
+												<!-- <option value="">请选择</option> -->
+											</select>
+										</div>
+									</div>
+								</td>
+								<td>
+									<div class="col-sm-10 col-sm-offset-1" ng-if="item.hasProxy==1">
+										<div class="form-group">
+										<input type="text" class=" offset-md-1 form-control"  maxlength="50" name="proxyName" id="proxyName" ng-model="item.proxyName">
+										</div>
+									</div>
+								</td>
+								<td>
+								<div ng-if="item.hasProxy==1">
+									<a ng-click="$ctrl.addPicter(item ,$index, 1)" ng-if="item.proxyOwnerList.length==0">上传代理人身份证</a>
+									<a ng-click="$ctrl.addPicter(item ,$index, 3)" ng-if="item.proxyOwnerBookList.length==0">上传代理人授权委托书</a>
+									<a ng-click="$ctrl.editPicter(item ,$index, 1)" ng-if="item.proxyOwnerList.length!=0">修改代理人身份证{{item.proxyOwnerList.length}}</a>
+									<a ng-click="$ctrl.editPicter(item ,$index, 3)" ng-if="item.proxyOwnerBookList.length!=0">修改代理人授权委托书{{item.proxyOwnerBookList.length}}</a>
+								</div>
+								</td>
+							</tr>																							
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="pl10 font-bold font-blue info-tit">委托书图片信息共{{$ctrl.res.proxyBookList.length}}张</div>
+		</div>
+		<div class="row">
+			<div class="form-group">
+				<div class="input-group file-caption-main">
+                       <div class="input-group-btn">
+                           <div class="btn btn-primary btn-file">
+                               <span class="hidden-xs">选择上传图片</span>
+                               <input type="file" accept="image/png, image/jpg, image/gif, image/jpeg, image/bmp" multiple="" id="proxyBookList">
+                           </div>
+                           
+                       </div>
+                   </div>
+                  </div>
+		</div>
+		<div class="panel-body proxy_con">
+			<sign-slider type="del" list="$ctrl.res.proxyBookList" phototype='1'></sign-slider>
+		</div>
+		<div class="row ptb10">
+			<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>产权信息</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-2 control-label"><span
+					class="text-danger">*</span>房屋证载地址:</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" name="houseAddress" id="houseAddress"
+							ng-model="$ctrl.resdata.houseAddress" maxlength="500">
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-2 control-label"><span
+					class="text-danger">*</span>层数:</label>
+					<div class="col-sm-10" layout="row" layout-wrap>
+						<label flex="5" class="control-label">第：</label>
+						<div flex="40">
+						<input type="text" class="form-control" name="floor" id="floor"
+								ng-model="$ctrl.resdata.floor" maxlength="3">
+						</div>
+						<label flex="5" class="control-label">层</label>
+						<label flex="5" class="control-label">共：</label>
+						<div flex="40">
+						<input type="text" class="form-control" name="allFloor" id="allFloor"
+								ng-model="$ctrl.resdata.allFloor" maxlength="3">
+						</div>
+						<label flex="5" class="control-label">层</label>
+					</div>
+				</div>
+			</div>
+		</div>	
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-2 control-label"><span
+					class="text-danger">*</span>房屋间数:</label>
+					<div class="col-sm-10" layout="row" layout-wrap>
+						<div flex="50">
+							<input type="text" class="form-control" name="roomNum" id="roomNum"
+								ng-model="$ctrl.resdata.roomNum">
+						</div>
+						<div  flex="5" class="control-label">间</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-2 control-label"><span
+					class="text-danger">*</span>房屋面积:</label>
+					<div class="col-sm-10" layout="row" layout-wrap>
+						<div flex="50">
+							<input type="text" class="form-control" name="houseArea" id="houseArea"
+								ng-model="$ctrl.resdata.houseArea">
+							
+						</div>
+						<div flex="5" class="control-label">平方米</div>
+					</div>
+				</div>
+			</div>
+		</div>	
+
+		<div class="row">
+			<div class="bootstrap-table table-list">
+				<div class="fixed-table-container">
+					<table id="dataTablePeople"
+						class="table table-hover  table-striped"
+						style="border-bottom: none">
+						<thead>
+							<tr>
+								<th class="col-md-2">序号</th>
+								<th class="col-md-2">产权人姓名</th>
+								<th class="col-md-2">房产证件号</th>
+																						
+								<th class="col-md-2">附件</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="item in $ctrl.res.houseProxyMandatorList">
+								<td>{{$index+1}}</td>
+								<td>
+									<div class="col-sm-10 col-sm-offset-1">
+									<div class="form-group">
+										<input type="text" class=" offset-md-1 form-control"  maxlength="50" name="mandatorName" id="mandatorName" ng-model="item.mandatorName" readonly>
+									</div>
+									</div>
+								</td>
+								<td>
+									<div class="col-sm-10 col-sm-offset-1">
+									<div class="form-group">
+										<input type="text" class=" offset-md-1 form-control" maxlength="50" name="certNum" id="certNum" ng-model="item.certNum">
+									</div>
+									</div>
+								</td>
+								
+								<td>
+									<a ng-click="$ctrl.addPicter(item ,$index, 2)" ng-if="item.propertyOwnerList.length==0">上传产权人身份证</a>
+									<a ng-click="$ctrl.editPicter(item ,$index, 2)" ng-if="item.propertyOwnerList.length!=0">修改产权人身份证{{item.propertyOwnerList.length}}</a>
+								</td>
+							</tr>																							
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="pl10 font-bold font-blue info-tit">产权证书图片信息共{{$ctrl.res.propertyBookList.length}}张</div>
+		</div>
+		<div class="row">
+			<div class="form-group">
+				<div class="input-group file-caption-main">
+                       <div class="input-group-btn">
+                           <div class="btn btn-primary btn-file">
+                               <span class="hidden-xs">选择上传图片</span>
+                               <input type="file" accept="image/jpg, image/jpeg, image/png, image/tif, image/tiff, image/bmp, image/gif" multiple="" id="propertyBookList">
+                           </div>
+                           
+                       </div>
+                   </div>
+                  </div>
+		</div>
+		<div class="panel-body proxy_con">
+			<sign-slider type="del" list="$ctrl.res.propertyBookList" phototype='2'></sign-slider>			
+		</div>
+		<!-- <div class="row ptb10">
+			<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>其他信息</div>
+		</div> -->
+		<div class="row">
+			<div class="pl10 font-bold font-blue info-tit">书面告知书图片信息共{{$ctrl.res.bookNoticeList.length}}张</div>
+		</div>
+		<div class="row">
+			<div class="form-group">
+				<div class="input-group file-caption-main">
+                       <div class="input-group-btn">
+                           <div class="btn btn-primary btn-file">
+                               <span class="hidden-xs">选择上传图片</span>
+                               <input type="file" accept="image/jpg, image/jpeg, image/png, image/tif, image/tiff, image/bmp, image/gif" multiple="" id="bookNoticeList">
+                           </div>
+                           
+                       </div>
+                   </div>
+                  </div>
+		</div>
+		<div class="panel-body proxy_con">
+			<sign-slider type="del" list="$ctrl.res.bookNoticeList" phototype='3'></sign-slider>
+			
+		</div>
+		<div class="row">
+			<div class="pl10 font-bold font-blue info-tit">房屋状况说明书图片信息共{{$ctrl.res.houseStatusList.length}}张</div>
+		</div>
+		<div class="row">
+			<div class="form-group">
+				<div class="input-group file-caption-main">
+                       <div class="input-group-btn">
+                           <div class="btn btn-primary btn-file">
+                               <span class="hidden-xs">选择上传图片</span>
+                               <input type="file" accept="image/jpg, image/jpeg, image/png, image/tif, image/tiff, image/bmp, image/gif" multiple="" id="houseStatusList">
+                           </div>
+                           
+                       </div>
+                   </div>
+                  </div>
+		</div>
+		<div class="panel-body proxy_con">
+			<sign-slider type="del" list="$ctrl.res.houseStatusList" phototype='4'></sign-slider>
+		</div>
+		<div class="row">
+			<div class="pl10 font-bold font-blue info-tit">其他资料图片信息{{$ctrl.res.otherList.length}}张</div>
+		</div>
+		<div class="row">
+			<div class="form-group">
+				<div class="input-group file-caption-main">
+                       <div class="input-group-btn">
+                           <div class="btn btn-primary btn-file">
+                               <span class="hidden-xs">选择上传图片</span>
+                               <input type="file" accept="image/jpg, image/jpeg, image/png, image/tif, image/tiff, image/bmp, image/gif" multiple="" id="otherList">
+                           </div>
+                           
+                       </div>
+                   </div>
+                  </div>
+		</div>
+		<div class="panel-body proxy_con">
+			<sign-slider type="del" list="$ctrl.res.otherList" phototype='8'></sign-slider>
+		</div>
+		<!-- <div class="row">
+			<div class="col-xs-2" ng-repeat="enclosure in $ctrl.res.otherList">
+                <div class="thumbnail" style="height:200px;">
+                    <img ng-src="{{enclosure.path}}" style="height: 150px;margin-bottom:10px;">
+                    
+                    <div class="col-sm-9"> 
+	                    <select id="photoType" name="photoType" chosen class="form-control layout" ng-model="enclosure.type" data-placeholder="请选择">
+							<option value="">请选择</option>
+							<option value="8">其他资料</option>
+							
+						</select>
+					</div>
+					<div class="col-sm-3">
+						<button type="button" style="margin-top:1px;"  class="btn btn-outline btn-success btn-xs mt-3 pd5" ng-click="$ctrl.removeFile($index,$ctrl.res.otherList)">删除</button>
+					</div>
+                </div>
+            </div>
+		</div> -->
+		<div class="row">
+			<div class="col-md-12 text-cen" style="margin-top:40px;">
+				<div class="form-group">
+					<button type="button" class="btn btn-success pr5" ng-click="$ctrl.sure()">确定</button>
+					<button type="button" class="btn btn-success pr5" ng-click="$ctrl.cancle()">取消</button>
+				</div>
+			</div>
+		</div>
+		</form>
+	</div>
+</div>
+</div>
+<!--star委托书录入-->
+	<div class="ibox-content" id="backResults" style="display:none">
+		<form class="form-horizontal">
+			<div class="form-group center-block" style="position:relative;text-align:center; padding:10px 0;"id="upLoadLile">
+				<button id="selectFile" type="button" class="btn btn-success pr5">选择上传图片</button>
+				<div id="fileHidden" style="position:absolute;visibility:hidden;">
+					<input type="file" accept="image/jpg, image/jpeg, image/png, image/tif, image/tiff, image/bmp, image/gif" id="upFile" />
+				</div>
+			</div>
+			<div class="row upFileName" id="enterUpFileName"></div>
+			<div style="padding-top:10px;">
+				<h4>上传图片规格</h4>
+				<p>1、建议上传图片尺寸为3508×2480px</p>
+				<p>2、图片最大不超过5M</p>
+				<p>3、图片格式为jpg、jpeg、png、tif、tiff、bmp、gif</p>
+			</div>
+		</form>
+	</div>
+<!--end委托书录入-->
+<script src="/sales/resources/script/house/inquisition/pic-enlarge/script.js"></script>
+<script src="$link.contextPath/resources/script/sign/sign-common.module.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/slider.component.js"></script>
+<script src="$link.contextPath/resources/js/viewer.js"></script>
+<script src="$link.contextPath/resources/js/jquery.bxslider.js"></script>
+<link rel="stylesheet" type="text/css" href="$link.contextPath/resources/css/viewer.css">
+<!-- <link rel="stylesheet" type="text/css" href="$link.contextPath/resources/css/jquery.bxslider.css"> -->
+<script src="$link.contextPath/resources/script/house/proxy/proxy_update.module.js"></script>

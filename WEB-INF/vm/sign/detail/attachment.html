@@ -1,0 +1,89 @@
+<div class="ibox float-e-margins">
+    <div class="ibox-title">
+        <h5>附件管理</h5>
+    </div>
+    <div class="ibox-content">
+
+        <form novalidate>
+            <h4 class="page-header text-success font-size-12">
+                {{::$ctrl.attachmentTitle}}
+                #if($shiro.hasPermission("SCM:SALES:LEASE_SIGN_CONTRACT_ENCLOSURE_UPLOAD"))
+                <button type="button" class="btn btn-success btn-xs pull-right"
+                        ng-if="!$ctrl.docbizkey && $ctrl.isOwnerUser && !$ctrl.other"
+                        ng-click="$ctrl.openUploadLayer()">
+                    <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+                    上传附件
+                </button>
+                #end
+            </h4>
+            <table class="table table-hover table-striped table-bordered">
+                <thead>
+                <tr>
+                    <th>
+                        <input type="checkbox" ng-model="$ctrl.checkAll"
+                               ng-if="$ctrl.isOwnerUser"
+                               ng-click="$ctrl.selectAllAttachment()">
+                    </th>
+                    <th>附件类型</th>
+                    <th>上传日期</th>
+                    <th>上传人</th>
+                    <th>状态</th>
+                    <th>备注</th>
+                    <th>财务签收意见</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in $ctrl.attachmentList">
+                    <td>
+                        <input type="checkbox" ng-model="item.checked"
+                               ng-if="$ctrl.isOwnerUser && (item.uploadState == 1 || item.uploadState == 4)">
+                    </td>
+                    <td>{{item.enclosureTypeValue}}</td>
+                    <td>{{item.uploadDate}}</td>
+                    <td>{{item.uploadUserName}}</td>
+                    <td>{{item.uploadState | uploadState}}</td>
+                    <td>{{item.memo}}</td>
+                    <td>
+                        <span ng-if="item.uploadState == 4">
+                            <a href="javascript:" ng-click="$ctrl.showRejectReason(item)">查看原因</a>
+                        </span>
+                        <span ng-if="item.uploadState == 3">
+                            {{item.financeSignAdvice}}
+                        </span>
+                    </td>
+                    <td>
+                    	#if($shiro.hasPermission("SCM:SALES:LEASE_SIGN_CONTRACT_ENCLOSURE_MODIFY"))
+                        <a href="javascript:"
+                           ng-if="(item.uploadState == 1 || item.uploadState == 4) && $ctrl.isOwnerUser"
+                           ng-click="$ctrl.modifyAttachment(item)">修改</a>
+                        #end
+                        <a href="javascript:" ng-click="$ctrl.showAttachment(item)">查看</a>
+                        <a href="javascript:"
+                           ng-if="$ctrl.docbizkey && item.uploadState == 2 && item.taskHandleId == $ctrl.currentUserId"
+                           ng-click="$ctrl.signDeliverAttachment(item)">签收</a>
+                        <a href="javascript:" class="text-danger"
+                           ng-if="item.uploadState == 1 && $ctrl.isOwnerUser"
+                           ng-click="$ctrl.signRemoveAttachment(item)">删除</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="text-center" ng-if="!$ctrl.other">
+            	#if($shiro.hasPermission("SCM:SALES:LEASE_SIGN_CONTRACT_ENCLOSURE_EXAMINE"))
+                <button class="btn btn-success" type="button"
+                        ng-click="$ctrl.submitAnAudit()"
+                        ng-if="$ctrl.isOwnerUser">
+                    提交审核
+                </button>
+				#end
+                <button class="btn btn-success btn_size" type="button"
+                        ng-repeat="item in $ctrl.attachmentWorkFlowButtons"
+                        ng-click="$ctrl.attachmentWorkFlowAction(item)">
+                    {{ item.labelName }}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

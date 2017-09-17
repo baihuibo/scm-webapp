@@ -1,0 +1,233 @@
+<!-- 核查详情 -->
+#set($plugins = ["table","chosen","autoSearch","validator"])
+<div class="ibox">
+	<div class="ibox-title">
+		<h5> 限制性房源客源详情信息</h5>
+		<div class="ibox-tools">
+			<a class="collapse-link ui-sortable"> <i class="fa fa-chevron-up"></i></a>
+		</div>
+	</div>
+	<div class="ibox-content">
+		<div class="row mt10">
+			<div class="customer_info_box">
+				<div class="customer_info_content">
+					<div class="row">
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt class="J_edit_area">信息编号：</dt>
+								<dd id="id"></dd>
+							</dl>
+						</div>
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt class="J_edit_area">姓名：</dt>
+								<dd id="customerName"></dd>
+							</dl>
+						</div>
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt class="J_edit_area">客户类型：</dt>
+								<dd id="customerTypeName"></dd>
+							</dl>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-4">
+							<dl id="J_editPhone" class="dl-horizontal">
+								<dt>业务类型：</dt>
+								<dd id="businessTypeName"></dd>
+							</dl>
+						</div>
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt class="J_edit_area">房产证件类型：</dt>
+								<dd id="houseCardTypeName"></dd>
+							</dl>
+						</div>
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt class="J_edit_area">房产证件号：</dt>
+								<dd id="houseCard"></dd>
+							</dl>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-4">
+							<dl id="J_editPhone" class="dl-horizontal">
+								<dt>身份证件类型：</dt>
+								<dd id="idCardTypeName"></dd>
+							</dl>
+						</div>
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt class="J_edit_area">证件号：</dt>
+								<dd id="idCard"></dd>
+							</dl>
+						</div>
+						<div class="col-sm-4">
+							<dl id="J_editPhone" class="dl-horizontal">
+								<dt>电话：</dt>
+								<dd id="customerTelephone"></dd>
+							</dl>
+						</div>
+					</div>					
+					<div class="row">
+						<div class="col-sm-10">
+							<dl class="dl-horizontal">
+								<dt class="J_edit_area">上榜原因：</dt>
+								<dd id="reasonDisplay"></dd>
+							</dl>
+						</div>
+					</div>
+					<div class="row">						
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt class="J_edit_area">物业地址：</dt>
+								<dd id="address"></dd>
+							</dl>
+						</div>
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt class="J_edit_area">合同编号：</dt>
+								<dd id="contractNo"></dd>
+							</dl>
+						</div>
+						<div class="col-sm-4">
+							<dl id="J_editPhone" class="dl-horizontal">
+								<dt>网签编号：</dt>
+								<dd id="netContractRecordNo "></dd>
+							</dl>
+						</div>
+					</div>
+					<div class="row">					
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt class="J_edit_area">成交日期：</dt>
+								<dd id="commitTime"></dd>
+							</dl>
+						</div>
+						<div class="col-sm-4">
+							<dl id="J_editPhone" class="dl-horizontal">
+								<dt>成交部门：</dt>
+								<dd id="commitShopName"></dd>
+							</dl>
+						</div>
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt class="J_edit_area">经纪人：</dt>
+								<dd id="commitUserName"></dd>
+							</dl>
+						</div>
+					</div>
+					<div class="row">						
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt class="J_edit_area">投诉编号：</dt>
+								<dd id="complainNo"></dd>
+							</dl>
+						</div>
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt class="J_edit_area">投诉日期：</dt>
+								<dd id="complainTime"></dd>
+							</dl>
+						</div>
+						<div class="col-sm-4">
+							<dl id="J_editPhone" class="dl-horizontal">
+								<dt>限制性房客源状态：</dt>
+								<dd id="lockName"></dd>
+							</dl>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-4">
+							<dl id="J_editPhone" class="dl-horizontal">
+								<dt>录入人：</dt>
+								<dd id="createUserName"></dd>
+							</dl>
+						</div>
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt class="J_edit_area">录入日期：</dt>
+								<dd id="createTime"></dd>
+							</dl>
+						</div>
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt class="J_edit_area">审批状态：</dt>
+								<dd id="stateName"></dd>
+							</dl>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-4">
+							<dl id="J_editPhone" class="dl-horizontal">
+								<dt>审核部门：</dt>
+								<dd id="lastApprovalDepartmentName"></dd>
+							</dl>
+						</div>
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt class="J_edit_area">审核人：</dt>
+								<dd id="lastApprovalUserName"></dd>
+							</dl>
+						</div>
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt class="J_edit_area">审核日期：</dt>
+								<dd id="lastApprovalTime"></dd>
+							</dl>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt class="J_edit_area">备注：</dt>
+								<dd id="remark" class="remark_all"></dd>
+							</dl>
+						</div>
+					</div>
+					<div class="row sugges">
+						<form class="form-horizontal">
+							<div class="col-md-10">
+								<div class="form-group">
+									<label class="col-sm-1 control-label"><span class="text-danger">*</span>核查意见：</label>
+									<div class="col-sm-8">
+										<textarea id="remarks" class="form-control" placeholder="请输入审批意见" id="J_memo" name="memo" maxlength="500" style="height:80px"></textarea>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-12 text-cen">
+								<div class="form-group">
+									<button id="go" type="button" class="btn btn-success pr5">核查通过</button>
+									<button id="no" type="button" class="btn btn-success pr5">核查不通过</button>
+								</div>
+							</div>
+						</form>
+					</div>
+					
+					<div class="row ptb10">
+						<div class="pl10 font-bold font-blue info-tit">限制性房源客源操作日志</div>
+					</div>
+					<div class="row">
+						<table id="J_dataTable" class="table table-hover  table-striped table-condensed"
+							data-query-params="queryParams" data-mobile-responsive="true"
+							data-pagination="true"
+							data-striped="true" data-search="false">
+							<thead>
+								<tr>
+									<th data-field="operateUserName">操作人</th>
+									<th data-field="jobName">职位</th>
+									<th data-field="departmentName">所在组店</th>
+									<th data-field="operateTime">操作时间</th>
+									<th data-field="operateDesc">操作内容</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="/sales/resources/script/restrictive/checkrestrictive.js"></script>

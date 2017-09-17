@@ -1,0 +1,413 @@
+#set($plugins = ["table","chosen","laydate","autoSearch","ztree","file_upload"])
+<style>
+	  body{
+		overflow-x:scroll;
+		min-width:1600px;
+	}  
+</style>
+<!-- 查询添加begin-->
+<div class="ibox iboxs" style="overflow-x:scroll;min-width:1600px;">
+	<div class="ibox-title">
+		<h5>业务管理日志</h5>
+		<div class="ibox-tools">
+			<a class="collapse-link ui-sortable"> <i class="fa fa-chevron-up"></i></a>
+		</div>
+	</div>
+	<div class="ibox-content">
+		<form class="form-horizontal" id="J_query">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label"><span style="color:red">*</span>业务类型：</label>
+						<div class="col-sm-8">
+							<select id="businsStates" name="businessTypeId"
+								class="J_chosen form-control">
+								<option value="2">买卖</option>
+								<option value="1">租赁</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label"><span style="color:red">*</span>业务环节：</label>
+						<div class="col-sm-8">
+							<select id="customerTypeId" name="customerTypeId"
+								class="J_chosen form-control">
+								<option value="2">房源</option>
+								<option value="1">客源</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label"><span style="color:red">*</span>统计维度：</label>
+						<div class="col-sm-8">
+							<select id="statistical" 
+								class="J_chosen form-control">
+								<option value="2">店组</option>
+								<option value="1">经纪人</option>
+								
+							</select>
+						</div>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="col-sm-3 control-label"><span style="color:red">*</span>所属部门:</label>
+							<div class="col-sm-8">
+								<div class="input-group">
+	                               <input id="J_level_id1" name="level" type="hidden">
+	                               <input id="J_deptName1" type="text" class="form-control radius-3" autocomplete="off">
+	                               <div class="input-group-btn">
+	                                   <button id="J_deptSelect1" data-toggle="dropdown" class="btn dropdown-toggle btn-dept" type="button"><span class="caret"></span></button>
+	                               </div>
+	                           </div>
+	
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="col-sm-3 control-label"><span style="color:red">*</span>统计时间：</label>
+							<div class="col-sm-4">
+								<input id="J_begindate" name="startTime"
+									class="J_chosen form-control" readonly
+									style="background-color: #FFFFFF;">
+							</div>
+							<div style="float: left; padding: 7px 0px;">-</div>
+							<div class="col-sm-4">
+								<input id="J_enddate" name="endTime"
+									class="J_chosen form-control" readonly
+									style="background-color: #FFFFFF;">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4 agent" style="display:none">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">经纪人:</label>
+							<div class="col-sm-8">
+								<div class="input-group">
+									<input type="text"  class="form-control" id="J_user"
+										autocomplete="off" >
+									<div class="input-group-btn">
+										<button type="button" class="btn btn-white dropdown-toggle"
+											data-toggle="">
+											<span class="glyphicon glyphicon-search search-caret"></span>
+										</button>
+										<ul class="dropdown-menu dropdown-menu-left" role="menu"
+											style="padding-top: 0px; max-height: 375px; max-width: 800px; overflow: auto; width: auto; transition: 0.3s; left: -110px; right: auto; min-width: 145px;">
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12 text-cen">
+						<div class="form-group">
+							<button id="J_search" type="button"
+								class="btn btn-success btn_size">查 询</button>
+							#if ($shiro.hasPermission("SCM:BUSINESS:EXPORT")) 
+							<button id="J_export" type="button"
+								class="btn btn-success btn_size">结果导出</button>
+							#end
+						</div>
+					</div>
+				</div>
+		</form>
+	</div>
+</div>
+<!-- 查询条件end -->
+
+<!-- 列表begin -->
+
+<!-- <div class="ibox float-e-margins" style="overflow-x:scroll;margin-top:10px"> -->
+
+<div class="ibox float-e-margins" >
+
+	<div class="ibox-title"><h5>业务管理日志列表</h5></div>
+	<div class="ibox-content ">
+		<div class="row row-lg">
+			<div class="col-sm-12">
+				<div class="example-wrap ptb10">
+				<!-- 房源-经纪人 -->
+				<div class="house_person" style="width:100%;margin-top:10px;overflow-x:scroll;display:none;" >
+				
+				<table style="margin-bottom:-0.5%;" 
+						
+						class="table table-hover  table-striped table-condensed "
+						data-query-params="queryParams" data-mobile-responsive="true"
+						 data-striped="true" data-search="false">
+					<thead>
+						<tr>
+							<th  rowspan="3" class="col-sm-1" style="vertical-align: middle !important;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- 所属部门 --></th>								
+							<th  colspan="22" class="col-sm-15">
+							<span id="begin_house_house2"> </span>-
+							<span id="end_house_house2"></span>统计
+						
+								</th>
+							</tr>
+							<tr>
+								<!-- <th  class="col-sm-1">经纪人</th>	 -->						
+								<th  class="col-sm-1">房源沟通</th>
+								
+								<th  class="col-sm-1">沟通房源套数</th>
+									<th ></th>
+								<th  class="col-sm-1">房源跟进</th>
+									<th ></th>
+								<th  class="col-sm-1">房源新增</th>
+									<th ></th>
+								<th  class="col-sm-1">空看</th>
+								 	<th ></th>
+								<th  class="col-sm-1" >房源收钥匙</th>
+								<th  class="col-sm-1">实勘</th>
+								<th  class="col-sm-2">委托、产权证书信息新增</th>
+							</tr>
+					</thead>	
+				</table>
+				<!-- style="overflow-x:scroll;width:1350px;" -->
+					<table id="house_person" 
+						class="table table-hover  table-striped table-condensed "
+						>
+						<thead>
+							
+							<tr>
+								<th data-field="displayShopName">所属部门	</th>
+								<th data-field="userName" >经纪人</th>
+								<th data-field="ownerCommunicateAllHouseSourceTimes">操作</th>
+								<th data-field="allCommunicateOwnerHouseSourceTimes">所属</th>
+								<th data-field="ownerCommunicateOwnerHouseSourceTimes">操作且所属</th>
+								<th data-field="ownerCommunicateAllHouseSourceCount">操作</th>
+								<th data-field="allCommunicateOwnerHouseSourceCount">所属</th>
+								<th data-field="ownerCommunicateOwnerHouseSourceCount">操作且所属</th>
+								<th data-field="ownerFollowUpHouseAllSourceTimes">操作</th>
+								<th data-field="allFollowUpHouseOwnerSourceTimes">所属</th>
+								<th data-field="ownerFollowUpHouseOwnerSourceTimes">操作且所属</th>
+								<th data-field="ownerCommunicateAllNewHouseSourceTimes">操作</th>
+								<th data-field="allCommunicateOwnerNewHouseSourceTimes">所属</th>
+								<th data-field="ownerCommunicateOwnerNewHouseSourceTimes">操作且所属</th>
+								<th data-field="ownerEmptySeeAllHouseSourceTimes">操作</th>
+								<th data-field="allEmptySeeOwnerHouseSourceTimes">所属</th>
+								<th data-field="ownerEmptySeeOwnerHouseSourceTimes">操作且所属</th>
+								<th data-field="ownerRecieveKeyAllHouseSourceTimes">操作</th>
+								<th data-field="allRecieveKeyOwnerHouseSourceTimes">所属</th>
+								<th data-field="ownerRecieveKeyOwnerHouseSourceTimes">操作且所属</th>
+								<th data-field="ownerInquisitionAllHouseSourceTimes">操作</th>
+								<th data-field="allInquisitionOwnerHouseSourceTimes">所属</th>
+								<th data-field="ownerInquisitionOwnerHouseSourceTimes">操作且所属</th>
+								<th data-field="ownerCredentialAllHouseSourceTimes">操作</th>
+								<th data-field="allCredentialOwnerHouseSourceTimes">所属</th>
+								<th data-field="ownerCredentialOwnerHouseSourceTimes">操作且所属</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+				
+
+				<!-- 房源-店组 -->
+				<div class="house_house" >
+					<table style="margin-bottom:-0.5%;" 
+						class="table table-hover  table-striped table-condensed "
+						data-query-params="queryParams" data-mobile-responsive="true"
+						 data-striped="true" data-search="false">
+					<thead>
+						<tr>
+							<th  rowspan="3" class="col-sm-1" style="vertical-align: middle !important;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- 所属部门 --></th>								
+							<th  colspan="20" class="col-sm-11">
+							<span id="begin_house_house"> </span>-
+							<span id="end_house_house"></span>统计
+						
+								</th>
+							</tr>
+							<tr>
+															
+								<th  class="col-sm-1">房源沟通</th>
+								
+								<th  class="col-sm-1">沟通房源套数</th>
+									<th ></th>
+								<th  class="col-sm-1">房源跟进</th>
+									<th ></th>
+								<th  class="col-sm-1">房源新增</th>
+									<th ></th>
+								<th  class="col-sm-1">空看</th>
+								 	<th ></th>
+								<th  class="col-sm-1" >房源收钥匙</th>
+								<th  class="col-sm-1">实勘</th>
+								<th  class="col-sm-2">委托、产权证书信息新增</th>
+							</tr>
+					</thead>	
+				</table>
+				 <table  id="house_house"
+						class="table table-hover  table-striped table-condensed "
+						data-query-params="queryParams" data-mobile-responsive="true"
+						 data-striped="true" data-search="false"
+						>
+						<thead>
+							
+							<tr>
+								<th data-field="displayShopName">所属部门				
+								</th>
+								<th data-field="ownerCommunicateAllHouseSourceTimes">操作</th>
+								<th data-field="allCommunicateOwnerHouseSourceTimes">所属</th>
+								<th data-field="ownerCommunicateOwnerHouseSourceTimes">操作且所属</th>
+								<th data-field="ownerCommunicateAllHouseSourceCount">操作</th>
+								<th data-field="allCommunicateOwnerHouseSourceCount">所属</th>
+								<th data-field="ownerCommunicateOwnerHouseSourceCount">操作且所属</th>
+								<th data-field="ownerFollowUpHouseAllSourceTimes">操作</th>
+								<th data-field="allFollowUpHouseOwnerSourceTimes">所属</th>
+								<th data-field="ownerFollowUpHouseOwnerSourceTimes">操作且所属</th>
+								<th data-field="ownerCommunicateAllNewHouseSourceTimes">操作</th>
+								<th data-field="allCommunicateOwnerNewHouseSourceTimes">所属</th>
+								<th data-field="ownerCommunicateOwnerNewHouseSourceTimes">操作且所属</th>
+								<th data-field="ownerEmptySeeAllHouseSourceTimes">操作</th>
+								<th data-field="allEmptySeeOwnerHouseSourceTimes">所属</th>
+								<th data-field="ownerEmptySeeOwnerHouseSourceTimes">操作且所属</th>
+								<th data-field="ownerRecieveKeyAllHouseSourceTimes">操作</th>
+								<th data-field="allRecieveKeyOwnerHouseSourceTimes">所属</th>
+								<th data-field="ownerRecieveKeyOwnerHouseSourceTimes">操作且所属</th>
+								<th data-field="ownerInquisitionAllHouseSourceTimes">操作</th>
+								<th data-field="allInquisitionOwnerHouseSourceTimes">所属</th>
+								<th data-field="ownerInquisitionOwnerHouseSourceTimes">操作且所属</th>
+								<th data-field="ownerCredentialAllHouseSourceTimes">操作</th>
+								<th data-field="allCredentialOwnerHouseSourceTimes">所属</th>
+								<th data-field="ownerCredentialOwnerHouseSourceTimes">操作且所属</th>
+							</tr>
+						</thead>
+					</table> 
+				</div>
+
+					<!-- 客源-店组 -->
+					<div class="customer_house" style="display: none" >
+						<table 
+						class="table table-hover  table-striped table-condensed customer_house"
+						data-query-params="queryParams" data-mobile-responsive="true"
+						 data-striped="true" data-search="false"
+						style="margin-bottom:-0.3%;display: ">
+							<thead>
+								<tr>
+									<th  rowspan="3" class="col-sm-1" style="vertical-align: middle !important;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- 所属部门 --></th>								
+									<th  colspan="20" class="col-sm-11">
+									<span id="begin_house_house3"> </span>-
+									<span id="end_house_house3"></span>统计
+									</th>
+							</tr>
+							</thead>
+						</table>
+						<table id="customer_house"
+						class="table table-hover  table-striped table-condensed customer_house"
+						data-query-params="queryParams" data-mobile-responsive="true"
+						 data-striped="true" data-search="false"
+						>
+						<thead>
+							
+							<tr>
+								<th data-field="displayShopName">所属部门</th>
+								<th data-field="ownerCommunicateCustomerTimes">客户沟通</th>
+								<th data-field="ownerCommunicateCustomerCount">客户沟通数</th>
+								<th data-field="ownerFollowUpCustomerCount">客户跟进</th>
+								<th data-field="ownerNewCustomerCount">客户新增</th>
+								<th data-field="ownerOrderSeeCustomerCount">客户预约看房</th>
+								<th data-field="ownerSuccessSeeCustomerHouseCount">客服看房套数</th>
+							</tr> 
+						</thead>
+					</table>
+					</div>
+					<!-- 客源-经纪人 -->
+					<div class="customer_person" style="display: none">
+						<table 
+						class="table table-hover  table-striped table-condensed "
+						data-query-params="queryParams" data-mobile-responsive="true"
+						 data-striped="true" data-search="false"
+						style="margin-bottom:-0.3%;display: ">
+							<thead>
+								<tr>
+									<th  rowspan="3" class="col-sm-1" style="vertical-align: middle !important;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- 所属部门 --></th>								
+									<th  colspan="20" class="col-sm-11">
+									<span id="begin_house_house4"> </span>-
+									<span id="end_house_house4"></span>统计
+									</th>
+								</tr>
+							</thead>
+						</table>
+						<table id="customer_person"
+						class="table table-hover  table-striped table-condensed "
+						data-query-params="queryParams" data-mobile-responsive="true"
+						 data-striped="true" data-search="false">
+						<thead>
+
+							<tr>
+								<th data-field="displayShopName">所属部门</th>
+								<th data-field="userName">经纪人</th>
+								<th data-field="ownerCommunicateCustomerTimes">客户沟通</th>
+								<th data-field="ownerCommunicateCustomerCount">客户沟通数</th>
+								<th data-field="ownerFollowUpCustomerCount">客户跟进</th>
+								<th data-field="ownerNewCustomerCount">客户新增</th>
+								<th data-field="ownerOrderSeeCustomerCount">客户预约看房</th>
+								<th data-field="ownerSuccessSeeCustomerHouseCount">客服看房套数</th>
+							</tr> 
+						</thead>
+					</table>
+					</div>
+					
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- 列表end -->
+<!--房源-店组模态框  -->
+<div class="house_house2" id="layer_house_house" class="ibox-content" style="display: none; background:#fff">
+	<div style="max-height:400px; overflow-y:auto;">
+		<table id="house_house2"
+			class="table table-hover  table-striped table-condensed "
+			data-query-params="queryParams" data-mobile-responsive="true"
+			 data-striped="true" data-search="false">
+			<thead>
+				<tr>
+					<th data-field="houseId">房源编号</th>
+					<th data-field="buildingName">楼盘</th>
+					<th data-field="belongUserName">所属人</th>
+					<th data-field="times">操作次数</th>
+					<th data-field="registerTime">录入日期</th>
+					<th data-field="lastFollowTime">最后跟进日期</th>
+					
+				</tr> 
+			</thead>
+		</table>
+	</div>
+</div>
+<!--房源-经纪人模态框  -->
+
+<!--客源-店组模态框  -->
+<div class="customer2" id="layer_customer" class="ibox-content" style="display: none">
+	<div style="max-height:400px; overflow-y:auto;">
+			<table id="customer2"
+				class="table table-hover  table-striped table-condensed "
+				data-query-params="queryParams" data-mobile-responsive="true"
+				 data-striped="true" data-search="false">
+				<thead>
+					<tr>
+						<th data-field="customerId">客源编号</th>
+						<th data-field="customerFinalAssessmentName">评价</th>
+						<th data-field="clientTypeName">客户类型</th>
+						<th data-field="belongUserName">所属人</th>
+						<th data-field="times">操作次数</th>
+						<th data-field="registerTime">录入日期</th>
+						<th data-field="lastFollowTime">最后跟进日期</th>
+						
+					</tr> 
+				</thead>
+			</table>
+	</div>
+</div>
+<!--客源-经纪人模态框  -->
+<script src="$link.contextPath/resources/script/business/reportlist.js"></script>
+<script type="text/javascript" src="$link.contextPath/resources/js/department.js"></script>
+ <script src="/sales/resources/script/house/public/check_address.js"></script>

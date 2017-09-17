@@ -1,0 +1,44 @@
+<div id="add-protect-mods">
+    <div id="add-protect-layer" class="ibox-content"
+         style="margin:0 10px 0 10px; display:none;"
+         ng-controller="addProtectCtrl as $ctrl">
+        <form class="form-horizontal">
+            <div class="form-group">
+                <div class="col-sm-12">
+                    <p class="form-control-static">
+                        已保护房源数量：{{$ctrl.data.used}}套,
+                        剩余可保护房源数量：{{$ctrl.data.limit}}套
+                    </p>
+                </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">
+                    <span class="text-danger">*</span>
+                    保护原因：
+                </label>
+                <div class="col-sm-9">
+                    <textarea ng-model="$ctrl.reason" rows="5" maxlength="500"
+                              class="form-control"></textarea>
+                    <div class="help-block text-right"
+                         ng-class="{'text-danger' : $ctrl.reason.length >= 500}">已使用({{$ctrl.reason.length}} / 500)
+                    </div>
+                </div>
+            </div>
+
+            <div class="hr-line-dashed"></div>
+
+            <div class="form-group">
+                <div class="col-sm-12">
+                    <p class="form-control-static text-danger">
+                        房源保护后，只有您能看到房源核心信息（业主姓名、联系方式、地址等），其他人将无法看到。
+                        房源保护时效为7天，超过7天系统将自动解除房源保护。
+                    </p>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type='text/javascript' src="$link.contextPath/resources/script/house/protect/add.js"></script>

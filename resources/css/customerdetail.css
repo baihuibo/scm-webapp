@@ -1,0 +1,191 @@
+/*-----------------------------------
+* Filename:		customerdetail.css
+* Description:	only for leasedetail/buydetail css
+* Version:		2017-03-02
+* Auther:		Athena
+-----------------------------------*/
+/* == STRUCTURE:=====================
+$ sign_color_	special color without in bootstrap
+$ autowidth_	autowidth
+$ fixedwidth_	operarea
+-----------------------------------*/
+#autowidth_box{
+	overflow: hidden; *zoom: 1;
+}
+#autowidth_left{
+	margin-right: 115px;
+}
+#fixedwidth_right{
+	float: right; width: 120px
+}
+#autowidth_footer{
+	background-color: #f00;color:#fff; margin-top: 1em;
+}
+.step_box{
+	position:relative;
+	height:65px;
+	margin: 0 5px 0 15px;
+	top:10px;
+}
+hr{border-top:solid 1px #000;margin-top:20px;font-size:0;line-height:0;}
+.step_outer_sign{
+	width: 16px;
+	height: 16px;
+	background-color: #efefef; 
+	border: solid 2px #990099;
+	/*border-radius: 50%;*/
+	border-radius:8px;
+	margin-left:5px;
+	margin-bottom:3px;
+}
+.step_inner_sign{
+	width: 8px; 
+	height: 8px;
+	background-color: #999999;	
+	/*border-radius: 50%;*/
+	border-radius:4px;
+	display:block;
+	margin-top:3px;
+	margin-left:3px;
+}
+.step_inner_sign1{
+	width: 8px; 
+	height: 8px;
+	background-color: #999999;	
+	/*border-radius: 50%;*/
+	border-radius:4px;
+	display:block;
+	margin-top:2px;
+	margin-left:2px;
+}
+.step_inner_active{background-color: #ff6600;}
+.step_inner_visited{background-color: #bfbfbf;}
+.step_01,.step_02,.step_03,.step_04{
+	width:50px;
+}
+.step_inner_sign,.step_inner_sign1,.step_01,.step_02,.step_03,.step_04{position:absolute;}
+.h_sign{margin-left:-3px;margin-top:-24px;}
+.step_01{
+	margin-left:20%;
+	margin-top:-28px;
+}
+.step_02{
+	margin-left:40%;
+	margin-top:-28px;
+}
+.step_03{
+	margin-left:60%;
+	margin-top:-28px;
+}
+.step_04{
+	margin-left:80%;
+	margin-top:-28px;
+}
+.t_sign{
+	margin-left:100%;
+	margin-top:-24px;
+}
+
+
+.customer_sign{
+	height:75px;
+	background-color:#f2f2f2;
+	border:solid 1px #e4e4e4;
+	border-radius: 6px 6px 6px 6px / 6px 6px 6px 6px;
+	padding-left:20px;
+}
+.customer_sign h3{
+	line-height:35px;
+}
+.customer_info_box{
+	/*border-top:solid 1px #e4e4e4;*/
+	float:left;
+	width:100%;
+	/* border:solid 1px #d7d7d7; */
+	border-top:none;
+	border:none;
+}
+.customer_info_box .business-title{
+	background-color:#f2f2f2;
+	border-bottom:solid 1px #e4e4e4;
+}
+.panel-body .business-title{
+	background-color:#f2f2f2;
+	border-bottom:solid 1px #e4e4e4;
+	margin-top: 0 !important;
+	padding: 10px;
+}
+.customer_info_box .h4{
+	
+}
+.customer_info_box .col-md-12{
+	border-top:solid 1px #e4e4e4;
+	height:34px;
+	background-color:#f2f2f2;
+}
+/* .panel-body .col-md-12{
+	border-top:solid 1px #e4e4e4;
+	height:34px;
+	background-color:#f2f2f2;	
+} */
+.customer_info_box .customer_info_content,.panel-body .customer_info_content{
+	float:left;
+	width:99%;
+	/* margin:6px 3px 3px 3px; */
+	padding:0 22px;
+	/*border:solid 1px #d7d7d7;*/
+}
+ul.nav_tab_ath{}
+ul.nav_tab_ath li{}
+.nav_tab_ath li>a{padding:12px 30px auto 30px;padding-left:30px;padding-right:30px;padding-top:13px;line-height:13px;}
+
+/* .panel-body .customer_info_content{margin-top:1px;} */
+.panel-body .mt_spec{margin-top:8px;}
+.tab-content{/*border:solid 1px #d7d7d7; border-top:solid 2px #009dd9; */margin-top:1px;}
+.tabs-container .tab-content>.tab-pane{padding:0;}
+.tabs-container .panel-body,.panel-body{padding:0 0;}
+
+.sign_color_gray{font-size:12px;color:#666666;}
+.sign_color_blue{font-seze:16px;color:#0000ff;font-weight:normal;}
+.dl-horizontal dd.edit_cursor{cursor:pointer;}
+
+/*#right_operbar{border:solid 1px red;position:absolute;top:0;right:0;width:114px;height:200px;}*/
+/*-----------------------------------
+-----------------------------------*/
+.right_operbar{position:fixed;top:30px;right:0;width:118px;height:200px;}
+.right_operbar span,.right_operbar a{display:block;width:114px;height:47px;border:solid 1px #e4e4e4;margin:2px;line-height:46px;text-align:center;background-color:#fff;color:#666666;border-radius: 5px 5px 5px 5px / 5px 5px 5px 5px;}
+.oper_followup{}
+.oper_referral{}
+.oper_blacklist{}
+.oper_show{}
+
+.clear{clear:both;}
+
+.basic-info{
+	padding: 25px 0 10px 0 !important;
+}
+
+.dl-horizontal dt {
+	width: 150px;
+}
+/* 限制和黑名单icon */
+.sign_ath{overflow:hidden;}
+.sign_ath span{display:block;float:left;}
+.blacklist_show,.limit_show{width:20px;height:20px;margin-top:5px;margin-left:8px;}
+.blacklist_show{background:url(../img/icon-blackman.png) no-repeat;display:none;}
+.limit_show{background:url(../img/icon-redman.png) no-repeat;}
+
+/* 右侧操作栏 查看电话 */
+.oper_telshow{background:url(../img/icon-bluephone.png) 10px 11px no-repeat;text-indent:20px;background-size:25% 50%;}
+#J_phone_dialog #J_cus_phone{word-wrap:break-word;}
+
+/* 解决新增tabs 最下面一行被截 需要在原tab-container 后面增加一个tab-container_ath */
+.tab-container_ath{overflow:visible;}
+
+.customer_info_content dd {
+	margin-left: 10px;
+}
+
+#autowidth_left .tabs-container{
+	overflow: inherit;
+}

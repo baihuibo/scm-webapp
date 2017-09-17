@@ -1,0 +1,93 @@
+#set($plugins = ["table","chosen","laydate","autoSearch"])
+<style>
+.table>thead>tr>th{vertical-align: middle !important;}
+</style>
+<script>
+    var buy_view_permission = $shiro.hasPermission("SCM:CUSTOM:BUY_VIEW"); // 买卖客户详情查看
+    var lease_view_permission = $shiro.hasPermission("SCM:CUSTOM:LEASE_VIEW"); // 租赁客户详情查看
+</script>
+<div class="ibox">
+	<div class="ibox-title">
+		<h5>转介客源管理</h5>
+		<div class="ibox-tools">
+			<a class="collapse-link ui-sortable"> 
+				<i class="fa fa-chevron-up"></i>
+			</a>
+		</div>
+	</div>
+	<div class="ibox-content">
+		<form id="J_query"  class="form-horizontal" role="form">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">业务类型:</label>
+						<div class="col-sm-8" id="J_businessType"></div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">客户编号:</label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" id="J_clientid" name="clientid" placeholder="请输入客户编号">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">客户姓名:</label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" id="J_customername" name="customername" placeholder="请输入客户姓名">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">登记人:</label>
+						<div class="col-sm-8">
+							<div class="input-group">
+								<input type="text" name="usersid" class="form-control" id="J_takekeyuser" value="">
+								<div class="input-group-btn">
+									<button type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown">
+										<span class="glyphicon glyphicon-search search-caret"></span>
+									</button>
+									<ul class="dropdown-menu dropdown-menu-right" role="menu">
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12 text-cen">
+					<div class="form-group">
+						<button id="J_search" type="button" class="btn btn-success btn_size">查 询</button>
+						<button id="J_reset" type="reset" class="btn btn-white btn_size">重 置</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<div class="ibox float-e-margins">
+	<div class="ibox-title">
+        <h5>转介客源管理列表</h5>
+     </div>
+    <div class="ibox-content">
+  		<div class="row row-lg">
+			<div class="col-sm-12">
+				<table id="J_dataTable" class="table table-hover table-striped">
+					<thead>
+						<tr>
+							<th data-field="strcustomertype">业务类型</th>
+							<th data-field="customername">客户姓名<br />客户编号</th>
+							<th data-field="username">登记人</th>
+							<th data-field="belongusername">归属人</th>
+							<th data-field="sharename">共享人</th>
+							<th data-field="cooperationtime">合作时间</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="$link.contextPath/resources/script/customer/cooperation/list.js"></script>

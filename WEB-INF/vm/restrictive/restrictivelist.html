@@ -1,0 +1,194 @@
+#set($plugins = ["table","chosen","autoSearch","validator"])
+<!-- 查询添加begin-->
+<div class="ibox">
+	<div class="ibox-title">
+		<h5>信息查询</h5>
+		<div class="ibox-tools">
+			<a class="collapse-link ui-sortable"> <i class="fa fa-chevron-up"></i></a>
+		</div>
+	</div>
+	<div class="ibox-content">
+		<form class="form-horizontal" id="J_restrictiveform">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">信息编号：</label>
+						<div class="col-sm-7">	
+							<input type="text" class="form-control" name="restrictiveId" id="J_customer" autocomplete="off">					
+						</div>
+					</div>
+				</div>
+				<div class="col-md-5">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">姓名：</label>
+						<div class="col-sm-6">	
+							<input type="text" class="form-control" name="customerName" id="" autocomplete="off">					
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">业务类型：</label>
+						<div class="col-sm-7">	
+							<select id="J_business" name="businessTypeId" class="J_chosen form-control" data-placeholder="全部">
+								<option value="">全部</option>
+							</select>				
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">房产证件类型：</label>
+						<div class="col-sm-7">	
+							<select id="J_houseCardType" name="houseCardTypeId" class="J_chosen form-control" data-placeholder="全部">
+								<option value="">全部</option>
+							</select>				
+						</div>
+					</div>
+				</div>
+				<div class="col-md-5">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">房产证件号：</label>
+						<div class="col-sm-6">	
+							<input type="text" class="form-control" name="houseCard" id="J_houseCard" autocomplete="off">			
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">客户类型：</label>
+						<div class="col-sm-7">	
+							<select id="J_clientType" name="customerTypeId" class="J_chosen form-control" data-placeholder="全部">
+								<option value="">全部</option>
+							</select>				
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+			<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">身份证件类型：</label>
+						<div class="col-sm-7">	
+							<select id="J_cardType" name="idCardTypeId" class="J_chosen form-control" data-placeholder="全部">
+								<option value="">全部</option>
+							</select>				
+						</div>
+					</div>
+				</div>
+				<div class="col-md-5">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">证件号：</label>
+						<div class="col-sm-6">	
+							<input type="text" class="form-control" name="idCard" id="" autocomplete="off">			
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">上榜原因：</label>
+						<div class="col-sm-7">	
+							<select id="J_reason" name="reasonId" class="J_chosen form-control" data-placeholder="全部">
+								<option value="">全部</option>
+							</select>				
+						</div>
+					</div>
+				</div>
+				
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">审批状态：</label>
+						<div class="col-sm-7">	
+							<select id="J_state" name="stateId" class="J_chosen form-control" data-placeholder="全部">
+								<option value="">全部</option>
+								<option value="1">待审批</option>
+								<option value="2">撤销</option>
+								<option value="3">退回申请人</option>
+								<option value="4">审批中</option>
+								<option value="5">待分派</option>
+								<option value="6">待核查</option>
+								<option value="7">待备案</option>
+								<option value="8">备案</option>
+								<option value="9">作废</option>
+							</select>				
+						</div>
+					</div>
+				</div>
+				<div class="col-md-5">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">限制性房客源状态：</label>
+						<div class="col-sm-6">	
+							<select id="J_restrictType" name="lockId" class="J_chosen form-control" data-placeholder="全部">
+								<option value="">全部</option>
+							</select>				
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12 text-cen">
+					<div class="form-group">
+						<button id="J_search" type="button" class="btn btn-success btn_size">查 询</button>
+						<button id="J_reset" type="reset" class="btn btn-white btn_size">重 置</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<!-- 查询条件end -->
+
+<!-- 列表begin -->
+<div class="ibox float-e-margins">
+	<div class="ibox-content">
+		<div class="row row-lg">
+			<div class="col-sm-12">
+				<div class="example-wrap ptb10">
+					<table id="J_dataTable" class="table table-hover  table-striped table-condensed" data-query-params="queryParams" data-mobile-responsive="true" 
+						data-pagination="true" 
+						data-striped="true" data-search="false">
+						<thead>
+							<tr>
+								<th data-field="id">信息编号</th>
+								<th data-field="customerName">姓名</th>
+								<th data-field="customerTypeName">客户类型</th>
+								<th data-field="businessTypeName">业务类型</th>
+								<th data-field="reasonDisplay" class="col-sm-6">上榜原因</th>
+								<th data-field="stateName">审批状态</th>
+								<th data-field="lockName">限制性房客源状态</th>
+								<th data-field="equityTypeName">操作</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- 锁定模态框 -->
+<div id="demo_layer_stantard_unlock" class="ibox-content" style="display: none">
+	<p style="font-size:18px; text-align:center;">确定执行解锁操作？</p>
+	<label for="name"><span style="color:red;">*</span>备注</label>
+	<textarea id="unlock" maxlength="500" style="height: 80px;width:100%"></textarea>
+</div>
+
+
+<!-- 解锁模态框 -->
+<div id="demo_layer_stantard_lock" class="ibox-content" style="display: none">
+	<p style="font-size:18px; text-align:center;">确定执行锁定操作？</p>
+	<label for="name"><span style="color:red;">*</span>备注</label>
+	<textarea id="lock" maxlength="500" style="height: 80px;width:100%"></textarea>
+</div>
+
+<!-- 撤销模态框 -->
+<div id="demo_layer_stantard_cancel" class="ibox-content" style="display: none">
+	<p style="font-size:18px; text-align:center;">确定执行撤销操作？</p>
+</div>
+
+<!-- 列表end -->
+<script src="$link.contextPath/resources/script/restrictive/restrictivelist.js"></script>

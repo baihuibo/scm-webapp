@@ -1,0 +1,199 @@
+#set($plugins = ["table","chosen","laydate","autoSearch","ztree"])
+<style>
+.table-bgcolor{ border:1px solid #797671;}
+.table-bgcolor tr td{ border:1px solid #797671;}
+.table-bgcolor tr td.bgcolor{ background:#9A9691; color:#000;}
+</style>
+<div class="ibox">
+	<div class="tabs-container ptbottom10">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="$link.contextPath/house/audit/unverifylist.htm">待审核房源</a></li>
+			<li class=""><a href="$link.contextPath/house/audit/verifylist.htm">已审核房源</a></li>
+		</ul>
+	</div>
+	<div class="ibox-title">
+		<h5>房源审核</h5>
+		<div class="ibox-tools">
+			<a class="collapse-link ui-sortable"> 
+				<i class="fa fa-chevron-up"></i>
+			</a>
+		</div>
+	</div>
+	<div class="ibox-content">
+		<form id="J_query"  class="form-horizontal" role="form">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">待审批人:</label>
+						<div class="col-sm-8">
+							<div class="input-group">
+								<input type="text" class="form-control" id="J_audituserid" autocomplete="off" name="audituserid">
+								<div class="input-group-btn">
+									<button type="button" class="btn btn-white dropdown-toggle"
+										data-toggle="">
+										<span class="glyphicon glyphicon-search search-caret"></span>
+									</button>
+									<ul class="dropdown-menu dropdown-menu-left" role="menu" style="padding-top: 0px; max-height: 375px; max-width: 800px; overflow: auto; width: auto; transition: 0.3s; left: -110px; right: auto; min-width: 145px;">
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">房源编号:</label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" id="J_houseid" name="houseid" placeholder="请输入房源编号">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">楼盘名:</label>
+						<div class="col-sm-8">
+	                    	<div class="input-group">
+	                        	<input id="J_build" name="buildingid" type="text" class="form-control"> 
+								<div class="input-group-btn">
+	                                <button type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown">
+	                                    <span class="glyphicon glyphicon-search search-caret"></span>
+	                                </button>
+	                                <ul class="dropdown-menu dropdown-menu-right" role="menu">
+	                                </ul>
+	                            </div>
+	                   		</div>
+	                   </div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">所属部门:</label>
+						<div class="col-sm-8">
+							<input id="J_deptLevel" name="deptlevel" type="hidden" class="form-control" value="">
+							<div class="input-group">
+								<input id="J_deptName" name="deptid" type="text" class="form-control radius-3 float-l" autocomplete="off">
+								<div class="input-group-btn">
+									<button id="J_deptSelect" data-toggle="dropdown" class="btn dropdown-toggle btn-dept float-l" type="button"><span class="caret"></span>
+	                            	</button>
+	                            </div>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">所属人:</label>
+						<div class="col-sm-8">
+							<div class="input-group">
+								<input type="text" class="form-control" id="J_user" autocomplete="off" name="belonguserid">
+								<div class="input-group-btn">
+									<button type="button" class="btn btn-white dropdown-toggle"
+										data-toggle="">
+										<span class="glyphicon glyphicon-search search-caret"></span>
+									</button>
+									<ul class="dropdown-menu dropdown-menu-left" role="menu" style="padding-top: 0px; max-height: 375px; max-width: 800px; overflow: auto; width: auto; transition: 0.3s; left: -110px; right: auto; min-width: 145px;">
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">待审类型:</label>
+						<div class="col-sm-8">
+							<select id="J_auditstep" name="auditstep" class="J_chosen form-control" data-placeholder="全部">
+								<option value="">全部</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">业务类型:</label>
+						<div class="col-sm-8">
+							<select id="J_businessType" name="businessType" class="J_chosen form-control" data-placeholder="全部">
+								<option value="">全部</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">录入时间:</label>
+						<div class="col-sm-4">
+							<input id="J_starttime" name="starttime" class="J_chosen form-control" placeholder="">
+						</div>
+						<div style="float:left; padding:7px 3px;">-</div>
+						<div class="col-sm-4">
+							<input id="J_endtime" name="endtime" class="J_chosen form-control" placeholder="">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group">
+							<label class="col-sm-1 control-label">规划用途:</label>
+							<div id="J_plannedUses" class="col-sm-10"></div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12 text-cen">
+					<div class="form-group">
+						<button id="J_search" type="button" class="btn btn-success btn_size">查 询</button>
+						<button id="J_reset" type="reset" class="btn btn-white btn_size">重 置</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>	
+</div>
+<div class="ibox float-e-margins">
+	<div class="ibox-title">
+        <h5>待审核房源列表</h5>
+     </div>
+	<div class="ibox-content">
+		<div class="row">
+			<div class="tab-content" style="padding:10px 0;">
+				<div class="form-group">
+					<button id="J_distribution" data-auditstep="" type="button" class="btn btn-success pr5">分配审批人</button>
+				</div>
+				<div class="row row-lg">
+					<div class="col-sm-12">
+						<table id="J_dataTable" class="table table-hover table-striped table-bordered table-condensed">
+							<thead>
+								<tr>
+									<th data-field="Choose"><input id="J_checkall"  name='list' type='checkbox'/></th>
+									<th data-field="houseid">房源编号</th>
+									<th data-field="auditstep">待审类型</th>
+									<th data-field="businesstype">业务类型</th>
+									<th data-field="propertytype">规划用途</th>
+									<th data-field="buildingname">楼盘名</th>
+									<th class="col-sm-3 remark_all" data-field="deptid">所属部门</th>
+									<th data-field="userid">所属人</th>
+									<th data-field="audituserid">待审批人</th>
+									<th data-field="flowstarttime">流程开始时间</th>
+									<th data-field="opt">操作</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 编辑电话 -->
+#parse("/public/edit_phone.html")
+<!--审核记录-->
+#parse("/house/audit/auditrecord.html")
+<script src="$link.contextPath/resources/script/house/audit/uncheckedlist.js"></script>
+<script src="$link.contextPath/resources/script/house/public/check_phone.js"></script>
+<script src="$link.contextPath/resources/script/house/public/check_address.js"></script>
+<script type="text/javascript" src="$link.contextPath/resources/js/department.js"></script>
+<script src="$link.contextPath/resources/script/house/public/auditlayer.js"></script>

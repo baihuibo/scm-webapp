@@ -1,0 +1,128 @@
+#set($plugins = ["table","chosen","autoSearch"])
+<style type="text/css">
+	#J_dataTable{
+		border:1px solid #CBD5DD; 
+	}
+</style>
+<div class="ibox">
+	<div class="ibox-title">
+		<h5>业绩授权申请单详情</h5>
+		<div class="ibox-tools">
+			<a class="collapse-link ui-sortable"> <i class="fa fa-chevron-up"></i></a>
+		</div>
+	</div>
+</div>
+<div class="ibox-content">
+		<div class="row">
+			<div class="customer_info_box">
+				<div class="customer_info_content">
+					<div class="row ptb10">
+						<div class="pl10 font-bold font-blue info-tit chage-tit">基本信息</div>
+					</div>
+					<div class="row">
+							<div class="col-sm-6">
+								<dl class="dl-horizontal">
+									<dt class="J_edit_area">合同编号：</dt>
+									<dd id="App_contractNo"></dd>
+								</dl>
+							</div>
+							<div class="col-sm-6">
+								<dl class="dl-horizontal">
+									<dt class="J_edit_area">合同录入日期：</dt>
+									<dd id="App_contractDate"></dd>
+								</dl>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-6">
+								<dl id="J_editPhone" class="dl-horizontal">
+									<dt class="J_edit_area">合同收益日期：</dt>
+									<dd id="App_Time"></dd>
+								</dl>
+							</div>
+							<div class="col-sm-6">
+								<dl class="dl-horizontal">
+									<dt class="J_edit_area">合同审批日期：</dt>
+									<dd id="App_mondate"></dd>
+								</dl>
+							</div>
+						</div>						
+					</div>					
+					<div class="row ptb10">
+						<div class="pl10 font-bold font-blue info-tit">调整单详情</div>
+					</div>
+					<div class="row">
+						<table id="J_dataTable" class="table table-hover  table-striped  table-condensed"
+							data-query-params="queryParams" data-mobile-responsive="true"
+							data-pagination="true"
+							data-striped="true" data-search="false">
+							<thead>
+								<tr>
+									<th data-field="perfType" class="col-sm-2">业绩类型</th>
+									<th data-field="belongerName" class="col-sm-2">业绩所有人</th>
+									<th data-field="fullDeptName" class="col-sm-3">所属部门</th>
+									<th data-field="generateWay" class="col-sm-2">状态</th>
+									<th data-field="percent" class="col-sm-2">分配比例</th>
+									<th data-field="isAuthorize" class="col-sm-1">业绩是否调整</th>
+								</tr>
+							</thead>
+							<tfoot id="none" style="display:none;border-top:1px solid #CBD5DD;">
+								<tr >
+									<td colspan="2" style="border-left:1px solid #CBD5DD;border-right:1px solid #CBD5DD;">调整原因</td>
+									<td id="J_reason" colspan="4" style="height:50px;white-space:normal; word-break:break-all;"></td>
+								</tr>
+							</tfoot>
+						</table>
+					</div>
+					<div class="row ptb10">
+						<div class="pl10 font-bold font-blue info-tit">申请进度</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12 text-cen">
+							<div class="form-group">
+							<div class="form-group" id="J_btn_button">
+								<!-- <button type="button" class="btn btn-success btn-altogether btn_size"  id="J_cancel">撤销</button> -->
+							</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="ibox-content" style=" width:100%; height:450px; overflow:hidden;">
+							<iframe class="ibox-content" id="J_srcimg" width="100%"; height="1000px";>
+							</iframe>
+						</div>
+					</div>
+					<div class="row">
+						<div style="display:flex;display:-webkit-box;display:-webkit-flex;justify-content:space-between;background:#e2e2e2;color:#676a6c;border:1px solid #CBD5DD;margin-top:50px;"><span class="dereson" style="width:40%;display:block;text-align:center;border-right:1px solid #CBD5DD">业绩调整原因</span><span style="width:60%;display:block;padding:10px;white-space:normal; word-break:break-all;" id="detail">与tomorrow共同合作完成签单，已约定分成30%作为成交人分成</span></div>
+					</div>
+					<div class="row">
+						<table id="J_table" class="table table-hover  table-striped  table-condensed"
+							data-query-params="queryParams" data-mobile-responsive="true"
+							data-pagination="true"
+							data-striped="true" data-search="false">
+							<thead>
+								<tr>
+									<th data-field="userName" >操作人</th>
+									<th data-field="createTime">提交日期</th>
+									<th data-field="approveState">当前状态</th>
+									<th data-field="completeTime">完成日期</th>
+									<th data-field="comment" class="col-sm-3">审核意见</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+					<!-- 撤销模态框 -->
+					<div id="demo_layer_stantard" class="ibox-content"
+						style="display: none">
+						<p class="title_contractNo" style="font-size: 14px; text-align: center;"></p>
+						<label for="name"><span style="color: red;">*</span>备注</label>
+						<textarea id="mem" maxlength="120"
+							style="height: 80px; width: 100%" oninput="strLenCalc($(this), 'checklen', 240);"></textarea>
+							<span id="checklen">还可输入 <strong>120</strong> 个汉字</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="$link.contextPath/resources/script/performance/perfoAjustManagedetail.js"></script>

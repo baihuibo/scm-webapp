@@ -1,0 +1,454 @@
+#set($plugins = ["table","chosen","laydate","linkage","autoSearch","ztree"])
+<div class="ibox">
+	<div class="ibox-title">
+		<!--<div class="row" style="font-size:14px;color: #ed5565;">提示：合同已办理过户，不可提交审核。评估费未结清，单据不可审批通过。</div>-->
+		<div class="row pt6">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="control-label" id="signnumber">单据编号：<span style="font-weight:100;">退单信息保存时自动生成</span></label>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="control-label" id="strauditstatus">审批状态：<span style="font-weight:100;">退单信息保存时自动生成</span></label>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="ibox-content isdisable">
+		<div class="tabs-container ptbottom10">
+			<ul class="nav nav-tabs" id="addNav" style="display:none;">
+				<li class="active"><a data-toggle="tab">退单信息</a></li>
+			</ul>
+			<ul class="nav nav-tabs block-tabs-nav" id="modifyNav" style="display:none;">
+				<li class="active"><a data-toggle="tab">退单信息</a></li>
+				<li><i>|</i></li>
+				<li id="gofeiYongcl"><a href="javascript:;">费用处理</a></li>
+				<li><i>|</i></li>
+				<li id="goAttachment"><a href="javascript:;">附件管理</a></li>
+				<li><i>|</i></li>
+				<li id="goAgreement"><a href="javascript:;">补充协议</a></li>
+				<li><i>|</i></li>
+				<li id="goShenPlc"><a href="javascript:;">审批流程</a></li>
+				<li><i>|</i></li>
+				<li id="goFeiyzhixmx" style="display:none"><a href="javascript:;">费用执行明细</a></li>
+			</ul>
+		</div>
+		<form id="addContractForm" class="form-horizontal" role="form">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label"><span style="color:#ff0000">*</span>合同编号：</label>
+						<div class="col-sm-8" id="addContractNum">
+							<div class="input-group">
+								<input type="text" name="contractCode" id="addContractNumber" class="form-control" readonly="readonly" style="background-color:#fff !important;" autocomplete="off">
+								<div class="input-group-btn">
+									<button type="button" class="btn btn-white dropdown-toggle"
+										data-toggle="">
+										<span class="glyphicon glyphicon-search search-caret"></span>
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">业务类型：</label>
+						<div class="col-sm-8">
+							<input name="" type="text" id="addBusinessType" readonly="readonly" class="form-control">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">所属部门：</label>
+						<div class="col-sm-8">
+							<input type="text" name="" readonly="readonly" class="form-control" id="addEpartment">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">客户姓名：</label>
+						<div class="col-sm-8">
+							<input type="text" readonly="readonly" name="" class="form-control" id="addCustomerName">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">业主姓名：</label>
+						<div class="col-sm-8">
+							<input type="text" readonly="readonly" name="" class="form-control" id="addOwnerName">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">佣金总额（元）：</label>
+						<div class="col-sm-8">
+							<input type="text" readonly="readonly" name="" class="form-control" id="addBackCommis">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">实收佣金（元）：</label>
+						<div class="col-sm-8">
+							<input type="text" name="" readonly="readonly" class="form-control" id="addPaidCommission">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">房源编号：</label>
+						<div class="col-sm-8">
+							<input type="text" name="" readonly="readonly" class="form-control" id="addHousing" style="text-decoration: underline;cursor:pointer;color: #1a7bb9;">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">客源编号：</label>
+						<div class="col-sm-8">
+							<input type="text" name="" readonly="readonly" class="form-control" id="addTourists" style="text-decoration: underline;cursor:pointer;color: #1a7bb9;">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label style="padding:7px 15px 0 0;" class="col-sm-4 control-label"><span style="color:#ff0000">*</span>是否付款：</label>
+						<div class="col-sm-8" id="errProPeichang">
+							<div class="radio radio-primary radio-inline">
+								<input type="radio" id="isPeichang"  name="ispayouts" value="1">
+								<label for="isPeichang">是</label>
+							</div>
+							<div class="radio radio-primary radio-inline">
+								<input type="radio" id="isPeichang1" name="ispayouts" value="0" checked>
+								<label for="isPeichang1">否</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label style="padding:7px 15px 0 0;" class="col-sm-4 control-label"><span style="color:#ff0000">*</span>是否收款：</label>
+						<div class="col-sm-8" id="errProShouweiyj">
+							<div class="radio radio-primary radio-inline">
+								<input type="radio" id="isShouweiyj"  name="isreceivepenalty" value="1">
+								<label for="isShouweiyj">是</label>
+							</div>
+							<div class="radio radio-primary radio-inline">
+								<input type="radio" id="isShouweiyj1" name="isreceivepenalty" value="0" checked>
+								<label for="isShouweiyj1">否</label>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label style="padding:7px 15px 0 0;" class="col-sm-4 control-label"><span style="color:#ff0000">*</span>是否退单：</label>
+						<div class="col-sm-8" id="errProTuidan">
+							<div class="radio radio-primary radio-inline">
+								<input type="radio" id="isTuidan"  name="isbacksign" value="1">
+								<label for="isTuidan">是</label>
+							</div>
+							<div class="radio radio-primary radio-inline">
+								<input type="radio" id="isTuidan1" name="isbacksign" value="0" checked>
+								<label for="isTuidan1">否</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label style="padding:7px 15px 0 0;" class="col-sm-4 control-label"><span style="color:#ff0000">*</span>是否转款：</label>
+						<div class="col-sm-8" id="errProZhuany">
+							<div class="radio radio-primary radio-inline">
+								<input type="radio" id="isZhuany"  name="istransfercommission" value="1">
+								<label for="isZhuany">是</label>
+							</div>
+							<div class="radio radio-primary radio-inline">
+								<input type="radio" id="isZhuany1" name="istransfercommission" value="0" checked>
+								<label for="isZhuany1">否</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label style="padding:7px 15px 0 0;" class="col-sm-4 control-label"><span style="color:#ff0000">*</span>是否退款：</label>
+						<div class="col-sm-8" id="errProTuiyong">
+							<div class="radio radio-primary radio-inline">
+								<input type="radio" id="isTuiyong"  name="isbackcommission" value="1">
+								<label for="">是</label>
+							</div>
+							<div class="radio radio-primary radio-inline">
+								<input type="radio" id="isTuiyong1" name="isbackcommission" value="0" checked>
+								<label for="isTuiyong1">否</label>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4" style="display:none;" id="tuiDanType">
+					<div class="form-group">
+						<label class="col-sm-4 control-label"><span style="color:#ff0000">*</span>退单类型：</label>
+						<div class="col-sm-8">
+							<select name="chargebacktype" id="chargebackType" class="J_chosen form-control">
+								<option value="">请选择</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div style="display:none;" id="tuiYongbl">
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="col-sm-4 control-label"><span style="color:#ff0000">*</span>实退佣金（元）：</label>
+							<div class="col-sm-8">
+								<input type="text" name="realreturncommission" class="form-control" id="shituiYj" oninput="clearNoNum(this)">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="col-sm-4 control-label">退佣比例：</label>
+							<div class="col-sm-8">
+								<input type="text" name="returncommissionpercent" readonly="readonly" class="form-control" id="addCommissionRate">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-8">
+					<div class="form-group" id="">
+						<label style="padding-top:7px;" class="col-sm-2 control-label"><span style="color:#ff0000">*</span>申请说明：</label>
+						<div class="col-sm-10" id="explainConten">
+							<textarea class="form-control" name="remark" maxlength="100" id="explain" style="height:100px;" oninput="strLenCalc();"></textarea>								
+						</div>
+						<span id="checklen" class="fr" style="color:#1d3872;">还可以输入 <strong>100</strong> 个汉字</span>	
+					</div>
+				</div>
+			</div>
+			<div id="xiuGai" style="display:none;">
+				<div class="row ptb10">
+					<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>审计信息</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="col-sm-4 control-label">创建人：</label>
+							<div class="col-sm-8 control-label text-left" id="createByName"></div>
+						</div>	
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="col-sm-4 control-label">创建时间：</label>
+							<div class="col-sm-8 control-label text-left" id="createTime"></div>
+						</div>	
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="col-sm-4 control-label">最后修改人：</label>
+							<div class="col-sm-8 control-label text-left" id="updateByName"></div>
+						</div>	
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="col-sm-4 control-label">最后修改时间：</label>
+							<div class="col-sm-8 control-label text-left" id="updateTime"></div>
+						</div>
+					</div>
+				</div>
+				<div id="jiaoYiInfor" style="display:none;">
+					<div class="row ptb10">
+						<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>交易状态信息<span style="color:#ff0000">（合同已办理过户，不可提交审核。评估费未结清，单据不可审批通过）</span></div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<label class="col-sm-4 control-label">评估费：</label>
+								<div class="col-sm-8 control-label text-left" id="valuationfee"></div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label class="col-sm-4 control-label">网签：</label>
+								<div class="col-sm-8 control-label text-left" id="netsign"></div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label class="col-sm-4 control-label">房源检验：</label>
+								<div class="col-sm-8 control-label text-left" id="roomcheck"></div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<label class="col-sm-4 control-label">贷款：</label>
+								<div class="col-sm-8 control-label text-left" id="loan"></div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label class="col-sm-4 control-label">过户：</label>
+								<div class="col-sm-8 control-label text-left" id="changeName"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<div class="col-sm-5  col-sm-offset-5">
+	                        <button id="saveBtn" type="button" class="btn btn-success btn_size">保存</button>
+	                        <button id="cancelBtn" type="button" class="btn btn-white btn_size">取消</button>
+	                    </div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<!--star选择合同-->
+<div class="ibox" id="choiceHetong" style="display:none;">
+	<div class="ibox-title">
+		<!-- <div class="row" style="font-size:14px;color: #ed5565;">提示：查询结果列示出的买卖合同都为未过户的合同</div> -->
+	</div>
+	<div class="ibox-content">	
+		<form id="J_contractQuery" class="form-horizontal" role="form">
+		<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">合同编号：</label>
+						<div class="col-sm-8">	
+							<input name="contract_code" type="text" class="form-control"  placeholder="请输入合同编号">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">录入日期：</label>
+						<div class="col-sm-8" layout="row">
+							<div flex="">
+								<input name="crt_dttm_begin" id="createstarttime" type="text" class="form-control" readonly="readonly" style="width:97%;background-color:#fff;" placeholder="请选择开始时间">
+							</div>
+							<div class="split">-</div>
+							<div flex="">
+								<input name="crt_dttm_end" id="createendtime" type="text" class="form-control" readonly="readonly" style="width:96%;margin-left:2%;background-color:#fff;" placeholder="请选择结束时间">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">房源编号：</label>
+						<div class="col-sm-8">	
+							<input type="text" name="houses_code" class="form-control"  placeholder="请输入房源编号">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">业主姓名：</label>
+						<div class="col-sm-8">	
+							<input type="text" name="owner_name" class="form-control"  placeholder="请输入业主姓名">					
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label J_price_text">成交价：</label>
+						<div class="col-sm-8" layout="row">
+							<div flex="">
+								<input name="transaction_price_min" id="createstarttime" type="text" class="form-control" style="width:97%;background-color:#fff;">
+							</div>
+							<div class="split">-</div>
+							<div flex="">
+								<input name="transaction_price_max" id="createendtime" type="text" class="form-control" style="width:96%;margin-left:2%;background-color:#fff;">
+							</div>
+							<label class="control-label">元</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">客户编号：</label>
+						<div class="col-sm-8">	
+							<input type="text" name="customer_code" class="form-control"  placeholder="请输入客户编号">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+			<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">客户姓名：</label>
+						<div class="col-sm-8">	
+							<input type="text" name="customer_name" class="form-control"  placeholder="请输入客户姓名">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">所属部门：</label>
+						<div class="col-sm-8"  id="J_deptSelect">
+							<input id="J_deptLevel" type="hidden" class="form-control" value="">
+							<div class="input-group">
+								<input id="J_deptName" type="text" data-id="" class="form-control radius-3 float-l" readonly="readonly" autocomplete="off" style="background-color:#fff;">
+								<div class="input-group-btn">
+									<button data-toggle="dropdown" class="btn dropdown-toggle btn-dept float-l" type="button"><span class="caret"></span>
+	                            	</button>
+	                            </div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">业务类型：</label>
+						<div class="col-sm-8">
+							<select name="contract_type" id="businesstype" class="J_chosen form-control">
+								<!-- <option value="">全部</option> -->
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row ptbottom10">
+				<div class="col-md-12">
+					<div class="form-group">
+						<div class="col-sm-5  col-sm-offset-5">
+	                        <button id="J_search" type="button" class="btn btn-success btn_size">查 询</button>
+	                        <button id="J_reset" type="reset" class="btn btn-white btn_size">重 置</button>
+	                    </div>
+					</div>
+				</div>
+			</div>
+		</form>
+		<div id="hetConten"></div>
+	</div>
+</div>
+<!--end选择合同-->
+<script type="text/javascript" src="$basePath/resources/js/plugins/ztree/jquery.ztree.core.js"></script>
+<script type="text/javascript" src="$basePath/resources/js/plugins/ztree/jquery.ztree.excheck.js"></script>
+<script type="text/javascript" src="$link.contextPath/resources/js/department.js"></script>
+<script src="$link.contextPath/resources/script/sign/chargeback/addChargeback.js"></script>

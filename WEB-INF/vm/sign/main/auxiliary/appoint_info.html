@@ -1,0 +1,168 @@
+<div class="ibox-content">
+	<div class="appoint_info_content">
+		<div class="row">
+			<div class="col-md-4">
+				<dl class="dl-horizontal">
+					<dt><span class="text-danger">*</span>存量房合同编号：</dt>
+					<!-- <dd><a>{{$ctrl.detail.basiclist.contractCode}}</a></dd> -->
+					<a ng-href="{{::$ctrl.contractLink}}" target="_blank">{{::$ctrl.detail.basiclist.contractCode}}</a>
+				</dl>
+			</div>
+			<div class="col-md-4">
+				<dl class="dl-horizontal">
+					<dt>房源编号：</dt>
+					<!-- <dd><a>{{$ctrl.detail.basiclist.housesCode}}</a></dd> -->
+					<a ng-href="{{::$ctrl.houseLink}}" target="_blank">{{::$ctrl.detail.basiclist.housesCode}}</a>
+				</dl>
+			</div>
+			<div class="col-md-4">
+				<dl class="dl-horizontal">
+					<dt>客源编号：</dt>
+					<!-- <dd><a>{{$ctrl.detail.basiclist.customerCode}}</a></dd> -->
+					<a ng-href="{{::$ctrl.customerLink}}" target="_blank">{{::$ctrl.detail.basiclist.customerCode}}</a>
+				</dl>
+			</div>
+			<div class="col-md-4">
+				<dl class="dl-horizontal">
+					<dt>附属合同类型：</dt>
+					<dd>{{$ctrl.detail.basiclist.subsidiaryContractType}}</dd> 
+				</dl>
+			</div>
+			<div class="col-md-4">
+				<dl class="dl-horizontal">
+					<dt>折前佣金：</dt>
+					<dd>{{$ctrl.detail.basiclist.sumPerformanceReceivable}}元</dd> 
+				</dl>
+			</div>
+			<div class="col-md-4">
+				<dl class="dl-horizontal">
+					<dt>折后佣金：</dt>
+					<dd>{{$ctrl.detail.basiclist.sumPerformanceReceived}}元</dd>
+				</dl>
+			</div>
+			<div class="col-md-4">
+				<dl class="dl-horizontal">
+					<dt>总折扣：</dt>
+					<dd>{{$ctrl.detail.basiclist.sumPerformanceDiscount}}折</dd>
+				</dl>
+			</div>
+			<div class="col-md-4">
+				<dl class="dl-horizontal">
+					<dt>所属部门：</dt>
+					<dd>{{$ctrl.detail.basiclist.deptName}}</dd>
+				</dl>
+			</div>
+			<div class="col-md-4">
+				<dl class="dl-horizontal">
+					<dt>房屋地址：</dt>
+					<dd>{{$ctrl.detail.basiclist.housingAddr}}</dd> 
+				</dl>
+			</div>
+			<div class="col-md-4">
+				<dl class="dl-horizontal">
+					<dt>付款方式：</dt>
+					<dd>{{$ctrl.detail.basiclist.payType}}</dd> 
+				</dl>
+			</div>
+		</div>
+		<div class="row ptb10">
+			<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>交易双方及履约人信息</div>
+		</div>
+		<div class="row">
+			<div class="example-wrap ptb10">
+				<table id="J_infodataTable" class="table table-hover table-striped singlewatch_ath table-bordered">
+					<thead>
+						<tr>
+							<th data-field="">类型</th>
+							<th data-field="">交易双方姓名</th>
+							<th data-field="">证件类型</th>
+							<th data-field="">证件号码</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="item in $ctrl.detail.personlist">
+							<td>{{item.proxyType}}</td>
+							<td>{{item.fullName}}</td>
+							<td>{{item.idcardTypeCd}}</td>
+							<td>{{item.idcardNo}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="row ptb10">
+			<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>佣金信息</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<dl class="dl-horizontal">
+					<dt><span class="text-danger">*</span>服务费收取对象：</dt>
+					<dd ng-if="$ctrl.detail.basiclist.chargeObject==1">客户和业主</dd>
+					<dd ng-if="$ctrl.detail.basiclist.chargeObject==2">客户</dd>
+					<dd ng-if="$ctrl.detail.basiclist.chargeObject==3">业主</dd>
+				</dl>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<dl class="dl-horizontal">
+					<dt><span class="text-danger">*</span>业主履约佣金：
+					<span class="help-block m-b-none" style="font-weight: normal;text-align: left;">(公司规定)</span></dt>
+					<dd>{{$ctrl.detail.basiclist.ownPerformanceReceivable}}元</dd>
+				</dl>
+			</div>
+			<div class="col-md-4">
+				<dl class="dl-horizontal">
+					<dt><span class="text-danger">*</span>业主履约佣金：
+					<span class="help-block m-b-none" style="font-weight: normal;text-align: left;">(合同约定)</span></dt>
+					<dd>{{$ctrl.detail.basiclist.ownPerformanceReceived}}元</dd>
+				</dl>
+			</div>
+			<div class="col-md-4">
+				<dl class="dl-horizontal">
+					<dt>履约折扣（折）：</dt> 
+					<dd>{{$ctrl.detail.basiclist.ownPerformanceDiscount}}</dd>
+				</dl>
+			</div>
+		</div>	
+		<div class="row">
+			<div class="col-md-4">
+				<dl class="dl-horizontal">
+					<dt><span class="text-danger">*</span>客户履约佣金：
+					<span class="help-block m-b-none" style="font-weight: normal;text-align: left;">(公司规定)</span></dt>
+					<dd>{{$ctrl.detail.basiclist.cusPerformanceReceivable}}元</dd>
+				</dl>
+			</div>
+			<div class="col-md-4">
+				<dl class="dl-horizontal">
+					<dt><span class="text-danger">*</span>客户履约佣金：
+					<span class="help-block m-b-none" style="font-weight: normal;text-align: left;">(合同约定)</span></dt>
+					<dd>{{$ctrl.detail.basiclist.cusPerformanceReceived}}元</dd>
+				</dl>
+			</div>
+			<div class="col-md-4">
+				<dl class="dl-horizontal">
+					<dt>履约折扣（折）：</dt>
+					<dd>{{$ctrl.detail.basiclist.cusPerformanceDiscount}}</dd>
+				</dl>
+			</div>
+		</div>
+		<div class="row ptb10">
+			<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>审计信息</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<dl class="dl-horizontal">
+					<dt>创建人：</dt>
+					<dd>{{$ctrl.detail.basiclist.belongUserName}}</dd>
+				</dl>
+			</div>
+			<div class="col-md-4">
+				<dl class="dl-horizontal">
+					<dt>创建时间：</dt>
+					<dd>{{$ctrl.detail.basiclist.crtDttm}}</dd>
+				</dl>
+			</div>
+		</div>	
+	</div>
+</div>

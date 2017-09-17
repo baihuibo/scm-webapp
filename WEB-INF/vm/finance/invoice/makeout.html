@@ -1,0 +1,138 @@
+#set($plugins = ["table","chosen","laydate","autoSearch"])
+<style>
+.table>thead>tr>th{vertical-align: middle !important;}
+</style>
+<div class="ibox">
+	<div class="ibox-title">
+		<h5>开发票页面</h5>
+		<div class="ibox-tools">
+			<a class="collapse-link ui-sortable"> 
+				<i class="fa fa-chevron-up"></i>
+			</a>
+		</div>
+	</div>
+	<div class="ibox-content">
+		<form id="J_query"  class="form-horizontal" role="form">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">合同编号:</label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" id="J_contraceNumber" name="contractNumber" placeholder="请输入合同编号">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">合同类型:</label>
+						<div class="col-sm-8">
+							<select id="J_businessType" name="businessType" class="J_chosen form-control" data-placeholder="全部">
+								<option value="">全部</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">房源编号:</label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" id="J_houseId" name="houseId" placeholder="请输入房源编号">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">客户编号:</label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" id="J_clientId" name="clientId" placeholder="请输入客户编号">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">收据编号:</label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" id="J_receiptNumber" name="receiptNumber" placeholder="请输入收据编号">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">发票编号:</label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" id="J_invoiceNumner" name="invoiceNumner" placeholder="请输入发票编号">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">业主姓名:</label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" id="J_ownerName" name="ownerName" placeholder="请输入业主名称">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">客户姓名:</label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" id="J_customerName" name="customerName" placeholder="请输入客户名称">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group">
+						<div class="col-sm-8  col-sm-offset-5">
+							<button id="J_search" type="button" class="btn btn-success btn_size">查 询</button>
+							<button id="J_reset" type="reset" class="btn btn-white btn_size">重 置</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<div class="ibox float-e-margins">
+	<div class="ibox-title">
+        <h5>合同信息列表</h5>
+    </div>
+    <div class="ibox-content">
+    	<div class="row row-lg">
+			<div class="col-sm-12">
+				<table id="J_dataTable" class="table table-hover table-striped table table-bordered tables table-condensed">
+					<thead>
+						<tr>
+							<th data-field="check">选择</th>
+							<th data-field="b">合同类型</th>
+							<th data-field="c">合同编号</th>
+							<th data-field="d">房源编号</th>
+							<th data-field="e">客户编号</th>
+							<th data-field="f">业主名称</th>
+							<th data-field="g">客户名称</th>
+							<th data-field="h">录入日期</th>
+							<th data-field="j">成交人</th>
+							<th data-field="k">所属部门</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<div class="col-sm-8  col-sm-offset-5">
+						<button id="J_nextstep" type="button" class="btn btn-success btn_size">下一步</button>
+						<button id="J_reset" type="reset" class="btn btn-white btn_size">取 消</button>
+					</div>
+				</div>
+			</div>
+		</div>
+    </div>
+</div>
+<script src="$link.contextPath/resources/script/finance/invoice/makeout.js"></script>

@@ -1,0 +1,79 @@
+<link rel="stylesheet" type="text/css" href="$basePath/resources/css/style.css?v=4.1.0">
+
+<style>
+	#info td {
+		padding: 6px;
+	}
+</style>
+
+<div class="ibox-content" style="padding: 0px;">
+	<table id="info" width="100%" cellspacing="0" cellpadding="2" border="1" bordercolor="#0882FF" bordercolordark=#e5e7ec>
+		<tr>
+			<td align="center" bgcolor="#0882FF" style="color: #ffffff;" colspan="7">
+				<b>员 工 个 人 信 息</b>
+			</td>
+		</tr>
+		<tr>
+			<td bgcolor="#e5e7ec" width=70><label>员工编号</label></td>
+			<td width="200"><text id="usersid">$!VO.user.userId</text></td>
+			<td bgcolor="#e5e7ec"><b>部门</b></td>
+			<td width="180"><text id="deptname">$!VO.department.deptName</text></td>
+        </tr>
+		<tr>
+			<td bgcolor="#e5e7ec"><b>员工姓名</b></td>
+			<td><text id="username">$!VO.user.userName</text></td>
+			<td bgcolor="#e5e7ec"><b>登录名</b></td>
+   			<td><text id="username">$!VO.user.userName</text></td>
+		</tr>
+		<tr>
+			<td bgcolor="#e5e7ec"><b>组团</b></td>
+   			<td><text id="shopGroupName">$!VO.deptDto.shopGroupName</text></td>
+			<td bgcolor="#e5e7ec"><b>所在组店</b></td>
+			<td><a href="/base/shops/manager.htm?deptId=$!VO.department.deptId&compId=$!VO.user.compId" title="点击查看组店信息">$!VO.deptDto.shopsName</a></td>
+		</tr>
+		<tr>
+			<td bgcolor="#e5e7ec"><b>大区</b></td>
+   			<td><text id="shopareaname">$!VO.deptDto.areaName</text></td>
+			<td bgcolor="#e5e7ec"><b>实际店</b></td>
+			<td><a href="/base/shops/managers.htm?shopId=$!VO.shop.shopId" title="点击查看实际店信息"><text id="shopNames">$!VO.shop.shopName</text></a>
+		</tr>
+		<tr>
+			<td bgcolor="#e5e7ec"><b>人事职级</b></td>
+			<td>&nbsp;</td>
+			<td bgcolor="#e5e7ec"><b>公司职位</b></td>
+			<td><text id="usertitle">$!VO.job.jobName</text></td>
+		</tr>
+		<tr>
+			<td bgcolor="#e5e7ec"><b>入职日期</b></td>
+			<td><text id="enterdate">$!VO.lastHireDt</text></td>
+			<td bgcolor="#e5e7ec"><b>经纪人证号</b></td>
+            <td>&nbsp;</td>
+     	</tr>
+		<tr>
+			<td bgcolor="#e5e7ec"><b>个人邮箱</b></td>
+			<td><text id="useremail">$!VO.user.email</text></td>
+			<td bgcolor="#e5e7ec"><b>公司邮箱</b></td>
+			<td>$!VO.user.compEmail</td>
+		</tr>
+		<!-- 
+		<tr>
+			<td bgcolor="#e5e7ec"><b><a href="#" onclick="javascript:void(0);" title="点击修改此项">个人MSN号</a></b></td>
+			<td>&nbsp;</td>
+			<td bgcolor="#e5e7ec"><b><a href="#" onclick="javascript:void(0);" title="点击修改此项">QQ号</a></b></td>
+			<td>&nbsp;</td>
+		</tr>
+		 -->
+		<tr>
+			<td bgcolor="#e5e7ec"><b>身份证号</b></td>
+        	<td>$!VO.user.cardId</td>
+			<td bgcolor="#e5e7ec" width=100><b>是否网络经纪人</b></td>
+			<td>&nbsp;</td>
+		</tr>
+        <tr>
+       		<td bgcolor="#e5e7ec"><b>电话</b></td>
+   			<td colspan="5" >手机：$!VO.user.mobile，住址电话：$!VO.user.phone&nbsp;<font color="RED">[保密]</font> 办公室电话：51199115-112</td>
+        </tr>
+	</table>
+</div>
+
+<script type="text/javascript" src="$basePath/resources/js/content.js?v=1.0.0"></script>

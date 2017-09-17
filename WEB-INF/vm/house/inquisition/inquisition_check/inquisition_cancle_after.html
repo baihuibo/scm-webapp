@@ -1,0 +1,349 @@
+#set($plugins = ["table","chosen","laydate","autoSearch","ztree","file_upload"])
+<style>
+label{
+ color: #676a6c;
+
+}
+</style>
+<div class="ibox">
+	<div class="row">
+		<div class="ibox-title">
+			<h5>取消实勘后</h5>
+			<div class="ibox-tools">
+				<a class="collapse-link ui-sortable"> <i
+									class="fa fa-chevron-up"></i>
+				</a>
+			</div>
+		</div>
+				
+				<div class="ibox-content">
+					<div class="inquisition_info_content">				
+					<div class="row">
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt>楼盘：</dt>
+								<dd id="conmmunityName"></dd>
+							</dl>
+						</div>
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt>详细地址：</dt>
+								<dd><a onclick="checkAddress($('#housesId').html())">查看</a></dd>
+							</dl>
+						</div>
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt>房源录入时间：</dt>
+								<dd id="bookinTime"></dd>
+							</dl>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt>房源编号：</dt>
+								<dd><a id="housesId"></a></dd>
+							</dl>
+						</div>
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt>所属部门：</dt>
+								<dd id="deptName"></dd>
+							</dl>
+						</div>
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt>所属人：</dt>
+								<person-show
+                                person-name="$ctrl.detail.housesInquBase.userName"
+                                person-id="$ctrl.detail.housesInquBase.userId"></person-show>
+							</dl>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt>户型：</dt>
+								<dd id="housesLayout"></dd>
+							</dl>
+						</div>
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt>建筑面积：</dt>
+								<dd id="acreage"></dd>
+							</dl>
+						</div>
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<a class=" pictur"  id="add">请先添加实勘图片</a>
+							</dl>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<dt></dt>
+								<dd></dd>
+							</dl>
+						</div>
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								
+							</dl>
+						</div>
+						<div class="col-sm-4">
+							<dl class="dl-horizontal">
+								<button id="past"  type="button" class="btn btn-success pr5">过往实勘</button>
+							</dl>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-4">
+							
+						</div>
+						<div class="col-sm-6">
+							
+						</div>
+					</div>
+				</div>
+				
+		</div>
+		
+	</div>
+	
+	<form role="form">
+	 <div class="form-group">
+			<div class=" panel panel-success ">
+				<div class="col-sm-12 panel-heading">
+					<h3 class="col-sm-1 panel-title">户型图</h3>
+					
+				</div>
+				<div class="panel-body panel-body1">
+					<div class="row img_out">
+						
+							
+						
+					</div>
+				</div>
+		    </div>
+	    </div>
+	    
+		<div style="clear:both;"></div>
+		<div class="form-group">
+		    <div class="panel panel-success">
+				<div class="col-sm-12 panel-heading">
+					<h3 class="col-sm-1 panel-title">室内图</h3>
+					
+				</div>
+				<div class="panel-body panel-body1">
+					<div class="row img_out">
+						
+							
+					</div>
+				</div>
+		    </div>
+		</div>   
+	    <div class="form-group">
+	    	<label for="name">评论</label>
+	    	<textarea  maxlength="500"id="comment" class="form-control" rows="2"></textarea>
+	  	</div>
+	  	<div class="ibox-content">
+			<div class="row all" >
+				<div class="col-md-12">
+						<h4 class="pl10 font-bold font-black info-tit">审核记录</h4>
+					</div>
+					<!-- Example Pagination -->
+					<div class="col-sm-12 ptb10">
+						<table id="J_dataTable_list" class="table table-hover table-striped table table-bordered tables">
+							<thead>
+								<tr>
+									<th class="col-sm-2" data-field="customertype">操作时间</th>
+									<th class="col-sm-2" data-field="name">操作人</th>
+									<th class="col-sm-2" data-field="shopgroup">员工编号</th>
+									<th class="col-sm-2" data-field="createbyname">所在店组</th>
+									<th class="col-sm-4" data-field="createtime">操作内容</th>
+										
+								</tr>
+								
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+		
+    </form>
+</div>
+<div class="row ">
+			<div class="col-md-6">
+				
+			</div>
+			<div class="col-md-4">
+				<div>
+					<div class="col-sm-8  col-sm-off set-4" >
+						<button id="close" type="button" class="btn btn-success pr5 apart">关闭</button>
+						
+					</div>
+				</div>
+			</div>
+			<div class="col-md-2">
+				
+			</div>
+		</div>
+<!-- 过往实勘模态框 -->
+<div id="demo_layer_stantard2" class="ibox-content2" style="display: none">	
+	<div class="inq_past_box">
+		<div class="inq_past_list">		
+			<p class="inq_past_normsg">操作时间：<span class="inq_past_time">2017/1/20</span><span class="inq_past_time">21:00:03</span>操作人：<a class="inq_past_time inq_past_name" href="javascript:;">李武</a></p>
+			<p>删除/上传实勘</p>
+			<ul class="inq_past_imglist">
+				<li>
+					<img class="inq_past_img" src="http://preview.quanjing.com/pm0015/pm0015-7378lp.jpg" />
+					<div class="inq_past_sTitle">户型图</div>
+					<p class="inq_past_title">删除了户型图</p>
+				</li>
+			</ul>
+		</div>
+		<div class="inq_past_list">		
+			<p class="inq_past_normsg">操作时间：<span class="inq_past_time">2017/1/20</span><span class="inq_past_time">21:00:03</span>操作人：<a class="inq_past_time inq_past_name" href="javascript:;">李武</a></p>
+			<p>删除/上传实勘</p>
+			<ul class="inq_past_imglist">
+				<li>
+					<img class="inq_past_img" src="http://preview.quanjing.com/pm0015/pm0015-7378lp.jpg" />
+					<div class="inq_past_sTitle">户型图</div>
+					<p>删除了户型图</p>
+				</li>
+			</ul>
+		</div>
+		<div class="inq_past_list">		
+			<p class="inq_past_normsg">操作时间：<span class="inq_past_time">2017/1/20</span><span class="inq_past_time">21:00:03</span>操作人：<a class="inq_past_time inq_past_name" href="javascript:;">李武</a></p>
+			<p>删除/上传实勘</p>
+			<ul class="inq_past_imglist">
+				<li>
+					<img class="inq_past_img" src="http://preview.quanjing.com/pm0015/pm0015-7378lp.jpg" />
+					<div class="inq_past_sTitle">户型图</div>
+					<p>删除了户型图</p>
+				</li>
+				<li>
+					<img class="inq_past_img" src="http://preview.quanjing.com/pm0015/pm0015-7378lp.jpg" />
+					<div class="inq_past_sTitle">户型图</div>
+					<p>删除了户型图</p>
+				</li>
+				<li>
+					<img class="inq_past_img" src="http://preview.quanjing.com/pm0015/pm0015-7378lp.jpg" />
+					<div class="inq_past_sTitle">户型图</div>
+					<p>删除了户型图</p>
+				</li>
+				<li>
+					<img class="inq_past_img" src="http://preview.quanjing.com/pm0015/pm0015-7378lp.jpg" />
+					<div class="inq_past_sTitle">户型图</div>
+					<p>删除了户型图</p>
+				</li>
+				<li>
+					<img class="inq_past_img" src="http://preview.quanjing.com/pm0015/pm0015-7378lp.jpg" />
+					<div class="inq_past_sTitle">户型图</div>
+					<p>删除了户型图</p>
+				</li>
+				<li>
+					<img class="inq_past_img" src="http://preview.quanjing.com/pm0015/pm0015-7378lp.jpg" />
+					<div class="inq_past_sTitle">户型图</div>
+					<p>删除了户型图</p>
+				</li>
+			</ul>
+		</div>
+		<div class="inq_past_list">		
+			<p class="inq_past_normsg">操作时间：<span class="inq_past_time">2017/1/20</span><span class="inq_past_time">21:00:03</span>操作人：<span class="inq_past_time">李武</span></p>
+			<p>删除/上传实勘</p>
+			<ul class="inq_past_imglist">
+				<li>
+					<img class="inq_past_img" src="http://preview.quanjing.com/pm0015/pm0015-7378lp.jpg" />
+					<div class="inq_past_sTitle">户型图</div>
+					<p>删除了户型图</p>
+				</li>
+			</ul>
+		</div>
+	</div>		
+</div>
+
+<!-- Bootstrap table -->
+<!-- 过往实勘模态框 -->
+<div id="demo_layer_stantard1" class="ibox-content1" style="display: none">	
+	<div class="inq_past_box">
+<!-- 		<div class="inq_past_list">		
+			<p class="inq_past_normsg">操作时间：<span class="inq_past_time" id="inq_past_time"></span>操作人：<a class="inq_past_time inq_past_name" href="javascript:;">李武</a></p>
+			<p>删除/上传实勘</p>
+			<ul class="inq_past_imglist">
+				<li>
+					<img class="inq_past_img" src="http://preview.quanjing.com/pm0015/pm0015-7378lp.jpg" />
+					<div class="inq_past_sTitle">户型图</div>
+					<p class="inq_past_title">删除了户型图</p>
+				</li>
+			</ul>
+		</div>
+		<div class="inq_past_list">		
+			<p class="inq_past_normsg">操作时间：<span class="inq_past_time" id="inq_past_time"></span>操作人：<a class="inq_past_time inq_past_name" href="javascript:;">李武</a></p>
+			<p>删除/上传实勘</p>
+			<ul class="inq_past_imglist">
+				<li>
+					<img class="inq_past_img" src="http://preview.quanjing.com/pm0015/pm0015-7378lp.jpg" />
+					<div class="inq_past_sTitle">户型图</div>
+					<p>删除了户型图</p>
+				</li>
+			</ul>
+		</div>
+		<div class="inq_past_list">		
+			<p class="inq_past_normsg">操作时间：<span class="inq_past_time" id="inq_past_time"></span>操作人：<a class="inq_past_time inq_past_name" href="javascript:;">李武</a></p>
+			<p>删除/上传实勘</p>
+			<ul class="inq_past_imglist">
+				<li>
+					<img class="inq_past_img" src="http://preview.quanjing.com/pm0015/pm0015-7378lp.jpg" />
+					<div class="inq_past_sTitle">户型图</div>
+					<p>删除了户型图</p>
+				</li>
+				<li>
+					<img class="inq_past_img" src="http://preview.quanjing.com/pm0015/pm0015-7378lp.jpg" />
+					<div class="inq_past_sTitle">户型图</div>
+					<p>删除了户型图</p>
+				</li>
+				<li>
+					<img class="inq_past_img" src="http://preview.quanjing.com/pm0015/pm0015-7378lp.jpg" />
+					<div class="inq_past_sTitle">户型图</div>
+					<p>删除了户型图</p>
+				</li>
+				<li>
+					<img class="inq_past_img" src="http://preview.quanjing.com/pm0015/pm0015-7378lp.jpg" />
+					<div class="inq_past_sTitle">户型图</div>
+					<p>删除了户型图</p>
+				</li>
+				<li>
+					<img class="inq_past_img" src="http://preview.quanjing.com/pm0015/pm0015-7378lp.jpg" />
+					<div class="inq_past_sTitle">户型图</div>
+					<p>删除了户型图</p>
+				</li>
+				<li>
+					<img class="inq_past_img" src="http://preview.quanjing.com/pm0015/pm0015-7378lp.jpg" />
+					<div class="inq_past_sTitle">户型图</div>
+					<p>删除了户型图</p>
+				</li>
+			</ul>
+		</div>
+		<div class="inq_past_list">		
+			<p class="inq_past_normsg">操作时间：<span class="inq_past_time" id="inq_past_time"></span>操作人：<span class="inq_past_time">李武</span></p>
+			<p>删除/上传实勘</p>
+			<ul class="inq_past_imglist">
+				<li>
+					<img class="inq_past_img" src="http://preview.quanjing.com/pm0015/pm0015-7378lp.jpg" />
+					<div class="inq_past_sTitle">户型图</div>
+					<p>删除了户型图</p>
+				</li>
+			</ul>
+		</div> -->
+	</div>	
+</div>
+
+
+ <script src="/sales/resources/script/house/public/check_address.js"></script>
+<script src="/sales/resources/script/house/inquisition/inquisition_check/inquisition_cancle_after.js"></script>
+<script src="/sales/resources/script/house/inquisition/inquisition_add/zyupload.js"></script>
+
+

@@ -1,0 +1,53 @@
+<div class="ibox float-e-margins">
+    <div class="ibox-title"><h5>审批流程</h5></div>
+    <div class="ibox-content" ng-repeat="group in $ctrl.ApprovalListGroup">
+        <!-- 审批流程图 -->
+        <iframe ng-if="group.flowChartUrl"
+                force-src="group.flowChartUrl" frameborder="0"
+                style="width: 100%; height: 560px;"></iframe>
+
+        <div class="row row-lg" ng-if="group.contractApprovalList && group.contractApprovalList.length">
+            <div class="col-sm-12">
+                <!-- Example Pagination -->
+                <div class="example-wrap ptb10">
+                    <p></p>
+                    <table class="table table-hover table-striped table-bordered">
+                        <thead>
+                        <tr>
+                            <th>流程序号</th>
+                            <th>合同类型</th>
+                            <th>审批部门</th>
+                            <th>角色</th>
+                            <th>审批人</th>
+                            <th>审批时间</th>
+                            <th>审批结果</th>
+                            <th>审批意见</th>
+                            <th>审批持续时间</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="item in group.contractApprovalList">
+                            <td>{{$index + 1}}</td>
+                            <td>{{item.businessType}}</td>
+                            <td>{{item.approvalDepartment}}</td>
+                            <td>{{item.role}}</td>
+                            <td>{{item.assignee}}</td>
+                            <td>{{item.createTime}}</td>
+                            <td>{{item.statusDesc}}</td>
+                            <td>
+                                <span ng-if="item.status.length < 15">{{item.status}}</span>
+                                <show-text text="item.status"
+                                           ng-if="item.status.length >= 15">
+                                    查看审批意见
+                                </show-text>
+                            </td>
+                            <td>{{item.approvalDuration}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- End Example Pagination -->
+            </div>
+        </div>
+    </div>
+</div>

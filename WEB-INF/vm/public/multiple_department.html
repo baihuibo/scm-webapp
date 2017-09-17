@@ -1,0 +1,29 @@
+#set($plugins = ["chosen","ztree"])
+
+<!-- 查询条件 begin -->
+<div class="ibox">
+	<input id="J_deptJson" type="hidden" class="form-control" value="">
+	<select id="J_deptName" name="dept" class="J_chosen form-control" multiple data-placeholder="请选择">
+	</select>
+</div>
+
+<div id="J_dept_dialog" class="ibox-content" style="margin: 10px;">
+	<div class="form-group">
+		<div>
+			<ul id="J_deptTree" class="ztree"></ul>
+		</div>
+	</div>
+</div>
+<!-- 查询条件end -->
+
+<script type="text/javascript">
+	$(function(){
+		$("select").chosen({
+			width : "100%"
+		});
+		
+		// 显示部门树状结构
+		//showDeptTree($('#J_deptName'), $('#J_deptJson'));
+	})
+</script>
+<script type="text/javascript" src="$link.contextPath/resources/js/multiple-department.js"></script>

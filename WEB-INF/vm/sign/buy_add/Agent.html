@@ -1,0 +1,216 @@
+<div class="ibox">
+	<div class="ibox-title">
+		<h5>客户业主资金交接</h5>
+	</div>
+	<div class="ibox-content">
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label required">成交价：</label>
+					<div class="col-sm-7">
+						<input type="text" class="form-control J_priceCover" id="transactionPrice" name='transactionPrice'>
+					 <span class="color_red help-block"></span>
+					</div>
+					<label class="col-sm-1 control-label">元</label>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label required">主体价（网签价）：</label>
+					<div class="col-sm-7">
+						<input type="text" class="form-control J_priceCover" id="mainPrice"
+							name='mainPrice'>
+						<span class="color_red help-block"></span>
+					</div>
+					<label class="col-sm-1 control-label">元</label> 
+					
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label">装修设施补偿价：</label>
+					<div class="col-sm-7">
+						<input type="text" class="form-control J_priceCover" id="compensationPrice"
+							name='compensationPrice' value="0">
+						<span class="color_red help-block"></span>
+					</div>
+					<label class="col-sm-1 control-label">元</label> 
+		
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>定金金额：</label>
+					<div class="col-sm-7">
+						<input type="text" class="form-control J_priceCover" id="deposit" name='deposit'>
+						<span class="color_red help-block"></span>
+					</div>
+					<label class="col-sm-1 control-label">元</label> 
+		
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>定金交付方式：</label>
+					<div class="col-sm-8">
+						<select name="depositType" id='depositType'
+							class="form-control " data-placeholder="请选择">
+							<option value="">请选择</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>付款方式：</label>
+					<div class="col-sm-8">
+						<select name="payType" id='payType' class="form-control"
+							data-placeholder="请选择">
+							<option value="">请选择</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>付款次数：</label>
+					<div class="col-sm-8">
+						<select name="loanNum" id='loanNum' class="form-control"
+							data-placeholder="请选择">
+							<option value="">请选择</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+							<option value="9">9</option>
+							<option value="10">10</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4 loanAmount">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>贷款金额：</label>
+					<div class="col-sm-7">
+						<input type="text" class="form-control J_priceCover" id="loanAmount"
+							name='loanAmount' autocomplete="off">
+						<span class="color_red help-block" id="J_loan"></span>
+					</div>
+					<label class="col-sm-1 control-label">元</label> 
+		
+				</div>
+			</div>
+			<div class="col-md-4 noBatchLoan">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>未批贷款解决方式：</label>
+					<div class="col-sm-8">
+						<select name="noBatchLoan" id='noBatchLoan' class="form-control "
+							data-placeholder="请选择">
+							<option value="">请选择</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row ptb10">
+			<div class="pl10 font-bold font-blue info-tit">具体付款方式及期限的约定</div>
+		</div>
+		<div id='list'>
+		</div>
+	</div>
+</div>
+<div class="ibox">
+	<div class="ibox-title">
+		<h5>房屋交付、税费、风险</h5>
+	</div>
+	<div class="ibox-content">
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>交付条件:</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" id="deliveryConditions"
+							name='deliveryConditions' autocomplete="off" placeholder="请填写条件">
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>风险责任转移日期:</label>
+					<div class="col-sm-8">
+						<select name="liabilityShift" id='liabilityShift'
+							class="form-control " data-placeholder="请选择">
+							<option value="">请选择</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>税费承担方:</label>
+					<div class="col-sm-8">
+						<select name="taxes" id='taxes' class="form-control "
+							data-placeholder="请选择">
+							<option value="">请选择</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span
+						class="text-danger">*</span>新税费缴纳方:</label>
+					<div class="col-sm-8">
+						<!-- <select name="taxPayingParty" id='taxPayingParty'
+							class="form-control " data-placeholder="请选择">
+							<option value="">请选择</option>
+						</select> -->
+						<select class="form-control" data-placeholder="请选择"
+		                       ng-model="$ctrl.taxpaying_party" chosen required
+		                       ng-options="item.valueCode as item.valueName for item in $ctrl.taxPayingParty"
+		                       id="taxPayingParty" name="taxPayingParty">
+		                   <option value="">请选择</option>
+		               </select>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4" ng-if="$ctrl.taxpaying_party==3">
+				<div class="form-group">
+					<label class="col-sm-4 control-label"><span class="text-danger">*</span>新税费缴纳方描述:</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" id="taxPayingMemo"
+							name='taxPayingMemo' autocomplete="off" placeholder="请填写原因">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 text-cen" style="margin-bottom:200px;margin-top:40px;">
+				<div class="form-group">
+					<!-- <button type="button" class="btn btn-success pr5 J_before">上一步</button> -->
+					<button type="button" class="btn btn-success pr5 J_next">下一步</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

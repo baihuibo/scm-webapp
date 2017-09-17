@@ -1,0 +1,220 @@
+#set($plugins = ["table","chosen","laydate","autoSearch","ztree"])
+<div class="ibox">
+	<div class="ibox-title">
+		<h5>实勘举报管理</h5>
+		<div class="ibox-tools">
+			<a class="collapse-link ui-sortable"> <i
+				class="fa fa-chevron-up"></i>
+			</a>
+		</div>
+	</div>
+					
+	<div class="ibox-content">
+	#if($shiro.hasPermission("SCM:HOUSE:INQANTIFRAUD:CANCEL"))
+	<input type="hidden" value="1" id="temp_cancel"></input>
+	#end
+	#if($shiro.hasPermission("SCM:HOUSE:INQANTIFRAUD:HANDLE"))
+	<input type="hidden" value="1" id="temp_handle"></input>
+	#end
+		<form id="J_query"  class="form-horizontal" role="form">
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">房源编号：</label>
+					<div class="col-sm-8">	
+						<input type="text" class="form-control" name="housesId"  id="" autocomplete="off">					
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label">被举报的实勘编号：</label>
+					<div class="col-sm-7">	
+						<input type="text" class="form-control" name="coverInquId"  id="" autocomplete="off">					
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">举报编号：</label>
+					<div class="col-sm-8">	
+						<input type="text" class="form-control" name="coverReportNo"  id="" autocomplete="off">					
+					</div>
+				</div>
+			</div>
+		</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">业务类型：</label>
+						<div class="col-sm-8">
+							<select id="businessType"name="businessType" class="J_chosen form-control" data-placeholder="全部">													
+								<option value="0">全部</option>
+								<!-- <option value="1">租赁</option>
+								<option value="2">买卖</option> -->
+							</select>
+						</div>
+					</div> 
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">举报状态：</label>
+						<div class="col-sm-8">
+							<select id="reportStatus"name="reportStatus" class="J_chosen form-control" data-placeholder="全部">
+								<!-- <option value="">请选择</option> -->
+								<option value="0">全部</option>
+								<!-- <option value="1">已撤销</option>
+								<option value="2">超期</option> --> -->
+							</select>
+						</div>
+					</div> 
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">处理结果：</label>
+						<div class="col-sm-8">
+							<select id="reportResult"name="reportResult" class="J_chosen form-control" data-placeholder="全部">
+								 <option value="0">全部</option>
+							<!--	<option value="1">错误举报</option>
+								<option value="2">真实举报</option> -->
+							</select>
+						</div>
+					</div> 
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">举报时间:</label>
+						<div class="col-sm-8" layout="row">
+							<div flex><input id="J_begindate" name="beginDate" class="J_chosen form-control" readonly style="background-color: #FFFFFF;"></div>
+							<div class="split">-</div>
+							<div flex><input id="J_enddate" name="endDate" class="J_chosen form-control" readonly style="background-color: #FFFFFF;"></div>
+						</div>
+					</div>
+				</div>
+				<!-- <div class="col-md-4">
+					<div class="form-group">
+					<label class="col-sm-3 control-label">举报人：</label>
+					<div class="col-sm-8">	
+						<input type="text" class="form-control" name="reportName"  id="" autocomplete="off">					
+					</div>
+				
+					</div>
+				</div> -->
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">举报人：</label>
+						<div class="col-sm-8">
+							<div class="input-group">
+								<input type="text" class="form-control" id="J_repor" name="reportName" autocomplete="off">
+								<div class="input-group-btn">
+									<button type="button" class="btn btn-white dropdown-toggle"
+										data-toggle="">
+										<span class="glyphicon glyphicon-search search-caret"></span>
+									</button>
+									<ul class="dropdown-menu dropdown-menu-right" role="menu"
+										style="padding-top: 0px; max-height: 375px; max-width: 800px; overflow: auto; width: auto; transition: 0.3s; left: -110px; right: auto; min-width: 145px;">
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- <div class="col-md-4">
+					<div class="form-group">
+					<label class="col-sm-3 control-label">被举报人：</label>
+					<div class="col-sm-8">	
+						<input type="text" class="form-control" name="coverReportName"  id="" autocomplete="off">					
+					</div>
+				
+					</div>
+				</div> -->
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">被举报人：</label>
+						<div class="col-sm-8">
+							<div class="input-group">
+								<input type="text" class="form-control" id="J_coverReport" name="coverReportName" autocomplete="off">
+								<div class="input-group-btn">
+									<button type="button" class="btn btn-white dropdown-toggle"
+										data-toggle="">
+										<span class="glyphicon glyphicon-search search-caret"></span>
+									</button>
+									<ul class="dropdown-menu dropdown-menu-right" role="menu"
+										style="padding-top: 0px; max-height: 375px; max-width: 800px; overflow: auto; width: auto; transition: 0.3s; left: -110px; right: auto; min-width: 145px;">
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12 text-cen">
+                    <div class="form-group">
+                         <button id="J_search" type="button" class="btn btn-success btn_size">查 询</button>
+                         <button id="J_reset" type="reset" class="btn btn-white btn_size">重 置</button>
+                    </div>
+                 </div>
+			</div>
+			<!-- <div class="row btns"> -->
+
+		</form>
+	</div>
+</div>
+<div class="ibox float-e-margins">
+	<div class="ibox-title">
+        <h5>实勘举报列表</h5>
+     </div>
+	<div class="ibox-content">
+		<div class="row all" >
+			<div class="col-sm-12">
+					
+				<!-- Example Pagination -->
+				<div class="col-sm-12 ptb10">
+					<table id="J_dataTable_list" class="table table-hover table-striped table table-bordered tables">
+						<thead>
+								<tr>
+									<th data-field="housesId">房源编号</th>
+									<th data-field="coverInquId">被举报的<br>实勘编号</th>	
+									<th data-field="coverReportNo">举报编号</th>
+									<th data-field="businessType">业务类型</th>
+									<th data-field="reportName">举报人</th>
+									<th data-field="coverReportName">被举报人</th>
+									<th data-field="reportTime">举报时间</th>
+									<th data-field="handleName">处理人</th>
+									<th data-field="handleTime">处理时间</th>
+									<th data-field="reportStatus">举报状态</th>
+									<th data-field="reportResult">处理结果</th>
+									<th data-field="operation">操作</th>
+									<!--  <th data-field="phone">操作</th>
+									-->
+								</tr>
+								
+							</thead>
+					</table>
+				</div>
+				<!-- End Example Pagination -->
+			</div>
+		</div>
+	</div>	
+</div>
+
+</div>
+<!-- Bootstrap table -->
+<div id="demo_layer" class="ibox-content" style="display: none">
+	<form id="retreatkey_form" name="retreatkey_form" class="form-horizontal">
+		<div class="form-group">
+			<label class="col-sm-3 control-label">客户姓名：</label>
+			<p class="col-sm-9 form-control-static">李老师</p>
+		</div>
+		<div class="form-group" style="background:#ccffff;">
+			<label class="col-sm-3 control-label">电话：</label>
+			<p class="col-sm-9 form-control-static">15834526473，15834526473</p>
+		</div>
+	</form>
+</div>
+<script src="/sales/resources/script/house/inquisition/antifraud/antifraud_news.js"></script>
+
+

@@ -1,0 +1,289 @@
+<!-- 录入计划收款 -->
+<div class="panel-body">
+	<div class="ibox-content">
+		<form id="form1" class="form-horizontal">
+			<div class="pl10 font-bold font-blue info-tit">
+				<i class="glyphicon glyphicon-minus"></i>收款计划	
+				<!-- <a class="btn btn-success pr5 m-b-sm" id="addplan" ng-if="!$ctrl.contract&&!$ctrl.client">添 加</a> -->								
+			</div>
+			<div ng-repeat="items in $ctrl.detail">
+				<div class="row m-t-md">
+					<strong>合同{{$index+1}}</strong>
+					<!-- <a class="btn btn-success" id="delplan" ng-click="$ctrl.removecontract(items , $ctrl.detail)" ng-if="!$ctrl.contract">删除</a> -->
+				</div>
+				<div class="row m-t-md">
+					<div class="col-md-3">
+						<dl class="dl-horizontal">
+							<dt>合同编号：</dt>
+							<dd>{{items.contractCode}}</dd>
+						</dl>
+					</div>
+					<div class="col-md-3">
+						<dl class="dl-horizontal">
+							<dt>收款来源：</dt>
+							<dd ng-if="items.collectionSource==1">租赁合同</dd>
+							<dd ng-if="items.collectionSource==2">买卖合同</dd>
+						</dl>
+					</div>
+					<div class="col-md-3">
+						<dl class="dl-horizontal">
+							<dt>客户姓名：</dt>
+							<dd>{{items.contractClientName}}</dd>
+						</dl>
+					</div>
+					<div class="col-md-3">
+						<dl class="dl-horizontal">
+							<dt>业主姓名：</dt>
+							<dd>{{items.contractOwnerName}}</dd>
+						</dl>
+					</div>
+				</div>
+				<div class="row">
+					<strong>款项</strong>
+				</div>
+				<div class="row row-lg">
+					<div class="col-sm-12">
+						<div class="example-wrap ptb10">
+							<table id="J_funddataTable" class="table table-hover table-striped table-condensed">
+								<thead>
+									<tr>
+										<!-- <th><input name="checkboxAll" type="checkbox" id="checkboxAll"></th> -->
+										<th data-field="">序号</th>
+										<th data-field="">款项名称</th>
+										<th data-field="">应收日期</th>
+										<th data-field="">应收金额</th>
+										<th data-field="">待收金额</th>
+										<th data-field="">实收金额（已审批）</th>
+										<th data-field="">在途金额（审批中） </th>
+										<th data-field="">退款金额</th>
+										<th data-field="">收款单位</th>
+										<th data-field="">付款方</th>
+										<th data-field="">付款单位/个人</th>
+										<th data-field="">本次收取金额</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="item in items.planList">
+										<!-- <td><input name="checkboxItem" type="checkbox" ng-model="item.$$checked"></td> -->
+										<td>{{$index+1}}</td>
+										<td>{{item.fundName}}</td>
+										<td>{{item.estCollectionDate | deleteMinute}}</td>
+										<td>{{item.receivableAmount}}</td>
+										<td>{{item.paidAmount}}</td>
+										<td>{{item.actualAmount}}</td>
+										<td>{{item.transitAmount}}</td>
+										<td>{{item.refundAmount}}</td>
+										<td>{{item.payeeStr}}</td>
+										<td>{{item.payerStr}}</td>
+										<td>{{item.payerName}}</td>
+										<td>{{item.amount}}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<!-- <pre>$ctrl.detail = {{$ctrl.detail | json}}</pre> -->
+			
+			<div ng-if="$ctrl.ifbuyDetail"> 
+				
+				<div class="row">
+					<strong>买卖客源</strong>
+				</div>
+				<div class="row  m-t-md">
+					<div class="col-md-3">
+						<dl class="dl-horizontal">
+							<dt>客户编号：</dt>
+							<dd>{{$ctrl.buyDetail.clientId}}</dd>
+						</dl>
+					</div>
+					<div class="col-md-3">
+						<dl class="dl-horizontal">
+							<dt>客户姓名：</dt>
+							<dd>{{$ctrl.buyDetail.clientName}}</dd>
+						</dl>
+					</div>
+					<div class="col-md-3">
+						<dl class="dl-horizontal">
+							<dt>收款来源：</dt>
+							<dd>{{$ctrl.buyDetail.businessType}}</dd>
+						</dl>
+					</div>
+					<div class="col-md-3">
+						<dl class="dl-horizontal">
+							<dt>房源编号：</dt>
+							<dd>{{$ctrl.buyDetail.houseId}}</dd>
+						</dl>
+					</div>
+				</div>
+			</div>
+		</form>
+		<div class="row">
+			<div class="col-md-12 text-cen">
+				<div class="form-group">
+					<button type="button" class="btn btn-success btn_size J_next"  ng-click="$ctrl.tab(0)">下一步</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- 计划添加 -->
+<div id="add_layer" class="ibox-content" style="display: none">
+	<div class="tabs-container">
+		<ul class="nav nav-tabs nav_tab_ath m-b-sm">
+			<li class="active"><a data-toggle="tab" href="#tab-11">合同</a></li>
+			<li class=""><a data-toggle="tab" href="#tab-12">买卖意向</a></li>
+		</ul>
+	</div>
+	<div class="tab-content" id="tab-content1">
+		<div id="tab-11" class="tab-pane active">
+			<div class="panel-body">
+				<form class="form-horizontal" role="form" id="J_contractform">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="col-sm-3 control-label">合同编号：</label>
+								<div class="col-sm-8">	
+									<input type="text" class="form-control" name="contractCode" id="J_contractCode">					
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="col-sm-3 control-label">业务类型：</label>
+								<div class="col-sm-8">	
+									<select id="J_businessType" name="businessType" class="J_chosen form-control" data-placeholder="请选择">
+										<option value="">请选择</option>
+										<!-- <option value="1">租赁</option>
+										<option value="2">买卖</option> -->
+									</select>			
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="col-sm-3 control-label">客户姓名：</label>
+								<div class="col-sm-8">	
+									<input type="text" class="form-control" name="customerName" id="J_customerName">					
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="col-sm-3 control-label">业主姓名：</label>
+								<div class="col-sm-8">	
+									<input type="text" class="form-control" name="ownerName" id="J_ownerName">					
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12 text-cen">
+							<div class="form-group">
+								<button id="J_contractsearch" type="button" class="btn btn-success btn_size">查 询</button>
+								<button id="J_reset" type="reset" class="btn btn-white btn_size">重 置</button>
+							</div>
+						</div>
+					</div>
+					<div class="row row-lg">
+						<div class="col-sm-12">
+							<div class="example-wrap ptb10">
+								<table id="J_contractdataTable" class="table table-hover table-striped table-condensed" 
+									data-query-params="queryParams" data-mobile-responsive="true" 
+									data-pagination="true" data-icon-size="outline"
+									data-striped="true" data-search="false">
+									<thead>
+										<tr>
+											<th data-field="">选择</th>
+											<th data-field="">合同编号</th>
+											<th data-field="">业务类型</th>
+											<th data-field="">客户姓名</th>
+											<th data-field="">业主姓名</th>
+											<th data-field="">录入日期</th>
+											<th data-field="">成交人</th>
+											<th data-field="">所属部门</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div id="tab-12" class="tab-pane">
+			<div class="panel-body">
+				<form class="form-horizontal" role="form" id="J_intentionform">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="col-sm-3 control-label">客户编号：</label>
+								<div class="col-sm-8">	
+									<input type="text" class="form-control" name="clientId" id="J_clientId">					
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="col-sm-3 control-label">客户姓名：</label>
+								<div class="col-sm-8">	
+									<input type="text" class="form-control" name="customerName" id="J_customerName">					
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="col-sm-3 control-label">房源编号：</label>
+								<div class="col-sm-8">	
+									<input type="text" class="form-control" name="houseId" id="J_houseId">					
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="col-sm-3 control-label">带看单号：</label>
+								<div class="col-sm-8">	
+									<input type="text" class="form-control" name="showingsId" id="J_showingsId">					
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12 text-cen">
+							<div class="form-group">
+								<button id="J_intentionsearch" type="button" class="btn btn-success btn_size">查 询</button>
+								<button id="J_reset" type="reset" class="btn btn-white btn_size">重 置</button>
+							</div>
+						</div>
+					</div>
+					<div class="row row-lg">
+						<div class="col-sm-12">
+							<div class="example-wrap ptb10">
+								<table id="J_intentiondataTable" class="table table-hover table-striped table-condensed" 
+									data-query-params="queryParams" data-mobile-responsive="true" 
+									data-pagination="true" data-icon-size="outline"
+									data-striped="true" data-search="false">
+									<thead>
+										<tr>
+											<th data-field="">选择</th>
+											<th data-field="">房源编号</th>
+											<th data-field="">客户编号</th>
+											<th data-field="">带看单号</th>
+											<th data-field="">客户姓名</th>
+											<th data-field="">性别</th>
+											<th data-field="">国籍</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,34 @@
+#set($plugins = ["table","chosen","autoSearch","laydate","validator"])
+<!-- 收款计划页面 -->
+<div class="ibox float-e-margins" id="ibox" ng-controller="PlanCtrl as $ctrl" ng-cloak>
+	<div class="row">
+		<div class="tabs-container">
+			<ul class="nav nav-tabs" id="lease-add"
+				style="background-color: #EBEBEB">
+				<li class="active" ng-show="!$ctrl.client"><a class="taba" data-toggle="tab"
+					href="#tab-1">录入收款计划</a></li>
+				<li ng-class="{active: $ctrl.client}">
+				<a class="taba" data-toggle="tab" href="#tab-1" ng-if="$ctrl.client">录入收款</a>
+				<a class="taba" ng-if="!$ctrl.client">录入收款</a>
+				</li>
+				<li class=""><a class="taba">录入收据</a></li>
+			</ul>
+			<div class="tab-content">
+				<div id="tab-1" class="tab-pane active" ng-show="!$ctrl.client">
+					#parse("/finance/collect/edit/plan.html")
+				</div>
+				<div id="tab-2" ng-class="{'active': $ctrl.client,'tab-pane':true}">
+					#parse("/finance/collect/edit/gathering.html")
+					
+				</div>
+				<div id="tab-3" class="tab-pane">
+					#parse("/finance/collect/edit/receipt.html")
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script src="$link.contextPath/resources/script/sign/sign-common.module.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/sign-laydate.directive.js"></script>
+<script src="$link.contextPath/resources/script/finance/collect/batch_edit.module.js?v=1"></script>

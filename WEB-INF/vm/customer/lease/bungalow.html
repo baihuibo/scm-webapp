@@ -1,0 +1,395 @@
+<div class="ibox-title">
+	<h5>平房需求</h5>
+</div>
+<div class="ibox-content">
+#if ($!VO.customer.hasBungalow==1)
+<div class="row">
+	<div class="customer_info_content">
+		<div class="row ptb10">
+			<div class="font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>房源需求</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt data-columns="minprice,maxprice|intervalInput||$!VO.customer.bungalow.minPrice,$!VO.customer.bungalow.maxPrice" class="J_edit_area"><span class="text-danger">*</span>价格区间：</dt>
+					<dd>
+						#if ($!VO.customer.bungalow.minPrice) $number.format("#0.00", $!VO.customer.bungalow.minPrice) #end - 
+						#if ($!VO.customer.bungalow.maxPrice) $number.format("#0.00", $!VO.customer.bungalow.maxPrice) #end <span>元/月</span>
+					</dd>
+				</dl>
+			</div>
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt data-columns="minarea,maxarea|intervalInput||$!VO.customer.bungalow.minArea,$!VO.customer.bungalow.maxArea" class="J_edit_area"><span class="text-danger">*</span>需求面积：</dt>
+					<dd>
+						#if ($!VO.customer.bungalow.minArea) $number.format("#0.00", $!VO.customer.bungalow.minArea) #end - 
+						#if ($!VO.customer.bungalow.maxArea) $number.format("#0.00", $!VO.customer.bungalow.maxArea) #end <span>平方米</span>
+					</dd>
+				</dl>
+			</div>
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt data-columns="bedroom1,bedroom2|intervalSelect|houseStructure|$!VO.customer.bungalow.bedRoom1,$!VO.customer.bungalow.bedRoom2" class="J_edit_area"><span class="text-danger">*</span>户型：</dt>
+					<dd>
+						#if ($!VO.customer.bungalow.bedRoom1) $!VO.customer.bungalow.bedRoom1 #end 或 
+						#if ($!VO.customer.bungalow.bedRoom2) $!VO.customer.bungalow.bedRoom2 #end <span>室</span>
+					</dd>
+				</dl>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt data-columns="roomtype|select|layoutStructure|$!VO.customer.bungalow.roomTypeId" class="J_edit_area">户型结构：</dt>
+					<dd>$!VO.customer.bungalow.roomTypeName</dd>
+				</dl>
+			</div>
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt data-columns="furniture|checkbox|furniture|$!VO.customer.bungalow.furnitureIds" class="J_edit_area">家具：</dt>
+					<dd>$!VO.customer.bungalow.furnitureNames</dd>
+				</dl>
+			</div>
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt data-columns="electric|checkbox|electric|$!VO.customer.bungalow.electricIds" class="J_edit_area">家电：</dt>
+					<dd>$!VO.customer.bungalow.electricNames</dd>
+				</dl>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="customer_info_content">
+		<div class="row ptb10">
+			<div class="font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>区域需求</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt id="J_editBuild" data-columns="$!VO.customer.bungalow.buildingIds|$!VO.customer.bungalow.buildingAllNames">需求楼盘：</dt>
+					<dd>$!VO.customer.bungalow.buildingNames</dd>
+				</dl>
+			</div>
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt id="J_editBusiness" data-columns="$!VO.customer.bungalow.businessIds|$!VO.customer.bungalow.businessAllNames"><span class="text-danger">*</span>商圈：</dt>
+					<dd>$!VO.customer.bungalow.businessNames</dd>
+				</dl>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="customer_info_content">
+		<div class="row ptb10">
+			<div class="font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>其他需求</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt data-columns="entertime|date||$!date.format('yyyy-MM-dd', $!VO.customer.bungalow.enterTime)" class="J_edit_area">入住时间：</dt>
+					<dd>$!date.format('yyyy-MM-dd', $!VO.customer.bungalow.enterTime)</dd>
+				</dl>
+			</div>
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt data-columns="renttime|input||$!VO.customer.bungalow.rentTime" class="J_edit_area">租期：</dt>
+					<dd>$!VO.customer.bungalow.rentTime <span>月</span></dd>
+				</dl>
+			</div>
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt data-columns="rentmode|select|rentMode|$!VO.customer.bungalow.rentModeId" class="J_edit_area">合租意向：</dt>
+					<dd>$!VO.customer.bungalow.rentModeName</dd>
+				</dl>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt data-columns="paytype|select|paymentMode|$!VO.customer.bungalow.payTypeId" class="J_edit_area">付租方式：</dt>
+					<dd>$!VO.customer.bungalow.payTypeName</dd>
+				</dl>
+			</div>
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt data-columns="cash|select|foregift|$!VO.customer.bungalow.depositTypeId" class="J_edit_area">押金：</dt>
+					<dd>$!VO.customer.bungalow.depositTypeName</dd>
+				</dl>
+			</div>
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt data-columns="urgency|select|urgency|$!VO.customer.bungalow.urgencyTypeId" class="J_edit_area">紧急度：</dt>
+					<dd>$!VO.customer.bungalow.urgencyTypeName</dd>
+				</dl>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4">
+				<dl class="dl-horizontal">
+					<dt id="J_editBill" data-columns="$!VO.customer.bungalow.isNeedBill|$!VO.customer.bungalow.billTypesId">其他需求：</dt>
+					<dd>$!VO.customer.bungalow.billTypesName</dd>
+				</dl>
+			</div>
+		</div>
+	</div>
+</div>
+#else
+<form name="form6" class="form-horizontal" role="form">
+<div class="row">
+	<div class="customer_info_content">
+		<div class="row ptb10">
+			<div class="font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>房源需求</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span
+						class="text-danger">*</span>价格区间：</label>
+					<div class="col-sm-3">
+						<input type="text" class="form-control J_minPrice" name="minPrice" required>
+					</div>
+					<div class="control-spacing">-</div>
+					<div class="col-sm-3">
+						<input type="text" class="form-control J_maxPrice" name="maxPrice" required>
+					</div>
+					<label class="control-label">元/月</label>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span
+						class="text-danger">*</span>需求面积：</label>
+					<div class="col-sm-3">
+						<input type="text" class="form-control J_minArea" name="minArea" autocomplete="off">
+					</div>
+					<div class="control-spacing">-</div>
+					<div class="col-sm-3">
+						<input type="text" class="form-control J_maxArea" name="maxArea" autocomplete="off">
+					</div>
+					<label class="control-label">平方米</label>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><span
+						class="text-danger">*</span>户型：</label>
+					<div class="col-sm-3">
+						<select id="J_bedRoom1" name="bedRoom1" class="J_chosen form-control J_bedRoom1" data-placeholder="请选择" required>
+							<option value="">请选择</option>							
+						</select>
+						<!-- <input type="text" class="form-control" id="bedRoom1" autocomplete="off"> -->
+					</div>
+					<div class="control-spacing">或</div>
+					<div class="col-sm-3">
+						<select id="J_bedRoom2" name="bedRoom2" class="J_chosen form-control J_bedRoom2" data-placeholder="请选择" required>
+							<option value="">请选择</option>							
+						</select>
+						</div>
+					<label class="control-label">室</label>
+					<input type="hidden" class="form-control" id="" value='1,1'>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">户型结构：</label>
+					<div class="col-sm-7">
+						<select id="J_layoutStructure" name="roomTypeId"
+							class="J_chosen form-control J_layoutStructure" data-placeholder="请选择">
+							<option value="">请选择</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label class="col-sm-2 control-label">家具：</label>
+					<div id="" class="col-sm-9 J_furniture">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-1 control-label">家电：</label>
+					<div id="" class="col-sm-9 J_electric">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="customer_info_content">
+		<div class="row ptb10">
+			<div class="font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>区域需求</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group clear">
+					<label class="col-md-1 control-label">需求楼盘：</label>
+					<div class="col-md-10">
+						<a id="J_addBuild" class="btn-green btn-bitbucket" style="float: right; margin-top: 10px;">
+							<i class="glyphicon glyphicon-plus"></i>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 m-b-sm ">
+				<div class="form-group clear">
+					<label class="col-md-1 control-label"></label>
+					<div class="col-md-10">
+						<div class="bootstrap-table table-list">
+							<div class="fixed-table-container">
+								<table id="J_dataTableBuild" class="table table-hover table-striped" style="border-bottom: none">
+									<thead>
+										<tr>
+											<th data-field="id">楼盘</th>
+											<th data-field="opt">操作</th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group clear">
+					<label class="col-md-1 control-label"><span class="text-danger">*</span>商圈：</label>
+					<div class="col-md-10">
+						<a id="J_addBusiness" class="btn-green btn-bitbucket" style="float: right; margin-top: 10px;">
+							<i class="glyphicon glyphicon-plus"></i>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 m-b-sm">
+				<div class="form-group clear">
+					<label class="col-md-1 control-label"></label>
+					<div class="col-md-10">
+						<div class="bootstrap-table table-list">
+							<div class="fixed-table-container">
+								<table id="J_dataTableBusiness" class="table table-hover table-striped" style="border-bottom: none">
+									<thead>
+										<tr>
+											<th data-field="id">商圈</th>
+											<th data-field="price">所属行政区</th>
+											<th data-field="opt">操作</th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>	
+<div class="row">
+	<div class="customer_info_content">
+		<div class="row ptb10">
+			<div class="font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>其他需求</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">入住时间：</label>
+					<div class="col-sm-7">
+						<input type="text" class="form-control enterTime" id="enterTime1" name="enterTime" onclick="laydate({istime: false, format: 'YYYY-MM-DD'})">
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">租期：</label>
+					<div class="col-sm-7">
+						<input type="text" class="form-control" name="rentTime">
+					</div>
+					<label class="control-label">月</label>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">合租意向：</label>
+					<div class="col-sm-7">
+						<select id="J_rentMode" name="rentModeId" class="form-control J_rentMode"
+							data-placeholder="请选择" style="display: none;">
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">付租方式：</label>
+					<div class="col-sm-7">
+						<select id="J_paymentMode" name="payTypeId" class="form-control J_paymentMode"
+							data-placeholder="请选择" style="display: none;">
+							<option value="">请选择</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">押金：</label>
+					<div class="col-sm-7">
+						<select id="J_foregift" name="depositTypeId" class="form-control J_foregift"
+							data-placeholder="请选择" style="display: none;">
+							<option value="">请选择</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">紧急度：</label>
+					<div class="col-sm-7">
+						<select id="J_urgency" name="urgencyTypeId" class="form-control J_urgency"
+							data-placeholder="请选择" style="display: none;">
+							<option value="">请选择</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-1 control-label">其他需求：</label>
+					<div class="col-sm-2">
+						<select name="isNeedBill" class="form-control J_isBill" data-placeholder="请选择" style="display: none;">
+							<option value="">请选择</option>
+						</select>
+					</div>
+					<div class="col-sm-3 J_bill" style="padding-left: 10px; display:none">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row mb20">
+	<div class="col-md-12 text-cen">
+		<div class="form-group">
+			<button id="J_addBtn" type="button" class="btn btn-success pr5">保 存</button>
+		</div>
+	</div>
+</div>
+</form>
+#end
+</div>

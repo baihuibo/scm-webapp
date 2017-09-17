@@ -1,0 +1,157 @@
+#set($plugins = ["table","chosen"])
+<style>
+.table>thead>tr>th{vertical-align: middle !important;}
+</style>
+<!-- <h1>费用处理</h1> -->
+<div class="ibox">
+	<div class="ibox-title">
+		<div class="row pt6">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-12 control-label" id="signnumber"></label>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="col-sm-12 control-label" id="strauditstatus"></label>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="ibox-content">
+		<div class="ibox float-e-margins">
+			<div class="row">
+				<div class="tabs-container">
+					<ul class="nav nav-tabs block-tabs-nav">
+						<li><i>|</i></li>
+						#if($shiro.hasPermission("SCM:SALES:RETREAT_INFORMATION_VIEW"))
+						<li class="" id="goTuidanInfor"><a data-toggle="tab">退单信息</a></li>
+						<li><i>|</i></li>
+						#end
+						#if($shiro.hasPermission("SCM:SALES:RETREAT_COST_VIEW"))
+						<li class="active" id="gofeiYongcl"><a href="javascript:;">费用处理</a></li>
+						<li><i>|</i></li>
+						#end
+						#if($shiro.hasPermission("SCM:SALES:RETREAT_COST_ENCLOSURE_SEE"))
+						<li id="goAttachment"><a href="javascript:;">附件管理</a></li>
+						<li><i>|</i></li>
+						#end
+						#if($shiro.hasPermission("SCM:SALES:RETREAT_COST_AGREEMENT_QUERY"))
+						<li id="goAgreement"><a href="javascript:;">补充协议</a></li>
+						<li><i>|</i></li>
+						#end
+						#if($shiro.hasPermission("SCM:SALES:RETREAT_COST_AGREEMENT_PROCESS_QUERY"))
+						<li id="goShenPlc"><a href="javascript:;">审批流程</a></li>
+						<li><i>|</i></li>
+						#end
+						<!-- #if($shiro.hasPermission("SCM:SALES:RETREAT_COST_DETAILED_VIEW")).....添加权限 -->
+						<li id="performance" ><a href="javascript:;" >业绩信息</a></li>
+						<li><i>|</i></li>
+						<!-- #end -->
+						#if($shiro.hasPermission("SCM:SALES:RETREAT_COST_DETAILED_VIEW"))
+						<li id="goFeiyzhixmx" style="display:none"><a href="javascript:;" >费用执行明细</a></li>
+						#end
+					</ul>
+				</div>
+			</div>
+			#if($shiro.hasPermission("SCM:SALES:RETREAT_COST_VIEW"))
+			<div class="row ptb10">
+				<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>费用处理(付款)</div>
+			</div>
+			<form class="form-horizontal" role="form">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group" style="padding-left:6px">
+							<label class="col-sm-3 control-label">应付总额(元)：</label>
+							<div class="col-sm-8">
+								<input class="form-control" name="" id="J_yingfu" value="" readonly="" type="text">
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+			<div class="ibox float-e-margins mb20">
+				<div class="col-md-12 text-right mb20">
+					#if($shiro.hasPermission("SCM:SALES:RETREAT_COST_REFUND"))
+					<button id="J_refundapplyadd" class="btn btn-success btn-altogether btn_size" disabled>录入退款申请</button>
+					#end
+					#if($shiro.hasPermission("SCM:SALES:RETREAT_COST_PAYMENT"))
+					<button id="J_paymentapplyadd" class="btn btn-success btn-altogether btn_size" disabled>录入付款申请</button>
+					#end
+					#if($shiro.hasPermission("SCM:SALES:RETREAT_COST_TRANSFER"))
+					<button id="J_transferapplyadd" class="btn btn-success btn-altogether" disabled>录入转款申请</button>
+					#end
+				</div>
+		  		<div class="row row-lg">
+					<div class="col-sm-12">
+						<table id="J_cost_dataTable" class="table table-hover table-striped table table-bordered tables table-condensed">
+							<thead>
+								<tr>
+									<th data-field="a">序号</th>
+									<th data-field="b">费用类型</th>
+									<th data-field="c">单据号</th>
+									<th data-field="d">款项名称</th>
+									<th data-field="e">付款单位</th>
+									<th data-field="f">收款方</th>
+									<th data-field="g">收款人</th>
+									<th data-field="h">转入合同</th>
+									<th data-field="j">金额/元</th>
+									<th data-field="k">付款日期</th>
+									<th data-field="l">开户人姓名<br />银行账户</th>
+									<th data-field="m">开户人证件类型</br>证件编号</th>
+									<th data-field="n">支付方式</th>
+									<th data-field="p">操作</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="ibox float-e-margins mb20">
+				<div class="row ptb10">
+					<div class="pl10 font-bold font-blue info-tit"><i class="glyphicon glyphicon-minus"></i>费用处理(收款)</div>
+				</div>
+				<form class="form-horizontal" role="form">
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group" style="padding-left:6px">
+								<label class="col-sm-3 control-label">应收总额(元)：</label>
+								<div class="col-sm-8">
+									<input class="form-control" name="" id="J_yingshou" value="" readonly="" type="text">
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+				#if($shiro.hasPermission("SCM:SALES:RETREAT_COST_RECEIVABLES"))
+				<div class="col-md-12 text-right mb20">
+					<button id="J_altogether" class="btn btn-success btn-altogether" disabled>录入收款</button>
+				</div>
+				#end
+				<div class="row row-lg">
+					<div class="col-sm-12 mb20">
+						<table id="J_costreceipt_dataTable" class="table table-hover table-striped table table-bordered tables table-condensed">
+							<thead>
+								<tr>
+									<th data-field="a">序号</th>
+									<th data-field="b">费用类型</th>
+									<th data-field="c">收据编号</th>
+									<th data-field="d">收款批次单号</th>
+									<th data-field="e">款项名称</th>
+									<th data-field="f">收款单位</th>
+									<th data-field="g">付款方</th>
+									<th data-field="h">付款单位/个人</th>
+									<th data-field="j">金额/元</th>
+									<th data-field="k">收款日期</th>
+									<!-- <th data-field="l">操作</th> -->
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+			#end
+		</div>
+	</div>
+</div>
+<script src="$link.contextPath/resources/script/sign/chargeback/cost.js"></script>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css?v=3.3.6">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.css?v=4.4.0">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/animate.css/3.5.2/animate.css?v=3.5.2">
+    <link rel="stylesheet"
+          href="https://cdn.bootcss.com/awesome-bootstrap-checkbox/0.3.7/awesome-bootstrap-checkbox.css?v=0.3.7">
+    <link rel="stylesheet" href="../resources/css/angular-material.layout-attributes.min.css">
+    <link rel="stylesheet" href="../resources/css/sales.css">
+
+    <link rel="stylesheet" href="../resources/css/sales-base.css">
+
+    <!-- 全局js -->
+    <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.js?v=2.1.4"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.js?v=3.3.6"></script>
+    <script src="../resources/js/lodash.js"></script>
+    <script src="../resources/js/moment.js"></script>
+    <script src="../resources/js/core.min.js"></script>
+    <script src="../resources/js/angular.js"></script>
+    <script src="../resources/js/base.module.js"></script>
+    <script src="../resources/js/basic.js"></script>
+
+    <script src="../resources/js/sea.js"></script>
+    <script src="../resources/js/seajs-wrap.js"></script>
+    <script src="../resources/js/seajs-preload.js"></script>
+    <script src="../resources/sea-config.js"></script>
+
+    <script>
+        var basePath = '/sales';
+        var staticBasePath = 'http://10.2.1.23:1111/static';
+    </script>
+
+</head>
+<body ng-controller="demoCtrl as $ctrl" ng-cloak>
+
+$ctrl.data = {{$ctrl.data}}
+
+
+<form ng-submit="$ctrl.count = 1" layout="row" layout-wrap>
+    <form-item text="请输入用户名" flex="50">
+        <sales-input type="text" name="userInfo"
+                     value="$ctrl.data.startName"
+                     validate-rule="{ruels:{maxlength:12,required:$ctrl.required},noMax: $ctrl.data.endName, regexp :'aaa'}"></sales-input>
+    </form-item>
+    <form-item text="输入用户信息" flex="50">
+        <sales-input type="text" value="$ctrl.data.endName"
+                     validate-rule="{ruels:{required:$ctrl.required}, maxTo: $ctrl.data.startName}"></sales-input>
+    </form-item>
+
+    <button type="button" ng-click="$ctrl.required = !$ctrl.required"> toggle required</button>
+
+    <form-item>
+        <button>submit</button>
+    </form-item>
+</form>
+
+<div class="form-group">
+    <label class="control-label"></label>
+</div>
+
+<script>
+    seajs.use('demos/demo.controller');
+</script>
+</body>
+</html>

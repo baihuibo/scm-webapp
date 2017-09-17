@@ -1,0 +1,404 @@
+#set($plugins = ["table","chosen","laydate","autoSearch","validator","ztree"])
+<div ng-controller="salesAddCtrl as $ctrl" ng-cloak id="controller">
+<div class="ibox float-e-margins">
+	<div class="row">
+		<div class="tabs-container">
+			<ul class="nav nav-tabs" id="lease-add"
+				style="background-color: #EBEBEB">
+				<li class="active"><a class="taba" data-toggle="tab"
+					href="#tab-1">交易双方信息</a></li>
+				<li class=""><a class="taba">房源及权属信息</a></li>
+				<li class=""><a class="taba">资金交接及房屋交付</a></li>
+				<!-- <li class=""><a class="taba">居间经纪人</a></li>
+				<li class=""><a class="taba">客户业主资金交接</a></li>
+				<li class=""><a class="taba">房屋交付、税费、风险</a></li> -->
+				<li class=""><a class="taba">公司服务费</a></li>
+				<li class=""><a class="taba">合同非打印项</a></li>
+			</ul>
+			<div class="tab-content">
+				<div id="tab-1" class="tab-pane">
+					<div class="panel-body">
+						<form id="form1" name="form1" class="form-horizontal" role="form">
+							<div class="ibox">
+								<div class="ibox-title">
+                                    <h5>合同信息新增</h5>
+                                </div>
+								<div class="ibox-content">
+									<div class="row">
+										<div class="col-md-4">
+											<dl class="dl-horizontal">
+												<dt>合同编号：</dt>
+												<dd>合同保存时自动生成</dd>
+											</dl>
+										</div>
+										<div class="col-md-4">
+											<dl class="dl-horizontal">
+												<dt>房源编号：</dt>
+												<dd><a id="houseId" target="_blank"></a></dd>
+												 
+											</dl>				
+										</div>
+										<div class="col-md-4">
+											<dl class="dl-horizontal">
+												<dt>客源编号：</dt>
+												<dd><a id="customerId" target="_blank"></a></dd>
+											</dl>				
+										</div>
+										<input type='hidden' name='customerId' id='clientId'></input>
+									</div>
+									<div class="row">
+										<div class="col-md-4">
+											<dl class="dl-horizontal">
+												<dt>合同日期：</dt>
+												<dd>合同保存时自动生成</dd>
+											</dl>				
+										</div>
+										<div class="col-md-4">
+											<dl class="dl-horizontal">
+												<dt>合同成交人：</dt>
+												<dd id="inputName"></dd>
+											</dl>				
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="ibox">
+								<div class="ibox-title">
+									<h5>交易双方信息</h5>
+								</div>
+								<div class="ibox-content">
+									#parse("/sign/buy_add/transaction.html")
+									<div class="row">
+										<div class="col-md-12 text-cen" style="margin-bottom:200px;margin-top:40px;">
+											<div class="form-group">
+												<!-- <button type="button" class="btn btn-success pr5 J_before">上一步</button> -->
+												<button type="button" class="btn btn-success pr5 J_next">下一步</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div id="tab-2" class="tab-pane">
+					<div class="panel-body">
+						<form id="form2" name="form2" class="form-horizontal normal" role="form">
+							#parse("/sign/buy_add/housebasic.html")
+							
+						</form>
+					</div>
+				</div>
+				<div id="tab-3" class="tab-pane">
+					<div class="panel-body">
+						<form id="form3" name="form3" class="form-horizontal normal" role="form">
+							#parse("/sign/buy_add/Agent.html")
+						</form>
+					</div>
+				</div>
+				
+				<div id="tab-4" class="tab-pane">
+					<div class="panel-body">
+						<form id="form4" name="form4" class="form-horizontal normal isdisable" role="form">
+							#parse("/sign/buy_add/serviceCharge.html")
+						</form>
+					</div>
+				</div>
+				<div id="tab-5" class="tab-pane">
+					<div class="panel-body">
+						<form id="form8" name="form8" class="form-horizontal normal" role="form">
+							#parse("/sign/buy_add/unprintable.html")			
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 添加电话 begin -->
+<div id="addphone_layer" class="ibox-content" style="display: none;height: 100%;">
+	<form id="addphone_form" name="addphone_form" class="form-horizontal" style="height:100%;">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<div class="col-sm-3">
+						<select id="phoneType" name="infoType"
+							class="J_chosen form-control" data-placeholder="请选择">
+							<option value="1">国内手机</option>
+							<option value="2">国内座机</option>
+							<option value="3">国外电话</option>
+						</select>
+					</div>
+					<div class="col-sm-7 m-l-sm">
+						<input id="phone" name="phones" class="form-control" placeholder="">
+						<div class="remark" style="margin-top: 3px;display: none;color:#ed5565;">
+						注:座机格式区号（3或4位）-固话（7或8位）</div>
+					</div>
+					<div class="col-sm-1 m-l-sm">
+						<button id="J_addphone" type="button" class="btn btn-success pr5">添加</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="tab-pane pt6 m-b-sm"style="height:76%;">
+			<div class="bootstrap-table" style="height:100%;overflow-y:auto;">
+				<table id="J_phone_dataTable" class="table table-hover table-striped singlewatch_ath table-bordered">
+					<thead>
+						<tr style="height: 30px;">
+							<th data-field="phone">电话</th>
+							<th data-field="opt">操作</th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+			</div>
+		</div>	
+		<div class="col-md-12 m-b-sm">
+			<div class="bootstrap-table">
+				<div id="prompt" style="color:#ff0000;">备注：至少添加一个手机号码</div>
+			</div>
+		</div>
+	</form>
+</div> 
+<!-- 添加电话的修改 end -->
+<!-- 业主代理人信息begin -->
+<div id="owner_agent_layer" class="ibox-content" style="display: none">
+	<form id="owner_agent_form" name="owner_agent_form" class="form-horizontal">
+		<div class="row">
+			<div class="col-md-12 ptb10">
+				<table id="J_owner_agent_dataTable"
+					class="table table-hover table-striped">
+					<thead>
+						<!-- <tr>
+							<th><span class="text-danger">*</span>业主代理人姓名</th>
+							<th><span class="text-danger">*</span>证件类型</th>
+							<th><span class="text-danger">*</span>证件号码</th>
+							<th><span class="text-danger">*</span>联系电话</th>
+						</tr> -->
+					</thead>
+					<tbody>
+						<tr>
+							<td class="col-md-3">
+								<div class="col-sm-10 col-sm-offset-1">
+								<div class="form-group">
+									<input name="J_owner_agent_name" id="J_owner_agent_name" class="form-control" placeholder="请输入姓名">
+								</div>
+								</div>
+							</td>
+							<td class="col-md-3">
+							<div class="col-sm-10 col-sm-offset-1">
+							<div class="form-group">
+							<select id="J_cardType" name="J_cardType"
+								class="J_chosen form-control" data-placeholder="请选择">
+							</select>
+							</div>
+							</div>
+							</td>
+							<td>
+							<div class="form-group">
+							<input name="J_cardType_num"  id="J_cardType_num" class="form-control" placeholder="请输入证件号码"></div></td>
+							<td class="col-md-3">
+							<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-1">
+									<input id="J_owner_agent_phone" name="J_owner_agent_phone" readonly='readonly' class="J_phone form-control" placeholder="请添加电话">
+								</div>
+								<div class="col-sm-1">
+									<a class="btn btn-white btn-bitbucket J_add_phone">  
+										<i class="glyphicon glyphicon-plus"></i>
+									</a>
+								</div>
+							</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</form>
+</div>
+<!-- 业主代理人信息 end -->
+<!-- 添加抵押信息begin -->
+<div id="mortgage_layer" class="ibox-content" style="display: none">
+	<form id="mortgage_form" name="mortgage_form" class="form-horizontal">
+		<div class="row">
+			<div class="col-md-12 ptb10">
+				<table id="J_mortgage_dataTable" class="table table-striped table-bordered table-hover dataTables-example table-condensed">
+					<thead>
+						<tr>
+							<th style="width:20%" class="required" style="width:20%">抵押权人姓名</th>
+							<th style="width:20%" class="required">抵押金额（元）</th>
+							<th style="width:20%">抵押注销条件</th>
+							<th style="width:20%">办理注销手续日期</th>
+							<th style="width:20%">备注</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="valign-top">
+							<td>
+								<div class="form-group">
+									<input name="J_mortgage_name" id="J_mortgage_name" class="form-control" placeholder="请输入姓名">
+									<label><span></span></label>
+								</div>
+							</td>
+							<td>
+								<div class="form-group">
+									<input name="J_mortgage_money" id="J_mortgage_money" class="form-control" placeholder="请输入金额">
+									<label class="color_red"><span id="J_mortgage_bigmoney"></span></label>
+								</div>
+							</td>
+							<td>
+								<div class="form-group">
+									<input name="J_mortgage_condition" id="J_mortgage_condition" class="form-control" placeholder="请输入条件">
+									<label><span></span></label>
+								</div>
+							</td>
+							<td>
+								<div class="form-group">
+									<input name="J_mortgage_date" id="J_mortgage_date" class="form-control" placeholder="请选择日期">
+									<label><span></span></label>
+								</div>
+							</td>
+							<td>
+								<div class="form-group">
+									<input name="J_mortgage_remark" id="J_mortgage_remark" class="form-control" placeholder="请输入备注">
+									<label><span></span></label>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</form>
+</div>
+<!-- 添加抵押信息 end -->
+<!--star选择合同-->
+<div class="ibox" id="choiceHetong" style="display:none;">
+	<div class="ibox-title">
+		<div class="row" style="font-size:14px;color: #ed5565;">提示：查询结果列示出的都为未过户的合同</div>
+	</div>
+	<div class="ibox-content">	
+		<form id="J_contractQuery" class="form-horizontal" role="form">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">合同编号：</label>
+						<div class="col-sm-8">
+							<input name="contract_code" type="text" class="form-control">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">录入日期：</label>
+							<div class="col-sm-4"><input name="crt_dttm_begin" id="createstarttime" type="text" class="form-control" readonly="readonly" style="width:97%;background-color:#fff;"></div>
+							<div style="float:left; padding:7px 0px;">-</div>
+							<div class="col-sm-4"><input name="crt_dttm_end" id="createendtime" type="text" class="form-control" readonly="readonly" style="width:96%;margin-left:2%;background-color:#fff;"></div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">房源编号：</label>
+						<div class="col-sm-8">
+							<input type="text" name="houses_code" class="form-control">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">业主姓名：</label>
+						<div class="col-sm-8">
+							<input type="text" name="owner_name" class="form-control">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">成交价：</label>
+							<div class="col-sm-4"><input name="transaction_price_min" id="createstarttime" type="text" class="form-control" style="width:97%;background-color:#fff;"></div>
+							<div style="float:left; padding:7px 0px;">-</div>
+							<div class="col-sm-3"><input name="transaction_price_max" id="createendtime" type="text" class="form-control" style="width:96%;margin-left:2%;background-color:#fff;"></div>
+							<label class="col-sm-1" style="padding:9px 0 0 2px;">元</label>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<label class="col-sm-3 control-label">客户编号：</label>
+					<div class="col-sm-8">
+						<input type="text" name="customer_code" class="form-control">
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<label class="col-sm-3 control-label">客户姓名：</label>
+					<div class="col-sm-8">
+						<input type="text" name="customer_name" class="form-control">
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">所属部门：</label>
+						<div class="col-sm-8"  id="J_deptSelect">
+							<input id="J_deptLevel" type="hidden" class="form-control" value="">
+							<div class="input-group">
+								<input id="J_deptName" type="text" data-id="" class="form-control radius-3 float-l" readonly="readonly" autocomplete="off" style="background-color:#fff;">
+								<div class="input-group-btn">
+									<button data-toggle="dropdown" class="btn dropdown-toggle btn-dept float-l" type="button"><span class="caret"></span>
+	                            	</button>
+	                            </div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- <div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">业务类型：</label>
+						<div class="col-sm-8">
+							<select name="contract_type" id="businesstype" class="J_chosen form-control">
+								<option value="">全部</option>
+							</select>
+						</div>
+					</div>
+				</div> -->
+			</div>
+			<div class="row ptbottom10">
+				<div class="col-md-12">
+					<div class="form-group">
+						<div class="col-sm-5  col-sm-offset-5">
+	                        <button id="J_search" type="button" class="btn btn-success btn_size">查 询</button>
+	                        <button id="J_reset" type="reset" class="btn btn-white btn_size">重 置</button>
+	                    </div>
+					</div>
+				</div>
+			</div>
+		</form>
+		<div id="hetConten"></div>
+	</div>
+</div>
+<!--end选择合同-->
+</div>
+<script type="text/javascript" src="$link.contextPath/resources/js/department.js"></script>
+<script
+src="$link.contextPath/resources/script/sign/main/validate/form-validate-demo.min.js"></script>
+<!-- <script
+src="$link.contextPath/resources/script/sign/main/messages_zh.min.js"></script> -->
+<script type="text/javascript"
+		src="$link.contextPath/resources/script/sign/main/sales_add.js?v=2"></script>
+<script
+src="$link.contextPath/resources/script/sign/main/validate.js"></script>
+<script
+src="$link.contextPath/resources/script/sign/main/linkage.js"></script>
+
+<script
+	src="$link.contextPath/resources/script/sign/sign-common.module.js"></script>
+<script
+	src="$link.contextPath/resources/script/sign/component/sign-checkbox.component.js"></script>
+<script src="$link.contextPath/resources/script/sign/component/sign-choose-person.component.js"></script>
+<script type="text/javascript"
+		src="$link.contextPath/resources/script/sign/main/sales_add.module.js?v=1"></script>

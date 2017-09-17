@@ -1,0 +1,162 @@
+#set($plugins = ["table","chosen","laydate","autoSearch","ztree"])
+
+<script>
+    var buy_view_permission = $shiro.hasPermission("SCM:CUSTOM:BUY_VIEW"); // 买卖客户详情查看
+    var lease_view_permission = $shiro.hasPermission("SCM:CUSTOM:LEASE_VIEW"); // 租赁客户详情查看
+</script>
+<div class="ibox">
+    <div class="row">
+        <div class="ibox-title">
+            <h5>跟进管理</h5>
+            <div class="ibox-tools">
+                <a class="collapse-link ui-sortable"> <i class="fa fa-chevron-up"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="ibox-content">
+            <form id="J_query" class="form-horizontal" role="form">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">客户姓名：</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="customername" id="" autocomplete="off">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">跟进时间:</label>
+                            <div class="col-sm-8" layout="row">
+                                <div flex><input id="J_begindate" name="createtimebegin" class="form-control"
+                                                 placeholder=""></div>
+                                <div class="split">-</div>
+                                <div flex><input id="J_enddate" name="createtimeend" class="form-control"
+                                                 placeholder=""></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4" id="groupFromItem">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">所属部门：</label>
+                            <div class="col-sm-8">
+                                <div class="input-group">
+                                    <input id="J_level_id1" name="level" type="hidden">
+                                    <input id="J_deptName1" type="text" class="form-control radius-3"
+                                           autocomplete="off">
+                                    <div class="input-group-btn">
+                                        <button id="J_deptSelect1" data-toggle="dropdown"
+                                                class="btn dropdown-toggle btn-dept" type="button"><span
+                                                class="caret"></span></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4" id="belongUserFromItem">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">所属人：</label>
+                            <div class="col-sm-8">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="J_user" autocomplete="off">
+                                    <div class="input-group-btn">
+                                        <button type="button" class="btn btn-white dropdown-toggle"
+                                                data-toggle="">
+                                            <span class="glyphicon glyphicon-search search-caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-right" role="menu"
+                                            style="padding-top: 0px; max-height: 375px; max-width: 800px; overflow: auto; width: auto; transition: 0.3s; left: -110px; right: auto; min-width: 145px;">
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">客源编号：</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="clientid" id="" autocomplete="off">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">业务类型：</label>
+                            <div class="col-sm-8" id="customertype"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row btns">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="col-sm-5 col-sm-offset-5">
+                                <button id="J_search" type="button" class="btn btn-success btn_size">查 询</button>
+                                <button id="J_reset" type="reset" class="btn btn-white btn_size">重 置</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="ibox-title"><h5>跟进列表</h5></div>
+        <div class="ibox-content">
+            <div class="row row-lg">
+                <div class="col-sm-12">
+                    <div class="example-wrap">
+
+                        #if($shiro.hasPermission("SCM:CUSTOM:FOLLOW_DELETE"))
+                        <div class="row all">
+                            <div class="btn-group hidden-xs fr" id="exampleToolbar" role="group">
+                                <button id="J_del" type="button" class="btn btn-success pr5">删除</button>
+                            </div>
+                        </div>
+                        #end
+                        <!-- Example Pagination -->
+
+                        <table id="J_dataTable_list"
+                               class="table table-hover table-striped table table-bordered tables">
+                            <thead>
+                            <tr>
+                                <th class="col-sm-1" data-field="Choose">
+                                    <input id="J_checkall" name='list' type='checkbox'/>
+                                </th>
+                                <th class="col-sm-1" data-field="customertype">业务类型</th>
+                                <th class="col-sm-2" data-field="name">客户姓名<br>(客户编号)</th>
+
+                                <th class="col-sm-2" data-field="shopgroup">所属部门</th>
+                                <th class="col-sm-2" data-field="createbyname">所属人</th>
+                                <th class="col-sm-2" data-field="createtime">跟进时间</th>
+                                <th class="col-sm-2" data-field="content">跟进内容</th>
+                                <!--  <th data-field="phone">操作</th>
+                                -->
+                            </tr>
+                            </thead>
+                        </table>
+                        <!-- End Example Pagination -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Bootstrap table -->
+<div id="demo_layer" class="ibox-content" style="display: none">
+    <form id="retreatkey_form" name="retreatkey_form" class="form-horizontal">
+        <div class="form-group">
+            <label class="col-sm-3 control-label">客户姓名：</label>
+            <p class="col-sm-9 form-control-static">李老师</p>
+        </div>
+        <div class="form-group" style="background:#ccffff;">
+            <label class="col-sm-3 control-label">电话：</label>
+            <p class="col-sm-9 form-control-static">15834526473，15834526473</p>
+        </div>
+    </form>
+</div>
+<script src="/sales/resources/script/customer/follow/list.js"></script>
+
+<script type="text/javascript" src="$link.contextPath/resources/js/department.js"></script>
+
+

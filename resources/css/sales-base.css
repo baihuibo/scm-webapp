@@ -1,0 +1,9 @@
+form-item, sales-input {
+    display: block;
+}
+
+form-item > .form-group > label.control-label {
+    min-width: 100px;
+    text-align: right;
+    margin-right: .5em;
+}

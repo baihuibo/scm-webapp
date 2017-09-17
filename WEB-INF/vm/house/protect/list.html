@@ -1,0 +1,332 @@
+#set($plugins = ["table","chosen","laydate","ztree","autoSearch"])
+<!-- 查询条件 begin -->
+<div class="ibox">
+	<div class="ibox-title">
+		<h5>房源保护管理</h5>
+		<div class="ibox-tools">
+			<a class="collapse-link ui-sortable"><i class="fa fa-chevron-up"></i>
+			</a>
+		</div>
+	</div>
+	<div class="ibox-content">
+		<div class="row">
+			#if($shiro.hasPermission("SCM:HOUSE:PROTECT:CANCEL"))
+				<input type="hidden" value="1" id="temp_cancel"></input>
+			#end
+			#if($shiro.hasPermission("SCM:HOUSE:PROTECT:VIEW"))
+				<input type="hidden" value="1" id="temp_view"></input>
+			#end
+			#if($shiro.hasPermission("SCM:HOUSE:PROTECT:CHANGE"))
+				<input type="hidden" value="1" id="temp_change"></input>
+			#end
+			<form class="form-horizontal" role="form" id="J_protect_form">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">房源编号：</label>
+						<div class="col-sm-8">
+							<input id="Q_houseid" name="houseid" class="form-control">
+						</div>
+					</div>
+				</div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">保护人：</label>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <input type="text" class="form-control" class="belongperson" id="J_belongperson">
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown">
+                                        <span class="glyphicon glyphicon-search search-caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">保护状态：</label>
+						<div class="col-sm-8">
+							<select id="Q_status" name="status" class="J_chosen form-control" data-placeholder="请选择">
+								<option value="">全部</option>
+								<option value="1">保护中</option>
+								<option value="2">已取消</option>
+								<option value="3">已到期</option>
+							</select>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">保护部门：</label>
+						<div class="col-sm-8">
+							<input id="J_belongdeptLevel" type="hidden" class="form-control" value="">
+							<div class="input-group">
+								<input id="J_belongdeptName" type="text" class="form-control radius-3" autocomplete="off">
+								<div class="input-group-btn">
+									<button id="J_belongdeptSelect" data-toggle="dropdown" class="btn dropdown-toggle btn-dept" type="button"><span class="caret"></span></button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">保护时间：</label>
+						<div class="col-sm-8" layout="row">
+							<div flex>
+								<input id="J_begintime" name="createstarttime" class="form-control">
+							</div>
+							<div class="split">-</div>
+							<div flex>
+								<input id="J_endtime" name="createendtime" class="form-control">
+							</div>
+						</div>
+					</div>
+				</div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">业务类型：</label>
+                        <div class="col-sm-8">
+                            <select id="Q_housekind" name="housekind" class="J_chosen form-control" data-placeholder="请选择">
+                                <option value="">全部</option>
+                                <option value="1">租赁</option>
+                                <option value="2">买卖</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+				<div class="col-md-12">
+					<div class="form-group">
+						<label class="col-sm-1 control-label">规划用途：</label>
+						<div class="col-sm-11" id="J_planningPurpose">
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-12 text-center">
+					<div class="form-group">
+						<button id="J_search" type="button" class="btn btn-success btn_size">查 询</button>
+						<button id="J_reset_lease" type="reset" class="btn btn-white btn_size">重 置</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<!-- 查询条件end -->
+
+<!-- 列表  begin -->
+<div class="ibox float-e-margins">
+	<div class="ibox-title"><h5>房源保护列表</h5></div>
+	<div class="ibox-content">
+		<div class="row row-lg">
+			<div class="col-sm-12">
+				<!-- Example Pagination -->
+				<div class="example-wrap ptb10">
+					<p></p>
+					<table id="J_dataTable" class="table table-hover  table-striped" data-query-params="queryParams" data-mobile-responsive="true" data-pagination="true" data-icon-size="outline" data-striped="true" data-search="false">
+						<thead>
+							<tr>
+								<th data-field="houseid">房源编号</th>
+								<th data-field="propertytype">业务类型</th>
+								<th data-field="housekind">规划用途</th>
+								<th data-field="protectname">保护人</th>
+								<th data-field="deptname">保护部门</th>
+								<th data-field="protecttime">保护时间</th>
+								<th data-field="limitday">房源保护倒计时</th>
+								<th data-field="status">保护状态</th>
+								<th data-field="opt">操作</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+				<!-- End Example Pagination -->
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- 查看 -->
+#parse("/house/protect/detail.html")
+
+<!-- 列表  end -->
+<!-- 查看保护详情 start -->
+<div id="J_protect_detail_layer" class="ibox-content" style="display:none;">
+	<div class="ibox">
+		<div class="ibox-content">
+			<form class="form-horizontal" role="form" id="J_protectdetail_form">
+				<div class="row">
+					<div class="protect_detail_content mt_spec">
+						<div class="row ptb10">
+							<div class="pl10 font-bold font-blue info-tit">房源信息</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-3">
+								<dl class="dl-horizontal">
+									<dt id="J_houseid" class="J_edit_area" style="padding-right: .5em;">
+										<a id="houseid" target="_blank" href=""></a>
+									</dt>
+									<dd id="conmmunityname"></dd>
+								</dl>
+							</div>
+							<div class="col-sm-3">
+								<dl class="dl-horizontal">
+									<dt id="J_servicetype" class="J_edit_area">
+										业务类型：
+									</dt>
+									<dd id="housekind"></dd>
+								</dl>
+							</div>
+							<div class="col-sm-3">
+								<dl class="dl-horizontal">
+									<dt id="J_propertytype" class="J_edit_area">规划用途：</dt>
+									<dd id="propertytype"></dd>
+								</dl>
+							</div>
+							<div class="col-sm-3">
+								<dl class="dl-horizontal">
+									<dt id="J_builtarea" class="J_edit_area">建筑面积：</dt>
+									<dd id="buildarea"></dd>
+								</dl>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-3">
+								<dl class="dl-horizontal">
+									<dt id="J_floor" class="J_edit_area">楼层</dt>
+									<dd id="floor"></dd>
+								</dl>
+							</div>
+							<div class="col-sm-3">
+								<dl class="dl-horizontal">
+									<dt id="J_layout" class="J_edit_area">户型：</dt>
+									<dd id="shape"></dd>
+								</dl>
+							</div>
+						</div>
+						<div class="row ptb10">
+							<div class="pl10 font-bold font-blue info-tit">保护信息</div>
+							<div class="row">
+								<div class="col-sm-4">
+									<dl class="dl-horizontal">
+										<dt id="J_protectperson" class="J_edit_area">保护人：</dt>
+										<dd id="userName"></dd>
+									</dl>
+								</div>
+								<div class="col-sm-4">
+									<dl class="dl-horizontal">
+										<dt id="J_protectdepart" class="J_edit_area">保护部门：</dt>
+										<dd id="groupName"></dd>
+									</dl>
+								</div>
+								<div class="col-sm-4">
+									<dl class="dl-horizontal">
+										<dt id="J_propertytime" class="J_edit_area">保护时间：</dt>
+										<dd id="createTime"></dd>
+									</dl>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-4">
+									<dl class="dl-horizontal">
+										<dt id="J_protectreason" class="J_edit_area">保护原因：</dt>
+										<dd id="reason"></dd>
+									</dl>
+								</div>
+                                <div class="col-sm-4">
+                                    <dl class="dl-horizontal">
+                                        <dt id="J_protectstatus" class="J_edit_area">保护状态：</dt>
+                                        <dd id="status"></dd>
+                                    </dl>
+                                </div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<!-- 查询条件end -->	
+		<!-- 列表  begin -->
+		<div class="ibox-content">		
+			<div class="row">
+				<div class="pl10 font-bold font-blue info-tit">历史保护记录</div>
+			</div>
+			<div class="row row-lg">
+				<div class="col-sm-12">
+					<!-- Example Pagination -->
+					<div class="example-wrap">
+						<p></p>
+						<table id="protectTab" class="table table-hover  table-striped">
+							<thead>
+								<tr>
+									<th data-field="userName">操作人</th>
+									<th data-field="createTime">保护时间</th>
+									<th data-field="reason">保护原因</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+					<!-- End Example Pagination -->
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 查看保护详情 end -->
+<!-- 取消保护 start -->
+<div id="J_protect_cancel_layer" class="ibox-content" style="margin:0 10px 0 10px; display:none;">
+	<div class="ibox">
+		<div class="ibox-content">
+			<form class="form-horizontal" role="form" id="J_protectcancel_form">
+				<div class="row ptb10">
+					<div class="pl10 font-bold font-blue info-tit" style="border:none;">是否确定取消保护该房源</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<!-- 取消保护 end -->
+<!-- 变更保护人 start -->
+<div id="J_protectedit_layer" class="ibox-content" style="margin:0 10px 0 10px; display:none;">
+	<div class="ibox">
+		<div class="ibox-content">
+			<form class="form-horizontal" role="form" id="J_protectedit_form">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group">
+							<label class="col-sm-4 control-label">原保护人：</label>
+							<div id="J_old_protectperson" class="col-sm-8 pt6"></div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group">
+							<label class="col-sm-4 control-label">变更保护人：</label>
+							<div class="col-sm-8">	
+								<div class="input-group">
+									<input type="text" class="form-control belongperson" id="J_propectperson">
+									<div class="input-group-btn">
+										<button type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown">
+											<span class="glyphicon glyphicon-search search-caret"></span>
+										</button>
+										<ul class="dropdown-menu dropdown-menu-right" role="menu">
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<!-- 变更保护人 end -->
+<script type="text/javascript" src="$link.contextPath/resources/js/department.js"></script>
+<script type='text/javascript' src="$link.contextPath/resources/script/house/protect/list.js"></script>
